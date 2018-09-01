@@ -12,6 +12,7 @@
 #include <stdio.h>
 #include <arpa/inet.h>
 #include <sys/socket.h>
+#include <malloc.h>
 #include <commons/log.h>
 #include <commons/collections/list.h>
 
@@ -41,22 +42,27 @@ int main(void) {
 	int cliente = accept(servidor, (void*) &direccionCliente, &tamanioDireccion);
 
 	printf("Recibi una conexion en %d!!\n", cliente);
-	send(cliente, "Hola!", 6, 0);
+	send(cliente, "Escribi algo\n", 14, 0);
 
 	//........................
 
-	char* buffer = malloc(strlen("Hola!"));
+	unsigned long LEN = 5;
+	char* buffer = NULL;
 
-	int bytesRecibidos = recv(cliente, (void*) &buffer, 4, 0);
-	if(bytesRecibidos < 0){
-		perror("Se desconectó el cliente.");
-		return 1;
+	while(1){
+		buffer = malloc(sizeof(char)*LEN);
+		int bytesRecibidos = recv(cliente, buffer, 4, 0);
+		if(bytesRecibidos <= 0){
+			perror("Se desconectó el cliente.");
+			return 1;
+		}
+
+		buffer[bytesRecibidos] = '\0';
+		printf("Me llegaron %d bytes con %s\n", bytesRecibidos, buffer);
+
+		free(buffer);
 	}
 
-	buffer[bytesRecibidos] = '\0';
-	printf("Me llegaron %d bytes con $s", bytesRecibidos, buffer);
-
-	free(buffer);
 
 	return 0;
 }
