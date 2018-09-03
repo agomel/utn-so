@@ -35,7 +35,7 @@ int main(void) {
 	puts("Estoy escuchando");
 	listen(servidor, 100);
 
-	//.........................
+	//-----------------------------
 
 	struct sockaddr_in direccionCliente;
 	unsigned int tamanioDireccion;
@@ -44,25 +44,25 @@ int main(void) {
 	printf("Recibi una conexion en %d!!\n", cliente);
 	send(cliente, "Escribi algo\n", 14, 0);
 
-	//........................
+	//----------------------------
 
-	unsigned long LEN = 5;
-	char* buffer = NULL;
+	int a;
+	char* buffer = malloc(5);
+
+	if(buffer == NULL){
+		printf("No hay espacio");
+	}
 
 	while(1){
-		buffer = malloc(sizeof(char)*LEN);
 		int bytesRecibidos = recv(cliente, buffer, 4, 0);
 		if(bytesRecibidos <= 0){
 			perror("Se desconectó el cliente.");
 			return 1;
 		}
-
 		buffer[bytesRecibidos] = '\0';
 		printf("Me llegaron %d bytes con %s\n", bytesRecibidos, buffer);
-
-		free(buffer);
 	}
-
+	free(buffer);
 
 	return 0;
 }
