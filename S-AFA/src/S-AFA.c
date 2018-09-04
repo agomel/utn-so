@@ -15,53 +15,27 @@
 #include <malloc.h>
 #include <commons/log.h>
 #include <commons/collections/list.h>
+#include "socket.h"
 
 int main(void) {
-	struct sockaddr_in direccionServidor;
-	direccionServidor.sin_family = AF_INET;
-	direccionServidor.sin_addr.s_addr = INADDR_ANY;
-	direccionServidor.sin_port = htons(20000);
+	int servidor = crearServidor(20000, INADDR_ANY, 100);
 
-	int servidor = socket(AF_INET, SOCK_STREAM, 0);
-
-	int activado = 1;
-	setsockopt(servidor, SOL_SOCKET, SO_REUSEADDR, &activado, sizeof(activado));
-
-	if(bind(servidor, (void*) &direccionServidor, sizeof(direccionServidor)) != 0){
-		perror("FALLÓ EL BIND");
-		return 1;
-	}
-
-	puts("Estoy escuchando");
-	listen(servidor, 100);
-
-	//-----------------------------
-
-	struct sockaddr_in direccionCliente;
-	unsigned int tamanioDireccion;
-	int cliente = accept(servidor, (void*) &direccionCliente, &tamanioDireccion);
-
+	int cliente = conectarConCliente(servidor);
 	printf("Recibi una conexion en %d!!\n", cliente);
-	send(cliente, "Escribi algo\n", 14, 0);
+	send(cliente, "Escribite algo\n", 14, 0);
 
-	//----------------------------
-
-	int a;
-	char* buffer = malloc(5);
+	char* buffer = malloc(10);
 
 	if(buffer == NULL){
 		printf("No hay espacio");
+		return 1;
 	}
 
 	while(1){
-		int bytesRecibidos = recv(cliente, buffer, 4, 0);
-		if(bytesRecibidos <= 0){
-			perror("Se desconectó el cliente.");
-			return 1;
-		}
-		buffer[bytesRecibidos] = '\0';
-		printf("Me llegaron %d bytes con %s\n", bytesRecibidos, buffer);
+		int bytesRecibidos = recibirMensaje(cliente, &buffer, 4);
+		printf("Me llegaron %d bytes con %s \n", bytesRecibidos, buffer);
 	}
+
 	free(buffer);
 
 	return 0;
