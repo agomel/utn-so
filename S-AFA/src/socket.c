@@ -6,13 +6,10 @@
 int crearServidor(int puerto, char* ip, int cantidadAEscuchar){
 	struct sockaddr_in direccionServidor = crearDireccionServidor(puerto, ip);
 
-	int servidor = socket(AF_INET, SOCK_STREAM, 0);
-	if(servidor == -1){
-		perror("FALLÓ LA CREACION DEL SOCKET");
-		exit(1);
-	}
+	int servidor = crearSocket();
 
 	int activado = 1;
+	//esto es para?
 	setsockopt(servidor, SOL_SOCKET, SO_REUSEADDR, &activado, sizeof(activado));
 
 	if(bind(servidor, (void*) &direccionServidor, sizeof(direccionServidor)) != 0){
@@ -29,6 +26,15 @@ struct sockaddr_in crearDireccionServidor(int puerto, char* ip){
 	direccionServidor.sin_addr.s_addr = ip;
 	direccionServidor.sin_port = htons(puerto);
 	return direccionServidor;
+}
+
+int crearSocket(){
+	int newSocket = socket(AF_INET, SOCK_STREAM, 0);
+	if(newSocket == -1){
+			perror("FALLÓ LA CREACION DEL SOCKET");
+			exit(1);
+	}
+	return newSocket;
 }
 
 void empezarAEscuchar(int servidor, int cantidadAEscuchar){
@@ -52,4 +58,21 @@ int recibirMensaje(int socketEmisor, char** buffer, int bytesMaximos){
 	(*buffer)[bytesRecibidos] = '\0';
 	return bytesRecibidos;
 }
+
+int conectarConServidor(int puerto, char* ip){
+	struct sockaddr_in direccionServidor = crearDireccionServidor(puerto, ip);
+	int socketCliente = crearSocket();
+	if(connect(socketCliente, (void*) &direccionServidor, sizeof(direccionServidor)) != 0){
+		perror("No se pudo conectar");
+		exit(1);
+	}
+	return socketCliente;
+}
+
+void enviarMensaje(int socket, char* mensaje){
+	send(socket, mensaje, strlen(mensaje), 0);
+}
+
+
+
 

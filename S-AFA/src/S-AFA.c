@@ -24,7 +24,7 @@ int main(void) {
 	printf("Recibi una conexion en %d!!\n", cliente);
 	send(cliente, "Escribite algo\n", 14, 0);
 
-	char* buffer = malloc(10);
+	char* buffer = malloc(5);
 
 	if(buffer == NULL){
 		printf("No hay espacio");
