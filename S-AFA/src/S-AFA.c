@@ -20,6 +20,7 @@
 #include <pthread.h>
 #include <unistd.h>
 #include "hilos.h"
+#include "utilidades.h"
 
 
 void consola(){
@@ -52,11 +53,7 @@ int main(void) {
 	printf("Recibi una conexion en %d!!\n", cliente);
 	enviarMensaje(cliente, "Escribite algo\n");
 
-	char* buffer = malloc(5);
-	if(buffer == NULL){
-		printf("No hay espacio");
-		return 1;
-	}
+	char* buffer=asignarMemoria(5);
 
 	int a = 1;
 	while(a){
