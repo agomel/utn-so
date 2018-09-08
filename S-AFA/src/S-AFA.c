@@ -37,7 +37,7 @@ void consola(){
 		}else if(strcmp(mensaje, "metricas") == 0){
 			printf("Reconocer metricas...\n");
 		}else{
-			printf("No te entiendo man.\n");
+			printf("No te entiendo.\n");
 		}
 	}
 }

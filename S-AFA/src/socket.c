@@ -9,7 +9,7 @@ int crearServidor(int puerto, char* ip, int cantidadAEscuchar){
 	int servidor = crearSocket();
 
 	int activado = 1;
-	//esto es para?
+	//eliminar error de puerto ocupado
 	setsockopt(servidor, SOL_SOCKET, SO_REUSEADDR, &activado, sizeof(activado));
 
 	if(bind(servidor, (void*) &direccionServidor, sizeof(direccionServidor)) != 0){
@@ -28,7 +28,7 @@ struct sockaddr_in crearDireccionServidor(int puerto, char* ip){
 	return direccionServidor;
 }
 
-int crearSocket(){
+static int crearSocket(){
 	int newSocket = socket(AF_INET, SOCK_STREAM, 0);
 	if(newSocket == -1){
 			perror("FALLÓ LA CREACION DEL SOCKET");
