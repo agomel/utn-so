@@ -16,8 +16,22 @@
 #include <commons/log.h>
 #include <commons/collections/list.h>
 #include "socket.h"
+#include <pthread.h>
+#include <unistd.h>
+#include "hilos.h"
+
+
+void consola(int a){
+	while(1){
+		printf("Soy la brencha \n");
+		sleep(1);
+	}
+}
 
 int main(void) {
+
+	pthread_t hiloConsola = crearHilo(&consola);
+
 	int servidor = crearServidor(20000, INADDR_ANY, 100);
 
 	int cliente = conectarConCliente(servidor);
@@ -38,5 +52,6 @@ int main(void) {
 
 	free(buffer);
 
+	pthread_join(hiloConsola, NULL);
 	return 0;
 }
