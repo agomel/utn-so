@@ -8,19 +8,9 @@
  ============================================================================
  */
 
-#include <stdlib.h>
-#include <stdio.h>
-#include <string.h>
-#include <arpa/inet.h>
-#include <sys/socket.h>
-#include <malloc.h>
-#include <commons/log.h>
-#include <commons/collections/list.h>
-#include "socket.h"
-#include <pthread.h>
-#include <unistd.h>
-#include "hilos.h"
-#include "utilidades.h"
+#include <biblioteca/socket.h>
+#include <biblioteca/hilos.h>
+#include <biblioteca/utilidades.h>
 
 
 void consola(){
@@ -47,13 +37,13 @@ int main(void) {
 
 	pthread_t hiloConsola = crearHilo(&consola,NULL);
 
-	int servidor = crearServidor(20000, INADDR_ANY, 100);
+	int servidor = crearServidor(20001, INADDR_ANY, 100);
 
 	int cliente = conectarConCliente(servidor);
 	printf("Recibi una conexion en %d!!\n", cliente);
 	enviarMensaje(cliente, "Escribite algo\n");
 
-	char* buffer=asignarMemoria(5);
+	char* buffer =asignarMemoria(5);
 
 	int a = 1;
 	while(a){

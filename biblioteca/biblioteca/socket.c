@@ -20,7 +20,7 @@ int crearServidor(int puerto, char* ip, int cantidadAEscuchar){
 	return servidor;
 }
 
-struct sockaddr_in crearDireccionServidor(int puerto, char* ip){
+static struct sockaddr_in crearDireccionServidor(int puerto, char* ip){
 	struct sockaddr_in direccionServidor;
 	direccionServidor.sin_family = AF_INET;
 	direccionServidor.sin_addr.s_addr = ip;
@@ -45,7 +45,7 @@ void empezarAEscuchar(int servidor, int cantidadAEscuchar){
 
 int conectarConCliente(int servidor){
 	struct sockaddr_in direccionCliente;
-	unsigned int tamanioDireccion;
+	unsigned int tamanioDireccion = sizeof(struct sockaddr_in);
 	return accept(servidor, (void*) &direccionCliente, &tamanioDireccion);
 }
 

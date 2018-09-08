@@ -1,11 +1,7 @@
-#include <stdlib.h>
-#include <stdio.h>
-#include <arpa/inet.h>
-#include <sys/socket.h>
-#include "../../S-AFA/src/socket.c"
+#include <biblioteca/socket.h>
 
 int main(void) {
-	int cliente = conectarConServidor(20000, inet_addr("127.0.0.1"));
+	int cliente = conectarConServidor(20001, inet_addr("127.0.0.1"));
 
 	while(1){
 		char mensaje[1000];
