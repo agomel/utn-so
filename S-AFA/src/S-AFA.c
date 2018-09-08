@@ -50,10 +50,9 @@ int main(void) {
 
 	int cliente = conectarConCliente(servidor);
 	printf("Recibi una conexion en %d!!\n", cliente);
-	send(cliente, "Escribite algo\n", 14, 0);
+	enviarMensaje(cliente, "Escribite algo\n");
 
 	char* buffer = malloc(5);
-
 	if(buffer == NULL){
 		printf("No hay espacio");
 		return 1;
