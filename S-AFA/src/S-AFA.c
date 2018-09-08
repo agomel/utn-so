@@ -21,17 +21,16 @@
 #include "hilos.h"
 
 
-void consola(int a){
+void consola(){
 	while(1){
-		printf("Soy la brencha %d\n",a);
+		printf("Soy la brencha \n");
 		sleep(1);
 	}
 }
 
 int main(void) {
 
-	pthread_t hiloConsola;
-	hiloConsola=crearHilo(&consola,3);
+	pthread_t hiloConsola=crearHilo(&consola,NULL);
 
 	int servidor = crearServidor(20000, INADDR_ANY, 100);
 
