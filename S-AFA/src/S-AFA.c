@@ -10,6 +10,7 @@
 
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
 #include <arpa/inet.h>
 #include <sys/socket.h>
 #include <malloc.h>
@@ -23,14 +24,27 @@
 
 void consola(){
 	while(1){
-		printf("Soy la brencha \n");
-		sleep(1);
+		char mensaje[1000];
+		scanf("%s", mensaje);
+		if(strcmp(mensaje, "exit") == 0){
+			exit(1);
+		}else if(strcmp(mensaje, "ejecutar") == 0){
+			printf("Reconocer ejecutar...\n");
+		}else if(strcmp(mensaje, "status") == 0){
+			printf("Reconocer status...\n");
+		}else if(strcmp(mensaje, "finalizar") == 0){
+			printf("Reconocer finalizar...\n");
+		}else if(strcmp(mensaje, "metricas") == 0){
+			printf("Reconocer metricas...\n");
+		}else{
+			printf("No te entiendo man.\n");
+		}
 	}
 }
 
 int main(void) {
 
-	pthread_t hiloConsola=crearHilo(&consola,NULL);
+	pthread_t hiloConsola = crearHilo(&consola,NULL);
 
 	int servidor = crearServidor(20000, INADDR_ANY, 100);
 
@@ -45,13 +59,20 @@ int main(void) {
 		return 1;
 	}
 
-	while(1){
+	int a = 1;
+	while(a){
 		int bytesRecibidos = recibirMensaje(cliente, &buffer, 4);
-		printf("Me llegaron %d bytes con %s \n", bytesRecibidos, buffer);
+		if(bytesRecibidos <= 0){
+				perror("Se desconectó el cliente.");
+				a=0;
+		}else{
+			printf("Me llegaron %d bytes con %s \n", bytesRecibidos, buffer);
+		}
 	}
 
 	free(buffer);
 
-	pthread_join(hiloConsola, NULL);
+	esperarHilo(hiloConsola);
+
 	return 0;
 }

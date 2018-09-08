@@ -6,5 +6,6 @@
 #include <string.h>
 
 pthread_t crearHilo(void* funcion,void* parametro);
+int esperarHilo(pthread_t hilo);
 
 #endif /*HILOS_H_*/

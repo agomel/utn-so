@@ -51,10 +51,6 @@ int conectarConCliente(int servidor){
 
 int recibirMensaje(int socketEmisor, char** buffer, int bytesMaximos){
 	int bytesRecibidos = recv(socketEmisor, *buffer, bytesMaximos, 0);
-	if(bytesRecibidos <= 0){
-		perror("Se desconectó el cliente.");
-		exit(1);
-	}
 	(*buffer)[bytesRecibidos] = '\0';
 	return bytesRecibidos;
 }
