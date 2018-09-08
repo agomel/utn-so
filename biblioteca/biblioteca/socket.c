@@ -45,7 +45,7 @@ void empezarAEscuchar(int servidor, int cantidadAEscuchar){
 
 int conectarConCliente(int servidor){
 	struct sockaddr_in direccionCliente;
-	unsigned int tamanioDireccion = sizeof(struct sockaddr_in);
+	int tamanioDireccion = sizeof(struct sockaddr_in);
 	return accept(servidor, (void*) &direccionCliente, &tamanioDireccion);
 }
 
