@@ -27,27 +27,6 @@ int main(void) {
 
 	pthread_t hiloAdministradorDeConexiones = crearHilo(&escucharClientes,servidor);
 
-	/*
-
-	int cliente = aceptarCliente(servidor);
-	printf("Recibi una conexion en %d!!\n", cliente);
-	enviarMensaje(cliente, "Escribite algo\n");
-
-	char* buffer =asignarMemoria(5);
-
-	int escuchar = 1;
-	while(escuchar){
-		int bytesRecibidos = recibirMensaje(cliente, &buffer, 4);
-		if(bytesRecibidos <= 0){
-				perror("Se desconectó el cliente.");
-				escuchar=0;
-		}else{
-			printf("Me llegaron %d bytes con %s \n", bytesRecibidos, buffer);
-		}
-	}
-
-	free(buffer);*/
-
 	esperarHilo(hiloConsola);
 
 	esperarHilo(hiloAdministradorDeConexiones);
