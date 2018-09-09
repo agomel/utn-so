@@ -22,27 +22,24 @@ int recibirConexionesYMensajes(int servidor){
 
 
 	// añadir servidor al conjunto maestro
-	FD_SET(servidor, &bolsaDeTodosLosSockets);
+	agregarABolsa(servidor, &bolsaDeTodosLosSockets);
 
 	// seguir la pista del socket mayor
 	numeroMaximoDeSockets = servidor; // por ahora es éste
 
 	// bucle principal
-	for(;;) {
+	while(1) {
 	socketsDeLectura = bolsaDeTodosLosSockets;
-	if (select(numeroMaximoDeSockets+1, &socketsDeLectura, NULL, NULL, NULL) == -1) {
-		perror("select");
-		exit(1);
-	}
+	realizarSelectLectura(numeroMaximoDeSockets+1, &socketsDeLectura);
 
 	// explorar conexiones existentes en busca de datos que leer
 	for(socketDeLaBolsa = 0; socketDeLaBolsa <= numeroMaximoDeSockets; socketDeLaBolsa++) {
-		if (FD_ISSET(socketDeLaBolsa, &socketsDeLectura)) { // ¡¡tenemos datos!!
+		if (estaEnLaBolsa(socketDeLaBolsa, &socketsDeLectura)) { // ¡¡tenemos datos!!
 			if (socketDeLaBolsa == servidor) {
 				// agregar cliente
 				cliente=aceptarCliente(servidor);
 				if (cliente != -1) {
-					FD_SET(cliente, &bolsaDeTodosLosSockets); // añadir al conjunto maestro
+					agregarABolsa(cliente, &bolsaDeTodosLosSockets); // añadir al conjunto maestro
 					if (cliente > numeroMaximoDeSockets) {    // actualizar el máximo
 						numeroMaximoDeSockets = cliente;
 					}
@@ -54,7 +51,7 @@ int recibirConexionesYMensajes(int servidor){
 				bytesRecibidos = recibirMensaje(socketDeLaBolsa,&buffer,149);
 				if (bytesRecibidos <= 0) {
 					close(socketDeLaBolsa); // bye!
-					FD_CLR(socketDeLaBolsa, &bolsaDeTodosLosSockets); // eliminar del conjunto maestro
+					eliminarDeBolsa(socketDeLaBolsa, &bolsaDeTodosLosSockets); // eliminar del conjunto maestro
 				} else {
 					// tenemos datos de algún cliente
 					printf("Me llegaron %d bytes con %s \n", bytesRecibidos, buffer);

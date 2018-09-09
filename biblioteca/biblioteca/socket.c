@@ -55,7 +55,23 @@ int aceptarCliente(int servidor){
 	}
 	return cliente;
 }
+void agregarABolsa(int servidor,fd_set* bolsa){
+	FD_SET(servidor, bolsa);
+}
+int estaEnLaBolsa(int servidor,fd_set* bolsa){
+	return FD_ISSET(servidor, bolsa);
+}
 
+int eliminarDeBolsa(int servidor,fd_set* bolsa){
+	FD_CLR(servidor,bolsa);
+}
+
+void realizarSelectLectura(int sockets,fd_set* socketsDeLectura){
+	if (select(sockets, socketsDeLectura, NULL, NULL, NULL) == -1) {
+		perror("select");
+		exit(1);
+	}
+}
 int recibirMensaje(int socketEmisor, char** buffer, int bytesMaximos){
 	int bytesRecibidos = recv(socketEmisor, *buffer, bytesMaximos, 0);
 	(*buffer)[bytesRecibidos] = '\0';

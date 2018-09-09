@@ -6,6 +6,9 @@
 #include <string.h>
 #include <arpa/inet.h>
 #include <sys/socket.h>
+#include <unistd.h>
+#include <sys/types.h>
+#include <netinet/in.h>
 
 
 int crearServidor(int puerto, char* ip);
@@ -20,5 +23,9 @@ int recibirMensaje(int socketEmisor, char** buffer, int bytesMaximos);
 int conectarConServidor(int puerto, char* ip);
 
 void enviarMensaje(int socket, char* mensaje);
+void agregarABolsa(int servidor,fd_set* bolsa);
+int estaEnLaBolsa(int servidor,fd_set* bolsa);
+int eliminarDeBolsa(int servidor,fd_set* bolsa);
+void realizarSelectLectura(int sockets,fd_set* socketsDeLectura);
 
 #endif /*SOCKET_H_*/
