@@ -50,8 +50,8 @@ int recibirConexionesYMensajes(int servidor){
 				}
 			} else {
 				// escuchar a cliente
-				buffer=asignarMemoria(5);
-				bytesRecibidos = recibirMensaje(socketDeLaBolsa,&buffer,4);
+				buffer=asignarMemoria(150);
+				bytesRecibidos = recibirMensaje(socketDeLaBolsa,&buffer,149);
 				if (bytesRecibidos <= 0) {
 					close(socketDeLaBolsa); // bye!
 					FD_CLR(socketDeLaBolsa, &bolsaDeTodosLosSockets); // eliminar del conjunto maestro

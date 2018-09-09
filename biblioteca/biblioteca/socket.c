@@ -63,7 +63,7 @@ int recibirMensaje(int socketEmisor, char** buffer, int bytesMaximos){
 	// error o conexión cerrada por el cliente
 	if (bytesRecibidos == 0) {
 		// conexión cerrada
-		printf("selectserver: socket %d hung up\n", socketEmisor);
+		printf("conexion cerrada\n");
 	} else {
 		perror("error en el recv");
 	}
