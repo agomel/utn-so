@@ -11,9 +11,9 @@
 int crearServidor(int puerto, char* ip, int cantidadAEscuchar);
 static struct sockaddr_in crearDireccionServidor(int puerto, char* ip);
 static int crearSocket();
-void empezarAEscuchar(int servidor, int cantidadAEscuchar);
+static void empezarAEscuchar(int servidor, int cantidadAEscuchar);
 
-int conectarConCliente(int servidor);
+int aceptarCliente(int servidor);
 
 int recibirMensaje(int socketEmisor, char** buffer, int bytesMaximos);
 

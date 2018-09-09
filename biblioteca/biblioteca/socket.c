@@ -37,13 +37,13 @@ static int crearSocket(){
 	return newSocket;
 }
 
-void empezarAEscuchar(int servidor, int cantidadAEscuchar){
+static void empezarAEscuchar(int servidor, int cantidadAEscuchar){
 	listen(servidor, cantidadAEscuchar);
 	puts("Estoy escuchando");
 }
 
 
-int conectarConCliente(int servidor){
+int aceptarCliente(int servidor){
 	struct sockaddr_in direccionCliente;
 	int tamanioDireccion = sizeof(struct sockaddr_in);
 	return accept(servidor, (void*) &direccionCliente, &tamanioDireccion);

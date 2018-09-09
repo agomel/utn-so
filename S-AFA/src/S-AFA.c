@@ -39,18 +39,18 @@ int main(void) {
 
 	int servidor = crearServidor(20001, INADDR_ANY, 100);
 
-	int cliente = conectarConCliente(servidor);
+	int cliente = aceptarCliente(servidor);
 	printf("Recibi una conexion en %d!!\n", cliente);
 	enviarMensaje(cliente, "Escribite algo\n");
 
 	char* buffer =asignarMemoria(5);
 
-	int a = 1;
-	while(a){
+	int escuchar = 1;
+	while(escuchar){
 		int bytesRecibidos = recibirMensaje(cliente, &buffer, 4);
 		if(bytesRecibidos <= 0){
 				perror("Se desconectó el cliente.");
-				a=0;
+				escuchar=0;
 		}else{
 			printf("Me llegaron %d bytes con %s \n", bytesRecibidos, buffer);
 		}
