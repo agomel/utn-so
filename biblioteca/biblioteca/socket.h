@@ -8,10 +8,10 @@
 #include <sys/socket.h>
 
 
-int crearServidor(int puerto, char* ip, int cantidadAEscuchar);
+int crearServidor(int puerto, char* ip);
 static struct sockaddr_in crearDireccionServidor(int puerto, char* ip);
 static int crearSocket();
-static void empezarAEscuchar(int servidor, int cantidadAEscuchar);
+int empezarAEscuchar(int servidor, int cantidadAEscuchar);
 
 int aceptarCliente(int servidor);
 

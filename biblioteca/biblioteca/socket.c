@@ -3,7 +3,7 @@
 #include "socket.h"
 
 
-int crearServidor(int puerto, char* ip, int cantidadAEscuchar){
+int crearServidor(int puerto, char* ip){
 	struct sockaddr_in direccionServidor = crearDireccionServidor(puerto, ip);
 
 	int servidor = crearSocket();
@@ -16,7 +16,6 @@ int crearServidor(int puerto, char* ip, int cantidadAEscuchar){
 		perror("FALLÓ EL BIND");
 		exit(1);
 	}
-	empezarAEscuchar(servidor, cantidadAEscuchar);
 	return servidor;
 }
 
@@ -37,21 +36,34 @@ static int crearSocket(){
 	return newSocket;
 }
 
-static void empezarAEscuchar(int servidor, int cantidadAEscuchar){
-	listen(servidor, cantidadAEscuchar);
+int empezarAEscuchar(int servidor, int cantidadAEscuchar){
 	puts("Estoy escuchando");
+	return listen(servidor, cantidadAEscuchar);
 }
 
 
 int aceptarCliente(int servidor){
 	struct sockaddr_in direccionCliente;
 	int tamanioDireccion = sizeof(struct sockaddr_in);
-	return accept(servidor, (void*) &direccionCliente, &tamanioDireccion);
+	int cliente= accept(servidor, (void*) &direccionCliente, &tamanioDireccion);
+	if (cliente == -1) {
+		perror("no se conecto el cliente.");
+	}
+	return cliente;
 }
 
 int recibirMensaje(int socketEmisor, char** buffer, int bytesMaximos){
 	int bytesRecibidos = recv(socketEmisor, *buffer, bytesMaximos, 0);
 	(*buffer)[bytesRecibidos] = '\0';
+	if(bytesRecibidos<=0){
+	// error o conexión cerrada por el cliente
+	if (bytesRecibidos == 0) {
+		// conexión cerrada
+		printf("selectserver: socket %d hung up\n", socketEmisor);
+	} else {
+		perror("error en el recv");
+	}
+	}
 	return bytesRecibidos;
 }
 

@@ -12,12 +12,14 @@
 #include <biblioteca/hilos.h>
 #include <biblioteca/utilidades.h>
 #include "consola.h"
+#include "select.h"
 
 int main(void) {
 
 	pthread_t hiloConsola = crearHilo(&consola,NULL);
+	pthread_t hiloAdministradorDeConexiones = crearHilo(&administradorDeConexiones,NULL);
 
-	int servidor = crearServidor(20001, INADDR_ANY, 100);
+	/*int servidor = crearServidor(20001, INADDR_ANY, 100);
 
 	int cliente = aceptarCliente(servidor);
 	printf("Recibi una conexion en %d!!\n", cliente);
@@ -36,9 +38,11 @@ int main(void) {
 		}
 	}
 
-	free(buffer);
+	free(buffer);*/
 
 	esperarHilo(hiloConsola);
+
+	esperarHilo(hiloAdministradorDeConexiones);
 
 	return 0;
 }
