@@ -14,9 +14,12 @@
 #include <biblioteca/select.h>
 #include <commons/config.h>
 
+void entenderMensaje(char* bytesRecibidos){
+	printf("bytes recibidos: %s \n",bytesRecibidos);
+}
 int escucharClientes(int servidor) {
 	empezarAEscuchar(servidor, 100);
-	recibirConexionesYMensajes(servidor);
+	recibirConexionesYMensajes(servidor,&entenderMensaje);
 }
 int main(void) {
 	t_config* configuracion = config_create(ARCHIVO_CONFIGURACION);

@@ -3,7 +3,7 @@
 ** selectserver.c -- servidor de chat multiusuario
 */
 #include "select.h"
-int recibirConexionesYMensajes(int servidor){
+int recibirConexionesYMensajes(int servidor,void (*funcionEntenderMensaje)(char*)){
 	fd_set bolsaDeTodosLosSockets;   // conjunto maestro de sockets
 	fd_set socketsDeLectura; // conjunto temporal de sockets para select()
 
@@ -55,6 +55,7 @@ int recibirConexionesYMensajes(int servidor){
 				} else {
 					// tenemos datos de algún cliente
 					printf("Me llegaron %d bytes con %s \n", bytesRecibidos, buffer);
+					(*funcionEntenderMensaje)(buffer);
 					enviarMensaje(socketDeLaBolsa,"gracias por la info");
 				}
 				free(buffer);
