@@ -3,13 +3,11 @@
 ** selectserver.c -- servidor de chat multiusuario
 */
 #include "select.h"
-#define PORT 20001   // puerto en el que escuchamos
-int administradorDeConexiones(){
+int recibirConexionesYMensajes(int servidor){
 	fd_set bolsaDeTodosLosSockets;   // conjunto maestro de sockets
 	fd_set socketsDeLectura; // conjunto temporal de sockets para select()
 
 	int numeroMaximoDeSockets;        // número máximo de sockets
-	int yoComoServidor;     // descriptor de socket a la escucha
 	int cliente;        // descriptor de socket de nueva conexión aceptada
 
 	char* buffer;    // buffer para datos del cliente
@@ -21,19 +19,13 @@ int administradorDeConexiones(){
 	FD_ZERO(&bolsaDeTodosLosSockets);    // borra los conjuntos maestro y temporal
 	FD_ZERO(&socketsDeLectura);
 
-	yoComoServidor=crearServidor(PORT,INADDR_ANY);
 
-	// escuchar
-	if (empezarAEscuchar(yoComoServidor, 10) == -1) {
-		perror("listen");
-		exit(1);
-	}
 
-	// añadir yoComoServidor al conjunto maestro
-	FD_SET(yoComoServidor, &bolsaDeTodosLosSockets);
+	// añadir servidor al conjunto maestro
+	FD_SET(servidor, &bolsaDeTodosLosSockets);
 
 	// seguir la pista del socket mayor
-	numeroMaximoDeSockets = yoComoServidor; // por ahora es éste
+	numeroMaximoDeSockets = servidor; // por ahora es éste
 
 	// bucle principal
 	for(;;) {
@@ -45,11 +37,10 @@ int administradorDeConexiones(){
 
 	// explorar conexiones existentes en busca de datos que leer
 	for(socketDeLaBolsa = 0; socketDeLaBolsa <= numeroMaximoDeSockets; socketDeLaBolsa++) {
-		buffer=asignarMemoria(5);
 		if (FD_ISSET(socketDeLaBolsa, &socketsDeLectura)) { // ¡¡tenemos datos!!
-			if (socketDeLaBolsa == yoComoServidor) {
+			if (socketDeLaBolsa == servidor) {
 				// agregar cliente
-				cliente=aceptarCliente(yoComoServidor);
+				cliente=aceptarCliente(servidor);
 				if (cliente != -1) {
 					FD_SET(cliente, &bolsaDeTodosLosSockets); // añadir al conjunto maestro
 					if (cliente > numeroMaximoDeSockets) {    // actualizar el máximo
@@ -59,6 +50,7 @@ int administradorDeConexiones(){
 				}
 			} else {
 				// escuchar a cliente
+				buffer=asignarMemoria(5);
 				bytesRecibidos = recibirMensaje(socketDeLaBolsa,&buffer,4);
 				if (bytesRecibidos <= 0) {
 					close(socketDeLaBolsa); // bye!
@@ -68,9 +60,9 @@ int administradorDeConexiones(){
 					printf("Me llegaron %d bytes con %s \n", bytesRecibidos, buffer);
 					enviarMensaje(socketDeLaBolsa,"gracias por la info");
 				}
+				free(buffer);
 			}
 		}
-		free(buffer);
 	}
 }
 

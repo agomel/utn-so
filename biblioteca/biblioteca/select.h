@@ -11,6 +11,6 @@
 #include <arpa/inet.h>
 
 
-int administradorDeConexiones();
+int recibirConexionesYMensajes(int servidor);
 
 #endif /*SELECT_H_*/

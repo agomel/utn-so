@@ -38,7 +38,11 @@ static int crearSocket(){
 
 int empezarAEscuchar(int servidor, int cantidadAEscuchar){
 	puts("Estoy escuchando");
-	return listen(servidor, cantidadAEscuchar);
+	int escuchar= listen(servidor, cantidadAEscuchar);
+	if (escuchar == -1) {
+			perror("error escuchando");
+			exit(1);
+	}
 }
 
 
