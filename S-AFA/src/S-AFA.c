@@ -12,7 +12,6 @@
 #include <biblioteca/utilidades.h>
 #include "consola.h"
 #include <biblioteca/select.h>
-#include <commons/config.h>
 
 void entenderMensaje(char* bytesRecibidos){
 	printf("bytes recibidos: %s \n",bytesRecibidos);

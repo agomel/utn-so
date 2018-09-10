@@ -2,7 +2,7 @@
 #include <biblioteca/socket.h>
 #include <biblioteca/hilos.h>
 #include <biblioteca/utilidades.h>
-#include <commons/config.h>
+
 
 void consola(int servidor){
 	while(1){
@@ -20,31 +20,21 @@ void escuchar(int servidor){
 	}
 }
 
-typedef struct{
-	char* ip;
-	int puerto;
-}direccionServidor;
-
-direccionServidor levantarDeConfiguracion(char* nombreIp, char* nombrePuerto, char* rutaArchivo){
-	t_config* configuracion = config_create(rutaArchivo);
-	direccionServidor direccion;
-	direccion.ip = config_get_string_value(configuracion, nombreIp);
-	direccion.puerto = config_get_int_value(configuracion, nombrePuerto);
-	return direccion;
-}
 
 int main(void) {
 	direccionServidor direccionSAFA = levantarDeConfiguracion("IP_SAFA", "PUERTO_SAFA", ARCHIVO_CONFIGURACION);
 	int SAFA = conectarConServidor(direccionSAFA.puerto, inet_addr(direccionSAFA.ip));
 	enviarIdentificacion("cpu", SAFA);
 
+	direccionServidor direccionFM9 = levantarDeConfiguracion("IP_FM9", "PUERTO_FM9", ARCHIVO_CONFIGURACION);
+	int FM9 = conectarConServidor(direccionFM9.puerto, inet_addr(direccionFM9.ip));
+	enviarIdentificacion("cpu", FM9);
+
 	/*direccionServidor direccionDAM = levantarDeConfiguracion("IP_DIEGO", "PUERTO_DIEGO", ARCHIVO_CONFIGURACION);
 	int DAM = conectarConServidor(direccionDAM.puerto, inet_addr(direccionDAM.ip));
 	enviarIdentificacion("cpu",DAM);
 
-	direccionServidor direccionFM9 = levantarDeConfiguracion("IP_FM9", "PUERTO_FM9", ARCHIVO_CONFIGURACION);
-	int FM9 = conectarConServidor(direccionFM9.puerto, inet_addr(direccionFM9.ip));
-	enviarIdentificacion("cpu", FM9);*/
+	*/
 
 
 	/*
@@ -52,11 +42,14 @@ int main(void) {
 	char* puertoSAFA = config_get_string_value(configuracion, "PUERTO_SAFA");
 
 	int SAFA = conectarConServidor("127.0.0.1", inet_addr(ipSAFA));*/
+
 	pthread_t hiloConsola = crearHilo(&consola,SAFA);
-	pthread_t hiloEscuchador = crearHilo(&escuchar,SAFA);
+	pthread_t hiloEscuchadorSAFA = crearHilo(&escuchar,SAFA);
+	pthread_t hiloEscuchadorFM9= crearHilo(&escuchar,FM9);
 
 	esperarHilo(hiloConsola);
-	esperarHilo(hiloEscuchador);
+	esperarHilo(hiloEscuchadorSAFA);
+	esperarHilo(hiloEscuchadorFM9);
 
 	return 0;
 }
