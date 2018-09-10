@@ -16,12 +16,12 @@
 
 void deserializarIdentificarse(int emisor){
 
-	char** parametros;
+	char* parametros[3];
 	printf("Esto es el identificador \n");
-	parametros = deserializar(emisor);
-	for(int i = 0;i<=sizeof((parametros));i++){
-		printf("parametro que me mandaste fue: %s",(parametros)[i]);
-		//free((parametros)[i]);
+	deserializar(parametros,emisor);
+	for(int i = 0;i<3;i++){
+		printf("parametro que me mandaste fue: %s \n",parametros[i]);
+		free((parametros)[i]);
 	}
 }
 void entenderMensaje(int emisor, int header){
@@ -48,9 +48,9 @@ int escucharClientes(int servidor) {
 	recibirConexionesYMensajes(servidor,&entenderMensaje);
 }
 int main(void) {
-	t_config* configuracion = config_create(ARCHIVO_CONFIGURACION);
-	int puertoSAFA = config_get_int_value(configuracion, "PUERTO");
-	int servidor = crearServidor(puertoSAFA, INADDR_ANY);
+	//t_config* configuracion = config_create(ARCHIVO_CONFIGURACION);
+	//int puertoSAFA = config_get_int_value(configuracion, "PUERTO");
+	int servidor = crearServidor(20001, INADDR_ANY);
 
 	pthread_t hiloAdministradorDeConexiones = crearHilo(&escucharClientes,servidor);
 	pthread_t hiloConsola = crearHilo(&consola, NULL);

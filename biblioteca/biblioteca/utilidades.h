@@ -15,6 +15,6 @@ enum{
 };
 void* asignarMemoria(int cantidad);
 
-char** deserializar(int emisor);
+void deserializar(char** parametros,int emisor);
 
 #endif /*UTILIDADES_H_*/
