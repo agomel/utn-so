@@ -1,27 +1,23 @@
 #include "consola.h"
 int obtenerComando(char*ingresado){
-	int comando=0;
+	int comando=6;
 	const char* comandos[] = {"salir","status","finalizar","metricas","ejecutar"};
-	for(comando;comando<=5;comando++){
-		if(strcmp(ingresado, comandos[comando]) == 0) break;
+	for(int i;i<5;i++){
+		if(strcmp(ingresado, comandos[i]) == 0) comando=i;
 	}
 	return comando;
 
 }
 comandoCompleto rearmarCadena(char* cadenaIngresada){
-	    // Returns first token
 		char* cadena[2];
 	    char* token = strtok(cadenaIngresada, ",");
 	    int posicion=0;
-	    // Keep printing tokens while one of the
-	    // delimiters present in str[].
 	    comandoCompleto comando;
 	    cadena[1]=NULL;
 	    while (token != NULL)
 	    {
-	        printf("%s\n", token);
 	        cadena[posicion]=token;
-	        token = strtok(NULL, "-");
+	        token = strtok(NULL, ",");
 	        posicion++;
 	    }
 	    comando.comando=cadena[0];

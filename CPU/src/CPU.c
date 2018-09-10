@@ -24,11 +24,12 @@ void escuchar(int servidor){
 int main(void) {
 	direccionServidor direccionSAFA = levantarDeConfiguracion("IP_SAFA", "PUERTO_SAFA", ARCHIVO_CONFIGURACION);
 	int SAFA = conectarConServidor(direccionSAFA.puerto, inet_addr(direccionSAFA.ip));
-	enviarIdentificacion("cpu", SAFA);
+	enviarMensaje(SAFA,"0103CPU99");
+	//enviarIdentificacion("cpu", SAFA);
 
-	direccionServidor direccionFM9 = levantarDeConfiguracion("IP_FM9", "PUERTO_FM9", ARCHIVO_CONFIGURACION);
-	int FM9 = conectarConServidor(direccionFM9.puerto, inet_addr(direccionFM9.ip));
-	enviarIdentificacion("cpu", FM9);
+	//direccionServidor direccionFM9 = levantarDeConfiguracion("IP_FM9", "PUERTO_FM9", ARCHIVO_CONFIGURACION);
+	//int FM9 = conectarConServidor(direccionFM9.puerto, inet_addr(direccionFM9.ip));
+	//enviarIdentificacion("cpu", FM9);
 
 	/*direccionServidor direccionDAM = levantarDeConfiguracion("IP_DIEGO", "PUERTO_DIEGO", ARCHIVO_CONFIGURACION);
 	int DAM = conectarConServidor(direccionDAM.puerto, inet_addr(direccionDAM.ip));
@@ -45,11 +46,11 @@ int main(void) {
 
 	pthread_t hiloConsola = crearHilo(&consola,SAFA);
 	pthread_t hiloEscuchadorSAFA = crearHilo(&escuchar,SAFA);
-	pthread_t hiloEscuchadorFM9= crearHilo(&escuchar,FM9);
+	//pthread_t hiloEscuchadorFM9= crearHilo(&escuchar,FM9);
 
 	esperarHilo(hiloConsola);
 	esperarHilo(hiloEscuchadorSAFA);
-	esperarHilo(hiloEscuchadorFM9);
+	//esperarHilo(hiloEscuchadorFM9);
 
 	return 0;
 }

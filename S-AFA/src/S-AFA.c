@@ -12,30 +12,31 @@
 #include <biblioteca/utilidades.h>
 #include "consola.h"
 #include <biblioteca/select.h>
+#include <commons/collections/dictionary.h>
 
+t_dictionary* conexiones;
 void deserializarIdentificarse(int emisor){
 
-	char* parametros[3];
+	char* parametros[1];
 	printf("Esto es el identificador \n");
 	deserializar(parametros,emisor);
-	for(int i = 0;i<3;i++){
-		printf("parametro que me mandaste fue: %s \n",parametros[i]);
-		free((parametros)[i]);
-	}
+	printf("Me mandaron %s \n",parametros[0]);
+	dictionary_put(conexiones,parametros[0],emisor);
+	printf("Agregado %s a las conexiones \n",parametros[0]);
 }
 void entenderMensaje(int emisor, int header){
 	printf("servidor: %d header: %d \n", emisor, header);
-	char* buffer;
+	char* parametros[1];
+
 	switch(header){
 		case identificarse:
 			deserializarIdentificarse(emisor);
 			break;
 		case mandarTexto:
-			printf("Esto es el mandarText");
-			buffer = asignarMemoria(1000);
-			recibirMensaje(emisor, &buffer, 999);
-			printf("El resto del mensaje es: %s \n", buffer);
-			break;
+			printf("Esto es el mandarTexto");
+			deserializar(parametros,emisor);
+			int socketCpu=dictionary_get(conexiones,"CPU");
+			enviarMensaje(socketCpu,parametros[0]);
 		default:
 			perror("Cualquiera ese header flaco");
 
@@ -47,6 +48,7 @@ int escucharClientes(int servidor) {
 	recibirConexionesYMensajes(servidor,&entenderMensaje);
 }
 int main(void) {
+	conexiones = dictionary_create();
 	//t_config* configuracion = config_create(ARCHIVO_CONFIGURACION);
 	//int puertoSAFA = config_get_int_value(configuracion, "PUERTO");
 	int servidor = crearServidor(20001, INADDR_ANY);
