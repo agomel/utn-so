@@ -6,6 +6,7 @@
 #include <string.h>
 #include <malloc.h>
 #include "socket.h"
+#include <commons/config.h>
 
 #define ARCHIVO_CONFIGURACION "../configuraciones/configuracion.txt"
 #define ARCHIVO_LOG "../../log.txt"
@@ -15,6 +16,15 @@ enum{
 };
 void* asignarMemoria(int cantidad);
 
+
 void deserializar(char** parametros,int emisor);
+
+typedef struct{
+	char* ip;
+	int puerto;
+}direccionServidor;
+
+direccionServidor levantarDeConfiguracion(char* nombreIp, char* nombrePuerto, char* rutaArchivo);
+
 
 #endif /*UTILIDADES_H_*/

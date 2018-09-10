@@ -90,17 +90,28 @@ int recibirMensaje(int socketEmisor, char** buffer, int bytesMaximos){
 
 int conectarConServidor(int puerto, char* ip){
 	struct sockaddr_in direccionServidor = crearDireccionServidor(puerto, ip);
-	int socketCliente = crearSocket();
-	if(connect(socketCliente, (void*) &direccionServidor, sizeof(direccionServidor)) != 0){
+	int socketServidor = crearSocket();
+	if(connect(socketServidor, (void*) &direccionServidor, sizeof(direccionServidor)) != 0){
 		perror("No se pudo conectar");
 		exit(1);
 	}
-	return socketCliente;
+	return socketServidor;
 }
 
 void enviarMensaje(int socket, char* mensaje){
 	send(socket, mensaje, strlen(mensaje), 0);
 }
+
+void enviarIdentificacion(char* nombre, int servidor){
+	char* mensajeAEnviar = malloc(strlen(nombre)+4);
+	int tamanioNombre = strlen(nombre);
+	sprintf(mensajeAEnviar, "01%d", tamanioNombre);
+	strcat(mensajeAEnviar, nombre);
+	strcat(mensajeAEnviar, "99");
+	enviarMensaje(servidor,mensajeAEnviar);
+	free(mensajeAEnviar);
+}
+
 
 
 

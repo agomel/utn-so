@@ -1,4 +1,5 @@
 #include "utilidades.h"
+
 void* asignarMemoria(int cantidad){
 	void* buffer = malloc(cantidad);
 	if(buffer == NULL){
@@ -27,5 +28,12 @@ void deserializar(char** parametros,int emisor){
 		espacioALeer = atoi(buffer);
 		parametro++;
 	}
+}
 
+direccionServidor levantarDeConfiguracion(char* nombreIp, char* nombrePuerto, char* rutaArchivo){
+	t_config* configuracion = config_create(rutaArchivo);
+	direccionServidor direccion;
+	direccion.ip = config_get_string_value(configuracion, nombreIp);
+	direccion.puerto = config_get_int_value(configuracion, nombrePuerto);
+	return direccion;
 }
