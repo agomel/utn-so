@@ -50,8 +50,7 @@ void consola(){
 				break;
 			case ejecutar: printf("seleccionaste ejecutar\n");
 				break;
-			default:printf("no entendes los comandos\n");
-				break;
+			default:perror("no entendes los comandos\n");
 
 		}
 

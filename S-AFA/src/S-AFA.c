@@ -14,8 +14,34 @@
 #include <biblioteca/select.h>
 #include <commons/config.h>
 
-void entenderMensaje(char* bytesRecibidos){
-	printf("bytes recibidos: %s \n",bytesRecibidos);
+void deserializarIdentificarse(int emisor){
+
+	char** parametros;
+	printf("Esto es el identificador \n");
+	parametros = deserializar(emisor);
+	for(int i = 0;i<=sizeof((parametros));i++){
+		printf("parametro que me mandaste fue: %s",(parametros)[i]);
+		//free((parametros)[i]);
+	}
+}
+void entenderMensaje(int emisor, int header){
+	printf("servidor: %d header: %d \n", emisor, header);
+	char* buffer;
+	switch(header){
+		case identificarse:
+			deserializarIdentificarse(emisor);
+			break;
+		case mandarTexto:
+			printf("Esto es el mandarText");
+			buffer = asignarMemoria(1000);
+			recibirMensaje(emisor, &buffer, 999);
+			printf("El resto del mensaje es: %s \n", buffer);
+			break;
+		default:
+			perror("Cualquiera ese header flaco");
+
+	}
+
 }
 int escucharClientes(int servidor) {
 	empezarAEscuchar(servidor, 100);
@@ -24,15 +50,13 @@ int escucharClientes(int servidor) {
 int main(void) {
 	t_config* configuracion = config_create(ARCHIVO_CONFIGURACION);
 	int puertoSAFA = config_get_int_value(configuracion, "PUERTO");
-
-	pthread_t hiloConsola = crearHilo(&consola, NULL);
 	int servidor = crearServidor(puertoSAFA, INADDR_ANY);
 
 	pthread_t hiloAdministradorDeConexiones = crearHilo(&escucharClientes,servidor);
-
-	esperarHilo(hiloConsola);
+	pthread_t hiloConsola = crearHilo(&consola, NULL);
 
 	esperarHilo(hiloAdministradorDeConexiones);
+	esperarHilo(hiloConsola);
 
 	return 0;
 }

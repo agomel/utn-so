@@ -11,6 +11,6 @@
 #include <arpa/inet.h>
 
 
-int recibirConexionesYMensajes(int servidor,void (*funcionEntenderMensaje)(char*));
+int recibirConexionesYMensajes(int servidor,void (*funcionEntenderMensaje)(int, int));
 
 #endif /*SELECT_H_*/

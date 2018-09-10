@@ -5,13 +5,16 @@
 #include <stdio.h>
 #include <string.h>
 #include <malloc.h>
+#include "socket.h"
 
 #define ARCHIVO_CONFIGURACION "../configuraciones/configuracion.txt"
 #define ARCHIVO_LOG "../../log.txt"
 
 enum{
-	identificarse=0, mandarTexto=1
+	identificarse=1, mandarTexto=2
 };
 void* asignarMemoria(int cantidad);
+
+char** deserializar(int emisor);
 
 #endif /*UTILIDADES_H_*/

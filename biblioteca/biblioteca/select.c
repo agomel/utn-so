@@ -3,14 +3,14 @@
 ** selectserver.c -- servidor de chat multiusuario
 */
 #include "select.h"
-int recibirConexionesYMensajes(int servidor,void (*funcionEntenderMensaje)(char*)){
+int recibirConexionesYMensajes(int servidor,void (*funcionEntenderMensaje)(int, int)){
 	fd_set bolsaDeTodosLosSockets;   // conjunto maestro de sockets
 	fd_set socketsDeLectura; // conjunto temporal de sockets para select()
 
 	int numeroMaximoDeSockets;        // número máximo de sockets
 	int cliente;        // descriptor de socket de nueva conexión aceptada
 
-	char* buffer;    // buffer para datos del cliente
+	char* header;    // header para datos del cliente
 	int bytesRecibidos;
 	int yes=1;        // para setsockopt() SO_REUSEADDR, más abajo
 
@@ -47,18 +47,18 @@ int recibirConexionesYMensajes(int servidor,void (*funcionEntenderMensaje)(char*
 				}
 			} else {
 				// escuchar a cliente
-				buffer=asignarMemoria(150);
-				bytesRecibidos = recibirMensaje(socketDeLaBolsa,&buffer,149);
+				header=asignarMemoria(sizeof(char)*2+1);
+				bytesRecibidos = recibirMensaje(socketDeLaBolsa,&header,sizeof(char)*2);
 				if (bytesRecibidos <= 0) {
 					close(socketDeLaBolsa); // bye!
 					eliminarDeBolsa(socketDeLaBolsa, &bolsaDeTodosLosSockets); // eliminar del conjunto maestro
 				} else {
 					// tenemos datos de algún cliente
-					printf("Me llegaron %d bytes con %s \n", bytesRecibidos, buffer);
-					(*funcionEntenderMensaje)(buffer);
+					printf("Me llegaron %d bytes con %s \n", bytesRecibidos, header);
+					(*funcionEntenderMensaje)(socketDeLaBolsa, atoi(header));
 					enviarMensaje(socketDeLaBolsa,"gracias por la info");
 				}
-				free(buffer);
+				free(header);
 			}
 		}
 	}
