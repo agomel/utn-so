@@ -25,6 +25,8 @@ int main(void) {
 	direccionServidor direccionSAFA = levantarDeConfiguracion("IP_SAFA", "PUERTO_SAFA", ARCHIVO_CONFIGURACION);
 	int SAFA = conectarConServidor(direccionSAFA.puerto, inet_addr(direccionSAFA.ip));
 	enviarMensaje(SAFA,"0103CPU99");
+	char* mensajeSerializado=serializarMensaje(identificarse,"CPU");
+	enviarMensaje(SAFA,mensajeSerializado);
 	//enviarIdentificacion("cpu", SAFA);
 
 	//direccionServidor direccionFM9 = levantarDeConfiguracion("IP_FM9", "PUERTO_FM9", ARCHIVO_CONFIGURACION);
