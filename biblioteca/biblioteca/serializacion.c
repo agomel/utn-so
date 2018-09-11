@@ -22,10 +22,18 @@ void deserializar(char** parametros,int emisor){
 		parametro++;
 	}
 }
-char* serializarMensajeAEnviar(char* mensaje){
-	char* serializado = malloc(strlen(mensaje)+6);
-	int tamanioNombre = strlen(mensaje);
-	sprintf(serializado, "02%d", tamanioNombre);
+char* serializarMensaje(int operacion,char*mensaje){
+	char* serializado = asignarMemoria(strlen(mensaje)+6);
+	int tamanioMensaje= strlen(mensaje);
+	if(operacion<10){
+		strcat(serializado, "0");
+	}
+	sprintf(serializado, "%d", operacion);
+
+	if(tamanioMensaje<10){
+			strcat(serializado, "0");
+	}
+	sprintf(serializado, "%d", tamanioMensaje);
 	strcat(serializado, mensaje);
 	strcat(serializado, "99");
 	return serializado;

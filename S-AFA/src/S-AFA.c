@@ -28,7 +28,7 @@ void entenderMensaje(int emisor, int header){
 			deserializar(parametros,emisor);
 			int socketCpu=dictionary_get(conexiones,"CPU");
 			printf("reenviar mensaje: %s \n",parametros[0]);
-			char* mensajeSerializado=serializarMensajeAEnviar(parametros[0]);
+			char* mensajeSerializado=serializarMensaje(mandarTexto,parametros[0]);
 			enviarMensaje(socketCpu,parametros[0]);
 			free(mensajeSerializado);
 			break;

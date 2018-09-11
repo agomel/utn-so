@@ -16,6 +16,6 @@
 void deserializar(char** parametros,int emisor);
 void deserializarIdentificarse(int emisor,t_dictionary* conexiones);
 
-char* serializarMensajeAEnviar(char* mensaje);
+char* serializarMensaje(int operacion,char* mensaje);
 
 #endif /*SERIALIZACION_H_*/
