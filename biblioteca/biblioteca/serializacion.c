@@ -22,7 +22,7 @@ void deserializar(char** parametros,int emisor){
 		parametro++;
 	}
 }
-char* enviarIdentificacion(char* mensaje){
+char* serializarMensajeAEnviar(char* mensaje){
 	char* serializado = malloc(strlen(mensaje)+6);
 	int tamanioNombre = strlen(mensaje);
 	sprintf(serializado, "02%d", tamanioNombre);
@@ -30,24 +30,6 @@ char* enviarIdentificacion(char* mensaje){
 	strcat(serializado, "99");
 	return serializado;
 }
-
-
-char* serializarMensajeAEnviar(char* mensaje){
-	char* serializado;
-	int longitudMensaje=strlen(mensaje);
-	serializado=asignarMemoria(6+longitudMensaje);
-
-	strcat(serializado,"02");
-	if(longitudMensaje<10){
-		strcat(serializado,"0");
-	}
-	strcat(serializado,longitudMensaje);
-	strcat(serializado,mensaje);
-	strcat(serializado,"99");
-	return serializado;
-}
-
-
 void deserializarIdentificarse(int emisor,t_dictionary* conexiones){
 	char* parametros[1];
 	printf("Esto es el identificador \n");
