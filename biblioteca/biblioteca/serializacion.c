@@ -16,7 +16,7 @@ void deserializar(void** parametros,int emisor){
 		recibirMensaje(emisor, &parametros[parametro], espacioALeer);
 
 		free(buffer);
-		buffer=asignarMemoria(3);
+		buffer=asignarMemoria(2);
 		recibirMensaje(emisor, &buffer, 2);
 		espacioALeer = atoi(buffer);
 		parametro++;
