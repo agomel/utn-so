@@ -22,18 +22,26 @@ void deserializar(char** parametros,int emisor){
 		parametro++;
 	}
 }
+char* enviarIdentificacion(char* mensaje){
+	char* serializado = malloc(strlen(mensaje)+6);
+	int tamanioNombre = strlen(mensaje);
+	sprintf(serializado, "02%d", tamanioNombre);
+	strcat(serializado, mensaje);
+	strcat(serializado, "99");
+	return serializado;
+}
+
+
 char* serializarMensajeAEnviar(char* mensaje){
 	char* serializado;
-	char* tamanioMensaje;
-	tamanioMensaje=malloc(2);
 	int longitudMensaje=strlen(mensaje);
-	if(longitudMensaje<10){
-		strcat(tamanioMensaje,"0");
-	}
-	tamanioMensaje=longitudMensaje;
-	serializado=asignarMemoria(6+tamanioMensaje);
+	serializado=asignarMemoria(6+longitudMensaje);
+
 	strcat(serializado,"02");
-	strcat(serializado,tamanioMensaje);
+	if(longitudMensaje<10){
+		strcat(serializado,"0");
+	}
+	strcat(serializado,longitudMensaje);
 	strcat(serializado,mensaje);
 	strcat(serializado,"99");
 	return serializado;
