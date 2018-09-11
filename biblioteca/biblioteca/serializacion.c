@@ -2,17 +2,17 @@
 
 
 
-void deserializar(char** parametros,int emisor){
+void deserializar(void** parametros,int emisor){
 	int espacioALeer;
 
 	int parametro=0;
-	char* buffer;
+	void* buffer;
 
-	buffer=asignarMemoria(3);
+	buffer=asignarMemoria(2);
 	recibirMensaje(emisor, &buffer, 2);
 	espacioALeer = atoi(buffer);
 	while(espacioALeer != 99){
-		parametros[parametro]=asignarMemoria(espacioALeer +1);
+		parametros[parametro]=asignarMemoria(espacioALeer);
 		recibirMensaje(emisor, &parametros[parametro], espacioALeer);
 
 		free(buffer);
@@ -43,7 +43,7 @@ char* serializarMensaje(int operacion,char*mensaje){
 void deserializarIdentificarse(int emisor,t_dictionary* conexiones){
 	char* parametros[1];
 	printf("Esto es el identificador \n");
-	deserializar(parametros,emisor);
+	deserializar((void**)parametros,emisor);
 	printf("Me mandaron %s \n",parametros[0]);
 	dictionary_put(conexiones,parametros[0],emisor);
 	printf("Agregado %s a las conexiones \n",parametros[0]);

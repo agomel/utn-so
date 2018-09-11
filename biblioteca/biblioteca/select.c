@@ -47,7 +47,7 @@ int recibirConexionesYMensajes(int servidor,void (*funcionEntenderMensaje)(int, 
 				}
 			} else {
 				// escuchar a cliente
-				header=asignarMemoria(sizeof(char)*2+1);
+				header=asignarMemoria(sizeof(char)*2);
 				bytesRecibidos = recibirMensaje(socketDeLaBolsa,&header,sizeof(char)*2);
 				if (bytesRecibidos <= 0) {
 					close(socketDeLaBolsa); // bye!

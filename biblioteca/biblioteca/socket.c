@@ -71,9 +71,8 @@ void realizarSelectLectura(int sockets,fd_set* socketsDeLectura){
 		exit(1);
 	}
 }
-int recibirMensaje(int socketEmisor, char** buffer, int bytesMaximos){
+int recibirMensaje(int socketEmisor, void** buffer, int bytesMaximos){
 	int bytesRecibidos = recv(socketEmisor, *buffer, bytesMaximos, 0);
-	(*buffer)[bytesRecibidos] = '\0';
 	if(bytesRecibidos<=0){
 	// error o conexión cerrada por el cliente
 	if (bytesRecibidos == 0) {

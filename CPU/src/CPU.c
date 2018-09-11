@@ -14,7 +14,7 @@ void consola(int servidor){
 void escuchar(int servidor){
 	while(1){
 		char* buffer=asignarMemoria(150);
-		int bytesRecibidos = recibirMensaje(servidor,&buffer,149);
+		int bytesRecibidos = recibirMensaje(servidor,&buffer,150);
 		printf("%s \n", buffer);
 		free(buffer);
 	}

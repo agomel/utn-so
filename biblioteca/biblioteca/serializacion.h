@@ -13,7 +13,7 @@
 #include <commons/collections/dictionary.h>
 
 
-void deserializar(char** parametros,int emisor);
+void deserializar(void** parametros,int emisor);
 void deserializarIdentificarse(int emisor,t_dictionary* conexiones);
 
 char* serializarMensaje(int operacion,char* mensaje);

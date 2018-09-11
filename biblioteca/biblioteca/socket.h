@@ -18,7 +18,7 @@ int empezarAEscuchar(int servidor, int cantidadAEscuchar);
 
 int aceptarCliente(int servidor);
 
-int recibirMensaje(int socketEmisor, char** buffer, int bytesMaximos);
+int recibirMensaje(int socketEmisor, void** buffer, int bytesMaximos);
 
 int conectarConServidor(int puerto, char* ip);
 
