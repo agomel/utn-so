@@ -17,8 +17,6 @@ enum{
 void* asignarMemoria(int cantidad);
 
 
-void deserializar(char** parametros,int emisor);
-
 typedef struct{
 	char* ip;
 	int puerto;

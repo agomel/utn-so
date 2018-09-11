@@ -54,9 +54,7 @@ int recibirConexionesYMensajes(int servidor,void (*funcionEntenderMensaje)(int, 
 					eliminarDeBolsa(socketDeLaBolsa, &bolsaDeTodosLosSockets); // eliminar del conjunto maestro
 				} else {
 					// tenemos datos de algún cliente
-					printf("Me llegaron %d bytes con %s \n", bytesRecibidos, header);
 					(*funcionEntenderMensaje)(socketDeLaBolsa, atoi(header));
-					enviarMensaje(socketDeLaBolsa,"gracias por la info");
 				}
 				free(header);
 			}

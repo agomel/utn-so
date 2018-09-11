@@ -8,28 +8,6 @@ void* asignarMemoria(int cantidad){
 	}
 	return buffer;
 }
-
-void deserializar(char** parametros,int emisor){
-	int espacioALeer;
-
-	int parametro=0;
-	char* buffer;
-
-	buffer=asignarMemoria(3);
-	recibirMensaje(emisor, &buffer, 2);
-	espacioALeer = atoi(buffer);
-	while(espacioALeer != 99){
-		parametros[parametro]=asignarMemoria(espacioALeer +1);
-		recibirMensaje(emisor, &parametros[parametro], espacioALeer);
-
-		free(buffer);
-		buffer=asignarMemoria(3);
-		recibirMensaje(emisor, &buffer, 2);
-		espacioALeer = atoi(buffer);
-		parametro++;
-	}
-}
-
 direccionServidor levantarDeConfiguracion(char* nombreIp, char* nombrePuerto, char* rutaArchivo){
 	t_config* configuracion = config_create(rutaArchivo);
 	direccionServidor direccion;
