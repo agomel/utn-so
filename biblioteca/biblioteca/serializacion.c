@@ -25,19 +25,19 @@ void deserializar(char** parametros,int emisor){
 char* serializarMensaje(int operacion,char*mensaje){
 	char* serializado = asignarMemoria(strlen(mensaje)+6);
 	int tamanioMensaje= strlen(mensaje);
-	if(operacion<10){
-		sprintf(serializado, "0%d",operacion);
+	if(operacion<10 && tamanioMensaje<10){
+		sprintf(serializado, "0%d0%d",operacion,tamanioMensaje);
+	}else if(operacion>10 && tamanioMensaje<10){
+		sprintf(serializado, "%d0%d",operacion,tamanioMensaje);
+	}else if(operacion<10 && tamanioMensaje>10){
+		sprintf(serializado, "0%d%d",operacion,tamanioMensaje);
 	}else{
-		sprintf(serializado, "%d", operacion);
+		sprintf(serializado, "%d%d",operacion,tamanioMensaje);
 	}
-	if(tamanioMensaje<10){
-		sprintf(serializado, "0%d",tamanioMensaje);
-	}else{
-		sprintf(serializado, "%d", tamanioMensaje);
-	}
-	strcat(serializado, mensaje);
-	strcat(serializado, "99");
-	printf("mensaje serializado %s \n",serializado);
+
+	strcat(serializado,mensaje);
+
+	strcat(serializado,"99");
 	return serializado;
 }
 void deserializarIdentificarse(int emisor,t_dictionary* conexiones){
