@@ -8,7 +8,7 @@
 #include "socket.h"
 #include <commons/config.h>
 
-#define ARCHIVO_CONFIGURACION "../configuraciones/configuracion.txt"
+#define ARCHIVO_CONFIGURACION "configuraciones/configuracion.txt"
 #define ARCHIVO_LOG "../../log.txt"
 
 enum{

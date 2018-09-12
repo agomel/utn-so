@@ -34,7 +34,6 @@ char* serializarMensaje(int operacion,char*mensaje){
 	}else{
 		sprintf(serializado, "%d%d",operacion,tamanioMensaje);
 	}
-
 	strcat(serializado,mensaje);
 
 	strcat(serializado,"99");
