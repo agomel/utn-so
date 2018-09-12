@@ -7,6 +7,7 @@
 #include <malloc.h>
 #include "socket.h"
 #include <commons/config.h>
+#include <commons/collections/dictionary.h>
 
 #define ARCHIVO_CONFIGURACION "../configuraciones/configuracion.txt"
 #define ARCHIVO_LOG "../../log.txt"
@@ -23,6 +24,13 @@ typedef struct{
 }direccionServidor;
 
 direccionServidor levantarDeConfiguracion(char* nombreIp, char* nombrePuerto, char* rutaArchivo);
+
+typedef struct {
+		int servidor;
+		void* funcion;
+	} parametrosEscucharClientes;
+
+int escucharClientes(parametrosEscucharClientes* parametros);
 
 
 #endif /*UTILIDADES_H_*/

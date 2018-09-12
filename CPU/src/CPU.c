@@ -3,7 +3,6 @@
 #include <biblioteca/hilos.h>
 #include <biblioteca/utilidades.h>
 
-
 void consola(int servidor){
 	while(1){
 		char mensaje[1000];
@@ -20,7 +19,6 @@ void escuchar(int servidor){
 	}
 }
 
-
 int main(void) {
 	direccionServidor direccionSAFA = levantarDeConfiguracion("IP_SAFA", "PUERTO_SAFA", ARCHIVO_CONFIGURACION);
 	int SAFA = conectarConServidor(direccionSAFA.puerto, inet_addr(direccionSAFA.ip));
@@ -28,8 +26,9 @@ int main(void) {
 	enviarMensaje(SAFA,mensajeSerializado);
 	//enviarIdentificacion("cpu", SAFA);
 
-	//direccionServidor direccionFM9 = levantarDeConfiguracion("IP_FM9", "PUERTO_FM9", ARCHIVO_CONFIGURACION);
-	//int FM9 = conectarConServidor(direccionFM9.puerto, inet_addr(direccionFM9.ip));
+	direccionServidor direccionFM9 = levantarDeConfiguracion("IP_FM9", "PUERTO_FM9", ARCHIVO_CONFIGURACION);
+	int FM9 = conectarConServidor(direccionFM9.puerto, inet_addr(direccionFM9.ip));
+	enviarMensaje(FM9, "SOY CPu");
 	//enviarIdentificacion("cpu", FM9);
 
 	/*direccionServidor direccionDAM = levantarDeConfiguracion("IP_DIEGO", "PUERTO_DIEGO", ARCHIVO_CONFIGURACION);

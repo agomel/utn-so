@@ -1,25 +1,23 @@
 #include "serializacion.h"
 
-
-
-void deserializar(void** parametros,int emisor){
+void deserializar(void** resultados, int emisor){
 	int espacioALeer;
 
-	int parametro=0;
+	int resultado=0;
 	void* buffer;
 
 	buffer=asignarMemoria(2);
 	recibirMensaje(emisor, &buffer, 2);
 	espacioALeer = atoi(buffer);
 	while(espacioALeer != 99){
-		parametros[parametro]=asignarMemoria(espacioALeer);
-		recibirMensaje(emisor, &parametros[parametro], espacioALeer);
+		resultados[resultado]=asignarMemoria(espacioALeer);
+		recibirMensaje(emisor, &resultados[resultado], espacioALeer);
 
 		free(buffer);
 		buffer=asignarMemoria(2);
 		recibirMensaje(emisor, &buffer, 2);
 		espacioALeer = atoi(buffer);
-		parametro++;
+		resultado++;
 	}
 }
 char* serializarMensaje(int operacion,char*mensaje){
@@ -40,11 +38,11 @@ char* serializarMensaje(int operacion,char*mensaje){
 	strcat(serializado,"99");
 	return serializado;
 }
-void deserializarIdentificarse(int emisor,t_dictionary* conexiones){
-	char* parametros[1];
+void deserializarIdentificarse(int emisor, t_dictionary* conexiones){
+	char* identificador[1];
 	printf("Esto es el identificador \n");
-	deserializar((void**)parametros,emisor);
-	printf("Me mandaron %s \n",parametros[0]);
-	dictionary_put(conexiones,parametros[0],emisor);
-	printf("Agregado %s a las conexiones \n",parametros[0]);
+	deserializar((void**)identificador, emisor);
+	printf("Me mandaron %s \n", identificador[0]);
+	dictionary_put(conexiones, identificador[0], emisor);
+	printf("Agregado %s a las conexiones \n", identificador[0]);
 }

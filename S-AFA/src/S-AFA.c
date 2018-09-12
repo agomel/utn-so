@@ -12,7 +12,6 @@
 #include <biblioteca/utilidades.h>
 #include "consola.h"
 #include <biblioteca/select.h>
-#include <commons/collections/dictionary.h>
 
 t_dictionary* conexiones;
 
@@ -38,17 +37,17 @@ void entenderMensaje(int emisor, int header){
 	}
 
 }
-int escucharClientes(int servidor) {
-	empezarAEscuchar(servidor, 100);
-	recibirConexionesYMensajes(servidor,&entenderMensaje);
-}
+
 int main(void) {
 	conexiones = dictionary_create();
 	t_config* configuracion = config_create(ARCHIVO_CONFIGURACION);
 	int puertoSAFA = config_get_int_value(configuracion, "PUERTO");
-	int servidor = crearServidor(20001, INADDR_ANY);
+	int servidor = crearServidor(puertoSAFA, INADDR_ANY);
 
-	pthread_t hiloAdministradorDeConexiones = crearHilo(&escucharClientes,servidor);
+	parametrosEscucharClientes parametros;
+	parametros.servidor = servidor;
+	parametros.funcion = &entenderMensaje;
+	pthread_t hiloAdministradorDeConexiones = crearHilo(&escucharClientes, &parametros);
 	pthread_t hiloConsola = crearHilo(&consola, NULL);
 
 	esperarHilo(hiloAdministradorDeConexiones);
