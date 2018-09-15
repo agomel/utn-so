@@ -1,7 +1,7 @@
 #include "serializacion.h"
 
 
-
+/*
 void deserializar(void** parametros,int emisor){
 	int espacioALeer;
 
@@ -47,3 +47,63 @@ void deserializarIdentificarse(int emisor,t_dictionary* conexiones){
 	dictionary_put(conexiones,parametros[0],emisor);
 	printf("Agregado %s a las conexiones \n",parametros[0]);
 }
+*/
+
+void handshake(u_int32_t servidor, char modulo){
+	u_int32_t tamanioMensaje = sizeof(char)*2;
+	void* mensaje = asignarMemoria(tamanioMensaje);
+	char operacion = IDENTIFICARSE;
+	u_int32_t puntero = 0;
+	memcpy(mensaje + puntero, &operacion, sizeof(char));
+	puntero = puntero + sizeof(char);
+	memcpy(mensaje + puntero, &modulo, sizeof(char));
+	puntero = puntero + sizeof(char); //este paso no es necesario ya que no vuelvo a usar el puntero
+	enviarMensaje(servidor, mensaje, tamanioMensaje);
+	free(mensaje);
+}
+
+void deserializarIdentificarse(u_int32_t emisor){
+	char modulo;
+	recibirMensaje(emisor, &modulo, sizeof(char));
+	printf("Se identifico a %c \n" , modulo);
+}
+
+void enviarStringSerializado(u_int32_t destino, char* texto){
+	u_int32_t tamanioTexto = strlen(texto) + 1;
+	u_int32_t tamanioMensaje = sizeof(char) + sizeof(u_int32_t) + tamanioTexto;
+	char* mensaje = asignarMemoria(tamanioMensaje);
+
+	char operacion = MANDAR_TEXTO;
+	u_int32_t puntero = 0;
+
+	memcpy(mensaje + puntero, &operacion, sizeof(char));
+	puntero = puntero + sizeof(char);
+
+	memcpy(mensaje + puntero, &tamanioTexto, sizeof(u_int32_t));
+	puntero = puntero + sizeof(u_int32_t);
+
+	memcpy(mensaje + puntero, texto, tamanioTexto);
+	puntero = puntero + tamanioTexto; //esta linea no es necesaria ya que no vuelvo a utilizar el puntero
+
+	enviarMensaje(destino, mensaje, tamanioMensaje);
+
+	free(mensaje);
+}
+
+void deserializarString(u_int32_t emisor){
+	u_int32_t tamanioMensaje;
+	recibirMensaje(emisor, &tamanioMensaje, sizeof(u_int32_t));
+	char* mensaje = malloc(tamanioMensaje);
+	recibirMensaje(emisor, mensaje, tamanioMensaje);
+	printf("Recibi %s de parte de %d \n" , mensaje, emisor);
+}
+
+/*void serializarMensajito(mensajito mensaje){
+	void* m = asignarMemoria(sizeof(mensaje));
+	char operacion = MANDAR_MENSAJITO;
+
+
+
+}*/
+
+

@@ -17,40 +17,18 @@
 t_dictionary* conexiones;
 
 void entenderMensaje(int emisor, char header){
-	char* parametros[1];
-	u_int32_t tam;
 	switch(header){
 		case IDENTIFICARSE:
-			/*
-			 * char* parametros[1];
-	printf("Esto es el identificador \n");
-	deserializar((void**)parametros,emisor);
-	printf("Me mandaron %s \n",parametros[0]);
-	dictionary_put(conexiones,parametros[0],emisor);
-	printf("Agregado %s a las conexiones \n",parametros[0]);
-	*/
-			recibirMensaje(emisor, &tam, sizeof(u_int32_t));
-			char* buffer = malloc(tam);
-
-			recibirMensaje(emisor, buffer, tam);
-			printf("Se identifico a %s \n" , buffer);
-			//deserializarIdentificarse(emisor,conexiones);
+			//TODO agregar tambien el socket identificado al mapa de conexiones
+			deserializarIdentificarse(emisor);
 			break;
 		case MANDAR_TEXTO:
-			//TODO esto no va  aser asi, hay que hacer la posta
-			printf("reenviar texto \n");
-			/*deserializar(parametros,emisor);
-			int socketCpu=dictionary_get(conexiones,"CPU");
-			printf("reenviar mensaje: %s \n",parametros[0]);
-			char* mensajeSerializado=serializarMensaje(MANDAR_TEXTO,parametros[0]);
-			enviarMensaje(socketCpu,parametros[0]);
-			free(mensajeSerializado);*/
+			//TODO esta operacion es basura, es para probar a serializacion y deserializacion
+			deserializarString(emisor);
 			break;
 		default:
 			perror("Cualquiera ese header flaco");
-
 	}
-
 }
 int escucharClientes(int servidor) {
 	empezarAEscuchar(servidor, 100);

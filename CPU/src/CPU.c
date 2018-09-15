@@ -6,9 +6,9 @@
 
 void consola(int servidor){
 	while(1){
-		char mensaje[1000];
-		scanf("%s", mensaje);
-		enviarMensaje(servidor, mensaje, strlen(mensaje));
+		char* texto = malloc(1000);
+		scanf("%s", texto);
+		enviarStringSerializado(servidor, texto);
 	}
 }
 void escuchar(int servidor){
@@ -20,57 +20,17 @@ void escuchar(int servidor){
 	}
 }
 
-
 int main(void) {
 	direccionServidor direccionSAFA = levantarDeConfiguracion("IP_SAFA", "PUERTO_SAFA", ARCHIVO_CONFIGURACION);
-	int SAFA = conectarConServidor(direccionSAFA.puerto, inet_addr(direccionSAFA.ip));
-	int tamanioMensaje = 10;
-	char* handshake = malloc(tamanioMensaje);
-	char op = IDENTIFICARSE;
-	char* cpu = "hola";
+	int socketSAFA = conectarConServidor(direccionSAFA.puerto, inet_addr(direccionSAFA.ip));
 
-	int puntero = 0;
-	memcpy(handshake + puntero, &op, sizeof(op));
+	handshake(socketSAFA, CPU);
 
-	puntero = puntero + sizeof(op);
-	u_int32_t tam = strlen(cpu)+1;
-	memcpy(handshake + puntero, &tam, sizeof(u_int32_t));
-
-	puntero = puntero + sizeof(u_int32_t);
-	memcpy(handshake + puntero, cpu, tam);
-	//puntero = puntero + strlen(cpu);
-
-	enviarMensaje(SAFA, handshake, tamanioMensaje);
-
-	free(handshake);
-	//char* mensajeSerializado=serializarMensaje(IDENTIFICARSE,"CPU");
-	//enviarMensaje(SAFA,mensajeSerializado);
-	//enviarIdentificacion("cpu", SAFA);
-
-	//direccionServidor direccionFM9 = levantarDeConfiguracion("IP_FM9", "PUERTO_FM9", ARCHIVO_CONFIGURACION);
-	//int FM9 = conectarConServidor(direccionFM9.puerto, inet_addr(direccionFM9.ip));
-	//enviarIdentificacion("cpu", FM9);
-
-	/*direccionServidor direccionDAM = levantarDeConfiguracion("IP_DIEGO", "PUERTO_DIEGO", ARCHIVO_CONFIGURACION);
-	int DAM = conectarConServidor(direccionDAM.puerto, inet_addr(direccionDAM.ip));
-	enviarIdentificacion("cpu",DAM);
-
-	*/
-
-
-	/*
-	 *
-	char* puertoSAFA = config_get_string_value(configuracion, "PUERTO_SAFA");
-
-	int SAFA = conectarConServidor("127.0.0.1", inet_addr(ipSAFA));*/
-
-	pthread_t hiloConsola = crearHilo(&consola,SAFA);
-	pthread_t hiloEscuchadorSAFA = crearHilo(&escuchar,SAFA);
-	//pthread_t hiloEscuchadorFM9= crearHilo(&escuchar,FM9);
+	pthread_t hiloConsola = crearHilo(&consola,socketSAFA);
+	pthread_t hiloEscuchadorSAFA = crearHilo(&escuchar,socketSAFA);
 
 	esperarHilo(hiloConsola);
 	esperarHilo(hiloEscuchadorSAFA);
-	//esperarHilo(hiloEscuchadorFM9);
 
 	return 0;
 }

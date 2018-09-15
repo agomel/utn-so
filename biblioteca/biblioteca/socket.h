@@ -22,9 +22,7 @@ int recibirMensaje(int socketEmisor, void* buffer, int bytesMaximos);
 
 int conectarConServidor(int puerto, char* ip);
 
-void enviarIdentificacion(char* nombre, int servidor);
-
-void enviarMensaje(int socket, char* mensaje, int tamanio);
+void enviarMensaje(int socket, void* mensaje, int tamanio);
 void agregarABolsa(int servidor,fd_set* bolsa);
 int estaEnLaBolsa(int servidor,fd_set* bolsa);
 int eliminarDeBolsa(int servidor,fd_set* bolsa);

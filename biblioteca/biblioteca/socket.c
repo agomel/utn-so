@@ -78,7 +78,6 @@ int recibirMensaje(int socketEmisor, void* buffer, int bytesMaximos){
 	if (bytesRecibidos == 0) {
 		// conexión cerrada
 		printf("conexion cerrada\n");
-		exit(1);
 	} else {
 		perror("error en el recv");
 	}
@@ -96,18 +95,8 @@ int conectarConServidor(int puerto, char* ip){
 	return socketServidor;
 }
 
-void enviarMensaje(int socket, char* mensaje, int tamanio){
+void enviarMensaje(int socket, void* mensaje, int tamanio){
 	send(socket, mensaje, tamanio, 0);
-}
-
-void enviarIdentificacion(char* nombre, int servidor){
-	char* mensajeAEnviar = malloc(strlen(nombre)+4);
-	int tamanioNombre = strlen(nombre);
-	sprintf(mensajeAEnviar, "01%d", tamanioNombre);
-	strcat(mensajeAEnviar, nombre);
-	strcat(mensajeAEnviar, "99");
-//	enviarMensaje(servidor,mensajeAEnviar);
-	free(mensajeAEnviar);
 }
 
 
