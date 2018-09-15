@@ -71,8 +71,8 @@ void realizarSelectLectura(int sockets,fd_set* socketsDeLectura){
 		exit(1);
 	}
 }
-int recibirMensaje(int socketEmisor, void** buffer, int bytesMaximos){
-	int bytesRecibidos = recv(socketEmisor, *buffer, bytesMaximos, 0);
+int recibirMensaje(int socketEmisor, void* buffer, int bytesMaximos){
+	int bytesRecibidos = recv(socketEmisor, buffer, bytesMaximos, 0);
 	if(bytesRecibidos<=0){
 	// error o conexión cerrada por el cliente
 	if (bytesRecibidos == 0) {
@@ -96,8 +96,8 @@ int conectarConServidor(int puerto, char* ip){
 	return socketServidor;
 }
 
-void enviarMensaje(int socket, char* mensaje){
-	send(socket, mensaje, strlen(mensaje), 0);
+void enviarMensaje(int socket, char* mensaje, int tamanio){
+	send(socket, mensaje, tamanio, 0);
 }
 
 void enviarIdentificacion(char* nombre, int servidor){
@@ -106,7 +106,7 @@ void enviarIdentificacion(char* nombre, int servidor){
 	sprintf(mensajeAEnviar, "01%d", tamanioNombre);
 	strcat(mensajeAEnviar, nombre);
 	strcat(mensajeAEnviar, "99");
-	enviarMensaje(servidor,mensajeAEnviar);
+//	enviarMensaje(servidor,mensajeAEnviar);
 	free(mensajeAEnviar);
 }
 

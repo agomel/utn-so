@@ -16,21 +16,35 @@
 
 t_dictionary* conexiones;
 
-void entenderMensaje(int emisor, int header){
+void entenderMensaje(int emisor, char header){
 	char* parametros[1];
-
+	u_int32_t tam;
 	switch(header){
-		case identificarse:
-			deserializarIdentificarse(emisor,conexiones);
+		case IDENTIFICARSE:
+			/*
+			 * char* parametros[1];
+	printf("Esto es el identificador \n");
+	deserializar((void**)parametros,emisor);
+	printf("Me mandaron %s \n",parametros[0]);
+	dictionary_put(conexiones,parametros[0],emisor);
+	printf("Agregado %s a las conexiones \n",parametros[0]);
+	*/
+			recibirMensaje(emisor, &tam, sizeof(u_int32_t));
+			char* buffer = malloc(tam);
+
+			recibirMensaje(emisor, buffer, tam);
+			printf("Se identifico a %s \n" , buffer);
+			//deserializarIdentificarse(emisor,conexiones);
 			break;
-		case mandarTexto:
+		case MANDAR_TEXTO:
+			//TODO esto no va  aser asi, hay que hacer la posta
 			printf("reenviar texto \n");
-			deserializar(parametros,emisor);
+			/*deserializar(parametros,emisor);
 			int socketCpu=dictionary_get(conexiones,"CPU");
 			printf("reenviar mensaje: %s \n",parametros[0]);
-			char* mensajeSerializado=serializarMensaje(mandarTexto,parametros[0]);
+			char* mensajeSerializado=serializarMensaje(MANDAR_TEXTO,parametros[0]);
 			enviarMensaje(socketCpu,parametros[0]);
-			free(mensajeSerializado);
+			free(mensajeSerializado);*/
 			break;
 		default:
 			perror("Cualquiera ese header flaco");
@@ -48,7 +62,7 @@ int main(void) {
 	int puertoSAFA = config_get_int_value(configuracion, "PUERTO");
 	int servidor = crearServidor(puertoSAFA, INADDR_ANY);
 
-	pthread_t hiloAdministradorDeConexiones = crearHilo(&escucharClientes,servidor);
+	pthread_t hiloAdministradorDeConexiones = crearHilo(&escucharClientes, servidor);
 	pthread_t hiloConsola = crearHilo(&consola, NULL);
 
 	esperarHilo(hiloAdministradorDeConexiones);

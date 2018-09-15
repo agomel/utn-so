@@ -11,9 +11,14 @@
 #define ARCHIVO_CONFIGURACION "configuraciones/configuracion.txt"
 #define ARCHIVO_LOG "../../log.txt"
 
-enum{
-	identificarse=1, mandarTexto=2
+enum OPERACIONES{
+	IDENTIFICARSE='a', MANDAR_TEXTO='b'
 };
+
+enum MODULOS{
+	SAFA='s', CPU='c', MDJ='m', FM9='f', DAM='d'
+};
+
 void* asignarMemoria(int cantidad);
 
 

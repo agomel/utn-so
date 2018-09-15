@@ -18,13 +18,13 @@ int empezarAEscuchar(int servidor, int cantidadAEscuchar);
 
 int aceptarCliente(int servidor);
 
-int recibirMensaje(int socketEmisor, void** buffer, int bytesMaximos);
+int recibirMensaje(int socketEmisor, void* buffer, int bytesMaximos);
 
 int conectarConServidor(int puerto, char* ip);
 
 void enviarIdentificacion(char* nombre, int servidor);
 
-void enviarMensaje(int socket, char* mensaje);
+void enviarMensaje(int socket, char* mensaje, int tamanio);
 void agregarABolsa(int servidor,fd_set* bolsa);
 int estaEnLaBolsa(int servidor,fd_set* bolsa);
 int eliminarDeBolsa(int servidor,fd_set* bolsa);
