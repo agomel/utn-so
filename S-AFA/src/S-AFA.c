@@ -22,9 +22,9 @@ void entenderMensaje(int emisor, char header){
 		case IDENTIFICARSE:
 			//TODO agregar tambien el socket identificado al mapa de conexiones
 			identificado[0]=deserializarIdentificarse(emisor);
-			dictionary_put(conexiones,identificado[0],emisor);
-			char* obtenido=dictionary_get(conexiones,1);
-			printf("Se obtuvo %s",obtenido);
+			dictionary_put(conexiones,identificado,emisor);
+			dictionary_get(conexiones,identificado);
+
 			break;
 		case MANDAR_TEXTO:
 			//TODO esta operacion es basura, es para probar a serializacion y deserializacion
