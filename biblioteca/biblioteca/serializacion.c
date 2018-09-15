@@ -62,10 +62,11 @@ void handshake(u_int32_t servidor, char modulo){
 	free(mensaje);
 }
 
-void deserializarIdentificarse(u_int32_t emisor){
+char deserializarIdentificarse(u_int32_t emisor){
 	char modulo;
 	recibirMensaje(emisor, &modulo, sizeof(char));
 	printf("Se identifico a %c \n" , modulo);
+	return modulo;
 }
 
 void enviarStringSerializado(u_int32_t destino, char* texto){

@@ -17,10 +17,14 @@
 t_dictionary* conexiones;
 
 void entenderMensaje(int emisor, char header){
+	char identificado[1];
 	switch(header){
 		case IDENTIFICARSE:
 			//TODO agregar tambien el socket identificado al mapa de conexiones
-			deserializarIdentificarse(emisor);
+			identificado[0]=deserializarIdentificarse(emisor);
+			dictionary_put(conexiones,identificado[0],emisor);
+			char* obtenido=dictionary_get(conexiones,1);
+			printf("Se obtuvo %s",obtenido);
 			break;
 		case MANDAR_TEXTO:
 			//TODO esta operacion es basura, es para probar a serializacion y deserializacion

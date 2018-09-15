@@ -20,7 +20,7 @@
 
 void handshake(u_int32_t servidor, char modulo);
 
-void deserializarIdentificarse(u_int32_t emisor);
+char deserializarIdentificarse(u_int32_t emisor);
 
 void enviarStringSerializado(u_int32_t destino, char* texto);
 
