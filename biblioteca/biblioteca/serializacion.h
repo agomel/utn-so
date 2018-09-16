@@ -12,12 +12,6 @@
 #include <commons/collections/dictionary.h>
 #include "utilidades.h"
 
-
-//void deserializar(void** parametros,int emisor);
-//void deserializarIdentificarse(int emisor,t_dictionary* conexiones);
-
-//char* serializarMensaje(int operacion,char* mensaje);
-
 void handshake(u_int32_t servidor, char modulo);
 
 char deserializarIdentificarse(u_int32_t emisor);

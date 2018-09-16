@@ -14,8 +14,8 @@
 #include <biblioteca/select.h>
 #include <commons/collections/dictionary.h>
 
-int socketCPU;
-int socketDAM;
+u_int32_t socketCPU;
+u_int32_t socketDAM;
 
 void entenderMensaje(int emisor, char header){
 	char identificado;
@@ -23,7 +23,7 @@ void entenderMensaje(int emisor, char header){
 		case IDENTIFICARSE:
 			//TODO agregar tambien el socket identificado al mapa de conexiones
 			identificado = deserializarIdentificarse(emisor);
-			printf("identificado %c \n" , identificado);
+			printf("identificado %c \n", identificado);
 			switch(identificado){
 				case CPU:
 					socketCPU = emisor;
@@ -33,7 +33,6 @@ void entenderMensaje(int emisor, char header){
 					break;
 				default:
 					perror("no acepto a esta conexion");
-
 			}
 			printf("Se agrego a las conexiones %c \n" , identificado);
 
