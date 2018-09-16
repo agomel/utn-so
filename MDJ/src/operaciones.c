@@ -15,7 +15,7 @@ void guardarDatos(u_int32_t emisor){
 }
 char* obtenerDatos(u_int32_t emisor){
 	char* rutaArchivo = deserializarString(emisor);
-	char* desplazamiento = deserializarString(emisor);
+	int desplazamiento = deserializarInt(emisor);
 	int tamanioALeer = deserializarInt(emisor);
 
 	return "leyendo de archivo";
