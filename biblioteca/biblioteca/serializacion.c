@@ -48,12 +48,13 @@ void concatenarString(void* buffer, u_int32_t* desplazamiento, char* mensaje){
 	*desplazamiento = *desplazamiento + strlen(mensaje) + 1;
 }
 
-void deserializarString(u_int32_t emisor){
+char* deserializarString(u_int32_t emisor){
 	u_int32_t tamanioMensaje;
 	recibirMensaje(emisor, &tamanioMensaje, sizeof(u_int32_t));
 	char* mensaje = malloc(tamanioMensaje);
 	recibirMensaje(emisor, mensaje, tamanioMensaje);
 	printf("Recibi %s de parte de %d \n" , mensaje, emisor);
+	return mensaje;
 }
 
 /*void serializarMensajito(mensajito mensaje){

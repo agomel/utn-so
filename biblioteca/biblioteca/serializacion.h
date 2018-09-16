@@ -18,7 +18,7 @@ char deserializarIdentificarse(u_int32_t emisor);
 
 void enviarStringSerializado(u_int32_t destino, char* texto);
 
-void deserializarString(u_int32_t emisor);
+char* deserializarString(u_int32_t emisor);
 
 void concatenarChar(void* buffer, u_int32_t* desplazamiento, char mensaje);
 int concatenarInt(void* buffer, u_int32_t* desplazamiento, u_int32_t numero);
