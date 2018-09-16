@@ -5,3 +5,8 @@ u_int32_t validarArchivo(int emisor){
 	return true;
 }
 void crearArchivo(int emisor){}
+
+void guardarDatos(u_int32_t emisor){
+
+	//TODO guardar datos.
+}

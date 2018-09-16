@@ -39,7 +39,7 @@ void entenderMensaje(int emisor, char header){
 			break;
 			case VALIDAR_ARCHIVO:
 				archivoValido = validarArchivo(emisor);
-				//TODO DEVOLVERLE AL EMISOR archivoValido
+				enviarYSerializarInt(emisor,archivoValido,VALIDAR_ARCHIVO);
 				break;
 			case CREAR_ARCHIVO:
 				crearArchivo(emisor);
@@ -47,6 +47,7 @@ void entenderMensaje(int emisor, char header){
 			case OBTENER_DATOS:
 				break;
 			case GUARDAR_DATOS:
+				guardarDatos(emisor);
 				break;
 		default:
 			perror("Cualquiera ese header flaco");
