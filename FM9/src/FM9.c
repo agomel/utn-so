@@ -14,6 +14,7 @@
 #include <biblioteca/socket.h>
 #include <biblioteca/select.h>
 #include <biblioteca/hilos.h>
+#include "operaciones.h"
 
 t_dictionary* conexiones;
 u_int32_t socketCPU;
@@ -38,9 +39,16 @@ void entenderMensaje(int emisor, int header){
 				}
 				printf("Se agrego a las conexiones %c \n" , identificado);
 				break;
-			case MANDAR_TEXTO:
-				//TODO esta operacion es basura, es para probar a serializacion y deserializacion
-				deserializarString(emisor);
+			case VALIDAR_ARCHIVO:
+				int archivoValido = validarArchivo(emisor);
+				//TODO DEVOLVERLE AL EMISOR archivoValido
+				break;
+			case CREAR_ARCHIVO:
+				crearArchivo(emisor);
+				break;
+			case OBTENER_DATOS:
+				break;
+			case GUARDAR_DATOS:
 				break;
 			default:
 				perror("Cualquiera ese header flaco");
