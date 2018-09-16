@@ -32,18 +32,18 @@ int main(void) {
 	int socketFM9 = conectarConServidor(direccionFM9.puerto, inet_addr(direccionFM9.ip));
 	handshake(socketFM9, CPU);
 
-	//direccionServidor direccionDIEGO = levantarDeConfiguracion("IP_DIEGO", "PUERTO_DIEGO", ARCHIVO_CONFIGURACION);
-	//int socketDIEGO= conectarConServidor(direccionDIEGO.puerto, inet_addr(direccionDIEGO.ip));
-	//handshake(socketDIEGO, CPU);
+	direccionServidor direccionDIEGO = levantarDeConfiguracion("IP_DIEGO", "PUERTO_DIEGO", ARCHIVO_CONFIGURACION);
+	int socketDIEGO= conectarConServidor(direccionDIEGO.puerto, inet_addr(direccionDIEGO.ip));
+	handshake(socketDIEGO, CPU);
 
 	pthread_t hiloConsola = crearHilo(&consola, socketSAFA);
 	pthread_t hiloEscuchadorSAFA = crearHilo(&escuchar, socketSAFA);
 	pthread_t hiloEscuchadorFM9= crearHilo(&escuchar, socketFM9);
-	//pthread_t hiloEscuchadorDIEGO = crearHilo(&escuchar, socketDIEGO);
+	pthread_t hiloEscuchadorDIEGO = crearHilo(&escuchar, socketDIEGO);
 
 	esperarHilo(hiloConsola);
 	esperarHilo(hiloEscuchadorSAFA);
 	esperarHilo(hiloEscuchadorFM9);
-	//esperarHilo(hiloEscuchadorDIEGO);
+	esperarHilo(hiloEscuchadorDIEGO);
 	return 0;
 }
