@@ -7,7 +7,7 @@ void consola(int servidor){
 	while(1){
 		char* texto = malloc(1000);
 		scanf("%s", texto);
-		enviarStringSerializado(servidor, texto,MANDAR_TEXTO);
+		enviarYSerializarString(servidor, texto,MANDAR_TEXTO);
 	}
 }
 void escuchar(int servidor){
