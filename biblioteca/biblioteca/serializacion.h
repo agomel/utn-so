@@ -16,7 +16,7 @@ void handshake(u_int32_t servidor, char modulo);
 
 char deserializarIdentificarse(u_int32_t emisor);
 
-void enviarStringSerializado(u_int32_t destino, char* texto);
+void enviarStringSerializado(u_int32_t destino, char* texto,int operacion);
 
 char* deserializarString(u_int32_t emisor);
 

@@ -6,6 +6,7 @@
 #include <string.h>
 #include <malloc.h>
 #include "socket.h"
+#include <stdbool.h>
 #include <commons/config.h>
 
 #define ARCHIVO_CONFIGURACION "configuraciones/configuracion.txt"

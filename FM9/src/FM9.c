@@ -42,6 +42,7 @@ void entenderMensaje(int emisor, int header){
 				break;
 			case VALIDAR_ARCHIVO:
 				archivoValido = validarArchivo(emisor);
+
 				//TODO DEVOLVERLE AL EMISOR archivoValido
 				break;
 			case CREAR_ARCHIVO:

@@ -19,14 +19,14 @@ char deserializarIdentificarse(u_int32_t emisor){
 	return modulo;
 }
 
-void enviarStringSerializado(u_int32_t destino, char* texto){
+void enviarStringSerializado(u_int32_t destino, char* texto,int operacion){
 	u_int32_t tamanioTexto = strlen(texto) + 1;
 	u_int32_t tamanioMensaje = sizeof(char) + sizeof(u_int32_t) + tamanioTexto;
 	void* mensaje = asignarMemoria(tamanioMensaje);
 
 	u_int32_t desplazamiento = 0;
 
-	concatenarChar(mensaje, &desplazamiento, MANDAR_TEXTO);
+	concatenarChar(mensaje, &desplazamiento, operacion);
 	concatenarInt(mensaje, &desplazamiento, tamanioTexto);
 	concatenarString(mensaje, &desplazamiento, texto);
 
