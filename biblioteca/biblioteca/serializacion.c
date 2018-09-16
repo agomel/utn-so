@@ -3,12 +3,11 @@
 void handshake(u_int32_t servidor, char modulo){
 	u_int32_t tamanioMensaje = sizeof(char)*2;
 	void* mensaje = asignarMemoria(tamanioMensaje);
-	char operacion = IDENTIFICARSE;
 	u_int32_t desplazamiento = 0;
-	memcpy(mensaje + desplazamiento, &operacion, sizeof(char));
-	desplazamiento = desplazamiento + sizeof(char);
-	memcpy(mensaje + desplazamiento, &modulo, sizeof(char));
-	desplazamiento = desplazamiento + sizeof(char); //este paso no es necesario ya que no vuelvo a usar el desplazamiento
+
+	concatenarChar(mensaje, &desplazamiento, IDENTIFICARSE);
+	concatenarChar(mensaje, &desplazamiento, modulo);
+
 	enviarMensaje(servidor, mensaje, tamanioMensaje);
 	free(mensaje);
 }
@@ -25,10 +24,9 @@ void enviarStringSerializado(u_int32_t destino, char* texto){
 	u_int32_t tamanioMensaje = sizeof(char) + sizeof(u_int32_t) + tamanioTexto;
 	void* mensaje = asignarMemoria(tamanioMensaje);
 
-	char operacion = MANDAR_TEXTO;
 	u_int32_t desplazamiento = 0;
 
-	concatenarChar(mensaje, &desplazamiento, operacion);
+	concatenarChar(mensaje, &desplazamiento, MANDAR_TEXTO);
 	concatenarInt(mensaje, &desplazamiento, tamanioTexto);
 	concatenarString(mensaje, &desplazamiento, texto);
 
