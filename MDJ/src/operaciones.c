@@ -10,7 +10,8 @@ void guardarDatos(u_int32_t emisor){
 	char* rutaArchivo = deserializarString(emisor);
 	char* desplazamiento = deserializarString(emisor);
 	int tamanioALeer = deserializarInt(emisor);
-	//TODO guardar datos.
+	char* datos = deserializarString(emisor);
+	printf("Guardados datos recibidos de %d \n" , emisor);
 }
 char* obtenerDatos(u_int32_t emisor){
 	char* rutaArchivo = deserializarString(emisor);
