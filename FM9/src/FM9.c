@@ -22,10 +22,8 @@ void entenderMensaje(int emisor, int header){
 }
 
 int main(void) {
-	conexiones = dictionary_create();
-	t_config* configuracion = config_create(ARCHIVO_CONFIGURACION);
-	int puertoFM9 = config_get_int_value(configuracion, "PUERTO");
-	int servidor = crearServidor(puertoFM9, INADDR_ANY);
+	direccionServidor direccionFM9 = levantarDeConfiguracion(NULL, "PUERTO", ARCHIVO_CONFIGURACION);
+	int servidor = crearServidor(direccionFM9.puerto, INADDR_ANY);
 
 	parametrosEscucharClientes parametros;
 	parametros.servidor = servidor;

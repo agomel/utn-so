@@ -13,40 +13,46 @@
 #include "consola.h"
 #include <biblioteca/select.h>
 
-t_dictionary* conexiones;
+int socketCPU;
+int socketDAM;
 
-void entenderMensaje(int emisor, int header){
-	char* parametros[1];
-
+void entenderMensaje(int emisor, char header){
+	char identificado;
 	switch(header){
-		case identificarse:
-			deserializarIdentificarse(emisor,conexiones);
-			break;
-		case mandarTexto:
-			printf("reenviar texto \n");
-			deserializar(parametros,emisor);
-			int socketCpu=dictionary_get(conexiones,"CPU");
-			printf("reenviar mensaje: %s \n",parametros[0]);
-			char* mensajeSerializado=serializarMensaje(mandarTexto,parametros[0]);
-			enviarMensaje(socketCpu,parametros[0]);
-			free(mensajeSerializado);
+		case IDENTIFICARSE:
+			//TODO agregar tambien el socket identificado al mapa de conexiones
+			identificado = deserializarIdentificarse(emisor);
+			printf("identificado %c \n" , identificado);
+			switch(identificado){
+				case CPU:
+					socketCPU = emisor;
+					break;
+				case DAM:
+					socketDAM = emisor;
+					break;
+				default:
+					perror("no acepto a esta conexion");
+
+			}
+			printf("Se agrego a las conexiones %c \n" , identificado);
+
+		case MANDAR_TEXTO:
+			//TODO esta operacion es basura, es para probar a serializacion y deserializacion
+			deserializarString(emisor);
 			break;
 		default:
 			perror("Cualquiera ese header flaco");
-
 	}
-
 }
 
 int main(void) {
-	conexiones = dictionary_create();
-	t_config* configuracion = config_create(ARCHIVO_CONFIGURACION);
-	int puertoSAFA = config_get_int_value(configuracion, "PUERTO");
-	int servidor = crearServidor(puertoSAFA, INADDR_ANY);
+	direccionServidor direccionSAFA = levantarDeConfiguracion(NULL, "PUERTO", ARCHIVO_CONFIGURACION);
+	int servidor = crearServidor(direccionSAFA.puerto, INADDR_ANY);
 
 	parametrosEscucharClientes parametros;
 	parametros.servidor = servidor;
 	parametros.funcion = &entenderMensaje;
+
 	pthread_t hiloAdministradorDeConexiones = crearHilo(&escucharClientes, &parametros);
 	pthread_t hiloConsola = crearHilo(&consola, NULL);
 

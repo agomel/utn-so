@@ -7,14 +7,18 @@
 #include <malloc.h>
 #include "socket.h"
 #include <commons/config.h>
-#include <commons/collections/dictionary.h>
 
-#define ARCHIVO_CONFIGURACION "../configuraciones/configuracion.txt"
+#define ARCHIVO_CONFIGURACION "configuraciones/configuracion.txt"
 #define ARCHIVO_LOG "../../log.txt"
 
-enum{
-	identificarse=1, mandarTexto=2
+enum OPERACIONES{
+	IDENTIFICARSE='a', MANDAR_TEXTO='b', MANDAR_MENSAJITO='c'
 };
+
+enum MODULOS{
+	SAFA='s', CPU='c', MDJ='m', FM9='f', DAM='d'
+};
+
 void* asignarMemoria(int cantidad);
 
 
@@ -32,5 +36,12 @@ typedef struct {
 
 int escucharClientes(parametrosEscucharClientes* parametros);
 
+
+typedef struct{
+	char* texto1;
+	int numero;
+	char* texto2;
+	char caracter;
+}mensajito;
 
 #endif /*UTILIDADES_H_*/

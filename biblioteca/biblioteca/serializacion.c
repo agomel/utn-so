@@ -1,48 +1,56 @@
 #include "serializacion.h"
 
-void deserializar(void** resultados, int emisor){
-	int espacioALeer;
-
-	int resultado=0;
-	void* buffer;
-
-	buffer=asignarMemoria(2);
-	recibirMensaje(emisor, &buffer, 2);
-	espacioALeer = atoi(buffer);
-	while(espacioALeer != 99){
-		resultados[resultado]=asignarMemoria(espacioALeer);
-		recibirMensaje(emisor, &resultados[resultado], espacioALeer);
-
-		free(buffer);
-		buffer=asignarMemoria(2);
-		recibirMensaje(emisor, &buffer, 2);
-		espacioALeer = atoi(buffer);
-		resultado++;
-	}
+void handshake(u_int32_t servidor, char modulo){
+	u_int32_t tamanioMensaje = sizeof(char)*2;
+	void* mensaje = asignarMemoria(tamanioMensaje);
+	char operacion = IDENTIFICARSE;
+	u_int32_t desplazamiento = 0;
+	memcpy(mensaje + desplazamiento, &operacion, sizeof(char));
+	desplazamiento = desplazamiento + sizeof(char);
+	memcpy(mensaje + desplazamiento, &modulo, sizeof(char));
+	desplazamiento = desplazamiento + sizeof(char); //este paso no es necesario ya que no vuelvo a usar el desplazamiento
+	enviarMensaje(servidor, mensaje, tamanioMensaje);
+	free(mensaje);
 }
-char* serializarMensaje(int operacion,char*mensaje){
-	char* serializado = asignarMemoria(strlen(mensaje)+6);
-	int tamanioMensaje= strlen(mensaje);
-	if(operacion<10 && tamanioMensaje<10){
-		sprintf(serializado, "0%d0%d",operacion,tamanioMensaje);
-	}else if(operacion>10 && tamanioMensaje<10){
-		sprintf(serializado, "%d0%d",operacion,tamanioMensaje);
-	}else if(operacion<10 && tamanioMensaje>10){
-		sprintf(serializado, "0%d%d",operacion,tamanioMensaje);
-	}else{
-		sprintf(serializado, "%d%d",operacion,tamanioMensaje);
-	}
 
-	strcat(serializado,mensaje);
+char deserializarIdentificarse(u_int32_t emisor){
+	char modulo;
+	recibirMensaje(emisor, &modulo, sizeof(char));
+	printf("Se identifico a %c \n" , modulo);
+	return modulo;
+}
 
-	strcat(serializado,"99");
-	return serializado;
+void enviarStringSerializado(u_int32_t destino, char* texto){
+	u_int32_t tamanioTexto = strlen(texto) + 1;
+	u_int32_t tamanioMensaje = sizeof(char) + sizeof(u_int32_t) + tamanioTexto;
+	void* mensaje = asignarMemoria(tamanioMensaje);
+
+	char operacion = MANDAR_TEXTO;
+	u_int32_t desplazamiento = 0;
+
+	memcpy(mensaje + desplazamiento, &operacion, sizeof(char));
+	desplazamiento = desplazamiento + sizeof(char);
+
+	memcpy(mensaje + desplazamiento, &tamanioTexto, sizeof(u_int32_t));
+	desplazamiento = desplazamiento + sizeof(u_int32_t);
+
+	memcpy(mensaje + desplazamiento, texto, tamanioTexto);
+	desplazamiento = desplazamiento + tamanioTexto; //esta linea no es necesaria ya que no vuelvo a utilizar el puntero
+
+	enviarMensaje(destino, mensaje, tamanioMensaje);
+
+	free(mensaje);
 }
-void deserializarIdentificarse(int emisor, t_dictionary* conexiones){
-	char* identificador[1];
-	printf("Esto es el identificador \n");
-	deserializar((void**)identificador, emisor);
-	printf("Me mandaron %s \n", identificador[0]);
-	dictionary_put(conexiones, identificador[0], emisor);
-	printf("Agregado %s a las conexiones \n", identificador[0]);
+
+void deserializarString(u_int32_t emisor){
+	u_int32_t tamanioMensaje;
+	recibirMensaje(emisor, &tamanioMensaje, sizeof(u_int32_t));
+	char* mensaje = malloc(tamanioMensaje);
+	recibirMensaje(emisor, mensaje, tamanioMensaje);
+	printf("Recibi %s de parte de %d \n" , mensaje, emisor);
 }
+
+/*void serializarMensajito(mensajito mensaje){
+	void* m = asignarMemoria(sizeof(mensaje));
+	char operacion = MANDAR_MENSAJITO;
+}*/
