@@ -22,6 +22,7 @@ u_int32_t socketDAM;
 
 void entenderMensaje(int emisor, int header){
 	char identificado;
+	u_int32_t archivoValido;
 		switch(header){
 			case IDENTIFICARSE:
 				//TODO agregar tambien el socket identificado al mapa de conexiones
@@ -40,7 +41,7 @@ void entenderMensaje(int emisor, int header){
 				printf("Se agrego a las conexiones %c \n" , identificado);
 				break;
 			case VALIDAR_ARCHIVO:
-				int archivoValido = validarArchivo(emisor);
+				archivoValido = validarArchivo(emisor);
 				//TODO DEVOLVERLE AL EMISOR archivoValido
 				break;
 			case CREAR_ARCHIVO:
