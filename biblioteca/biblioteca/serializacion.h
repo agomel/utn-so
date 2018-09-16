@@ -22,5 +22,6 @@ void deserializarString(u_int32_t emisor);
 
 void concatenarChar(void* buffer, u_int32_t* desplazamiento, char mensaje);
 int concatenarInt(void* buffer, u_int32_t* desplazamiento, u_int32_t numero);
+void concatenarString(void* buffer, u_int32_t* desplazamiento, char* mensaje);
 
 #endif /*SERIALIZACION_H_*/

@@ -30,9 +30,7 @@ void enviarStringSerializado(u_int32_t destino, char* texto){
 
 	concatenarChar(mensaje, &desplazamiento, operacion);
 	concatenarInt(mensaje, &desplazamiento, tamanioTexto);
-
-	memcpy(mensaje + desplazamiento, texto, tamanioTexto);
-	desplazamiento = desplazamiento + tamanioTexto; //esta linea no es necesaria ya que no vuelvo a utilizar el puntero
+	concatenarString(mensaje, &desplazamiento, texto);
 
 	enviarMensaje(destino, mensaje, tamanioMensaje);
 
@@ -46,6 +44,10 @@ void concatenarChar(void* buffer, u_int32_t* desplazamiento, char mensaje){
 int concatenarInt(void* buffer, u_int32_t* desplazamiento, u_int32_t numero){
 	memcpy(buffer + *desplazamiento, &numero, sizeof(u_int32_t));
 	*desplazamiento = *desplazamiento + sizeof(u_int32_t);
+}
+void concatenarString(void* buffer, u_int32_t* desplazamiento, char* mensaje){
+	memcpy(buffer + *desplazamiento, mensaje, strlen(mensaje) + 1);
+	*desplazamiento = *desplazamiento + strlen(mensaje) + 1;
 }
 
 void deserializarString(u_int32_t emisor){
