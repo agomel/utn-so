@@ -45,6 +45,8 @@ void entenderMensaje(int emisor, char header){
 				crearArchivo(emisor);
 				break;
 			case OBTENER_DATOS:
+				obtenerDatos(emisor);
+				//TODO DEVOLVERLE AL EMISOR LOS DATOS
 				break;
 			case GUARDAR_DATOS:
 				guardarDatos(emisor);
