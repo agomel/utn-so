@@ -14,12 +14,14 @@
 #include <biblioteca/socket.h>
 #include <biblioteca/select.h>
 #include <biblioteca/hilos.h>
+#include "operaciones.h"
 
 
 u_int32_t socketDAM;
 
 void entenderMensaje(int emisor, char header){
 	char identificado;
+	u_int32_t archivoValido;
 	switch(header){
 		case IDENTIFICARSE:
 			//TODO agregar tambien el socket identificado al mapa de conexiones
@@ -29,15 +31,23 @@ void entenderMensaje(int emisor, char header){
 				case DAM:
 					socketDAM = emisor;
 					break;
+
 				default:
 					perror("no acepto a esta conexion");
 			}
 			printf("Se agrego a las conexiones %c \n" , identificado);
 			break;
-		case MANDAR_TEXTO:
-			//TODO esta operacion es basura, es para probar a serializacion y deserializacion
-			deserializarString(emisor);
-			break;
+			case VALIDAR_ARCHIVO:
+				archivoValido = validarArchivo(emisor);
+				//TODO DEVOLVERLE AL EMISOR archivoValido
+				break;
+			case CREAR_ARCHIVO:
+				crearArchivo(emisor);
+				break;
+			case OBTENER_DATOS:
+				break;
+			case GUARDAR_DATOS:
+				break;
 		default:
 			perror("Cualquiera ese header flaco");
 	}
