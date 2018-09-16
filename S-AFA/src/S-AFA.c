@@ -14,18 +14,29 @@
 #include <biblioteca/select.h>
 #include <commons/collections/dictionary.h>
 
-t_dictionary* conexiones;
+int socketCPU;
+int socketDAM;
 
 void entenderMensaje(int emisor, char header){
-	char identificado[1];
+	char identificado;
 	switch(header){
 		case IDENTIFICARSE:
 			//TODO agregar tambien el socket identificado al mapa de conexiones
-			identificado[0]=deserializarIdentificarse(emisor);
-			dictionary_put(conexiones,identificado,emisor);
-			dictionary_get(conexiones,identificado);
+			identificado = deserializarIdentificarse(emisor);
+			printf("identificado %c \n" , identificado);
+			switch(identificado){
+				case CPU:
+					socketCPU = emisor;
+					break;
+				case DAM:
+					socketDAM = emisor;
+					break;
+				default:
+					perror("no acepto a esta conexion");
 
-			break;
+			}
+			printf("Se agrego a las conexiones %c \n" , identificado);
+
 		case MANDAR_TEXTO:
 			//TODO esta operacion es basura, es para probar a serializacion y deserializacion
 			deserializarString(emisor);
@@ -39,7 +50,6 @@ int escucharClientes(int servidor) {
 	recibirConexionesYMensajes(servidor,&entenderMensaje);
 }
 int main(void) {
-	conexiones = dictionary_create();
 	t_config* configuracion = config_create(ARCHIVO_CONFIGURACION);
 	int puertoSAFA = config_get_int_value(configuracion, "PUERTO");
 	int servidor = crearServidor(puertoSAFA, INADDR_ANY);
