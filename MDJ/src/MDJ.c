@@ -18,17 +18,28 @@
 
 u_int32_t socketDAM;
 
+void entenderMensaje(int emisor, char header){
+	char identificado;
+	switch(header){
+		case IDENTIFICARSE:
+			//TODO agregar tambien el socket identificado al mapa de conexiones
+			identificado = deserializarIdentificarse(emisor);
+			printf("identificado %c \n", identificado);
+			switch(identificado){
+				case DAM:
+					socketDAM = emisor;
+					break;
+				default:
+					perror("no acepto a esta conexion");
+			}
+			printf("Se agrego a las conexiones %c \n" , identificado);
 
-void escuchar(int servidor){
-	int a = 1;
-	while(a){
-		char* buffer=asignarMemoria(150);
-		int bytesRecibidos = recibirMensaje(servidor,&buffer,150);
-		if(bytesRecibidos <= 0){
-			a = 0;
-		}
-		printf("%s \n", buffer);
-		free(buffer);
+		case MANDAR_TEXTO:
+			//TODO esta operacion es basura, es para probar a serializacion y deserializacion
+			deserializarString(emisor);
+			break;
+		default:
+			perror("Cualquiera ese header flaco");
 	}
 }
 
@@ -36,9 +47,13 @@ int main(void) {
 	direccionServidor direccionMDJ = levantarDeConfiguracion(NULL, "PUERTO", ARCHIVO_CONFIGURACION);
 	int servidor = crearServidor(direccionMDJ.puerto, INADDR_ANY);
 
-	socketDAM = aceptarCliente(servidor);
-	empezarAEscuchar(servidor, 1);
-	pthread_t hiloEscuchadorDAM = crearHilo(&escuchar, socketDAM);
+	parametrosEscucharClientes parametros;
+	parametros.servidor = servidor;
+	parametros.funcion = &entenderMensaje;
+
+	pthread_t hiloAdministradorDeConexiones = crearHilo(&escucharClientes, &parametros);
+
+	esperarHilo(hiloAdministradorDeConexiones);
 
 	return 0;
 }

@@ -64,10 +64,10 @@ int main(void) {
 	int socketSAFA = conectarConServidor(direccionSAFA.puerto, inet_addr(direccionSAFA.ip));
 
 	direccionServidor direccionMDJ = levantarDeConfiguracion("IP_MDJ", "PUERTO_MDJ", ARCHIVO_CONFIGURACION);
-	int socketMDJ = conectarConServidor(direccionSAFA.puerto, inet_addr(direccionSAFA.ip));
+	int socketMDJ = conectarConServidor(direccionMDJ.puerto, inet_addr(direccionMDJ.ip));
 
 	direccionServidor direccionFM9 = levantarDeConfiguracion("IP_FM9", "PUERTO_FM9", ARCHIVO_CONFIGURACION);
-	int socketFM9 = conectarConServidor(direccionSAFA.puerto, inet_addr(direccionSAFA.ip));
+	int socketFM9 = conectarConServidor(direccionFM9.puerto, inet_addr(direccionFM9.ip));
 
 	//mandar handshakes a los servidores
 	handshake(socketSAFA, DAM);
