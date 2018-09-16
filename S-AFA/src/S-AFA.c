@@ -14,8 +14,8 @@
 #include <biblioteca/select.h>
 #include <commons/collections/dictionary.h>
 
-int socketCPU;
-int socketDAM;
+u_int32_t socketCPU;
+u_int32_t socketDAM;
 
 void entenderMensaje(int emisor, char header){
 	char identificado;
@@ -23,7 +23,7 @@ void entenderMensaje(int emisor, char header){
 		case IDENTIFICARSE:
 			//TODO agregar tambien el socket identificado al mapa de conexiones
 			identificado = deserializarIdentificarse(emisor);
-			printf("identificado %c \n" , identificado);
+			printf("identificado %c \n", identificado);
 			switch(identificado){
 				case CPU:
 					socketCPU = emisor;
@@ -33,7 +33,6 @@ void entenderMensaje(int emisor, char header){
 					break;
 				default:
 					perror("no acepto a esta conexion");
-
 			}
 			printf("Se agrego a las conexiones %c \n" , identificado);
 
@@ -50,9 +49,9 @@ int escucharClientes(int servidor) {
 	recibirConexionesYMensajes(servidor,&entenderMensaje);
 }
 int main(void) {
-	t_config* configuracion = config_create(ARCHIVO_CONFIGURACION);
-	int puertoSAFA = config_get_int_value(configuracion, "PUERTO");
-	int servidor = crearServidor(puertoSAFA, INADDR_ANY);
+	direccionServidor direccionSAFA = levantarDeConfiguracion(NULL, "PUERTO", ARCHIVO_CONFIGURACION);
+	int servidor = crearServidor(direccionSAFA.puerto, INADDR_ANY);
+
 
 	pthread_t hiloAdministradorDeConexiones = crearHilo(&escucharClientes, servidor);
 	pthread_t hiloConsola = crearHilo(&consola, NULL);

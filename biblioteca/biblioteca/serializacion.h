@@ -12,12 +12,6 @@
 #include <commons/collections/dictionary.h>
 #include "utilidades.h"
 
-
-//void deserializar(void** parametros,int emisor);
-//void deserializarIdentificarse(int emisor,t_dictionary* conexiones);
-
-//char* serializarMensaje(int operacion,char* mensaje);
-
 void handshake(u_int32_t servidor, char modulo);
 
 char deserializarIdentificarse(u_int32_t emisor);
@@ -25,5 +19,8 @@ char deserializarIdentificarse(u_int32_t emisor);
 void enviarStringSerializado(u_int32_t destino, char* texto);
 
 void deserializarString(u_int32_t emisor);
+
+void concatenarChar(void* buffer, u_int32_t* desplazamiento, char mensaje);
+int concatenarInt(void* buffer, u_int32_t* desplazamiento, u_int32_t numero);
 
 #endif /*SERIALIZACION_H_*/

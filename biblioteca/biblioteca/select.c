@@ -12,9 +12,7 @@ int recibirConexionesYMensajes(int servidor,void (*funcionEntenderMensaje)(int, 
 
 	char header;    // header para datos del cliente
 	int bytesRecibidos;
-	//int yes=1;        // para setsockopt() SO_REUSEADDR, más abajo
 
-	//int addrlen;
 	int socketDeLaBolsa;
 	FD_ZERO(&bolsaDeTodosLosSockets);    // borra los conjuntos maestro y temporal
 	FD_ZERO(&socketsDeLectura);
@@ -47,7 +45,7 @@ int recibirConexionesYMensajes(int servidor,void (*funcionEntenderMensaje)(int, 
 				}
 			} else {
 				// escuchar a cliente
-				bytesRecibidos = recibirMensaje(socketDeLaBolsa,&header,sizeof(char));
+				bytesRecibidos = recibirMensaje(socketDeLaBolsa, &header, sizeof(char));
 				if (bytesRecibidos <= 0) {
 					close(socketDeLaBolsa); // bye!
 					eliminarDeBolsa(socketDeLaBolsa, &bolsaDeTodosLosSockets); // eliminar del conjunto maestro
