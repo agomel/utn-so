@@ -9,6 +9,7 @@
 
 u_int32_t validarArchivo(int emisor);
 void crearArchivo(int emisor);
+char* obtenerDatos(u_int32_t emisor);
 
 
 #endif /*OPERACIONES_H_*/
