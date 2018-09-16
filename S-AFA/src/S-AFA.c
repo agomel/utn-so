@@ -34,6 +34,7 @@ void entenderMensaje(int emisor, char header){
 					perror("no acepto a esta conexion");
 			}
 			printf("Se agrego a las conexiones %c \n" , identificado);
+			break;
 
 		case MANDAR_TEXTO:
 			//TODO esta operacion es basura, es para probar a serializacion y deserializacion
