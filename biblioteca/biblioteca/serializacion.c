@@ -72,14 +72,15 @@ char deserializarIdentificarse(u_int32_t emisor){
 void enviarStringSerializado(u_int32_t destino, char* texto){
 	u_int32_t tamanioTexto = strlen(texto) + 1;
 	u_int32_t tamanioMensaje = sizeof(char) + sizeof(u_int32_t) + tamanioTexto;
-	char* mensaje = asignarMemoria(tamanioMensaje);
+	void* mensaje = asignarMemoria(tamanioMensaje);
 
 	char operacion = MANDAR_TEXTO;
 	u_int32_t puntero = 0;
 
-	memcpy(mensaje + puntero, &operacion, sizeof(char));
+	concatenarString(mensaje, puntero, operacion);
+	/*memcpy(mensaje + puntero, &operacion, sizeof(char));
 	puntero = puntero + sizeof(char);
-
+	 */
 	memcpy(mensaje + puntero, &tamanioTexto, sizeof(u_int32_t));
 	puntero = puntero + sizeof(u_int32_t);
 
@@ -89,6 +90,15 @@ void enviarStringSerializado(u_int32_t destino, char* texto){
 	enviarMensaje(destino, mensaje, tamanioMensaje);
 
 	free(mensaje);
+}
+
+void concatenarString(void* buffer, u_int32_t* desplazamiento, char* mensaje){
+	memcpy(buffer + desplazamiento, mensaje, sizeof(char));
+	desplazamiento = desplazamiento + sizeof(char);
+}
+int concatenarInt(void* buffer, u_int32_t* desplazamiento, u_int32_t numero){
+	memcpy(buffer + desplazamiento, &numero, sizeof(u_int32_t));
+	desplazamiento = desplazamiento + sizeof(u_int32_t);
 }
 
 void deserializarString(u_int32_t emisor){
