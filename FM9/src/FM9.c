@@ -15,19 +15,20 @@
 #include <biblioteca/select.h>
 #include <biblioteca/hilos.h>
 
-void entenderMensaje(char* bytesRecibidos){
-	printf("bytes recibidos: %s \n",bytesRecibidos);
-}
-int escucharClientes(int servidor) {
-	empezarAEscuchar(servidor, 100);
-	recibirConexionesYMensajes(servidor,&entenderMensaje);
+t_dictionary* conexiones;
+
+void entenderMensaje(int emisor, int header){
+	deserializarIdentificarse(emisor,conexiones);
 }
 
 int main(void) {
 	direccionServidor direccionFM9 = levantarDeConfiguracion(NULL, "PUERTO", ARCHIVO_CONFIGURACION);
 	int servidor = crearServidor(direccionFM9.puerto, INADDR_ANY);
 
-	pthread_t hiloAdministradorDeConexiones = crearHilo(&escucharClientes,servidor);
+	parametrosEscucharClientes parametros;
+	parametros.servidor = servidor;
+	parametros.funcion = &entenderMensaje;
+	pthread_t hiloAdministradorDeConexiones = crearHilo(&escucharClientes, &parametros);
 
 	esperarHilo(hiloAdministradorDeConexiones);
 }

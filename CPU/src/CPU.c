@@ -3,7 +3,6 @@
 #include <biblioteca/hilos.h>
 #include <biblioteca/utilidades.h>
 
-
 void consola(int servidor){
 	while(1){
 		char* texto = malloc(1000);
@@ -35,6 +34,5 @@ int main(void) {
 
 	esperarHilo(hiloConsola);
 	esperarHilo(hiloEscuchadorSAFA);
-
 	return 0;
 }

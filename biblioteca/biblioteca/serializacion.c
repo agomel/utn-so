@@ -61,9 +61,4 @@ void deserializarString(u_int32_t emisor){
 /*void serializarMensajito(mensajito mensaje){
 	void* m = asignarMemoria(sizeof(mensaje));
 	char operacion = MANDAR_MENSAJITO;
-
-
-
 }*/
-
-

@@ -12,7 +12,6 @@
 #include <biblioteca/utilidades.h>
 #include "consola.h"
 #include <biblioteca/select.h>
-#include <commons/collections/dictionary.h>
 
 u_int32_t socketCPU;
 u_int32_t socketDAM;
@@ -44,16 +43,16 @@ void entenderMensaje(int emisor, char header){
 			perror("Cualquiera ese header flaco");
 	}
 }
-int escucharClientes(int servidor) {
-	empezarAEscuchar(servidor, 100);
-	recibirConexionesYMensajes(servidor,&entenderMensaje);
-}
+
 int main(void) {
 	direccionServidor direccionSAFA = levantarDeConfiguracion(NULL, "PUERTO", ARCHIVO_CONFIGURACION);
 	int servidor = crearServidor(direccionSAFA.puerto, INADDR_ANY);
 
+	parametrosEscucharClientes parametros;
+	parametros.servidor = servidor;
+	parametros.funcion = &entenderMensaje;
 
-	pthread_t hiloAdministradorDeConexiones = crearHilo(&escucharClientes, servidor);
+	pthread_t hiloAdministradorDeConexiones = crearHilo(&escucharClientes, &parametros);
 	pthread_t hiloConsola = crearHilo(&consola, NULL);
 
 	esperarHilo(hiloAdministradorDeConexiones);

@@ -1,7 +1,7 @@
 #include "hilos.h"
 
 
-pthread_t crearHilo(void* funcion,void* parametro){
+pthread_t crearHilo(void* funcion, void* parametro){
 	pthread_t hilo;
 	pthread_create(&hilo, NULL, funcion, parametro);
 	return hilo;

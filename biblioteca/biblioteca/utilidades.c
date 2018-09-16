@@ -17,3 +17,8 @@ direccionServidor levantarDeConfiguracion(char* nombreIp, char* nombrePuerto, ch
 	direccion.puerto = config_get_int_value(configuracion, nombrePuerto);
 	return direccion;
 }
+
+int escucharClientes(parametrosEscucharClientes* parametros) {
+	empezarAEscuchar(parametros->servidor, 100);
+	recibirConexionesYMensajes(parametros->servidor, parametros->funcion);
+}
