@@ -24,9 +24,8 @@ int escucharClientes(int servidor) {
 }
 
 int main(void) {
-	t_config* configuracion = config_create(ARCHIVO_CONFIGURACION);
-	int puertoFM9 = config_get_int_value(configuracion, "PUERTO");
-	int servidor = crearServidor(puertoFM9, INADDR_ANY);
+	direccionServidor direccionFM9 = levantarDeConfiguracion(NULL, "PUERTO", ARCHIVO_CONFIGURACION);
+	int servidor = crearServidor(direccionFM9.puerto, INADDR_ANY);
 
 	pthread_t hiloAdministradorDeConexiones = crearHilo(&escucharClientes,servidor);
 
