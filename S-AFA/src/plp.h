@@ -2,6 +2,7 @@
 #define PLP_H_
 
 
+#include <commons/collections/queue.h>
 #include "planificador.h"
 
 void planificadorALargoPlazo();

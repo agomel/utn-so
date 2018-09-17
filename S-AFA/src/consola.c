@@ -1,4 +1,5 @@
 #include "consola.h"
+#include <biblioteca/dtb.h>
 int obtenerComando(char*ingresado){
 	int comando=6;
 	const char* comandos[] = {"salir","status","finalizar","metricas","ejecutar"};
@@ -25,6 +26,13 @@ comandoCompleto rearmarCadena(char* cadenaIngresada){
 	    return comando;
 }
 
+void ponerProcesoEnNew(char* escriptorio){
+	DTB proceso = crearDTB(escriptorio);
+	//TODO wait mutexnew
+	//TODO agregar a cola new
+	//TODO signal mutexnew
+}
+
 void consola(){
 
 	while(1){
@@ -36,15 +44,17 @@ void consola(){
 
 
 		switch(comando){
-			case salir: printf("salir\n"); exit(1);
+			case SALIR: printf("salir\n"); exit(1);
 				break;
-			case status: printf("seleccionaste status\n");
+			case STATUS: printf("seleccionaste status\n");
 				break;
-			case finalizar: printf("seleccionaste finalizar\n");
+			case FINALIZAR: printf("seleccionaste finalizar\n");
 				break;
-			case metricas: printf("seleccionaste metricas\n");
+			case METRICAS: printf("seleccionaste metricas\n");
 				break;
-			case ejecutar: printf("seleccionaste ejecutar\n");
+			case EJECUTAR:
+				printf("seleccionaste ejecutar\n");
+				ponerProcesoEnNew(cadenaArmada.parametro);
 				break;
 			default:perror("no entendes los comandos\n");
 

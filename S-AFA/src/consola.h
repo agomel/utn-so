@@ -6,7 +6,7 @@
 #include <stdio.h>
 #include <string.h>
 enum{
-	salir=0,status=1,finalizar=2,metricas=3,ejecutar=4
+	SALIR = 0, STATUS = 1, FINALIZAR = 2, METRICAS = 3, EJECUTAR=4
 };
 
 typedef struct{

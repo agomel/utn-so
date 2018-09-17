@@ -1,14 +1,12 @@
 #include "plp.h"
 
-
-t_queue* colaNEW;
-
 void planificadorALargoPlazo(){
 	u_int32_t a = 1;
 	while(a){
 		if(!queue_is_empty(colaNEW)){
 			//TODO wait mutex cola new
-			DTB dtb = queue_pop(colaNEW);
+			DTB dtb;
+			dtb= (DTB) queue_pop(colaNEW);
 			//TODO signal mutex cola new
 			//TODO operacion dummmy
 			//wait lugares
