@@ -12,6 +12,7 @@
 #include <biblioteca/utilidades.h>
 #include <biblioteca/select.h>
 #include <biblioteca/serializacion.h>
+#include <biblioteca/dtb.h>
 
 u_int32_t socketCPU;
 u_int32_t socketFM9;
