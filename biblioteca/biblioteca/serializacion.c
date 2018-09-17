@@ -74,8 +74,11 @@ int deserializarInt(u_int32_t emisor){
 	recibirMensaje(emisor, &mensaje, sizeof(u_int32_t));
 	return mensaje;
 }
-
-/*void serializarMensajito(mensajito mensaje){
-	void* m = asignarMemoria(sizeof(mensaje));
-	char operacion = MANDAR_MENSAJITO;
-}*/
+voidDeserealizado deserializarVoid(u_int32_t emisor){
+	voidDeserealizado mensajeADeserealizar;
+	recibirMensaje(emisor, mensajeADeserealizar.tamanioMensaje, sizeof(u_int32_t));
+	char* mensaje = malloc(mensajeADeserealizar.tamanioMensaje);
+	recibirMensaje(emisor, mensaje, mensajeADeserealizar.tamanioMensaje);
+	mensajeADeserealizar.mensaje = mensaje;
+	return mensajeADeserealizar;
+}

@@ -12,6 +12,12 @@
 #include <commons/collections/dictionary.h>
 #include "utilidades.h"
 
+typedef struct{
+		void* mensaje;
+		u_int32_t tamanioMensaje;
+	}voidDeserealizado;
+
+
 void handshake(u_int32_t servidor, char modulo);
 
 char deserializarIdentificarse(u_int32_t emisor);
@@ -25,5 +31,7 @@ int deserializarInt(u_int32_t emisor);
 void concatenarChar(void* buffer, u_int32_t* desplazamiento, char mensaje);
 int concatenarInt(void* buffer, u_int32_t* desplazamiento, u_int32_t numero);
 void concatenarString(void* buffer, u_int32_t* desplazamiento, char* mensaje);
+
+voidDeserealizado deserializarVoid(u_int32_t emisor);
 
 #endif /*SERIALIZACION_H_*/

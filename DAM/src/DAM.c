@@ -11,11 +11,18 @@
 #include <biblioteca/hilos.h>
 #include <biblioteca/utilidades.h>
 #include <biblioteca/select.h>
+#include <biblioteca/serializacion.h>
 
 u_int32_t socketCPU;
-
+u_int32_t socketFM9;
+u_int32_t socketMDJ;
+u_int32_t socketSAFA;
 void entenderMensaje(int emisor, char header){
+	voidDeserealizado mensajeAReenviar;
 	char identificado;
+	char identificarPersonaReenviar;
+	u_int32_t personaAReenviar;
+
 	switch(header){
 		case IDENTIFICARSE:
 			//TODO agregar tambien el socket identificado al mapa de conexiones
@@ -33,6 +40,21 @@ void entenderMensaje(int emisor, char header){
 		case MANDAR_TEXTO:
 			//TODO esta operacion es basura, es para probar a serializacion y deserializacion
 			deserializarString(emisor);
+			break;
+		case REENVIAR_MENSAJE:
+			identificarPersonaReenviar = deserializarIdentificarse(emisor);
+			switch(identificarPersonaReenviar){
+				case MDJ:
+					personaAReenviar = socketMDJ;
+					break;
+				case FM9:
+					personaAReenviar = socketFM9;
+					break;
+				default:
+				perror("no se puede reenviar a esa persona");
+			}
+			mensajeAReenviar = deserializarVoid(emisor);
+			enviarMensaje(personaAReenviar, mensajeAReenviar.mensaje, mensajeAReenviar.tamanioMensaje);
 			break;
 		default:
 			perror("Cualquiera ese header flaco");
@@ -61,13 +83,13 @@ int main(void) {
 
 	//crear servidores para ser cliente de ellos
 	direccionServidor direccionSAFA = levantarDeConfiguracion("IP_SAFA", "PUERTO_SAFA", ARCHIVO_CONFIGURACION);
-	int socketSAFA = conectarConServidor(direccionSAFA.puerto, inet_addr(direccionSAFA.ip));
+	socketSAFA = conectarConServidor(direccionSAFA.puerto, inet_addr(direccionSAFA.ip));
 
 	direccionServidor direccionMDJ = levantarDeConfiguracion("IP_MDJ", "PUERTO_MDJ", ARCHIVO_CONFIGURACION);
-	int socketMDJ = conectarConServidor(direccionMDJ.puerto, inet_addr(direccionMDJ.ip));
+	socketMDJ = conectarConServidor(direccionMDJ.puerto, inet_addr(direccionMDJ.ip));
 
 	direccionServidor direccionFM9 = levantarDeConfiguracion("IP_FM9", "PUERTO_FM9", ARCHIVO_CONFIGURACION);
-	int socketFM9 = conectarConServidor(direccionFM9.puerto, inet_addr(direccionFM9.ip));
+	socketFM9 = conectarConServidor(direccionFM9.puerto, inet_addr(direccionFM9.ip));
 
 	//mandar handshakes a los servidores
 	handshake(socketSAFA, DAM);
