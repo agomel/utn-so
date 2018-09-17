@@ -2,6 +2,48 @@
 #include <biblioteca/socket.h>
 #include <biblioteca/hilos.h>
 #include <biblioteca/utilidades.h>
+#include <biblioteca/dtb.h>
+
+void entenderMensaje(int emisor, char header){
+	DTB dtbRecibido;
+	char identificado;
+	switch(header){
+		case ENVIAR_DTB:
+			dtbRecibido = deserializarDTB(emisor);
+			if(dtbRecibido.flag == 1){
+				u_int32_t tamanioEscriptorio = strlen(dtbRecibido.escriptorio) + 1;
+				u_int32_t tamanioBuffer = sizeof(u_int32_t) + sizeof(char)*3 + tamanioEscriptorio;
+				void* buffer = asignarMemoria(tamanioBuffer);
+
+				//Lleno el buffer
+				u_int32_t desplazamiento = 0;
+
+				concatenarChar(buffer, &desplazamiento, REENVIAR_MENSAJE);
+				concatenarChar(buffer, &desplazamiento, MDJ);
+				concatenarInt(buffer, &desplazamiento, sizeof(u_int32_t) + sizeof(char) + tamanioEscriptorio);
+				concatenarChar(buffer, &desplazamiento, OBTENER_DATOS);
+				concatenarString(buffer, &desplazamiento, dtbRecibido.escriptorio);
+
+				enviarMensaje(emisor, buffer, tamanioBuffer);
+
+				free(buffer);
+			}
+/*			switch(identificado){
+				case CPU:
+					socketCPU = emisor;
+					break;
+				case DAM:
+					socketDAM = emisor;
+					break;
+				default:
+					perror("no acepto a esta conexion");
+			}
+			printf("Se agrego a las conexiones %c \n" , identificado);
+			break;*/
+		default:
+			perror("Cualquiera ese header flaco");
+	}
+}
 
 void consola(int servidor){
 	while(1){

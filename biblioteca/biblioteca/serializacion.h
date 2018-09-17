@@ -11,6 +11,7 @@
 #include <sys/types.h>
 #include <commons/collections/dictionary.h>
 #include "utilidades.h"
+#include "dtb.h"
 
 typedef struct{
 		void* mensaje;
@@ -27,7 +28,6 @@ void enviarYSerializarInt(u_int32_t destino, u_int32_t numero,char operacion);
 
 char* deserializarString(u_int32_t emisor);
 int deserializarInt(u_int32_t emisor);
-
 void concatenarChar(void* buffer, u_int32_t* desplazamiento, char mensaje);
 int concatenarInt(void* buffer, u_int32_t* desplazamiento, u_int32_t numero);
 void concatenarString(void* buffer, u_int32_t* desplazamiento, char* mensaje);

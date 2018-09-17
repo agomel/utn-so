@@ -22,6 +22,7 @@ u_int32_t socketDAM;
 void entenderMensaje(int emisor, char header){
 	char identificado;
 	u_int32_t archivoValido;
+	char* datos;
 	switch(header){
 		case IDENTIFICARSE:
 			//TODO agregar tambien el socket identificado al mapa de conexiones
@@ -44,7 +45,7 @@ void entenderMensaje(int emisor, char header){
 				crearArchivo(emisor);
 				break;
 			case OBTENER_DATOS:
-				char* datos = obtenerDatos(emisor);
+				datos = obtenerDatos(emisor);
 				//TODO corroborar que es esto lo que queremos devolver
 				enviarYSerializarString(emisor, datos, OBTENER_DATOS);
 				break;
