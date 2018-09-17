@@ -12,6 +12,7 @@
 #include <biblioteca/utilidades.h>
 #include "consola.h"
 #include <biblioteca/select.h>
+#include "planificador.h"
 
 u_int32_t socketCPU;
 u_int32_t socketDAM;
@@ -54,10 +55,15 @@ int main(void) {
 	parametros.funcion = &entenderMensaje;
 
 	pthread_t hiloAdministradorDeConexiones = crearHilo(&escucharClientes, &parametros);
+
 	pthread_t hiloConsola = crearHilo(&consola, NULL);
+
+	inicializarColas();
+	pthread_t hiloPlanificadorALargoPlazo = crearHilo(&planificadorALargoPlazo(), NULL);
 
 	esperarHilo(hiloAdministradorDeConexiones);
 	esperarHilo(hiloConsola);
+	esperarHilo(hiloPlanificadorALargoPlazo);
 
 	return 0;
 }
