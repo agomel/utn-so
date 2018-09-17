@@ -1,5 +1,10 @@
 #include "planificador.h"
 
+void inicializarPlanificadores(){
+	inicializarColas();
+	inicializarSemaforos();
+}
+
 void inicializarColas(){
 	colaNEW = queue_create();
 	colaREADY = queue_create();

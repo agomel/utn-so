@@ -7,7 +7,7 @@ void planificadorALargoPlazo(){
 			waitMutex(mutexNEW);
 			DTB* dtb = queue_pop(colaNEW);
 			signalMutex(mutexNEW);
-			//TODO operacion dummmy
+			realizarProcesoDummy(*dtb);
 			waitSem(espacioDisponibleREADY);
 			waitMutex(mutexREADY);
 			queue_push(colaREADY, dtb);
@@ -17,5 +17,14 @@ void planificadorALargoPlazo(){
 	}
 }
 
+void ponerProcesoEnNew(char* escriptorio){
+	DTB proceso = crearDTB(escriptorio);
+	waitMutex(mutexNEW);
+	queue_pop(&proceso);
+	signalMutex(mutexNEW);
+}
 
+void realizarProcesoDummy(DTB proceso){
+	//TODO hacer el proceso dummy
+}
 

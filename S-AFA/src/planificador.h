@@ -20,8 +20,9 @@ sem_t* espacioDisponibleREADY;
 sem_t* cantidadTotalREADY;
 
 
-void inicializarColas();
+void inicializarPlanificadores();
 
+void inicializarColas();
 void inicializarSemaforos();
 
 #endif /*PLANIFICADOR_H_*/

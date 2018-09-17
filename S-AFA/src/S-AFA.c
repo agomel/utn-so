@@ -62,12 +62,13 @@ int main(void) {
 
 	pthread_t hiloConsola = crearHilo(&consola, NULL);
 
-	inicializarColas();
+	inicializarPlanificadores();
 	pthread_t hiloPlanificadorALargoPlazo = crearHilo(&planificadorALargoPlazo, NULL);
+	pthread_t hiloPlanificadorACortoPlazo = crearHilo(&planificadorACortoPlazo, NULL);
 
 	esperarHilo(hiloAdministradorDeConexiones);
 	esperarHilo(hiloConsola);
 	esperarHilo(hiloPlanificadorALargoPlazo);
-
+	esperarHilo(hiloPlanificadorACortoPlazo);
 	return 0;
 }
