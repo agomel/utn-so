@@ -12,6 +12,7 @@
 #include <biblioteca/utilidades.h>
 #include "consola.h"
 #include <biblioteca/select.h>
+#include <biblioteca/dtb.h>
 
 u_int32_t socketCPU;
 u_int32_t socketDAM;
@@ -46,6 +47,8 @@ void entenderMensaje(int emisor, char header){
 }
 
 int main(void) {
+	inicializarMutex(&mutexIdsDTB);
+	contadorIds = 1;
 	direccionServidor direccionSAFA = levantarDeConfiguracion(NULL, "PUERTO", ARCHIVO_CONFIGURACION);
 	int servidor = crearServidor(direccionSAFA.puerto, INADDR_ANY);
 

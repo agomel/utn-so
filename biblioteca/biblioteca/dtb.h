@@ -16,8 +16,10 @@ typedef struct{
 
 DTB crearDTB (char* parametro);
 
-pthread_mutex_t mutexIdsDTB = crearMutex();
+int contadorIds;
 
-int contadorIds = 1;
+pthread_mutex_t mutexIdsDTB;
+
+
 
 #endif /*DTB_H_*/

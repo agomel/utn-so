@@ -2,10 +2,8 @@
 
 //MUTEX
 
-pthread_mutex_t crearMutex(){
-	pthread_mutex_t semaforo;
-	pthread_mutex_init(&semaforo, NULL);
-	return semaforo;
+void inicializarMutex(pthread_mutex_t* semaforo){
+	pthread_mutex_init(semaforo, NULL);
 }
 
 u_int32_t lock(pthread_mutex_t* semaforo){
@@ -20,14 +18,12 @@ u_int32_t unlock(pthread_mutex_t* semaforo){
 
 //CONTADOR
 
-sem_t crearContador(u_int32_t valorInicial){
-	sem_t semaforo;
+void inicializarContador(sem_t* semaforo, u_int32_t valorInicial){
 	sem_init(&semaforo, 0, valorInicial);
-	return semaforo;
 }
 
 u_int32_t wait(sem_t* semaforo){
-	extern int numero =  sem_wait(semaforo);
+	int numero =  sem_wait(semaforo);
 	return numero;
 }
 
