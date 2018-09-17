@@ -1,10 +1,10 @@
 #include "dtb.h"
 
 u_int32_t obtenerId(){
-	lock(&mutexIdsDTB);
+	waitMutex(&mutexIdsDTB);
 	u_int32_t id = contadorIds;
 	contadorIds++;
-	unlock(&mutexIdsDTB);
+	signalMutex(&mutexIdsDTB);
 	return id;
 }
 
