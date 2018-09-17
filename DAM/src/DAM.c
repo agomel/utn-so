@@ -17,6 +17,7 @@ u_int32_t socketCPU;
 u_int32_t socketFM9;
 u_int32_t socketMDJ;
 u_int32_t socketSAFA;
+
 void entenderMensaje(int emisor, char header){
 	voidDeserealizado mensajeAReenviar;
 	char identificado;

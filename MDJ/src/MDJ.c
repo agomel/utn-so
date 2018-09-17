@@ -31,7 +31,6 @@ void entenderMensaje(int emisor, char header){
 				case DAM:
 					socketDAM = emisor;
 					break;
-
 				default:
 					perror("no acepto a esta conexion");
 			}
@@ -39,14 +38,15 @@ void entenderMensaje(int emisor, char header){
 			break;
 			case VALIDAR_ARCHIVO:
 				archivoValido = validarArchivo(emisor);
-				enviarYSerializarInt(emisor,archivoValido,VALIDAR_ARCHIVO);
+				enviarYSerializarInt(emisor, archivoValido, VALIDAR_ARCHIVO);
 				break;
 			case CREAR_ARCHIVO:
 				crearArchivo(emisor);
 				break;
 			case OBTENER_DATOS:
-				obtenerDatos(emisor);
-				//TODO DEVOLVERLE AL EMISOR LOS DATOS
+				char* datos = obtenerDatos(emisor);
+				//TODO corroborar que es esto lo que queremos devolver
+				enviarYSerializarString(emisor, datos, OBTENER_DATOS);
 				break;
 			case GUARDAR_DATOS:
 				guardarDatos(emisor);
