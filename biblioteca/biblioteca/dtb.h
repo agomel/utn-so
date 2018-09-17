@@ -5,6 +5,8 @@
 #include <stdio.h>
 #include <string.h>
 #include "semaforos.h"
+#include "serializacion.h"
+#include "socket.h"
 
 typedef struct{
 	u_int32_t id;
@@ -19,6 +21,10 @@ DTB crearDTB (char* parametro);
 int contadorIds;
 
 pthread_mutex_t mutexIdsDTB;
+
+void serializarYEnviarDTB(int receptor, DTB dtb, char operacion);
+
+DTB deserializarDTB(int emisor);
 
 
 

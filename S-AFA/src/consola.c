@@ -25,7 +25,7 @@ comandoCompleto rearmarCadena(char* cadenaIngresada){
 	    comando.parametro=cadena[1];
 	    return comando;
 }
-
+//ESTO VA EN PLP
 void ponerProcesoEnNew(char* escriptorio){
 	DTB proceso = crearDTB(escriptorio);
 	//TODO wait mutexnew
@@ -33,6 +33,10 @@ void ponerProcesoEnNew(char* escriptorio){
 	//TODO signal mutexnew
 }
 
+void realizarProcesoDummy(DTB proceso){
+
+}
+//TERMINA PLP
 void consola(){
 
 	while(1){
