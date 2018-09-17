@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include "semaforos.h"
 
 typedef struct{
 	u_int32_t id;
@@ -14,6 +15,8 @@ typedef struct{
 }DTB;
 
 DTB crearDTB (char* parametro);
+
+pthread_mutex_t mutexIdsDTB = crearMutex();
 
 int contadorIds = 1;
 

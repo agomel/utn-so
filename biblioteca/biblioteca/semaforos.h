@@ -11,9 +11,9 @@
 
 pthread_mutex_t crearMutex();
 
-lock(pthread_mutex_t* semaforo);
+u_int32_t lock(pthread_mutex_t* semaforo);
 
-unlock(pthread_mutex_t* semaforo);
+u_int32_t unlock(pthread_mutex_t* semaforo);
 
 /////////////////
 
@@ -21,9 +21,9 @@ unlock(pthread_mutex_t* semaforo);
 
 sem_t crearContador(u_int32_t valorInicial);
 
-wait(sem_t* semaforo);
+u_int32_t wait(sem_t* semaforo);
 
-signal(sem_t* semaforo);
+u_int32_t signal(sem_t* semaforo);
 
 //////////////
 
