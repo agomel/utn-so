@@ -27,7 +27,6 @@ void enviarYSerializarString(u_int32_t destino, char* texto,char operacion){
 	u_int32_t desplazamiento = 0;
 
 	concatenarChar(mensaje, &desplazamiento, operacion);
-	concatenarInt(mensaje, &desplazamiento, tamanioTexto);
 	concatenarString(mensaje, &desplazamiento, texto);
 
 	enviarMensaje(destino, mensaje, tamanioMensaje);
@@ -57,6 +56,7 @@ int concatenarInt(void* buffer, u_int32_t* desplazamiento, u_int32_t numero){
 	*desplazamiento = *desplazamiento + sizeof(u_int32_t);
 }
 void concatenarString(void* buffer, u_int32_t* desplazamiento, char* mensaje){
+	concatenarInt(buffer,desplazamiento,strlen(mensaje) + 1);
 	memcpy(buffer + *desplazamiento, mensaje, strlen(mensaje) + 1);
 	*desplazamiento = *desplazamiento + strlen(mensaje) + 1;
 }
