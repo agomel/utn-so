@@ -74,6 +74,11 @@ int deserializarInt(u_int32_t emisor){
 	recibirMensaje(emisor, &mensaje, sizeof(u_int32_t));
 	return mensaje;
 }
+char deserializarChar(u_int32_t emisor){
+	char mensaje;
+	recibirMensaje(emisor, &mensaje, sizeof(char));
+	return mensaje;
+}
 voidDeserealizado deserializarVoid(u_int32_t emisor){
 	voidDeserealizado mensajeADeserealizar;
 	recibirMensaje(emisor, mensajeADeserealizar.tamanioMensaje, sizeof(u_int32_t));
