@@ -13,11 +13,11 @@ t_queue* colaREADY;
 t_queue* colaEXECUTE;
 t_queue* colaBLOCKED;
 
-pthread_mutex_t* mutexNEW;
-pthread_mutex_t* mutexREADY;
+pthread_mutex_t mutexNEW;
+pthread_mutex_t mutexREADY;
 
-sem_t* espacioDisponibleREADY;
-sem_t* cantidadTotalREADY;
+sem_t espacioDisponibleREADY;
+sem_t cantidadTotalREADY;
 
 
 void inicializarPlanificadores();

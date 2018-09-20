@@ -9,6 +9,7 @@ void entenderMensaje(int emisor, char header){
 	char identificado;
 	switch(header){
 		case ENVIAR_DTB:
+			printf("c\n");
 			dtbRecibido = deserializarDTB(emisor);
 			if(dtbRecibido.flag == 1){
 				u_int32_t tamanioEscriptorio = strlen(dtbRecibido.escriptorio) + 1;
