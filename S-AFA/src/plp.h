@@ -8,4 +8,8 @@
 
 void planificadorALargoPlazo();
 
+void ponerProcesoEnNew(char* escriptorio);
+
+void enviarDTB(DTB proceso);
+
 #endif /*PLP_H_*/
