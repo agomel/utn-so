@@ -7,14 +7,7 @@
  Description : Hello World in C, Ansi-style
  ============================================================================
  */
-#include <biblioteca/socket.h>
-#include <biblioteca/hilos.h>
-#include <biblioteca/utilidades.h>
-#include "consola.h"
-#include <biblioteca/select.h>
-#include "plp.h"
-#include "pcp.h"
-#include <biblioteca/dtb.h>
+#include "S-AFA.h"
 
 u_int32_t socketCPU;
 u_int32_t socketDAM;

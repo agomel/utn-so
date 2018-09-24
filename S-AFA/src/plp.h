@@ -4,6 +4,7 @@
 
 #include <commons/collections/queue.h>
 #include "planificador.h"
+#include "S-AFA.h"
 
 void planificadorALargoPlazo();
 

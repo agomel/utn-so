@@ -26,6 +26,6 @@ void ponerProcesoEnNew(char* escriptorio){
 }
 
 void enviarDTB(DTB proceso){
-	serializarYEnviarDTB(CPU, proceso, ENVIAR_DTB);
+	serializarYEnviarDTB(socketCPU, proceso, ENVIAR_DTB);
 }
 

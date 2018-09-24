@@ -76,7 +76,9 @@ int deserializarInt(u_int32_t emisor){
 }
 char deserializarChar(u_int32_t emisor){
 	char mensaje;
+	printf("deserializar char del emisor %d \n", emisor);
 	recibirMensaje(emisor, &mensaje, sizeof(char));
+	printf("El mensaje es %s \n", mensaje);
 	return mensaje;
 }
 voidDeserealizado deserializarVoid(u_int32_t emisor){
