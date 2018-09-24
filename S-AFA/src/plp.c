@@ -4,10 +4,15 @@ void planificadorALargoPlazo(){
 	u_int32_t a = 1;
 	while(a){
 		if(!queue_is_empty(colaNEW)){
-			printf("b\n");
+			printf("hay procesos en la cola new\n");
 			waitMutex(&mutexNEW);
 			DTB* dtb = queue_pop(colaNEW);
 			signalMutex(&mutexNEW);
+
+			waitMutex(&mutexDummy);
+			enviarOperacionDummy(*dtb);
+			signalMutex(&mutexDummy);
+
 			enviarDTB(*dtb);
 			waitSem(&espacioDisponibleREADY);
 			waitMutex(&mutexREADY);
@@ -18,6 +23,13 @@ void planificadorALargoPlazo(){
 	}
 }
 
+void enviarOperacionDummy(DTB dtb){
+	dtbDummy.flag = 1;
+	dtbDummy.escriptorio = dtb.escriptorio;
+	dtbDummy.id = dtb.id;
+	serializarYEnviarDTB(socketCPU, dtbDummy);
+}
+
 void ponerProcesoEnNew(char* escriptorio){
 	DTB proceso = crearDTB(escriptorio);
 	waitMutex(&mutexNEW);
@@ -26,6 +38,6 @@ void ponerProcesoEnNew(char* escriptorio){
 }
 
 void enviarDTB(DTB proceso){
-	serializarYEnviarDTB(socketCPU, proceso, ENVIAR_DTB);
+	serializarYEnviarDTB(socketCPU, proceso);
 }
 

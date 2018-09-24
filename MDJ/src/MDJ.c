@@ -26,7 +26,7 @@ void entenderMensaje(int emisor, char header){
 	switch(header){
 		case IDENTIFICARSE:
 			//TODO agregar tambien el socket identificado al mapa de conexiones
-			identificado = deserializarIdentificarse(emisor);
+			identificado = deserializarChar(emisor);
 			printf("identificado %c \n", identificado);
 			switch(identificado){
 				case DAM:
@@ -47,7 +47,7 @@ void entenderMensaje(int emisor, char header){
 			case OBTENER_DATOS:
 				datos = obtenerDatos(emisor);
 				//TODO corroborar que es esto lo que queremos devolver
-				enviarYSerializarString(emisor, datos, OBTENER_DATOS);
+				enviarYSerializarString(emisor, datos, DATOS_CONSEGUIDOS);
 				break;
 			case GUARDAR_DATOS:
 				guardarDatos(emisor);

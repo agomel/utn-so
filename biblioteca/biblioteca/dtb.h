@@ -22,7 +22,7 @@ int contadorIds;
 
 pthread_mutex_t mutexIdsDTB;
 
-void serializarYEnviarDTB(int receptor, DTB dtb, char operacion);
+void serializarYEnviarDTB(int receptor, DTB dtb);
 
 DTB deserializarDTB(int emisor);
 

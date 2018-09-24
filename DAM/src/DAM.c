@@ -24,11 +24,12 @@ void entenderMensaje(int emisor, char header){
 	char identificado;
 	char identificarPersonaReenviar;
 	u_int32_t personaAReenviar;
+	char* datos;
 
 	switch(header){
 		case IDENTIFICARSE:
 			//TODO agregar tambien el socket identificado al mapa de conexiones
-			identificado = deserializarIdentificarse(emisor);
+			identificado = deserializarChar(emisor);
 			printf("identificado %c \n", identificado);
 			switch(identificado){
 				case CPU:
@@ -44,7 +45,7 @@ void entenderMensaje(int emisor, char header){
 			deserializarString(emisor);
 			break;
 		case REENVIAR_MENSAJE:
-			identificarPersonaReenviar = deserializarIdentificarse(emisor);
+			identificarPersonaReenviar = deserializarChar(emisor);
 			switch(identificarPersonaReenviar){
 				case MDJ:
 					personaAReenviar = socketMDJ;
@@ -57,6 +58,10 @@ void entenderMensaje(int emisor, char header){
 			}
 			mensajeAReenviar = deserializarVoid(emisor);
 			enviarMensaje(personaAReenviar, mensajeAReenviar.mensaje, mensajeAReenviar.tamanioMensaje);
+			break;
+		case DATOS_CONSEGUIDOS:
+			datos = deserializarString(emisor);
+			enviarYSerializarString(socketFM9, datos, GUARDAR_DATOS);
 			break;
 		default:
 			perror("Cualquiera ese header flaco");

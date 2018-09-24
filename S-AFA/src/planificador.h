@@ -7,6 +7,7 @@
 #include <biblioteca/dtb.h>
 #include <commons/collections/queue.h>
 #include <biblioteca/semaforos.h>
+#include <biblioteca/dtb.h>
 
 t_queue* colaNEW;
 t_queue* colaREADY;
@@ -19,6 +20,8 @@ pthread_mutex_t mutexREADY;
 sem_t espacioDisponibleREADY;
 sem_t cantidadTotalREADY;
 
+DTB dtbDummy;
+pthread_mutex_t mutexDummy;
 
 void inicializarPlanificadores();
 

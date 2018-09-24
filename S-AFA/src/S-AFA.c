@@ -17,7 +17,7 @@ void entenderMensaje(int emisor, char header){
 	switch(header){
 		case IDENTIFICARSE:
 			//TODO agregar tambien el socket identificado al mapa de conexiones
-			identificado = deserializarIdentificarse(emisor);
+			identificado = deserializarChar(emisor);
 			printf("identificado %c \n", identificado);
 			switch(identificado){
 				case CPU:
