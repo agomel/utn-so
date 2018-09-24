@@ -15,8 +15,11 @@ void planificadorALargoPlazo(){
 			//block dummy
 			//enviarOperacionDummy(*dtb);
 			signalMutex(&mutexDummy);
-
-			//enviarDTB(*dtb);
+			waitSem(&espacioDisponibleREADY);
+			waitMutex(&mutexREADY);
+			queue_push(colaREADY, dtb);
+			signalMutex(&mutexREADY);
+			signalSem(&cantidadTotalREADY);
 		}
 	}
 }
