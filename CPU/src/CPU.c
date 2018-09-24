@@ -17,7 +17,6 @@ void escuchar(int servidor){
 	int a = 1;
 	while(a){
 		DTB dtbRecibido;
-		char identificado;
 		char header = deserializarChar(servidor);
 			switch(header){
 				case ENVIAR_DTB:
