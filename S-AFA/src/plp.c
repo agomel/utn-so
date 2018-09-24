@@ -13,7 +13,6 @@ void planificadorALargoPlazo(){
 			enviarOperacionDummy(*dtb);
 			signalMutex(&mutexDummy);
 
-			enviarDTB(*dtb);
 			waitSem(&espacioDisponibleREADY);
 			waitMutex(&mutexREADY);
 			queue_push(colaREADY, dtb);

@@ -38,6 +38,9 @@ void escuchar(int servidor){
 						concatenarString(buffer, &desplazamiento, dtbRecibido.escriptorio);
 
 						enviarMensaje(socketDIEGO, buffer, tamanioBuffer);
+					}else{
+						//No es el dummy
+						printf("Ejecutar dtb");
 					}
 					break;
 		default:

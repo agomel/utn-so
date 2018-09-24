@@ -62,6 +62,8 @@ void entenderMensaje(int emisor, char header){
 		case DATOS_CONSEGUIDOS:
 			datos = deserializarString(emisor);
 			enviarYSerializarString(socketFM9, datos, GUARDAR_DATOS);
+			//Preguntar si deberíamos esperar una confirmación del FM9
+
 			break;
 		default:
 			perror("Cualquiera ese header flaco");
