@@ -25,7 +25,7 @@ DTB crearDTB (char* parametro){
 void serializarYEnviarDTB(int receptor, DTB dtb){
 	//Asigno tamanio al buffer
 	u_int32_t tamanioEscriptorio = strlen(dtb.escriptorio) + 1;
-	u_int32_t tamanioBuffer = sizeof(u_int32_t)*4 + tamanioEscriptorio + sizeof(char);
+	u_int32_t tamanioBuffer = sizeof(char) + sizeof(u_int32_t)*4 + sizeof(u_int32_t) + tamanioEscriptorio;
 	void* buffer = asignarMemoria(tamanioBuffer);
 
 	//Lleno el buffer

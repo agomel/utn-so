@@ -6,7 +6,11 @@ void planificadorACortoPlazo(){
 		if(!queue_is_empty(colaREADY)){
 			waitSem(&cantidadTotalREADY);
 			waitMutex(&mutexREADY);
+			//algoritmo para elegir
 			DTB* dtb = queue_pop(colaREADY);
+			//enviar a cpu dtb a ejecutar
+			//si es el dummy
+			//desblockiar dummy
 			signalMutex(&mutexREADY);
 			signalSem(&espacioDisponibleREADY);
 			//TODO ejecutar el dtb

@@ -7,22 +7,29 @@ void planificadorALargoPlazo(){
 			printf("hay procesos en la cola new\n");
 			waitMutex(&mutexNEW);
 			DTB* dtb = queue_pop(colaNEW);
+			//Quizas seria un peek o no se que
 			signalMutex(&mutexNEW);
 
 			waitMutex(&mutexDummy);
-			enviarOperacionDummy(*dtb);
+			//poner en la cola de ready el DTBdummy
+			//block dummy
+			//enviarOperacionDummy(*dtb);
 			signalMutex(&mutexDummy);
 
-			enviarDTB(*dtb);
-			waitSem(&espacioDisponibleREADY);
-			waitMutex(&mutexREADY);
-			queue_push(colaREADY, dtb);
-			signalMutex(&mutexREADY);
-			signalSem(&cantidadTotalREADY);
+			//enviarDTB(*dtb);
 		}
 	}
 }
 
+/*void dtbListo(DTBListo datos){
+	//Busco en la lista el dtb con el id de datos dtb
+	DTB dtb;
+	waitSem(&espacioDisponibleREADY);
+	waitMutex(&mutexREADY);
+	queue_push(colaREADY, dtb);
+	signalMutex(&mutexREADY);
+	signalSem(&cantidadTotalREADY);
+}*/
 void enviarOperacionDummy(DTB dtb){
 	dtbDummy.flag = 1;
 	dtbDummy.escriptorio = dtb.escriptorio;
@@ -31,9 +38,10 @@ void enviarOperacionDummy(DTB dtb){
 }
 
 void ponerProcesoEnNew(char* escriptorio){
-	DTB proceso = crearDTB(escriptorio);
+	DTB* proceso = asignarMemoria(sizeof(DTB));
+	*proceso = crearDTB(escriptorio);
 	waitMutex(&mutexNEW);
-	queue_push(colaNEW, &proceso);
+	queue_push(colaNEW, proceso);
 	signalMutex(&mutexNEW);
 }
 

@@ -36,6 +36,9 @@ void entenderMensaje(int emisor, char header){
 			//TODO esta operacion es basura, es para probar a serializacion y deserializacion
 			deserializarString(emisor);
 			break;
+		case DTB_LISTO:
+			//Llamo a dtb listo del pcb
+			break;
 		default:
 			perror("Cualquiera ese header flaco");
 	}

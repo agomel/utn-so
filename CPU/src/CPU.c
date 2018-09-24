@@ -25,7 +25,7 @@ void escuchar(int servidor){
 					if(dtbRecibido.flag == 1){
 						//ES EL DUMMY
 						u_int32_t tamanioEscriptorio = strlen(dtbRecibido.escriptorio) + 1;
-						u_int32_t tamanioBuffer = sizeof(u_int32_t) + sizeof(char)*3 + tamanioEscriptorio;
+						u_int32_t tamanioBuffer = sizeof(u_int32_t)*2 + sizeof(char)*3 + tamanioEscriptorio;
 						void* buffer = asignarMemoria(tamanioBuffer);
 
 						//Lleno el buffer
