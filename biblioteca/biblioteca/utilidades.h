@@ -13,12 +13,17 @@
 #define ARCHIVO_LOG "../../log.txt"
 
 enum OPERACIONES{
-	IDENTIFICARSE = 'a', MANDAR_TEXTO = 'b', MANDAR_MENSAJITO = 'c', REENVIAR_MENSAJE = 'd',
-	VALIDAR_ARCHIVO = 'e', CREAR_ARCHIVO = 'f', OBTENER_DATOS = 'g', GUARDAR_DATOS = 'h', ENVIAR_DTB = 'i'
+	IDENTIFICARSE = 'a', MANDAR_TEXTO = 'b', MANDAR_MENSAJITO = 'c', CARGAR_ESCRIPTORIO = 'd',
+	VALIDAR_ARCHIVO = 'e', CREAR_ARCHIVO = 'f', OBTENER_DATOS = 'g', GUARDAR_DATOS = 'h', ENVIAR_DTB = 'i',
+	DATOS_CONSEGUIDOS = 'j', DTB_LISTO = 'k' , RESPUESTA_CARGA = 'l', PASAR_EXIT = 'm', PASAR_READY = 'n'
 };
 
 enum MODULOS{
 	SAFA='s', CPU='c', MDJ='m', FM9='f', DAM='d'
+};
+
+enum COLAS{
+	COLA_NEW = 'n', COLA_READY = 'r', COLA_EXEC = 'e'
 };
 
 void* asignarMemoria(int cantidad);

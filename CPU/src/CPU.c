@@ -15,6 +15,12 @@ void consola(int servidor){
 }
 void escuchar(int servidor){
 	int a = 1;
+	u_int32_t tamanioPathEscriptorio;
+	u_int32_t tamanioBuffer;
+	void* buffer;
+	u_int32_t desplazamiento;
+	u_int32_t sizeDelEscriptorio = 10;
+
 	while(a){
 		DTB dtbRecibido;
 		char header = deserializarChar(servidor);
@@ -22,21 +28,23 @@ void escuchar(int servidor){
 				case ENVIAR_DTB:
 					printf("c\n");
 					dtbRecibido = deserializarDTB(servidor);
-					if(dtbRecibido.flag == 1){
-						u_int32_t tamanioEscriptorio = strlen(dtbRecibido.escriptorio) + 1;
-						u_int32_t tamanioBuffer = sizeof(u_int32_t) + sizeof(char)*3 + tamanioEscriptorio;
-						void* buffer = asignarMemoria(tamanioBuffer);
+					if(dtbRecibido.flag == 0){
+						//ES EL DUMMY
+						tamanioPathEscriptorio = strlen(dtbRecibido.escriptorio) + 1;
+						tamanioBuffer = sizeof(char) + tamanioPathEscriptorio + sizeof(u_int32_t)*3;
+						buffer = asignarMemoria(tamanioBuffer);
+						desplazamiento = 0;
 
-						//Lleno el buffer
-						u_int32_t desplazamiento = 0;
-
-						concatenarChar(buffer, &desplazamiento, REENVIAR_MENSAJE);
-						concatenarChar(buffer, &desplazamiento, MDJ);
-						concatenarInt(buffer, &desplazamiento, sizeof(u_int32_t) + sizeof(char) + tamanioEscriptorio);
-						concatenarChar(buffer, &desplazamiento, OBTENER_DATOS);
+						concatenarChar(buffer, &desplazamiento, CARGAR_ESCRIPTORIO);
 						concatenarString(buffer, &desplazamiento, dtbRecibido.escriptorio);
+						concatenarInt(buffer, &desplazamiento, 0); //Offset
+						concatenarInt(buffer, &desplazamiento, sizeDelEscriptorio); //No sabemos este size
 
 						enviarMensaje(socketDIEGO, buffer, tamanioBuffer);
+						free(buffer);
+					}else{
+						//No es el dummy
+						printf("Ejecutar dtb");
 					}
 					break;
 		default:

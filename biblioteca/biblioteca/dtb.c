@@ -12,7 +12,7 @@ DTB crearDTB (char* parametro){
 	DTB dtb;
 
 	dtb.escriptorio = parametro;
-	dtb.flag = 0;
+	dtb.flag = 1;
 	dtb.id = obtenerId();
 	//TODO poner valor valido en programCounter
 	dtb.programCounter = -1;
@@ -22,16 +22,16 @@ DTB crearDTB (char* parametro){
 	return dtb;
 }
 
-void serializarYEnviarDTB(int receptor, DTB dtb, char operacion){
+void serializarYEnviarDTB(int receptor, DTB dtb){
 	//Asigno tamanio al buffer
 	u_int32_t tamanioEscriptorio = strlen(dtb.escriptorio) + 1;
-	u_int32_t tamanioBuffer = sizeof(u_int32_t)*4 + tamanioEscriptorio + sizeof(char);
+	u_int32_t tamanioBuffer = sizeof(char) + sizeof(u_int32_t)*4 + sizeof(u_int32_t) + tamanioEscriptorio;
 	void* buffer = asignarMemoria(tamanioBuffer);
 
 	//Lleno el buffer
 	u_int32_t desplazamiento = 0;
 
-	concatenarChar(buffer, &desplazamiento, operacion);
+	concatenarChar(buffer, &desplazamiento, ENVIAR_DTB);
 	concatenarString(buffer, &desplazamiento, dtb.escriptorio);
 	concatenarInt(buffer, &desplazamiento, dtb.flag);
 	concatenarInt(buffer, &desplazamiento, dtb.id);

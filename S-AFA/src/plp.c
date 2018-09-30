@@ -4,33 +4,53 @@ void planificadorALargoPlazo(){
 	u_int32_t a = 1;
 	while(a){
 		if(!queue_is_empty(colaNEW)){
+			printf("hay procesos en la cola new\n");
 			waitMutex(&mutexNEW);
 			DTB* dtb = queue_pop(colaNEW);
-			printf("Pude sacar de la cola\n");
-			DTB dtb2 = *dtb;
-			char* m = dtb2.escriptorio;
-			printf("el escriptorio sacado de la cola es: %s\n", m);
 			signalMutex(&mutexNEW);
-			enviarDTB(dtb2);
-			waitSem(&espacioDisponibleREADY);
+
+			wait(mutexColaDummy);
+			list_add(esperandoDummy, dtb);
+			signal(mutexColaDummy);
+
+			//Preguntar que seria bloquear el dummy
+			cargarDummy(dtb);
+
+			waitSem(&gradoMultiprogramacion); //hacer el signal cuando el proceso va a exit
 			waitMutex(&mutexREADY);
-			queue_push(colaREADY, dtb);
+			list_add(colaREADY, &dtbDummy);
 			signalMutex(&mutexREADY);
 			signalSem(&cantidadTotalREADY);
 		}
 	}
 }
 
-void ponerProcesoEnNew(char* escriptorio){
-	DTB proceso = crearDTB(escriptorio);
-	printf("el escriptorio fuera del dtb: %s\n", escriptorio);
-	waitMutex(&mutexNEW);
-	queue_push(colaNEW, &proceso);
-	signalMutex(&mutexNEW);
-	char* m = proceso.escriptorio;
-	printf("el escriptorio es: %s\n", m);
+/*void dtbListo(DTBListo datos){
+	//Busco en la lista el dtb con el id de datos dtb
+	DTB dtb;
+	waitSem(&espacioDisponibleREADY);
+	waitMutex(&mutexREADY);
+	queue_push(colaREADY, dtb);
+	signalMutex(&mutexREADY);
+	signalSem(&cantidadTotalREADY);
+}*/
+void cargarDummy(DTB dtb){
+	waitMutex(&mutexDummy);
+	dtbDummy.flag = 0;
+	dtbDummy.escriptorio = dtb.escriptorio;
+	dtbDummy.id = dtb.id;
+	//serializarYEnviarDTB(socketCPU, dtbDummy);
 }
 
-void enviarDTB(DTB proceso){
-	serializarYEnviarDTB(socketCPU, proceso, ENVIAR_DTB);
+void ponerProcesoEnNew(char* escriptorio){
+	DTB* dtb = asignarMemoria(sizeof(DTB));
+	*dtb = crearDTB(escriptorio);
+	waitMutex(&mutexNEW);
+	queue_push(colaNEW, dtb);
+	signalMutex(&mutexNEW);
+	free(dtb);
+}
+
+void enviarDTB(DTB dtb){
+	serializarYEnviarDTB(socketCPU, dtb);
 }

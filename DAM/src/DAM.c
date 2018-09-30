@@ -20,15 +20,24 @@ u_int32_t socketMDJ;
 u_int32_t socketSAFA;
 
 void entenderMensaje(int emisor, char header){
-	voidDeserealizado mensajeAReenviar;
 	char identificado;
 	char identificarPersonaReenviar;
 	u_int32_t personaAReenviar;
+	char* datos;
+	u_int32_t idDtb;
+	u_int32_t estadoDeCarga;
+	void* buffer;
+	u_int32_t desplazamiento;
+	u_int32_t tamanioPath;
+	char* path;
+	u_int32_t tamanioBuffer;
+	u_int32_t offset;
+	u_int32_t sizeDelEscriptorio;
 
 	switch(header){
 		case IDENTIFICARSE:
 			//TODO agregar tambien el socket identificado al mapa de conexiones
-			identificado = deserializarIdentificarse(emisor);
+			identificado = deserializarChar(emisor);
 			printf("identificado %c \n", identificado);
 			switch(identificado){
 				case CPU:
@@ -39,33 +48,58 @@ void entenderMensaje(int emisor, char header){
 			}
 			printf("Se agrego a las conexiones %c \n" , identificado);
 			break;
+
 		case MANDAR_TEXTO:
 			//TODO esta operacion es basura, es para probar a serializacion y deserializacion
 			deserializarString(emisor);
 			break;
-		case REENVIAR_MENSAJE:
-			identificarPersonaReenviar = deserializarIdentificarse(emisor);
-			switch(identificarPersonaReenviar){
-				case MDJ:
-					personaAReenviar = socketMDJ;
-					break;
-				case FM9:
-					personaAReenviar = socketFM9;
-					break;
-				default:
-				perror("no se puede reenviar a esa persona");
-			}
-			mensajeAReenviar = deserializarVoid(emisor);
-			enviarMensaje(personaAReenviar, mensajeAReenviar.mensaje, mensajeAReenviar.tamanioMensaje);
+
+		case CARGAR_ESCRIPTORIO:
+			//TODO fijarse el transfer size porque no puede cargar todo de una.
+			path = deserializarString(emisor);
+			offset = deserializarInt(emisor);
+			sizeDelEscriptorio = deserializarInt(emisor);
+
+			tamanioBuffer = strlen(path) + sizeof(u_int32_t)*3 + sizeof(char);
+			buffer = asignarMemoria(tamanioBuffer);
+			desplazamiento = 0;
+
+			concatenarChar(buffer, &desplazamiento, OBTENER_DATOS);
+			concatenarString(buffer, &desplazamiento, path);
+			concatenarInt(buffer, &desplazamiento, offset);
+			concatenarInt(buffer, &desplazamiento, sizeDelEscriptorio);
+			enviarMensaje(socketMDJ, buffer, tamanioBuffer);
+			free(buffer);
 			break;
+
+		case DATOS_CONSEGUIDOS:
+			datos = deserializarString(emisor);
+			enviarYSerializarString(socketFM9, datos, GUARDAR_DATOS);
+			break;
+
+		case RESPUESTA_CARGA: //Si el FM9 pudo cargar bien los datos o no
+			estadoDeCarga = deserializarInt(emisor);
+			buffer = asignarMemoria(sizeof(u_int32_t) + sizeof(char)*2);
+			desplazamiento = 0;
+			if(estadoDeCarga == 0){ //No pudo cargar
+				concatenarChar(buffer, &desplazamiento, PASAR_EXIT);
+			}else{
+				concatenarChar(buffer, &desplazamiento, PASAR_READY);
+			}
+			concatenarChar(buffer, &desplazamiento, COLA_NEW);
+			enviarMensaje(socketSAFA, buffer, sizeof(char)*2);
+			free(buffer);
+			break;
+
 		default:
 			perror("Cualquiera ese header flaco");
 	}
 }
+
 void escuchar(int servidor){
 	int a = 1;
 	while(a){
-		char* buffer=asignarMemoria(150);
+		char* buffer = asignarMemoria(150);
 		int bytesRecibidos = recibirMensaje(servidor,&buffer,150);
 		if(bytesRecibidos <= 0){
 			a = 0;
@@ -74,6 +108,7 @@ void escuchar(int servidor){
 		free(buffer);
 	}
 }
+
 int main(void) {
 	//crear servidor para escuchar al cpu
 	direccionServidor direccionDAM = levantarDeConfiguracion(NULL, "PUERTO", ARCHIVO_CONFIGURACION);

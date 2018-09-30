@@ -12,13 +12,6 @@ void handshake(u_int32_t servidor, char modulo){
 	free(mensaje);
 }
 
-char deserializarIdentificarse(u_int32_t emisor){
-	char modulo;
-	recibirMensaje(emisor, &modulo, sizeof(char));
-	printf("Se identifico a %c \n" , modulo);
-	return modulo;
-}
-
 void enviarYSerializarString(u_int32_t destino, char* texto,char operacion){
 	u_int32_t tamanioTexto = strlen(texto) + 1;
 	u_int32_t tamanioMensaje = sizeof(char) + sizeof(u_int32_t) + tamanioTexto;
@@ -65,8 +58,10 @@ char* deserializarString(u_int32_t emisor){
 	u_int32_t tamanioMensaje = deserializarInt(emisor);
 	char* mensaje = asignarMemoria(tamanioMensaje);
 	recibirMensaje(emisor, mensaje, tamanioMensaje);
-	printf("Recibi %s de parte de %d \n" , mensaje, emisor);
-	return mensaje;
+	char* respuesta = &mensaje;
+	free(mensaje);
+	printf("Recibi %s de parte de %d \n" , respuesta, emisor);
+	return respuesta;
 }
 
 int deserializarInt(u_int32_t emisor){
@@ -78,14 +73,15 @@ char deserializarChar(u_int32_t emisor){
 	char mensaje;
 	printf("deserializar char del emisor %d \n", emisor);
 	recibirMensaje(emisor, &mensaje, sizeof(char));
-	printf("El mensaje es %s \n", mensaje);
+	printf("El mensaje es %c \n", mensaje);
 	return mensaje;
 }
 voidDeserealizado deserializarVoid(u_int32_t emisor){
 	voidDeserealizado mensajeADeserealizar;
-	recibirMensaje(emisor, mensajeADeserealizar.tamanioMensaje, sizeof(u_int32_t));
+	mensajeADeserealizar.tamanioMensaje = deserializarInt(emisor);
 	char* mensaje = malloc(mensajeADeserealizar.tamanioMensaje);
 	recibirMensaje(emisor, mensaje, mensajeADeserealizar.tamanioMensaje);
 	mensajeADeserealizar.mensaje = mensaje;
+	free(mensaje);
 	return mensajeADeserealizar;
 }

@@ -17,7 +17,7 @@ void entenderMensaje(int emisor, char header){
 	switch(header){
 		case IDENTIFICARSE:
 			//TODO agregar tambien el socket identificado al mapa de conexiones
-			identificado = deserializarIdentificarse(emisor);
+			identificado = deserializarChar(emisor);
 			printf("identificado %c \n", identificado);
 			switch(identificado){
 				case CPU:
@@ -36,12 +36,17 @@ void entenderMensaje(int emisor, char header){
 			//TODO esta operacion es basura, es para probar a serializacion y deserializacion
 			deserializarString(emisor);
 			break;
+		case DTB_LISTO:
+			//Llamo a dtb listo del pcb
+			break;
 		default:
 			perror("Cualquiera ese header flaco");
 	}
 }
 
 int main(void) {
+	//TODO Debe iniciar en estado corrupto
+
 	inicializarMutex(&mutexIdsDTB);
 	contadorIds = 1;
 	direccionServidor direccionSAFA = levantarDeConfiguracion(NULL, "PUERTO", ARCHIVO_CONFIGURACION);

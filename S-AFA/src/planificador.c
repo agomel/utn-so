@@ -7,7 +7,8 @@ void inicializarPlanificadores(){
 
 void inicializarColas(){
 	colaNEW = queue_create();
-	colaREADY = queue_create();
+	colaREADY = list_create();
+	esperandoDummy = list_create();
 	colaEXECUTE = queue_create();
 	colaBLOCKED = queue_create();
 }
@@ -17,6 +18,6 @@ void inicializarSemaforos(){
 	inicializarMutex(&mutexREADY);
 
 	//TODO pasarle el espacio disponible en READY (grado de multiprogramacion) por parametro
-	inicializarSem(&espacioDisponibleREADY, 3);
+	inicializarSem(&gradoMultiprogramacion, 3);
 	inicializarSem(&cantidadTotalREADY, 0);
 }
