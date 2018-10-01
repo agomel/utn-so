@@ -1,5 +1,6 @@
 #include "consola.h"
 #include <biblioteca/dtb.h>
+
 int obtenerComando(char*ingresado){
 	int comando=6;
 	const char* comandos[] = {"salir","status","finalizar","metricas","ejecutar"};
@@ -7,8 +8,8 @@ int obtenerComando(char*ingresado){
 		if(strcmp(ingresado, comandos[i]) == 0) comando=i;
 	}
 	return comando;
-
 }
+
 comandoCompleto rearmarCadena(char* cadenaIngresada){
 		char* cadena[2];
 	    char* token = strtok(cadenaIngresada, ",");
@@ -27,14 +28,12 @@ comandoCompleto rearmarCadena(char* cadenaIngresada){
 }
 
 void consola(){
-
 	while(1){
 		char mensaje[1000];
 		scanf("%s", mensaje);
 
 		comandoCompleto cadenaArmada=rearmarCadena(mensaje);
 		int comando=obtenerComando(cadenaArmada.comando);
-
 
 		switch(comando){
 			case SALIR: printf("salir\n"); exit(1);
@@ -50,8 +49,6 @@ void consola(){
 				ponerProcesoEnNew(cadenaArmada.parametro);
 				break;
 			default:perror("no entendes los comandos\n");
-
 		}
-
 	}
 }
