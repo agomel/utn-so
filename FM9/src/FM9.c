@@ -81,7 +81,7 @@ void entenderMensaje(int emisor, int header){
 }
 
 int main(void) {
-	//cargar storage
+	//TODO cargar storage
 	storage = asignarMemoria(1000);
 
 	direccionServidor direccionFM9 = levantarDeConfiguracion(NULL, "PUERTO", ARCHIVO_CONFIGURACION);
