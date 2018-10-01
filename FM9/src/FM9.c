@@ -8,29 +8,34 @@
  ============================================================================
  */
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <biblioteca/utilidades.h>
-#include <biblioteca/socket.h>
-#include <biblioteca/select.h>
-#include <biblioteca/hilos.h>
+#include "FM9.h"
 
-t_dictionary* conexiones;
-u_int32_t socketCPU;
-u_int32_t socketDAM;
-char* storage;
-
-u_int32_t cargarDatosEnMemoria(char* datos){
-	//TODO devolver una estructura que tenga la lista de tabla de paginas
+respuestaDeCargaEnMemoria cargarDatosEnMemoria(char* datos, u_int32_t id_dtb){
+	respuestaDeCargaEnMemoria respuesta;
+	respuesta.id_dtb = id_dtb;
+	//TODO convertir el char* datos en t_list listaDeDirecciones
+	list_add(respuesta.listaDeDirecciones, 1);
+	//TODO pudoGuardarlo()
+	if(1){
+		respuesta.pudoGuardarlo = 1;
+	}else{
+		respuesta.pudoGuardarlo = 0;
+	}
 	printf("guardado en memoria: %s", datos);
-	return 1; //pudo guardar. TODO hacer si tuvo un error return 0
+	return respuesta; //pudo guardar. TODO hacer si tuvo un error return 0
 }
 
 void entenderMensaje(int emisor, int header){
 	char identificado;
 	char* datos;
-	u_int32_t pudoGuardarDatos;
-
+	respuestaDeCargaEnMemoria respuestaDeCarga;
+	u_int32_t id;
+	u_int32_t tamanioBuffer;
+	u_int32_t offset;
+	u_int32_t sizeDeLaRespuesta;
+	u_int32_t desplazamiento;
+	u_int32_t tamanioPath;
+	void* buffer;
 		switch(header){
 			case IDENTIFICARSE:
 				identificado = deserializarChar(emisor);
@@ -50,10 +55,24 @@ void entenderMensaje(int emisor, int header){
 
 			case GUARDAR_DATOS:
 				datos = deserializarString(emisor);
-				pudoGuardarDatos = cargarDatosEnMemoria(datos);
+				id = deserializarInt(emisor);
+				respuestaDeCarga = cargarDatosEnMemoria(datos,id);
 				//TODO enviar y serializar la estructura de guardado
-				enviarYSerializarInt(socketDAM, pudoGuardarDatos, RESPUESTA_CARGA);
+				//enviarYSerializarInt(socketDAM, respuestaDeCarga, RESPUESTA_CARGA);
+				tamanioBuffer = sizeof(u_int32_t) + sizeof(u_int32_t) + sizeof(u_int32_t)*list_size(respuestaDeCarga.listaDeDirecciones);
+				buffer = asignarMemoria(tamanioBuffer);
+				desplazamiento = 0;
+				offset = 0; //Quiero que lea el archivo desde el principio
+				sizeDeLaRespuesta = 100; //Cómo sabemos el tamaño de lo que va a traer?!?!?
 
+				concatenarChar(buffer, &desplazamiento, RESPUESTA_CARGA);
+				concatenarInt(buffer, &desplazamiento, respuestaDeCarga.id_dtb);
+				concatenarInt(buffer, &desplazamiento, respuestaDeCarga.pudoGuardarlo);
+				if(respuestaDeCarga.pudoGuardarlo){
+					concatenarInt(buffer, &desplazamiento, respuestaDeCarga.listaDeDirecciones);
+				}
+				enviarMensaje(socketDAM, buffer, tamanioBuffer);
+				free(buffer);
 				break;
 
 			default:
