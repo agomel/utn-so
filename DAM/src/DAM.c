@@ -7,17 +7,7 @@
  Description : Hello World in C, Ansi-style
  ============================================================================
  */
-#include <biblioteca/socket.h>
-#include <biblioteca/hilos.h>
-#include <biblioteca/utilidades.h>
-#include <biblioteca/select.h>
-#include <biblioteca/serializacion.h>
-#include <biblioteca/dtb.h>
-
-u_int32_t socketCPU;
-u_int32_t socketFM9;
-u_int32_t socketMDJ;
-u_int32_t socketSAFA;
+#include "DAM.h"
 
 void entenderMensaje(int emisor, char header){
 	char identificado;
@@ -71,8 +61,21 @@ void entenderMensaje(int emisor, char header){
 			break;
 
 		case DATOS_CONSEGUIDOS:
+			u_int32_t idDTB = queue_pop(colaMDJ);
 			datos = deserializarString(emisor);
-			enviarYSerializarString(socketFM9, datos, GUARDAR_DATOS);
+			//Serializo y envio a FM9
+
+			tamanioBuffer = strlen(datos)+1 + sizeof(u_int32_t)*3 + sizeof(char);
+			buffer = asignarMemoria(tamanioBuffer);
+			desplazamiento = 0;
+
+			concatenarChar(buffer, &desplazamiento, GUARDAR_DATOS);
+			concatenarString(buffer, &desplazamiento, datos);
+			concatenarInt(buffer, &desplazamiento, idDTB);
+
+			enviarMensaje(socketFM9, buffer, tamanioBuffer);
+			free(buffer);
+
 			break;
 
 		case RESPUESTA_CARGA: //Si el FM9 pudo cargar bien los datos o no

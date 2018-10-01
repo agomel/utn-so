@@ -10,7 +10,6 @@ u_int32_t obtenerId(){
 
 DTB crearDTB (char* parametro){
 	DTB dtb;
-
 	dtb.escriptorio = parametro;
 	dtb.flag = 1;
 	dtb.id = obtenerId();
