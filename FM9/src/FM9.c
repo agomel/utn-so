@@ -33,7 +33,6 @@ void entenderMensaje(int emisor, int header){
 
 		switch(header){
 			case IDENTIFICARSE:
-				//TODO agregar tambien el socket identificado al mapa de conexiones
 				identificado = deserializarChar(emisor);
 				printf("identificado %c \n", identificado);
 				switch(identificado){

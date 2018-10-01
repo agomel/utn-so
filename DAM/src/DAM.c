@@ -36,7 +36,6 @@ void entenderMensaje(int emisor, char header){
 
 	switch(header){
 		case IDENTIFICARSE:
-			//TODO agregar tambien el socket identificado al mapa de conexiones
 			identificado = deserializarChar(emisor);
 			printf("identificado %c \n", identificado);
 			switch(identificado){
@@ -57,7 +56,6 @@ void entenderMensaje(int emisor, char header){
 		case CARGAR_ESCRIPTORIO:
 			//TODO fijarse el transfer size porque no puede cargar todo de una.
 			path = deserializarString(emisor);
-
 			tamanioBuffer = strlen(path) + sizeof(u_int32_t)*3 + sizeof(char);
 			buffer = asignarMemoria(tamanioBuffer);
 			desplazamiento = 0;

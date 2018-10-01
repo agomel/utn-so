@@ -18,7 +18,6 @@ void entenderMensaje(int emisor, char header){
 	int idDTB;
 	switch(header){
 		case IDENTIFICARSE:
-			//TODO agregar tambien el socket identificado al mapa de conexiones
 			identificado = deserializarChar(emisor);
 			printf("identificado %c \n", identificado);
 			switch(identificado){
@@ -77,7 +76,6 @@ int main(void) {
 	parametros.funcion = &entenderMensaje;
 
 	pthread_t hiloAdministradorDeConexiones = crearHilo(&escucharClientes, &parametros);
-
 	pthread_t hiloConsola = crearHilo(&consola, NULL);
 
 	inicializarPlanificadores();
