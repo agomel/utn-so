@@ -44,14 +44,23 @@ void concatenarChar(void* buffer, u_int32_t* desplazamiento, char mensaje){
 	memcpy(buffer + *desplazamiento, &mensaje, sizeof(char));
 	*desplazamiento = *desplazamiento + sizeof(char);
 }
-u_int32_t concatenarInt(void* buffer, u_int32_t* desplazamiento, u_int32_t numero){
+
+void concatenarInt(void* buffer, u_int32_t* desplazamiento, u_int32_t numero){
 	memcpy(buffer + *desplazamiento, &numero, sizeof(u_int32_t));
 	*desplazamiento = *desplazamiento + sizeof(u_int32_t);
 }
+
 void concatenarString(void* buffer, u_int32_t* desplazamiento, char* mensaje){
-	concatenarInt(buffer,desplazamiento,strlen(mensaje) + 1);
+	concatenarInt(buffer, desplazamiento, strlen(mensaje) + 1);
 	memcpy(buffer + *desplazamiento, mensaje, strlen(mensaje) + 1);
 	*desplazamiento = *desplazamiento + strlen(mensaje) + 1;
+}
+
+void concatenarListaInt(void* buffer, u_int32_t* desplazamiento, t_list* listaArchivos){
+	concatenarInt(buffer, desplazamiento, listaArchivos->elements_count);
+	for(int i = 0; i < (listaArchivos->elements_count); i++){
+		concatenarInt(buffer, desplazamiento, list_get(listaArchivos, i));
+	}
 }
 
 char* deserializarString(u_int32_t emisor){
@@ -72,6 +81,7 @@ u_int32_t deserializarInt(u_int32_t emisor){
 	recibirMensaje(emisor, &mensaje, sizeof(u_int32_t));
 	return mensaje;
 }
+
 char deserializarChar(u_int32_t emisor){
 	char mensaje;
 	printf("deserializar char del emisor %d \n", emisor);
@@ -79,6 +89,16 @@ char deserializarChar(u_int32_t emisor){
 	printf("El mensaje es %c \n", mensaje);
 	return mensaje;
 }
+
+t_list* deserializarListaInt(u_int32_t emisor){
+	u_int32_t elementosDeLalista = deserializarInt(emisor);
+	t_list* respuesta;
+	for(int i = 0; i<elementosDeLalista; i++){
+		list_add(respuesta, deserializarInt(emisor));
+	}
+	return respuesta;
+}
+
 voidDeserealizado deserializarVoid(u_int32_t emisor){
 	voidDeserealizado mensajeADeserealizar;
 	mensajeADeserealizar.tamanioMensaje = deserializarInt(emisor);
