@@ -34,6 +34,7 @@ void entenderMensaje(int emisor, char header){
 	u_int32_t offset;
 	u_int32_t sizeDelEscriptorio;
 	u_int32_t idDTBNuevo;
+
 	switch(header){
 		case IDENTIFICARSE:
 			identificado = deserializarChar(emisor);
@@ -56,7 +57,8 @@ void entenderMensaje(int emisor, char header){
 		case CARGAR_ESCRIPTORIO:
 			//TODO fijarse el transfer size porque no puede cargar todo de una.
 			path = deserializarString(emisor);
-			tamanioBuffer = strlen(path) + sizeof(u_int32_t)*3 + sizeof(char);
+			idDTBNuevo = deserializarInt(emisor);
+			tamanioBuffer = (strlen(path)+1) + sizeof(u_int32_t)*3 + sizeof(char);
 			buffer = asignarMemoria(tamanioBuffer);
 			desplazamiento = 0;
 			offset = 0; //Quiero que lea el archivo desde el principio

@@ -44,7 +44,7 @@ void concatenarChar(void* buffer, u_int32_t* desplazamiento, char mensaje){
 	memcpy(buffer + *desplazamiento, &mensaje, sizeof(char));
 	*desplazamiento = *desplazamiento + sizeof(char);
 }
-int concatenarInt(void* buffer, u_int32_t* desplazamiento, u_int32_t numero){
+u_int32_t concatenarInt(void* buffer, u_int32_t* desplazamiento, u_int32_t numero){
 	memcpy(buffer + *desplazamiento, &numero, sizeof(u_int32_t));
 	*desplazamiento = *desplazamiento + sizeof(u_int32_t);
 }
@@ -68,7 +68,7 @@ char* deserializarString(u_int32_t emisor){
 	return respuesta;
 }
 
-int deserializarInt(u_int32_t emisor){
+u_int32_t deserializarInt(u_int32_t emisor){
 	u_int32_t mensaje;
 	recibirMensaje(emisor, &mensaje, sizeof(u_int32_t));
 	return mensaje;
