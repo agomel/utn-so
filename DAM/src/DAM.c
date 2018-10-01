@@ -9,6 +9,73 @@
  */
 #include "DAM.h"
 
+void inicializarDAM(){
+	inicializarMutex(&mutexColaMDJ);
+	inicializarMutex(&mutexMDJDisponible);
+	inicializarSem(&semHayEnColaMDJ,0);
+}
+
+void enviarAMDJ(){
+	waitSem(&semHayEnColaMDJ);
+
+	waitMutex(&mutexColaMDJ);
+	ProcesoMDJ* procesoMDJ = queue_peek(colaMDJ);
+	signalMutex(&mutexColaMDJ);
+
+	u_int32_t tamanioBuffer = (strlen(procesoMDJ->path)+1) + sizeof(u_int32_t)*3 + sizeof(char);
+	void* buffer = asignarMemoria(tamanioBuffer);
+	u_int32_t desplazamiento = 0;
+
+	concatenarChar(buffer, &desplazamiento, OBTENER_DATOS);
+	concatenarString(buffer, &desplazamiento, procesoMDJ->path);
+	concatenarInt(buffer, &desplazamiento, procesoMDJ->offset);
+	concatenarInt(buffer, &desplazamiento, procesoMDJ->size);
+
+	waitMutex(&mutexMDJDisponible);
+	enviarMensaje(socketMDJ, buffer, tamanioBuffer);
+	free(buffer);
+}
+
+void agregarDTBAColaMDJ(int emisor, int esDummy){
+	ProcesoMDJ* dtb;
+	dtb->path = deserializarString(emisor);
+	dtb->idDTB = deserializarInt(emisor);
+	if(esDummy){
+		dtb->offset = 0;
+		//TODO el MDJ tiene que saber que si el size es -1 tiene que leer hasta el final del archivo
+		dtb->size = -1;
+	}else{
+		dtb->offset = deserializarInt(emisor);
+		dtb->size = deserializarInt(emisor);
+	}
+	waitMutex(&mutexColaMDJ);
+	queue_push(colaMDJ, dtb);
+	signalMutex(&mutexColaMDJ);
+	signalSem(&semHayEnColaMDJ);
+}
+void enviarDatosAFM9(int emisor){
+	signalMutex(&mutexMDJDisponible);
+
+	waitMutex(&mutexColaMDJ);
+	ProcesoMDJ* dtb = queue_pop(colaMDJ);
+	signalMutex(&mutexColaMDJ);
+
+	//TODO recibir los datos del mdj y crear lo que enviar
+	char* datos = deserializarString(emisor);
+
+	u_int32_t tamanioBuffer = strlen(datos)+1 + sizeof(u_int32_t)*2 + sizeof(char);
+	void* buffer = asignarMemoria(tamanioBuffer);
+	u_int32_t desplazamiento = 0;
+
+	concatenarChar(buffer, &desplazamiento, GUARDAR_DATOS);
+	concatenarString(buffer, &desplazamiento, datos);
+	concatenarInt(buffer, &desplazamiento, dtb->idDTB);
+
+	enviarMensaje(socketFM9, buffer, tamanioBuffer);
+	free(buffer);
+
+}
+
 void entenderMensaje(int emisor, char header){
 	char identificado;
 	char identificarPersonaReenviar;
@@ -45,39 +112,12 @@ void entenderMensaje(int emisor, char header){
 			break;
 
 		case CARGAR_ESCRIPTORIO:
-			//TODO fijarse el transfer size porque no puede cargar todo de una.
-			path = deserializarString(emisor);
-			idDTBNuevo = deserializarInt(emisor);
-			tamanioBuffer = (strlen(path)+1) + sizeof(u_int32_t)*3 + sizeof(char);
-			buffer = asignarMemoria(tamanioBuffer);
-			desplazamiento = 0;
-			offset = 0; //Quiero que lea el archivo desde el principio
-			sizeDelEscriptorio = 100; //Cómo sabemos el tamaño de lo que va a traer?!?!?
-
-			concatenarChar(buffer, &desplazamiento, OBTENER_DATOS);
-			concatenarString(buffer, &desplazamiento, path);
-			concatenarInt(buffer, &desplazamiento, offset);
-			concatenarInt(buffer, &desplazamiento, sizeDelEscriptorio);
-			enviarMensaje(socketMDJ, buffer, tamanioBuffer);
-			free(buffer);
+			//Se le envia 1 como segundo parametro porque el dtb a agregar a la cola es el dummy
+			agregarDTBAColaMDJ(emisor, 1);
 			break;
 
 		case DATOS_CONSEGUIDOS:
-			u_int32_t idDTB = queue_pop(colaMDJ);
-			datos = deserializarString(emisor);
-			//Serializo y envio a FM9
-
-			tamanioBuffer = strlen(datos)+1 + sizeof(u_int32_t)*3 + sizeof(char);
-			buffer = asignarMemoria(tamanioBuffer);
-			desplazamiento = 0;
-
-			concatenarChar(buffer, &desplazamiento, GUARDAR_DATOS);
-			concatenarString(buffer, &desplazamiento, datos);
-			concatenarInt(buffer, &desplazamiento, idDTB);
-
-			enviarMensaje(socketFM9, buffer, tamanioBuffer);
-			free(buffer);
-
+			enviarDatosAFM9(emisor);
 			break;
 
 		case RESPUESTA_CARGA: //Si el FM9 pudo cargar bien los datos o no
@@ -116,6 +156,7 @@ void escuchar(int servidor){
 }
 
 int main(void) {
+	inicializarDAM();
 	//crear servidor para escuchar al cpu
 	direccionServidor direccionDAM = levantarDeConfiguracion(NULL, "PUERTO", ARCHIVO_CONFIGURACION);
 	int servidorDAM = crearServidor(direccionDAM.puerto, INADDR_ANY);
@@ -143,7 +184,7 @@ int main(void) {
 	pthread_t hiloEscuchadorSAFA = crearHilo(&escuchar,socketSAFA);
 	pthread_t hiloEscuchadorMDJ = crearHilo(&escuchar,socketMDJ);
 	pthread_t hiloEscuchadorFM9 = crearHilo(&escuchar,socketFM9);
-
+	pthread_t hiloControladorDeMDJ = crearHilo(&enviarAMDJ,hiloControladorDeMDJ);
 	//creo un hilo para escuchar los clientes(CPU)
 	pthread_t hiloAdministradorDeConexiones = crearHilo(&escucharClientes, &parametros);
 
@@ -152,6 +193,7 @@ int main(void) {
 	esperarHilo(hiloEscuchadorMDJ);
 	esperarHilo(hiloEscuchadorFM9);
 	esperarHilo(hiloAdministradorDeConexiones);
+	esperarHilo(hiloControladorDeMDJ);
 
 	return 0;
 }
