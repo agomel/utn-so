@@ -76,7 +76,7 @@ char* deserializarString(u_int32_t emisor){
 	return respuesta;
 }
 
-int deserializarInt(u_int32_t emisor){
+u_int32_t deserializarInt(u_int32_t emisor){
 	u_int32_t mensaje;
 	recibirMensaje(emisor, &mensaje, sizeof(u_int32_t));
 	return mensaje;
