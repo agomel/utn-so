@@ -67,7 +67,7 @@ void ponerEnReadyProcesoDummyOk(u_int32_t idDTB){
 		}
 		index++;
 	}
-	//TODO esta lista es imaginaria. Cambiar el uint por lista
+	//TODO Cambiar el uint por una lista
 	dtb->tablaDireccionesArchivos = 2;
 	waitSem(&gradoMultiprogramacion); //TODO hacer el signal cuando el proceso va a exit
 	waitMutex(&mutexREADY);
