@@ -81,16 +81,10 @@ void entenderMensaje(int emisor, char header){
 	char identificarPersonaReenviar;
 	u_int32_t personaAReenviar;
 	char* datos;
-	u_int32_t idDtb;
 	u_int32_t estadoDeCarga;
-	void* buffer;
 	u_int32_t desplazamiento;
-	u_int32_t tamanioPath;
-	char* path;
-	u_int32_t tamanioBuffer;
-	u_int32_t offset;
-	u_int32_t sizeDelEscriptorio;
-	u_int32_t idDTBNuevo;
+	u_int32_t idDtb;
+	void* buffer;
 
 	switch(header){
 		case IDENTIFICARSE:
