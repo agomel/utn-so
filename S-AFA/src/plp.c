@@ -59,11 +59,11 @@ void ponerEnReadyProcesoDummyOk(u_int32_t idDTB){
 	DTB* dtb;
 	int index = 0;
 	int salir = 0;
-	while(index<colaEsperandoDummy->elements_count && !salir){
+	while(index < colaEsperandoDummy->elements_count && !salir){
 		dtb = list_get(colaEsperandoDummy, index);
 		if(dtb->id == idDTB){
 			salir = 1;
-			list_remove(colaEsperandoDummy,index);
+			list_remove(colaEsperandoDummy, index);
 		}
 		index++;
 	}
