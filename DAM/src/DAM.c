@@ -37,7 +37,7 @@ void enviarAMDJ(){
 }
 
 void agregarDTBAColaMDJ(int emisor, int esDummy){
-	ProcesoMDJ* dtb;
+	ProcesoMDJ* dtb = asignarMemoria(sizeof(ProcesoMDJ));
 	dtb->path = deserializarString(emisor);
 	dtb->idDTB = deserializarInt(emisor);
 	if(esDummy){
@@ -73,6 +73,7 @@ void enviarDatosAFM9(int emisor){
 
 	enviarMensaje(socketFM9, buffer, tamanioBuffer);
 	free(buffer);
+	free(dtb);
 
 }
 
