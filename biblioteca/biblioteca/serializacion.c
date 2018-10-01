@@ -58,7 +58,7 @@ char* deserializarString(u_int32_t emisor){
 	u_int32_t tamanioMensaje = deserializarInt(emisor);
 	char* mensaje = asignarMemoria(tamanioMensaje);
 	recibirMensaje(emisor, mensaje, tamanioMensaje);
-	char* respuesta = &mensaje;
+	char* respuesta = *mensaje;
 	free(mensaje);
 	printf("Recibi %s de parte de %d \n" , respuesta, emisor);
 	return respuesta;
@@ -81,7 +81,7 @@ voidDeserealizado deserializarVoid(u_int32_t emisor){
 	mensajeADeserealizar.tamanioMensaje = deserializarInt(emisor);
 	char* mensaje = malloc(mensajeADeserealizar.tamanioMensaje);
 	recibirMensaje(emisor, mensaje, mensajeADeserealizar.tamanioMensaje);
-	mensajeADeserealizar.mensaje = mensaje;
+	mensajeADeserealizar.mensaje = *mensaje;
 	free(mensaje);
 	return mensajeADeserealizar;
 }

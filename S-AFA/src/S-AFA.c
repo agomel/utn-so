@@ -14,6 +14,8 @@ u_int32_t socketDAM;
 
 void entenderMensaje(int emisor, char header){
 	char identificado;
+	char colaOrigen;
+	int idDTB;
 	switch(header){
 		case IDENTIFICARSE:
 			//TODO agregar tambien el socket identificado al mapa de conexiones
@@ -36,8 +38,17 @@ void entenderMensaje(int emisor, char header){
 			//TODO esta operacion es basura, es para probar a serializacion y deserializacion
 			deserializarString(emisor);
 			break;
-		case DTB_LISTO:
-			//Llamo a dtb listo del pcb
+
+		case PASAR_EXIT:
+			colaOrigen = deserializarChar(emisor);
+			idDTB = deserializarInt(emisor);
+			//Debería sacarlo de la lista de los dtbs esperando Dummy y ponerlo en exit
+			break;
+
+		case PASAR_READY:
+			colaOrigen = deserializarChar(emisor);
+			idDTB = deserializarInt(emisor);
+			//Debería sacarlo de la lista de los dtbs esperando Dummy y ponerlo en ready
 			break;
 		default:
 			perror("Cualquiera ese header flaco");

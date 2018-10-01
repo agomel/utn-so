@@ -10,7 +10,7 @@ void consola(int servidor){
 	while(1){
 		char* texto = malloc(1000);
 		scanf("%s", texto);
-		enviarYSerializarString(servidor, texto,MANDAR_TEXTO);
+		enviarYSerializarString(servidor, texto, MANDAR_TEXTO);
 	}
 }
 void escuchar(int servidor){
@@ -26,19 +26,17 @@ void escuchar(int servidor){
 		char header = deserializarChar(servidor);
 			switch(header){
 				case ENVIAR_DTB:
-					printf("c\n");
+					printf("llego un dtb\n");
 					dtbRecibido = deserializarDTB(servidor);
 					if(dtbRecibido.flag == 0){
-						//ES EL DUMMY
+						//Es el dummy
 						tamanioPathEscriptorio = strlen(dtbRecibido.escriptorio) + 1;
-						tamanioBuffer = sizeof(char) + tamanioPathEscriptorio + sizeof(u_int32_t)*3;
+						tamanioBuffer = sizeof(char) + tamanioPathEscriptorio + sizeof(u_int32_t);
 						buffer = asignarMemoria(tamanioBuffer);
 						desplazamiento = 0;
 
 						concatenarChar(buffer, &desplazamiento, CARGAR_ESCRIPTORIO);
 						concatenarString(buffer, &desplazamiento, dtbRecibido.escriptorio);
-						concatenarInt(buffer, &desplazamiento, 0); //Offset
-						concatenarInt(buffer, &desplazamiento, sizeDelEscriptorio); //No sabemos este size
 
 						enviarMensaje(socketDIEGO, buffer, tamanioBuffer);
 						free(buffer);

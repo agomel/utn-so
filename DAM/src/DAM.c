@@ -57,12 +57,12 @@ void entenderMensaje(int emisor, char header){
 		case CARGAR_ESCRIPTORIO:
 			//TODO fijarse el transfer size porque no puede cargar todo de una.
 			path = deserializarString(emisor);
-			offset = deserializarInt(emisor);
-			sizeDelEscriptorio = deserializarInt(emisor);
 
 			tamanioBuffer = strlen(path) + sizeof(u_int32_t)*3 + sizeof(char);
 			buffer = asignarMemoria(tamanioBuffer);
 			desplazamiento = 0;
+			offset = 0; //Quiero que lea el archivo desde el principio
+			sizeDelEscriptorio = 100; //Cómo sabemos el tamaño de lo que va a traer?!?!?
 
 			concatenarChar(buffer, &desplazamiento, OBTENER_DATOS);
 			concatenarString(buffer, &desplazamiento, path);
@@ -86,7 +86,9 @@ void entenderMensaje(int emisor, char header){
 			}else{
 				concatenarChar(buffer, &desplazamiento, PASAR_READY);
 			}
-			concatenarChar(buffer, &desplazamiento, COLA_NEW);
+			concatenarChar(buffer, &desplazamiento, COLA_NEW); //de donde sacar el proceso
+			idDtb = 0; //De donde lo saca?!?!
+			concatenarInt(buffer, &desplazamiento, idDtb);
 			enviarMensaje(socketSAFA, buffer, sizeof(char)*2);
 			free(buffer);
 			break;

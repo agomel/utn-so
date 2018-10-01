@@ -21,8 +21,6 @@ typedef struct{
 
 void handshake(u_int32_t servidor, char modulo);
 
-char deserializarIdentificarse(u_int32_t emisor);
-
 void enviarStringSerializado(u_int32_t destino, char* texto,char operacion);
 void enviarYSerializarInt(u_int32_t destino, u_int32_t numero,char operacion);
 
