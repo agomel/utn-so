@@ -33,7 +33,7 @@ void entenderMensaje(int emisor, char header){
 	u_int32_t tamanioBuffer;
 	u_int32_t offset;
 	u_int32_t sizeDelEscriptorio;
-
+	u_int32_t idDTBNuevo;
 	switch(header){
 		case IDENTIFICARSE:
 			identificado = deserializarChar(emisor);
@@ -76,19 +76,25 @@ void entenderMensaje(int emisor, char header){
 			break;
 
 		case RESPUESTA_CARGA: //Si el FM9 pudo cargar bien los datos o no
+			idDTBNuevo = deserializarInt(emisor);
 			estadoDeCarga = deserializarInt(emisor);
-			buffer = asignarMemoria(sizeof(u_int32_t) + sizeof(char)*2);
-			desplazamiento = 0;
+
 			if(estadoDeCarga == 0){ //No pudo cargar
+				buffer = asignarMemoria(sizeof(char) + sizeof(u_int32_t));
+				desplazamiento = 0;
 				concatenarChar(buffer, &desplazamiento, PASAR_EXIT);
+				concatenarInt(buffer, &desplazamiento, idDTBNuevo);
 			}else{
+				//TODO hacer lo  que pasa si vuelve bien
+				//TODO deserializar lista y ver que onda
 				concatenarChar(buffer, &desplazamiento, PASAR_READY);
+				concatenarChar(buffer, &desplazamiento, COLA_NEW); //de donde sacar el proceso
+				idDtb = 0; //TODO poner de donde lo saca?!?!
+				concatenarInt(buffer, &desplazamiento, idDtb);
+				//TODO concatenar lista de tabla de paginas
 			}
-			concatenarChar(buffer, &desplazamiento, COLA_NEW); //de donde sacar el proceso
-			idDtb = 0; //TODO poner de donde lo saca?!?!
-			concatenarInt(buffer, &desplazamiento, idDtb);
-			//TODO concatenar lista de tabla de paginas
-			enviarMensaje(socketSAFA, buffer, sizeof(char)*2);
+
+			enviarMensaje(socketSAFA, buffer, desplazamiento);
 			free(buffer);
 			break;
 

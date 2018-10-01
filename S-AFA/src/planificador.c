@@ -9,8 +9,8 @@ void inicializarColas(){
 	colaNEW = queue_create();
 	colaREADY = list_create();
 	colaEsperandoDummy = list_create();
-	colaEXECUTE = queue_create();
-	colaBLOCKED = queue_create();
+	colaEXECUTE = list_create();
+	colaBLOCKED = list_create();
 }
 
 void inicializarSemaforos(){
@@ -21,3 +21,23 @@ void inicializarSemaforos(){
 	inicializarSem(&gradoMultiprogramacion, 3);
 	inicializarSem(&cantidadTotalREADY, 0);
 }
+
+void pasarDTBAExit(u_int32_t idDTB){
+	/**
+		* @NAME: list_find
+		* @DESC: Retorna el primer valor encontrado, el cual haga que condition devuelva != 0
+	*/
+	void *list_find(t_list *, bool(*closure)(void*));
+
+	list_find(colaEsperandoDummy, )
+}
+
+int buscarDTB(int id, t_list listaDeDTB){
+
+	bool esElDTB(DTB* dtb){
+
+	}
+}
+
+
+

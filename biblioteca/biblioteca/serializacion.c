@@ -54,6 +54,7 @@ void concatenarString(void* buffer, u_int32_t* desplazamiento, char* mensaje){
 	*desplazamiento = *desplazamiento + strlen(mensaje) + 1;
 }
 
+
 char* deserializarString(u_int32_t emisor){
 	u_int32_t tamanioMensaje = deserializarInt(emisor);
 	char* mensaje = asignarMemoria(tamanioMensaje);
