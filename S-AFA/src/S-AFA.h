@@ -10,9 +10,6 @@
 #include "pcp.h"
 #include <biblioteca/dtb.h>
 
-
-
-
 u_int32_t socketCPU;
 u_int32_t socketDAM;
 

@@ -87,8 +87,9 @@ void entenderMensaje(int emisor, char header){
 				concatenarChar(buffer, &desplazamiento, PASAR_READY);
 			}
 			concatenarChar(buffer, &desplazamiento, COLA_NEW); //de donde sacar el proceso
-			idDtb = 0; //De donde lo saca?!?!
+			idDtb = 0; //TODO poner de donde lo saca?!?!
 			concatenarInt(buffer, &desplazamiento, idDtb);
+			//TODO concatenar lista de tabla de paginas
 			enviarMensaje(socketSAFA, buffer, sizeof(char)*2);
 			free(buffer);
 			break;

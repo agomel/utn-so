@@ -40,15 +40,24 @@ void entenderMensaje(int emisor, char header){
 			break;
 
 		case PASAR_EXIT:
+			//TODO deserializar estructura que envia dam
 			colaOrigen = deserializarChar(emisor);
 			idDTB = deserializarInt(emisor);
 			//Debería sacarlo de la lista de los dtbs esperando Dummy y ponerlo en exit
 			break;
 
 		case PASAR_READY:
+			//TODO deserializar estructura que envia dam
 			colaOrigen = deserializarChar(emisor);
 			idDTB = deserializarInt(emisor);
-			//Debería sacarlo de la lista de los dtbs esperando Dummy y ponerlo en ready
+			switch(colaOrigen){
+				case COLA_NEW:
+					//es el dummy que avisa que el proceso esta listo
+					ponerEnReadyProcesoDummyOk(idDTB);
+					break;
+				default:
+					break;
+			}
 			break;
 		default:
 			perror("Cualquiera ese header flaco");

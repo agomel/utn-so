@@ -2,6 +2,7 @@
 #define PCP_H_
 
 #include "planificador.h"
+#include "S-AFA.h"
 
 void planificadorACortoPlazo();
 

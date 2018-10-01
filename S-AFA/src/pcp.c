@@ -3,17 +3,20 @@
 void planificadorACortoPlazo(){
 	u_int32_t a = 1;
 	while(a){
-		if(!queue_is_empty(&colaREADY)){
+		if(!list_is_empty(colaREADY)){
 			waitSem(&cantidadTotalREADY);
 			waitMutex(&mutexREADY);
 			//algoritmo para elegir
-			DTB* dtb = queue_pop(colaREADY);
-			//enviar a cpu dtb a ejecutar
-			//si es el dummy
-			//desblockiar dummy
+			int indexElegido = 0;
+			//El list remove hace un get y lo borra de la lista
+			DTB* dtb = list_remove(colaREADY, indexElegido);
+			serializarYEnviarDTB(socketCPU, *dtb);
+
+			if(dtb->flag==0){
+				signalMutex(&mutexDummy);
+			}
 			signalMutex(&mutexREADY);
 			signalSem(&gradoMultiprogramacion);
-			//TODO ejecutar el dtb
 		}
 	}
 }

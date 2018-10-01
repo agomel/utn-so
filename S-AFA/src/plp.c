@@ -3,20 +3,19 @@
 void planificadorALargoPlazo(){
 	u_int32_t a = 1;
 	while(a){
-		if(!queue_is_empty(&colaNEW)){
+		if(!queue_is_empty(colaNEW)){
 			printf("hay procesos en la cola new\n");
 			waitMutex(&mutexNEW);
 			DTB* dtb = queue_pop(colaNEW);
 			signalMutex(&mutexNEW);
 
 			wait(mutexColaDummy);
-			list_add(esperandoDummy, dtb);
+			list_add(colaEsperandoDummy, dtb);
 			signal(mutexColaDummy);
 
-			//Preguntar que seria bloquear el dummy
 			cargarDummy(dtb);
 
-			waitSem(&gradoMultiprogramacion); //hacer el signal cuando el proceso va a exit
+			waitSem(&gradoMultiprogramacion); //TODO hacer el signal cuando el proceso va a exit
 			waitMutex(&mutexREADY);
 			list_add(colaREADY, &dtbDummy);
 			signalMutex(&mutexREADY);
@@ -53,4 +52,26 @@ void ponerProcesoEnNew(char* escriptorio){
 
 void enviarDTB(DTB dtb){
 	serializarYEnviarDTB(socketCPU, dtb);
+}
+
+//TODO no recibe int recibe estructura de guardado
+void ponerEnReadyProcesoDummyOk(u_int32_t idDTB){
+	DTB* dtb;
+	int index = 0;
+	int salir = 0;
+	while(index<colaEsperandoDummy->elements_count && !salir){
+		dtb = list_get(colaEsperandoDummy, index);
+		if(dtb->id == idDTB){
+			salir = 1;
+			list_remove(colaEsperandoDummy,index);
+		}
+		index++;
+	}
+	//TODO esta lista es imaginaria. Cambiar el uint por lista
+	dtb->tablaDireccionesArchivos = 2;
+	waitSem(&gradoMultiprogramacion); //TODO hacer el signal cuando el proceso va a exit
+	waitMutex(&mutexREADY);
+	list_add(colaREADY, &dtb);
+	signalMutex(&mutexREADY);
+	signalSem(&cantidadTotalREADY);
 }

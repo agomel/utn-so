@@ -14,7 +14,7 @@ t_queue* colaNEW;
 t_list* colaREADY;
 t_queue* colaEXECUTE;
 t_queue* colaBLOCKED;
-t_list* esperandoDummy;
+t_list* colaEsperandoDummy;
 
 pthread_mutex_t mutexColaDummy;
 pthread_mutex_t mutexNEW;

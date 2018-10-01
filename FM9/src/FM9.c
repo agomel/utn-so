@@ -20,6 +20,11 @@ u_int32_t socketCPU;
 u_int32_t socketDAM;
 char* storage;
 
+u_int32_t cargarDatosEnMemoria(char* datos){
+	//TODO devolver una estructura que tenga la lista de tabla de paginas
+	printf("guardado en memoria: %s", datos);
+	return 1; //pudo guardar. TODO hacer si tuvo un error return 0
+}
 
 void entenderMensaje(int emisor, int header){
 	char identificado;
@@ -46,7 +51,8 @@ void entenderMensaje(int emisor, int header){
 
 			case GUARDAR_DATOS:
 				datos = deserializarString(emisor);
-				pudoGuardarDatos = guardarDatosEnMemoria(datos);
+				pudoGuardarDatos = cargarDatosEnMemoria(datos);
+				//TODO enviar y serializar la estructura de guardado
 				enviarYSerializarInt(socketDAM, pudoGuardarDatos, RESPUESTA_CARGA);
 
 				break;
@@ -54,11 +60,6 @@ void entenderMensaje(int emisor, int header){
 			default:
 				perror("Cualquiera ese header flaco");
 		}
-}
-int guardarDatosEnMemoria(char* datos){
-
-	printf("guardado en memoria: %s", datos);
-	return 1; //pudo guardar. TODO hacer si tuvo un error return 0
 }
 
 int main(void) {

@@ -8,7 +8,7 @@ void inicializarPlanificadores(){
 void inicializarColas(){
 	colaNEW = queue_create();
 	colaREADY = list_create();
-	esperandoDummy = list_create();
+	colaEsperandoDummy = list_create();
 	colaEXECUTE = queue_create();
 	colaBLOCKED = queue_create();
 }
