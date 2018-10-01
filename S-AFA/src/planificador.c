@@ -35,8 +35,11 @@ void pasarDTBAExit(u_int32_t idDTB){
 int buscarDTB(int id, t_list listaDeDTB){
 
 	bool esElDTB(DTB* dtb){
-
+		return dtb->id == id;
 	}
+
+	DTB* dtb
+
 }
 
 

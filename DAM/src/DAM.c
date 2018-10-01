@@ -85,6 +85,7 @@ void entenderMensaje(int emisor, char header){
 				concatenarChar(buffer, &desplazamiento, PASAR_EXIT);
 				concatenarInt(buffer, &desplazamiento, idDTBNuevo);
 			}else{
+				//deserializar lista int
 				//TODO hacer lo  que pasa si vuelve bien
 				//TODO deserializar lista y ver que onda
 				concatenarChar(buffer, &desplazamiento, PASAR_READY);
