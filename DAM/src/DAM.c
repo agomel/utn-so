@@ -62,16 +62,12 @@ void recibirDatosDeFM9YEnviarASafa(u_int32_t idDTB){
 		concatenarChar(buffer, &desplazamiento, FALLO_LA_CARGA_DEL_SCRIPTORIO);
 		concatenarInt(buffer, &desplazamiento, idDTB);
 	}else{
-		//TODO que pasa si esta ok lo que guardo el MDJ ?
-
-		//deserializar lista int
-		//TODO hacer lo  que pasa si vuelve bien
-		//TODO deserializar lista y ver que onda
-		//concatenarChar(buffer, &desplazamiento, PASAR_READY);
-		//concatenarChar(buffer, &desplazamiento, COLA_NEW); //de donde sacar el proceso
-		//idDtb = 0; //TODO poner de donde lo saca?!?!
-		//concatenarInt(buffer, &desplazamiento, idDtb);
-		//TODO concatenar lista de tabla de paginas
+		t_list* listaDirecciones = deserializarListaInt(socketFM9);
+		u_int32_t tamanioBuffer = sizeof(char)*2 + sizeof(u_int32_t) + sizeof(u_int32_t) + sizeof(u_int32_t)*(listaDirecciones->elements_count);
+		concatenarChar(buffer, &desplazamiento, PASAR_READY);
+		concatenarChar(buffer, &desplazamiento, COLA_NEW);
+		concatenarInt(buffer, &desplazamiento, idDTB);
+		concatenarListaInt(buffer, &desplazamiento, listaDirecciones);
 	}
 	enviarMensaje(socketSAFA, buffer, desplazamiento);
 	free(buffer);

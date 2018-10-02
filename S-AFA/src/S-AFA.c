@@ -16,6 +16,8 @@ void entenderMensaje(int emisor, char header){
 	char identificado;
 	char colaOrigen;
 	int idDTB;
+	t_list* tablaDeDIreccionesYArchivos;
+	DTB* dtb;
 	switch(header){
 		case IDENTIFICARSE:
 			identificado = deserializarChar(emisor);
@@ -51,8 +53,11 @@ void entenderMensaje(int emisor, char header){
 			idDTB = deserializarInt(emisor);
 			switch(colaOrigen){
 				case COLA_NEW:
+					tablaDeDIreccionesYArchivos = deserializarListaInt(emisor);
+					dtb = obtenerProcesoDeCola(colaEsperandoDummy, idDTB);
+					dtb->tablaDireccionesArchivos = tablaDeDIreccionesYArchivos;
 					//es el dummy que avisa que el proceso esta listo
-					ponerEnReadyProcesoDummyOk(idDTB);
+					ponerEnReadyProcesoDummyOk(dtb);
 					break;
 				default:
 					break;

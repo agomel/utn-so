@@ -54,21 +54,7 @@ void enviarDTB(DTB dtb){
 	serializarYEnviarDTB(socketCPU, dtb);
 }
 
-//TODO no recibe int recibe estructura de guardado
-void ponerEnReadyProcesoDummyOk(u_int32_t idDTB){
-	DTB* dtb;
-	int index = 0;
-	int salir = 0;
-	while(index < colaEsperandoDummy->elements_count && !salir){
-		dtb = list_get(colaEsperandoDummy, index);
-		if(dtb->id == idDTB){
-			salir = 1;
-			list_remove(colaEsperandoDummy, index);
-		}
-		index++;
-	}
-	//TODO Cambiar el uint por una lista
-	dtb->tablaDireccionesArchivos = 2;
+void ponerEnReadyProcesoDummyOk(DTB* dtb){
 	waitSem(&gradoMultiprogramacion);
 	waitMutex(&mutexREADY);
 	list_add(colaREADY, &dtb);

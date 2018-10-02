@@ -13,6 +13,6 @@ void ponerProcesoEnNew(char* escriptorio);
 
 void enviarDTB(DTB proceso);
 //TODO no recibe int recibe la estructura de guardado
-void ponerEnReadyProcesoDummyOk(u_int32_t idDTB);
+void ponerEnReadyProcesoDummyOk(DTB* dtb);
 
 #endif /*PLP_H_*/

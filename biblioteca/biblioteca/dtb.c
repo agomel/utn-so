@@ -49,3 +49,19 @@ DTB deserializarDTB(int emisor){
 
 	return dtb;
 }
+
+
+DTB* obtenerProcesoDeCola(t_list* cola, u_int32_t idDTB){
+	DTB* dtb;
+	int index = 0;
+	int salir = 0;
+	while(index < cola->elements_count && !salir){
+		dtb = list_get(cola, index);
+		if(dtb->id == idDTB){
+			salir = 1;
+			list_remove(cola, index);
+		}
+		index++;
+	}
+	return dtb;
+}
