@@ -23,6 +23,8 @@ void inicializarSemaforos(){
 }
 
 void pasarDTBAExit(u_int32_t idDTB){
+
+
 	/**
 		* @NAME: list_find
 		* @DESC: Retorna el primer valor encontrado, el cual haga que condition devuelva != 0
@@ -32,14 +34,12 @@ void pasarDTBAExit(u_int32_t idDTB){
 	list_find(colaEsperandoDummy, )
 }
 
-int buscarDTB(int id, t_list listaDeDTB){
-
+DTB* buscarDTB(int id, t_list listaDeDTB){
 	bool esElDTB(DTB* dtb){
 		return dtb->id == id;
 	}
 
-	DTB* dtb
-
+	return list_find(listaDeDTB, (void*)esElDTB);
 }
 
 
