@@ -9,11 +9,13 @@
 #include <commons/collections/list.h>
 #include <biblioteca/semaforos.h>
 #include <biblioteca/dtb.h>
+#include <stdbool.h>
 
 t_queue* colaNEW;
 t_list* colaREADY;
-t_queue* colaEXECUTE;
-t_queue* colaBLOCKED;
+t_list* colaEXECUTE;
+t_list* colaBLOCKED;
+t_list* colaEXIT;
 t_list* colaEsperandoDummy;
 
 pthread_mutex_t mutexColaDummy;
