@@ -28,8 +28,6 @@ void inicializarSemaforos(){
 	t_config* configuracion = config_create(ARCHIVO_CONFIGURACION);
 
 	u_int32_t multiprogramacion = config_get_int_value(configuracion, "MULTIPROGRAMACION");
-	perror("tengo el grado de multiprogramacion");
-	printf("grado de multiprogramacion %d\n", multiprogramacion);
 	inicializarSem(&gradoMultiprogramacion, multiprogramacion);
 	inicializarSem(&cantidadTotalREADY, 0);
 }

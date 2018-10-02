@@ -4,12 +4,14 @@ void planificadorACortoPlazo(){
 	u_int32_t a = 1;
 	while(a){
 		if(!list_is_empty(colaREADY)){
+			printf("tamanio cola ready %d \n",colaREADY->elements_count);
 			//algoritmo para elegir
 			int indexElegido = 0;
 			//El list remove hace un get y lo borra de la lista
 			waitSem(&cantidadTotalREADY);
 			waitMutex(&mutexREADY);
-			DTB* dtb = list_remove(colaREADY, indexElegido);
+			DTB* dtb = list_get(colaREADY, indexElegido);
+			list_remove(colaREADY, indexElegido);
 			signalMutex(&mutexREADY);
 
 			serializarYEnviarDTB(socketCPU, *dtb);
