@@ -65,7 +65,6 @@ void entenderMensaje(int emisor, int header){
 				offset = 0; //Quiero que lea el archivo desde el principio
 				sizeDeLaRespuesta = 100; //Cómo sabemos el tamaño de lo que va a traer?!?!?
 
-				concatenarChar(buffer, &desplazamiento, RESPUESTA_CARGA);
 				concatenarInt(buffer, &desplazamiento, respuestaDeCarga.id_dtb);
 				concatenarInt(buffer, &desplazamiento, respuestaDeCarga.pudoGuardarlo);
 				if(respuestaDeCarga.pudoGuardarlo){

@@ -10,6 +10,7 @@
 #include <unistd.h>
 #include <sys/types.h>
 #include <commons/collections/dictionary.h>
+#include <commons/collections/list.h>
 #include "utilidades.h"
 #include "dtb.h"
 
@@ -21,15 +22,18 @@ typedef struct{
 
 void handshake(u_int32_t servidor, char modulo);
 
-void enviarStringSerializado(u_int32_t destino, char* texto,char operacion);
+void enviarYSerializarString(u_int32_t destino, char* texto,char operacion);
+void enviarYSerializarStringSinHeader(u_int32_t destino, char* texto);
 void enviarYSerializarInt(u_int32_t destino, u_int32_t numero,char operacion);
-
+void enviarYSerializarIntSinHeader(u_int32_t destino, u_int32_t numero);
 char* deserializarString(u_int32_t emisor);
 u_int32_t deserializarInt(u_int32_t emisor);
 char deserializarChar(u_int32_t emisor);
+t_list* deserializarListaInt(u_int32_t emisor);
 void concatenarChar(void* buffer, u_int32_t* desplazamiento, char mensaje);
-u_int32_t concatenarInt(void* buffer, u_int32_t* desplazamiento, u_int32_t numero);
+void concatenarInt(void* buffer, u_int32_t* desplazamiento, u_int32_t numero);
 void concatenarString(void* buffer, u_int32_t* desplazamiento, char* mensaje);
+void concatenarListaInt(void* buffer, u_int32_t* desplazamiento, t_list* listaArchivos);
 
 voidDeserealizado deserializarVoid(u_int32_t emisor);
 

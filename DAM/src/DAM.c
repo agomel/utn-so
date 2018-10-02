@@ -7,126 +7,110 @@
  Description : Hello World in C, Ansi-style
  ============================================================================
  */
-#include <biblioteca/socket.h>
-#include <biblioteca/hilos.h>
-#include <biblioteca/utilidades.h>
-#include <biblioteca/select.h>
-#include <biblioteca/serializacion.h>
-#include <biblioteca/dtb.h>
+#include "DAM.h"
 
-u_int32_t socketCPU;
-u_int32_t socketFM9;
-u_int32_t socketMDJ;
-u_int32_t socketSAFA;
+void inicializarDAM(){
+	inicializarMutex(&mutexColaOperaciones);
+	inicializarSem(&semHayEnColaOperaciones, 0);
+}
+void enviarAMDJ(Operacion operacion){
+	u_int32_t tamanioBuffer = (strlen(operacion.path)+1) + sizeof(u_int32_t)*3 + sizeof(char);
+	void* buffer = asignarMemoria(tamanioBuffer);
+	u_int32_t desplazamiento = 0;
 
-void entenderMensaje(int emisor, char header){
-	char identificado;
-	char identificarPersonaReenviar;
-	u_int32_t personaAReenviar;
-	char* datos;
-	u_int32_t idDtb;
-	u_int32_t estadoDeCarga;
+	concatenarChar(buffer, &desplazamiento, OBTENER_DATOS);
+	concatenarString(buffer, &desplazamiento, operacion.path);
+	concatenarInt(buffer, &desplazamiento, operacion.offset);
+	concatenarInt(buffer, &desplazamiento, operacion.size);
+
+	enviarMensaje(socketMDJ, buffer, tamanioBuffer);
+	free(buffer);
+}
+
+void agregarOperacionACola(int emisor, char accion){
+	Operacion* operacion = asignarMemoria(sizeof(Operacion));
+	operacion->path = deserializarString(emisor);
+	operacion->idDTB = deserializarInt(emisor);
+	operacion->offset = deserializarInt(emisor);
+	operacion->size = deserializarInt(emisor);
+	operacion->accion = accion;
+
+	waitMutex(&mutexColaOperaciones);
+	queue_push(colaOperaciones, operacion);
+	signalMutex(&mutexColaOperaciones);
+	signalSem(&semHayEnColaOperaciones);
+}
+
+void enviarDatosAFM9(char* datos){
+	u_int32_t tamanioBuffer = strlen(datos)+1 + sizeof(u_int32_t) + sizeof(char);
+	void* buffer = asignarMemoria(tamanioBuffer);
+	u_int32_t desplazamiento = 0;
+
+	concatenarChar(buffer, &desplazamiento, GUARDAR_DATOS);
+	concatenarString(buffer, &desplazamiento, datos);
+
+	enviarMensaje(socketFM9, buffer, tamanioBuffer);
+	free(buffer);
+}
+void recibirDatosDeFM9YEnviarASafa(u_int32_t idDTB){
 	void* buffer;
-	u_int32_t desplazamiento;
-	u_int32_t tamanioPath;
-	char* path;
-	u_int32_t tamanioBuffer;
-	u_int32_t offset;
-	u_int32_t sizeDelEscriptorio;
-	u_int32_t idDTBNuevo;
+	u_int32_t desplazamiento = 0;
+	u_int32_t estadoDeCarga = deserializarInt(socketFM9);
+	if(estadoDeCarga == 0){ //No pudo cargar
+		buffer = asignarMemoria(sizeof(char) + sizeof(u_int32_t));
+		concatenarChar(buffer, &desplazamiento, FALLO_LA_CARGA_DEL_SCRIPTORIO);
+		concatenarInt(buffer, &desplazamiento, idDTB);
+	}else{
+		//TODO que pasa si esta ok lo que guardo el MDJ ?
+		//deserializar lista int
+		//TODO hacer lo  que pasa si vuelve bien
+		//TODO deserializar lista y ver que onda
+		//concatenarChar(buffer, &desplazamiento, PASAR_READY);
+		//concatenarChar(buffer, &desplazamiento, COLA_NEW); //de donde sacar el proceso
+		//idDtb = 0; //TODO poner de donde lo saca?!?!
+		//concatenarInt(buffer, &desplazamiento, idDtb);
+		//TODO concatenar lista de tabla de paginas
+	}
+	enviarMensaje(socketSAFA, buffer, desplazamiento);
+}
 
-	switch(header){
-		case IDENTIFICARSE:
-			identificado = deserializarChar(emisor);
-			printf("identificado %c \n", identificado);
-			switch(identificado){
-				case CPU:
-					socketCPU = emisor;
-					break;
-				default:
-					perror("no acepto a esta conexion");
+void consumirCola(){
+	while(1){
+		waitSem(&semHayEnColaOperaciones);
+		waitMutex(&mutexColaOperaciones);
+		Operacion* operacion = queue_pop(colaOperaciones);
+		signalMutex(&mutexColaOperaciones);
+
+		switch(operacion->accion){
+			case CARGAR_ESCRIPTORIO://Dummy
+				//aca tengo que pedirle al mdj esperar etc...
+				enviarAMDJ(*operacion);
+				char* datos = deserializarString(socketMDJ);
+				enviarDatosAFM9(datos);
+				recibirDatosDeFM9YEnviarASafa(operacion->idDTB);
+				free(buffer);
+			break;
+			default:
+				perror("Cualquiera ese header flaco");
 			}
-			printf("Se agrego a las conexiones %c \n" , identificado);
-			break;
-
-		case MANDAR_TEXTO:
-			//TODO esta operacion es basura, es para probar a serializacion y deserializacion
-			deserializarString(emisor);
-			break;
-
-		case CARGAR_ESCRIPTORIO:
-			//TODO fijarse el transfer size porque no puede cargar todo de una.
-			path = deserializarString(emisor);
-			idDTBNuevo = deserializarInt(emisor);
-			tamanioBuffer = (strlen(path)+1) + sizeof(u_int32_t)*3 + sizeof(char);
-			buffer = asignarMemoria(tamanioBuffer);
-			desplazamiento = 0;
-			offset = 0; //Quiero que lea el archivo desde el principio
-			sizeDelEscriptorio = 100; //Cómo sabemos el tamaño de lo que va a traer?!?!?
-
-			concatenarChar(buffer, &desplazamiento, OBTENER_DATOS);
-			concatenarString(buffer, &desplazamiento, path);
-			concatenarInt(buffer, &desplazamiento, offset);
-			concatenarInt(buffer, &desplazamiento, sizeDelEscriptorio);
-			enviarMensaje(socketMDJ, buffer, tamanioBuffer);
-			free(buffer);
-			break;
-
-		case DATOS_CONSEGUIDOS:
-			datos = deserializarString(emisor);
-			enviarYSerializarString(socketFM9, datos, GUARDAR_DATOS);
-			break;
-
-		case RESPUESTA_CARGA: //Si el FM9 pudo cargar bien los datos o no
-			idDTBNuevo = deserializarInt(emisor);
-			estadoDeCarga = deserializarInt(emisor);
-
-			if(estadoDeCarga == 0){ //No pudo cargar
-				buffer = asignarMemoria(sizeof(char) + sizeof(u_int32_t));
-				desplazamiento = 0;
-				concatenarChar(buffer, &desplazamiento, PASAR_EXIT);
-				concatenarInt(buffer, &desplazamiento, idDTBNuevo);
-			}else{
-				//deserializar lista int
-				//TODO hacer lo  que pasa si vuelve bien
-				//TODO deserializar lista y ver que onda
-				concatenarChar(buffer, &desplazamiento, PASAR_READY);
-				concatenarChar(buffer, &desplazamiento, COLA_NEW); //de donde sacar el proceso
-				idDtb = 0; //TODO poner de donde lo saca?!?!
-				concatenarInt(buffer, &desplazamiento, idDtb);
-				//TODO concatenar lista de tabla de paginas
-			}
-
-			enviarMensaje(socketSAFA, buffer, desplazamiento);
-			free(buffer);
-			break;
-
-		default:
-			perror("Cualquiera ese header flaco");
 	}
 }
 
-void escuchar(int servidor){
-	int a = 1;
-	while(a){
-		char* buffer = asignarMemoria(150);
-		int bytesRecibidos = recibirMensaje(servidor,&buffer,150);
-		if(bytesRecibidos <= 0){
-			a = 0;
-		}
-		printf("%s \n", buffer);
-		free(buffer);
+void escucharCPU(int socketCPU){
+	while(1){
+		char header;
+		recibirMensaje(socketCPU, &header, sizeof(char));
+		agregarOperacionACola(socketCPU, header);
+		//esto solo agrega operaciones ala colas
 	}
 }
+
 
 int main(void) {
+	inicializarDAM();
 	//crear servidor para escuchar al cpu
 	direccionServidor direccionDAM = levantarDeConfiguracion(NULL, "PUERTO", ARCHIVO_CONFIGURACION);
 	int servidorDAM = crearServidor(direccionDAM.puerto, INADDR_ANY);
-
-	parametrosEscucharClientes parametros;
-	parametros.servidor = servidorDAM;
-	parametros.funcion = &entenderMensaje;
 
 	//crear servidores para ser cliente de ellos
 	direccionServidor direccionSAFA = levantarDeConfiguracion("IP_SAFA", "PUERTO_SAFA", ARCHIVO_CONFIGURACION);
@@ -143,19 +127,13 @@ int main(void) {
 	handshake(socketMDJ, DAM);
 	handshake(socketFM9, DAM);
 
-	//creo un hilo para cada servidor con el que me conecto
-	pthread_t hiloEscuchadorSAFA = crearHilo(&escuchar,socketSAFA);
-	pthread_t hiloEscuchadorMDJ = crearHilo(&escuchar,socketMDJ);
-	pthread_t hiloEscuchadorFM9 = crearHilo(&escuchar,socketFM9);
-
-	//creo un hilo para escuchar los clientes(CPU)
-	pthread_t hiloAdministradorDeConexiones = crearHilo(&escucharClientes, &parametros);
-
-	//esperar hilos
-	esperarHilo(hiloEscuchadorSAFA);
-	esperarHilo(hiloEscuchadorMDJ);
-	esperarHilo(hiloEscuchadorFM9);
-	esperarHilo(hiloAdministradorDeConexiones);
-
+	//TODO crear hilo de la otra forma
+	crearHilo(&consumirCola, NULL);
+	empezarAEscuchar(servidorDAM, 100);
+	while(1){
+		int cpu = aceptarCliente(servidorDAM);
+		//TODO crear hilo de la otra forma
+		crearHilo(&escucharCPU, cpu);
+	}
 	return 0;
 }
