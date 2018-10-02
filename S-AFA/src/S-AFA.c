@@ -40,7 +40,7 @@ void entenderMensaje(int emisor, char header){
 
 		case FALLO_LA_CARGA_DEL_SCRIPTORIO:
 			idDTB = deserializarInt(emisor);
-			//Debería sacarlo de la lista de los dtbs esperando Dummy y ponerlo en exit
+			pasarDTBAExit(idDTB, colaEsperandoDummy);
 			break;
 
 		case PASAR_READY:
