@@ -18,6 +18,7 @@
 
 
 u_int32_t socketDAM;
+t_config* archivoConfiguracion;
 
 void entenderMensaje(int emisor, char header){
 	char identificado;
@@ -56,7 +57,7 @@ void entenderMensaje(int emisor, char header){
 }
 
 int main(void) {
-	direccionServidor direccionMDJ = levantarDeConfiguracion(NULL, "PUERTO", ARCHIVO_CONFIGURACION);
+	direccionServidor direccionMDJ = levantarDeConfiguracion(NULL, "PUERTO", ARCHIVO_CONFIGURACION, archivoConfiguracion);
 	int servidor = crearServidor(direccionMDJ.puerto, INADDR_ANY);
 
 	parametrosEscucharClientes parametros;

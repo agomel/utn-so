@@ -103,17 +103,17 @@ void escucharCPU(int socketCPU){
 int main(void) {
 	inicializarDAM();
 	//crear servidor para escuchar al cpu
-	direccionServidor direccionDAM = levantarDeConfiguracion(NULL, "PUERTO", ARCHIVO_CONFIGURACION);
+	direccionServidor direccionDAM = levantarDeConfiguracion(NULL, "PUERTO", ARCHIVO_CONFIGURACION, archivoConfiguracion);
 	int servidorDAM = crearServidor(direccionDAM.puerto, INADDR_ANY);
 
 	//crear servidores para ser cliente de ellos
-	direccionServidor direccionSAFA = levantarDeConfiguracion("IP_SAFA", "PUERTO_SAFA", ARCHIVO_CONFIGURACION);
+	direccionServidor direccionSAFA = levantarDeConfiguracion("IP_SAFA", "PUERTO_SAFA", ARCHIVO_CONFIGURACION, archivoConfiguracion);
 	socketSAFA = conectarConServidor(direccionSAFA.puerto, inet_addr(direccionSAFA.ip));
 
-	direccionServidor direccionMDJ = levantarDeConfiguracion("IP_MDJ", "PUERTO_MDJ", ARCHIVO_CONFIGURACION);
+	direccionServidor direccionMDJ = levantarDeConfiguracion("IP_MDJ", "PUERTO_MDJ", ARCHIVO_CONFIGURACION, archivoConfiguracion);
 	socketMDJ = conectarConServidor(direccionMDJ.puerto, inet_addr(direccionMDJ.ip));
 
-	direccionServidor direccionFM9 = levantarDeConfiguracion("IP_FM9", "PUERTO_FM9", ARCHIVO_CONFIGURACION);
+	direccionServidor direccionFM9 = levantarDeConfiguracion("IP_FM9", "PUERTO_FM9", ARCHIVO_CONFIGURACION, archivoConfiguracion);
 	socketFM9 = conectarConServidor(direccionFM9.puerto, inet_addr(direccionFM9.ip));
 
 	//mandar handshakes a los servidores

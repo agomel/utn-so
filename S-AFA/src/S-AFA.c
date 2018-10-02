@@ -68,7 +68,7 @@ int main(void) {
 
 	inicializarMutex(&mutexIdsDTB);
 	contadorIds = 1;
-	direccionServidor direccionSAFA = levantarDeConfiguracion(NULL, "PUERTO", ARCHIVO_CONFIGURACION);
+	direccionServidor direccionSAFA = levantarDeConfiguracion(NULL, "PUERTO", ARCHIVO_CONFIGURACION, archivoConfiguracion);
 	int servidor = crearServidor(direccionSAFA.puerto, INADDR_ANY);
 
 	parametrosEscucharClientes parametros;

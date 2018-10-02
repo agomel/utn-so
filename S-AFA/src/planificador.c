@@ -1,4 +1,5 @@
 #include "planificador.h"
+#include "S-AFA.h"
 
 void inicializarPlanificadores(){
 	inicializarColas();
@@ -17,7 +18,7 @@ void inicializarSemaforos(){
 	inicializarMutex(&mutexNEW);
 	inicializarMutex(&mutexREADY);
 
-	//TODO pasarle el espacio disponible en READY (grado de multiprogramacion) por parametro
-	inicializarSem(&gradoMultiprogramacion, 3);
+	u_int32_t multiprogramacion = config_get_int_value(archivoConfiguracion, "MULTIPROGRAMACION");
+	inicializarSem(&gradoMultiprogramacion, multiprogramacion);
 	inicializarSem(&cantidadTotalREADY, 0);
 }

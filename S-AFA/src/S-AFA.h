@@ -12,6 +12,7 @@
 
 u_int32_t socketCPU;
 u_int32_t socketDAM;
+t_config* archivoConfiguracion;
 
 void entenderMensaje(int emisor, char header);
 

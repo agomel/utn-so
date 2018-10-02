@@ -34,7 +34,7 @@ typedef struct{
 	int puerto;
 }direccionServidor;
 
-direccionServidor levantarDeConfiguracion(char* nombreIp, char* nombrePuerto, char* rutaArchivo);
+direccionServidor levantarDeConfiguracion(char* nombreIp, char* nombrePuerto, char* rutaArchivo, t_config* configuracion);
 
 typedef struct {
 		int servidor;
