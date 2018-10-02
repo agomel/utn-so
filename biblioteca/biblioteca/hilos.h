@@ -6,6 +6,7 @@
 #include <string.h>
 #include <pthread.h>
 
+void crearHiloQueMuereSolo(void* funcion, void* parametro);
 pthread_t crearHilo(void* funcion,void* parametro);
 int esperarHilo(pthread_t hilo);
 

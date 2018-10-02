@@ -90,6 +90,7 @@ void consumirCola(){
 }
 
 void escucharCPU(int socketCPU){
+	printf("Escuchando a cpu \n");
 	while(1){
 		char header;
 		recibirMensaje(socketCPU, &header, sizeof(char));
@@ -120,13 +121,11 @@ int main(void) {
 	handshake(socketMDJ, DAM);
 	handshake(socketFM9, DAM);
 
-	//TODO crear hilo de la otra forma
-	crearHilo(&consumirCola, NULL);
+	crearHiloQueMuereSolo(&consumirCola, NULL);
 	empezarAEscuchar(servidorDAM, 100);
 	while(1){
 		int cpu = aceptarCliente(servidorDAM);
-		//TODO crear hilo de la otra forma
-		crearHilo(&escucharCPU, cpu);
+		crearHiloQueMuereSolo(&escucharCPU, cpu);
 	}
 	return 0;
 }
