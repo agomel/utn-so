@@ -67,15 +67,15 @@ void entenderMensaje(int emisor, int header){
 			case GUARDAR_DATOS:
 				datos = deserializarString(emisor);
 				respuestaDeCarga = cargarDatosEnMemoria(datos);
-				//TODO enviar y serializar la estructura de guardado
-				//enviarYSerializarInt(socketDAM, respuestaDeCarga, RESPUESTA_CARGA);
-				tamanioBuffer = sizeof(u_int32_t) + sizeof(u_int32_t) + sizeof(u_int32_t)*list_size(respuestaDeCarga.listaDeDirecciones);
-				buffer = asignarMemoria(tamanioBuffer);
 				desplazamiento = 0;
-
+				tamanioBuffer = sizeof(u_int32_t) + sizeof(u_int32_t) + sizeof(u_int32_t)*(respuestaDeCarga.listaDeDirecciones->elements_count);
+				buffer = asignarMemoria(tamanioBuffer);
 				concatenarInt(buffer, &desplazamiento, respuestaDeCarga.pudoGuardarlo);
+
 				if(respuestaDeCarga.pudoGuardarlo){
-					concatenarListaInt(buffer, &desplazamiento, respuestaDeCarga.listaDeDirecciones);
+					concatenarListaInt(buffer, &desplazamiento, &respuestaDeCarga.listaDeDirecciones);
+				}else{
+					tamanioBuffer = sizeof(u_int32_t);
 				}
 				enviarMensaje(socketDAM, buffer, tamanioBuffer);
 				free(buffer);
