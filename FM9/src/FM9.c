@@ -9,12 +9,23 @@
  */
 
 #include "FM9.h"
+t_list* guardarDatos(char* datos){
+	t_list* direccionesGuardadas;
+	list_create(direccionesGuardadas);
+	list_add(direccionesGuardadas,offset);
+	waitMutex(&mutexStorage);
+	memcpy(&storage, datos, strlen(datos) + 1);
+	signalMutex(&mutexStorage);
 
-respuestaDeCargaEnMemoria cargarDatosEnMemoria(char* datos, u_int32_t id_dtb){
+	waitMutex(&mutexOffset);
+	offset = offset + strlen(datos) + 1;
+	signalMutex(&mutexOffset);
+	return direccionesGuardadas;
+}
+
+respuestaDeCargaEnMemoria cargarDatosEnMemoria(char* datos){
 	respuestaDeCargaEnMemoria respuesta;
-	respuesta.id_dtb = id_dtb;
-	//TODO convertir el char* datos en t_list listaDeDirecciones
-	list_add(respuesta.listaDeDirecciones, 1);
+	respuesta.listaDeDirecciones = guardarDatos(datos);
 	//TODO pudoGuardarlo()
 	if(1){
 		respuesta.pudoGuardarlo = 1;
@@ -55,20 +66,20 @@ void entenderMensaje(int emisor, int header){
 
 			case GUARDAR_DATOS:
 				datos = deserializarString(emisor);
-				id = deserializarInt(emisor);
-				respuestaDeCarga = cargarDatosEnMemoria(datos,id);
+				respuestaDeCarga = cargarDatosEnMemoria(datos);
 				//TODO enviar y serializar la estructura de guardado
 				//enviarYSerializarInt(socketDAM, respuestaDeCarga, RESPUESTA_CARGA);
 				tamanioBuffer = sizeof(u_int32_t) + sizeof(u_int32_t) + sizeof(u_int32_t)*list_size(respuestaDeCarga.listaDeDirecciones);
 				buffer = asignarMemoria(tamanioBuffer);
 				desplazamiento = 0;
-				offset = 0; //Quiero que lea el archivo desde el principio
-				sizeDeLaRespuesta = 100; //Cómo sabemos el tamaño de lo que va a traer?!?!?
 
-				concatenarInt(buffer, &desplazamiento, respuestaDeCarga.id_dtb);
 				concatenarInt(buffer, &desplazamiento, respuestaDeCarga.pudoGuardarlo);
 				if(respuestaDeCarga.pudoGuardarlo){
-					concatenarInt(buffer, &desplazamiento, respuestaDeCarga.listaDeDirecciones);
+					concatenarInt(buffer, &desplazamiento, respuestaDeCarga.listaDeDirecciones->elements_count);
+					for(int i = 0; i<respuestaDeCarga.listaDeDirecciones->elements_count ;i++){
+						u_int32_t direccion = list_get(respuestaDeCarga.listaDeDirecciones, i);
+						concatenarInt(buffer, &desplazamiento, direccion);
+					}
 				}
 				enviarMensaje(socketDAM, buffer, tamanioBuffer);
 				free(buffer);
@@ -79,9 +90,16 @@ void entenderMensaje(int emisor, int header){
 		}
 }
 
-int main(void) {
+void init(){
+	inicializarMutex(&mutexOffset);
+	inicializarMutex(&mutexStorage);
 	//TODO cargar storage
 	storage = asignarMemoria(1000);
+	offset = 0;
+}
+
+int main(void) {
+	init();
 
 	direccionServidor direccionFM9 = levantarDeConfiguracion(NULL, "PUERTO", ARCHIVO_CONFIGURACION);
 	int servidor = crearServidor(direccionFM9.puerto, INADDR_ANY);

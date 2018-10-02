@@ -14,16 +14,20 @@ t_dictionary* conexiones;
 u_int32_t socketCPU;
 u_int32_t socketDAM;
 char* storage;
+pthread_mutex_t mutexStorage;
+u_int32_t offset;
+pthread_mutex_t mutexOffset;
+
 
 typedef struct{
-	u_int32_t id_dtb;
 	t_list* listaDeDirecciones;
 	u_int32_t pudoGuardarlo;
 }respuestaDeCargaEnMemoria;
 
 
-respuestaDeCargaEnMemoria cargarDatosEnMemoria(char* datos, u_int32_t id_dtb);
+respuestaDeCargaEnMemoria cargarDatosEnMemoria(char* datos);
 
+void init();
 void entenderMensaje(int emisor, int header);
 int main(void);
 
