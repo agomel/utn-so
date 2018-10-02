@@ -10,130 +10,57 @@
 #include "DAM.h"
 
 void inicializarDAM(){
-	inicializarMutex(&mutexColaMDJ);
-	inicializarMutex(&mutexMDJDisponible);
-	inicializarSem(&semHayEnColaMDJ,0);
+	inicializarMutex(&mutexColaOperaciones);
+	inicializarSem(semHayEnColaOperaciones, 0);
 }
-
-void enviarAMDJ(){
-	waitSem(&semHayEnColaMDJ);
-
-	waitMutex(&mutexColaMDJ);
-	ProcesoMDJ* procesoMDJ = queue_peek(colaMDJ);
-	signalMutex(&mutexColaMDJ);
-
-	u_int32_t tamanioBuffer = (strlen(procesoMDJ->path)+1) + sizeof(u_int32_t)*3 + sizeof(char);
+void enviarAMDJ(Operacion operacion){
+	u_int32_t tamanioBuffer = (strlen(operacion.path)+1) + sizeof(u_int32_t)*3 + sizeof(char);
 	void* buffer = asignarMemoria(tamanioBuffer);
 	u_int32_t desplazamiento = 0;
 
-	concatenarChar(buffer, &desplazamiento, OBTENER_DATOS);
-	concatenarString(buffer, &desplazamiento, procesoMDJ->path);
-	concatenarInt(buffer, &desplazamiento, procesoMDJ->offset);
-	concatenarInt(buffer, &desplazamiento, procesoMDJ->size);
+	concatenarChar(buffer, &desplazamiento, operacion.accion);
+	concatenarString(buffer, &desplazamiento, operacion.path);
+	concatenarInt(buffer, &desplazamiento, operacion.offset);
+	concatenarInt(buffer, &desplazamiento, operacion.size);
 
-	waitMutex(&mutexMDJDisponible);
 	enviarMensaje(socketMDJ, buffer, tamanioBuffer);
 	free(buffer);
 }
 
-void agregarDTBAColaMDJ(int emisor, int esDummy){
-	ProcesoMDJ* dtb = asignarMemoria(sizeof(ProcesoMDJ));
-	dtb->path = deserializarString(emisor);
-	dtb->idDTB = deserializarInt(emisor);
-	if(esDummy){
-		dtb->offset = 0;
-		//TODO el MDJ tiene que saber que si el size es -1 tiene que leer hasta el final del archivo
-		dtb->size = -1;
-	}else{
-		dtb->offset = deserializarInt(emisor);
-		dtb->size = deserializarInt(emisor);
-	}
-	waitMutex(&mutexColaMDJ);
-	queue_push(colaMDJ, dtb);
-	signalMutex(&mutexColaMDJ);
-	signalSem(&semHayEnColaMDJ);
+void agregarOperacionACola(int emisor, char accion){
+	Operacion* operacion = asignarMemoria(sizeof(Operacion));
+	operacion->path = deserializarString(emisor);
+	operacion->idDTB = deserializarInt(emisor);
+	operacion->offset = deserializarInt(emisor);
+	operacion->size = deserializarInt(emisor);
+	operacion->accion = accion;
+
+	waitMutex(&mutexColaOperaciones);
+	queue_push(colaOperaciones, operacion);
+	signalMutex(&mutexColaOperaciones);
+	signalSem(&semHayEnColaOperaciones);
 }
-void enviarDatosAFM9(int emisor){
-	signalMutex(&mutexMDJDisponible);
 
-	waitMutex(&mutexColaMDJ);
-	ProcesoMDJ* dtb = queue_pop(colaMDJ);
-	signalMutex(&mutexColaMDJ);
-
-	//TODO recibir los datos del mdj y crear lo que enviar
-	char* datos = deserializarString(emisor);
-
-	u_int32_t tamanioBuffer = strlen(datos)+1 + sizeof(u_int32_t)*2 + sizeof(char);
+void enviarDatosAFM9(char* datos){
+	u_int32_t tamanioBuffer = strlen(datos)+1 + sizeof(u_int32_t) + sizeof(char);
 	void* buffer = asignarMemoria(tamanioBuffer);
 	u_int32_t desplazamiento = 0;
 
 	concatenarChar(buffer, &desplazamiento, GUARDAR_DATOS);
 	concatenarString(buffer, &desplazamiento, datos);
-	concatenarInt(buffer, &desplazamiento, dtb->idDTB);
 
 	enviarMensaje(socketFM9, buffer, tamanioBuffer);
 	free(buffer);
-	free(dtb);
-
 }
+void recibirDatosDeFM9(void* buffer, u_int32_t* desplazamiento){
+	u_int32_t estadoDeCarga = deserializarInt(socketFM9);
 
-void entenderMensaje(int emisor, char header){
-	char identificado;
-	char identificarPersonaReenviar;
-	u_int32_t personaAReenviar;
-	char* datos;
-	u_int32_t estadoDeCarga;
-	u_int32_t desplazamiento;
-	u_int32_t idDtb;
-	void* buffer;
+	if(estadoDeCarga == 0){ //No pudo cargar
+		buffer = asignarMemoria(10);
+		//esta parte esta en el branch exitPCD
 
-	switch(header){
-		case IDENTIFICARSE:
-			identificado = deserializarChar(emisor);
-			printf("identificado %c \n", identificado);
-			switch(identificado){
-				case CPU:
-					socketCPU = emisor;
-					break;
-				default:
-					perror("no acepto a esta conexion");
-			}
-			printf("Se agrego a las conexiones %c \n" , identificado);
-			break;
-
-		case MANDAR_TEXTO:
-			//TODO esta operacion es basura, es para probar a serializacion y deserializacion
-			deserializarString(emisor);
-			break;
-
-		case CARGAR_ESCRIPTORIO:
-			//Se le envia 1 como segundo parametro porque el dtb a agregar a la cola es el dummy
-			agregarDTBAColaMDJ(emisor, 1);
-			break;
-
-		case DATOS_CONSEGUIDOS:
-			enviarDatosAFM9(emisor);
-			break;
-
-		case RESPUESTA_CARGA: //Si el FM9 pudo cargar bien los datos o no
-			estadoDeCarga = deserializarInt(emisor);
-			buffer = asignarMemoria(sizeof(u_int32_t) + sizeof(char)*2);
-			desplazamiento = 0;
-			if(estadoDeCarga == 0){ //No pudo cargar
-				concatenarChar(buffer, &desplazamiento, PASAR_EXIT);
-			}else{
-				concatenarChar(buffer, &desplazamiento, PASAR_READY);
-			}
-			concatenarChar(buffer, &desplazamiento, COLA_NEW); //de donde sacar el proceso
-			idDtb = 0; //TODO poner de donde lo saca?!?!
-			concatenarInt(buffer, &desplazamiento, idDtb);
-			//TODO concatenar lista de tabla de paginas
-			enviarMensaje(socketSAFA, buffer, sizeof(char)*2);
-			free(buffer);
-			break;
-
-		default:
-			perror("Cualquiera ese header flaco");
+	}else{//Pudo cargar los datos ok
+		//TODO que pasa si esta ok lo que guardo el MDJ ?
 	}
 }
 
@@ -149,6 +76,41 @@ void escuchar(int servidor){
 		free(buffer);
 	}
 }
+
+void consumirCola(){
+	while(1){
+		waitSem(&semHayEnColaOperaciones);
+		waitMutex(&mutexColaOperaciones);
+		Operacion* operacion = queue_pop(colaOperaciones);
+		signalMutex(&mutexColaOperaciones);
+
+		switch(operacion->accion){
+			case CARGAR_ESCRIPTORIO://Dummy
+				//aca tengo que pedirle al mdj esperar etc...
+				enviarAMDJ(operacion);
+				char* datos = deserializarString(socketMDJ);
+				enviarDatosAFM9(datos);
+				void* buffer;
+				u_int32_t desplazamiento;
+				recibirDatosDeFM9(buffer, &desplazamiento);
+				//TODO enviar y serializar estructura
+				free(buffer);
+			break;
+			default:
+				perror("Cualquiera ese header flaco");
+			}
+	}
+}
+
+void escucharCPU(int socketCPU){
+	while(1){
+		char header;
+		recibirMensaje(socketCPU, &header, sizeof(char));
+		agregarOperacionACola(socketCPU, header);
+		//esto solo agrega operaciones ala colas
+	}
+}
+
 
 int main(void) {
 	inicializarDAM();
@@ -175,20 +137,13 @@ int main(void) {
 	handshake(socketMDJ, DAM);
 	handshake(socketFM9, DAM);
 
-	//creo un hilo para cada servidor con el que me conecto
-	pthread_t hiloEscuchadorSAFA = crearHilo(&escuchar,socketSAFA);
-	pthread_t hiloEscuchadorMDJ = crearHilo(&escuchar,socketMDJ);
-	pthread_t hiloEscuchadorFM9 = crearHilo(&escuchar,socketFM9);
-	pthread_t hiloControladorDeMDJ = crearHilo(&enviarAMDJ,hiloControladorDeMDJ);
-	//creo un hilo para escuchar los clientes(CPU)
-	pthread_t hiloAdministradorDeConexiones = crearHilo(&escucharClientes, &parametros);
+	//TODO crear hilo de la otra forma
+	crearHilo(&consumirCola, NULL);
 
-	//esperar hilos
-	esperarHilo(hiloEscuchadorSAFA);
-	esperarHilo(hiloEscuchadorMDJ);
-	esperarHilo(hiloEscuchadorFM9);
-	esperarHilo(hiloAdministradorDeConexiones);
-	esperarHilo(hiloControladorDeMDJ);
-
+	while(1){
+		int cpu = aceptarCliente(servidorDAM);
+		//TODO crear hilo de la otra forma
+		crearHilo(&escucharCPU, cpu);
+	}
 	return 0;
 }

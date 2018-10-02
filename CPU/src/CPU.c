@@ -64,7 +64,6 @@ int main(void) {
 
 	direccionServidor direccionDIEGO = levantarDeConfiguracion("IP_DIEGO", "PUERTO_DIEGO", ARCHIVO_CONFIGURACION);
 	socketDIEGO= conectarConServidor(direccionDIEGO.puerto, inet_addr(direccionDIEGO.ip));
-	handshake(socketDIEGO, CPU);
 
 	pthread_t hiloConsola = crearHilo(&consola, socketSAFA);
 	pthread_t hiloEscuchadorSAFA = crearHilo(&escuchar, socketSAFA);
