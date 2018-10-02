@@ -11,7 +11,6 @@ void planificadorACortoPlazo(){
 			waitMutex(&mutexREADY);
 			DTB* dtb = list_remove(colaREADY, indexElegido);
 			signalMutex(&mutexREADY);
-			signalSem(&gradoMultiprogramacion);
 
 			serializarYEnviarDTB(socketCPU, *dtb);
 
