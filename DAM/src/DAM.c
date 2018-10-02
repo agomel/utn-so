@@ -88,7 +88,6 @@ void consumirCola(){
 				char* datos = deserializarString(socketMDJ);
 				enviarDatosAFM9(datos);
 				recibirDatosDeFM9YEnviarASafa(operacion->idDTB);
-				free(buffer);
 			break;
 			default:
 				perror("Cualquiera ese header flaco");

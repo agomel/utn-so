@@ -17,6 +17,7 @@ char* storage;
 pthread_mutex_t mutexStorage;
 u_int32_t offset;
 pthread_mutex_t mutexOffset;
+t_config* archivoConfiguracion;
 
 
 typedef struct{
