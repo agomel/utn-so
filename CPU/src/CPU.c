@@ -32,13 +32,15 @@ void escuchar(int servidor){
 					if(dtbRecibido.flag == 0){
 						//Es el dummy
 						tamanioPathEscriptorio = strlen(dtbRecibido.escriptorio) + 1;
-						tamanioBuffer = sizeof(char) + tamanioPathEscriptorio + sizeof(u_int32_t)*2;
+						tamanioBuffer = sizeof(char) + tamanioPathEscriptorio + sizeof(u_int32_t)*4;
 						buffer = asignarMemoria(tamanioBuffer);
 						desplazamiento = 0;
 
 						concatenarChar(buffer, &desplazamiento, CARGAR_ESCRIPTORIO);
 						concatenarString(buffer, &desplazamiento, dtbRecibido.escriptorio);
 						concatenarInt(buffer, &desplazamiento, dtbRecibido.id);
+						concatenarInt(buffer, &desplazamiento, 0); //Offset (Desde el principio)
+						concatenarInt(buffer, &desplazamiento, -1); //size  (Hasta el final)
 
 						enviarMensaje(socketDIEGO, buffer, tamanioBuffer);
 						free(buffer);

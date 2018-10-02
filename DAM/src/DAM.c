@@ -38,6 +38,7 @@ void agregarOperacionACola(int emisor, char accion){
 	waitMutex(&mutexColaOperaciones);
 	queue_push(colaOperaciones, operacion);
 	signalMutex(&mutexColaOperaciones);
+	free(operacion);
 	signalSem(&semHayEnColaOperaciones);
 }
 
@@ -78,9 +79,10 @@ void recibirDatosDeFM9YEnviarASafa(u_int32_t idDTB){
 
 void consumirCola(){
 	while(1){
+		Operacion* operacion = asignarMemoria(sizeof(Operacion));
 		waitSem(&semHayEnColaOperaciones);
 		waitMutex(&mutexColaOperaciones);
-		Operacion* operacion = queue_pop(colaOperaciones);
+		operacion = queue_pop(colaOperaciones);
 		signalMutex(&mutexColaOperaciones);
 
 		switch(operacion->accion){
@@ -93,6 +95,7 @@ void consumirCola(){
 			default:
 				perror("Cualquiera ese header flaco");
 			}
+		free(operacion);
 	}
 }
 

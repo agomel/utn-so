@@ -30,10 +30,11 @@ void inicializarSemaforos(){
 
 void pasarDTBAExit(u_int32_t idDTB, t_list* listaDeDTB){
 	DTB* dtb;
-	for(u_int32_t i = 0; i < list_size(listaDeDTB); i++){
+	for(u_int32_t i = 0; i < listaDeDTB->elements_count; i++){
 		dtb = list_get(listaDeDTB, i);
 		if(dtb->id == idDTB){
 			list_remove(listaDeDTB, i);
+			signalSem(&gradoMultiprogramacion);
 			break;//para cortar el for
 		}
 	}

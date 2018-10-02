@@ -40,6 +40,7 @@ void enviarYSerializarStringSinHeader(u_int32_t destino, char* texto){
 
 	free(mensaje);
 }
+
 void enviarYSerializarInt(u_int32_t destino, u_int32_t numero,char operacion){
 	u_int32_t tamanioMensaje = sizeof(u_int32_t) + sizeof(char);
 	void* mensaje = asignarMemoria(tamanioMensaje);
