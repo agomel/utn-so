@@ -18,6 +18,10 @@ void inicializarColas(){
 void inicializarSemaforos(){
 	inicializarMutex(&mutexNEW);
 	inicializarMutex(&mutexREADY);
+	inicializarMutex(&mutexEXECUTE);
+	inicializarMutex(&mutexBLOCKED);
+	inicializarMutex(&mutexEXIT);
+	inicializarMutex(&mutexColaDummy);
 
 	u_int32_t multiprogramacion = config_get_int_value(archivoConfiguracion, "MULTIPROGRAMACION");
 	inicializarSem(&gradoMultiprogramacion, multiprogramacion);
@@ -33,7 +37,9 @@ void pasarDTBAExit(u_int32_t idDTB, t_list* listaDeDTB){
 			break;//para cortar el for
 		}
 	}
+	waitMutex(&mutexEXIT);
 	list_add(colaEXIT, dtb);
+	signalMutex(&mutexEXIT);
 }
 
 /*DTB* buscarDTB(int id, t_list listaDeDTB){

@@ -18,9 +18,12 @@ t_list* colaBLOCKED;
 t_list* colaEXIT;
 t_list* colaEsperandoDummy;
 
-pthread_mutex_t mutexColaDummy;
 pthread_mutex_t mutexNEW;
 pthread_mutex_t mutexREADY;
+pthread_mutex_t mutexEXECUTE;
+pthread_mutex_t mutexBLOCKED;
+pthread_mutex_t mutexEXIT;
+pthread_mutex_t mutexColaDummy;
 
 sem_t gradoMultiprogramacion;
 sem_t cantidadTotalREADY;

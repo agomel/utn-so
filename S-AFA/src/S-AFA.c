@@ -40,7 +40,9 @@ void entenderMensaje(int emisor, char header){
 
 		case FALLO_LA_CARGA_DEL_SCRIPTORIO:
 			idDTB = deserializarInt(emisor);
+			waitMutex(&mutexColaDummy);
 			pasarDTBAExit(idDTB, colaEsperandoDummy);
+			signal(&mutexColaDummy);
 			break;
 
 		case PASAR_READY:
