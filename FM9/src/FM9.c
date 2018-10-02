@@ -75,11 +75,7 @@ void entenderMensaje(int emisor, int header){
 
 				concatenarInt(buffer, &desplazamiento, respuestaDeCarga.pudoGuardarlo);
 				if(respuestaDeCarga.pudoGuardarlo){
-					concatenarInt(buffer, &desplazamiento, respuestaDeCarga.listaDeDirecciones->elements_count);
-					for(int i = 0; i<respuestaDeCarga.listaDeDirecciones->elements_count ;i++){
-						u_int32_t direccion = list_get(respuestaDeCarga.listaDeDirecciones, i);
-						concatenarInt(buffer, &desplazamiento, direccion);
-					}
+					concatenarListaInt(buffer, &desplazamiento, respuestaDeCarga.listaDeDirecciones);
 				}
 				enviarMensaje(socketDAM, buffer, tamanioBuffer);
 				free(buffer);
