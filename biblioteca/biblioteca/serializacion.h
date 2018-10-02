@@ -22,9 +22,10 @@ typedef struct{
 
 void handshake(u_int32_t servidor, char modulo);
 
-void enviarStringSerializado(u_int32_t destino, char* texto,char operacion);
+void enviarYSerializarString(u_int32_t destino, char* texto,char operacion);
+void enviarYSerializarStringSinHeader(u_int32_t destino, char* texto);
 void enviarYSerializarInt(u_int32_t destino, u_int32_t numero,char operacion);
-
+void enviarYSerializarIntSinHeader(u_int32_t destino, u_int32_t numero);
 char* deserializarString(u_int32_t emisor);
 u_int32_t deserializarInt(u_int32_t emisor);
 char deserializarChar(u_int32_t emisor);

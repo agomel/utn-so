@@ -18,7 +18,7 @@ void enviarAMDJ(Operacion operacion){
 	void* buffer = asignarMemoria(tamanioBuffer);
 	u_int32_t desplazamiento = 0;
 
-	concatenarChar(buffer, &desplazamiento, operacion.accion);
+	concatenarChar(buffer, &desplazamiento, OBTENER_DATOS);
 	concatenarString(buffer, &desplazamiento, operacion.path);
 	concatenarInt(buffer, &desplazamiento, operacion.offset);
 	concatenarInt(buffer, &desplazamiento, operacion.size);

@@ -38,14 +38,14 @@ void entenderMensaje(int emisor, char header){
 			break;
 			case VALIDAR_ARCHIVO:
 				archivoValido = validarArchivo(emisor);
-				enviarYSerializarInt(emisor, archivoValido, VALIDAR_ARCHIVO);
+				enviarYSerializarIntSinHeader(emisor, archivoValido);
 				break;
 			case CREAR_ARCHIVO:
 				crearArchivo(emisor);
 				break;
 			case OBTENER_DATOS:
 				datos = obtenerDatos(emisor);
-				enviarYSerializarString(emisor, datos, DATOS_CONSEGUIDOS);
+				enviarYSerializarStringSinHeader(emisor, datos);
 				break;
 			case GUARDAR_DATOS:
 				guardarDatos(emisor);

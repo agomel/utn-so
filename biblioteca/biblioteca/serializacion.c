@@ -26,6 +26,20 @@ void enviarYSerializarString(u_int32_t destino, char* texto,char operacion){
 
 	free(mensaje);
 }
+
+void enviarYSerializarStringSinHeader(u_int32_t destino, char* texto){
+	u_int32_t tamanioTexto = strlen(texto) + 1;
+	u_int32_t tamanioMensaje = sizeof(u_int32_t) + tamanioTexto;
+	void* mensaje = asignarMemoria(tamanioMensaje);
+
+	u_int32_t desplazamiento = 0;
+
+	concatenarString(mensaje, &desplazamiento, texto);
+
+	enviarMensaje(destino, mensaje, tamanioMensaje);
+
+	free(mensaje);
+}
 void enviarYSerializarInt(u_int32_t destino, u_int32_t numero,char operacion){
 	u_int32_t tamanioMensaje = sizeof(u_int32_t) + sizeof(char);
 	void* mensaje = asignarMemoria(tamanioMensaje);
@@ -33,6 +47,19 @@ void enviarYSerializarInt(u_int32_t destino, u_int32_t numero,char operacion){
 	u_int32_t desplazamiento = 0;
 
 	concatenarChar(mensaje, &desplazamiento, operacion);
+	concatenarInt(mensaje, &desplazamiento, numero);
+
+	enviarMensaje(destino, mensaje, tamanioMensaje);
+
+	free(mensaje);
+}
+
+void enviarYSerializarIntSinHeader(u_int32_t destino, u_int32_t numero){
+	u_int32_t tamanioMensaje = sizeof(u_int32_t);
+	void* mensaje = asignarMemoria(tamanioMensaje);
+
+	u_int32_t desplazamiento = 0;
+
 	concatenarInt(mensaje, &desplazamiento, numero);
 
 	enviarMensaje(destino, mensaje, tamanioMensaje);

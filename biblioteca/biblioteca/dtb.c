@@ -14,10 +14,9 @@ DTB crearDTB (char* parametro){
 	dtb.flag = 1;
 	dtb.id = obtenerId();
 	//TODO poner valor valido en programCounter
-	dtb.programCounter = -1;
+	dtb.programCounter = 0;
 	//TODO poner valor valido en tablaDireccionesArchivos
 	dtb.tablaDireccionesArchivos = -1;
-
 	return dtb;
 }
 
