@@ -15,15 +15,13 @@ DTB crearDTB (char* parametro){
 	dtb.id = obtenerId();
 	//TODO poner valor valido en programCounter
 	dtb.programCounter = 0;
-	//TODO poner valor valido en tablaDireccionesArchivos
-	dtb.tablaDireccionesArchivos = -1;
 	return dtb;
 }
 
 void serializarYEnviarDTB(int receptor, DTB dtb){
 	//Asigno tamanio al buffer
 	u_int32_t tamanioEscriptorio = strlen(dtb.escriptorio) + 1;
-	u_int32_t tamanioBuffer = sizeof(char) + sizeof(u_int32_t)*4 + sizeof(u_int32_t) + tamanioEscriptorio;
+	u_int32_t tamanioBuffer = sizeof(char) + sizeof(u_int32_t)*5 + tamanioEscriptorio + sizeof(u_int32_t)*(dtb.tablaDireccionesArchivos->elements_count);
 	void* buffer = asignarMemoria(tamanioBuffer);
 
 	//Lleno el buffer
@@ -34,7 +32,7 @@ void serializarYEnviarDTB(int receptor, DTB dtb){
 	concatenarInt(buffer, &desplazamiento, dtb.flag);
 	concatenarInt(buffer, &desplazamiento, dtb.id);
 	concatenarInt(buffer, &desplazamiento, dtb.programCounter);
-	concatenarInt(buffer, &desplazamiento, dtb.tablaDireccionesArchivos);
+	concatenarListaInt(buffer, &desplazamiento, dtb.tablaDireccionesArchivos);
 
 	enviarMensaje(receptor, buffer, tamanioBuffer);
 
@@ -47,7 +45,7 @@ DTB deserializarDTB(int emisor){
 	dtb.flag = deserializarInt(emisor);
 	dtb.id = deserializarInt(emisor);
 	dtb.programCounter = deserializarInt(emisor);
-	dtb.tablaDireccionesArchivos = deserializarInt(emisor);
+	dtb.tablaDireccionesArchivos = deserializarListaInt(emisor);
 
 	return dtb;
 }

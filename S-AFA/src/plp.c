@@ -15,7 +15,7 @@ void planificadorALargoPlazo(){
 
 			cargarDummy(dtb);
 
-			waitSem(&gradoMultiprogramacion); //TODO hacer el signal cuando el proceso va a exit
+			waitSem(&gradoMultiprogramacion);
 			waitMutex(&mutexREADY);
 			list_add(colaREADY, &dtbDummy);
 			signalMutex(&mutexREADY);
@@ -69,7 +69,7 @@ void ponerEnReadyProcesoDummyOk(u_int32_t idDTB){
 	}
 	//TODO Cambiar el uint por una lista
 	dtb->tablaDireccionesArchivos = 2;
-	waitSem(&gradoMultiprogramacion); //TODO hacer el signal cuando el proceso va a exit
+	waitSem(&gradoMultiprogramacion);
 	waitMutex(&mutexREADY);
 	list_add(colaREADY, &dtb);
 	signalMutex(&mutexREADY);
