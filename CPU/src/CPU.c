@@ -6,7 +6,6 @@
 int socketDIEGO;
 int socketFM9;
 int socketSAFA;
-t_config* archivoConfiguracion;
 void consola(int servidor){
 	while(1){
 		char* texto = malloc(1000);
@@ -56,16 +55,16 @@ void escuchar(int servidor){
 }
 
 int main(void) {
-	direccionServidor direccionSAFA = levantarDeConfiguracion("IP_SAFA", "PUERTO_SAFA", ARCHIVO_CONFIGURACION, archivoConfiguracion);
+	direccionServidor direccionSAFA = levantarDeConfiguracion("IP_SAFA", "PUERTO_SAFA", ARCHIVO_CONFIGURACION);
 	socketSAFA = conectarConServidor(direccionSAFA.puerto, inet_addr(direccionSAFA.ip));
 	handshake(socketSAFA, CPU);
 	printf("Socket del safa %d \n", socketSAFA);
 
-	direccionServidor direccionFM9 = levantarDeConfiguracion("IP_FM9", "PUERTO_FM9", ARCHIVO_CONFIGURACION, archivoConfiguracion);
+	direccionServidor direccionFM9 = levantarDeConfiguracion("IP_FM9", "PUERTO_FM9", ARCHIVO_CONFIGURACION);
 	socketFM9 = conectarConServidor(direccionFM9.puerto, inet_addr(direccionFM9.ip));
 	handshake(socketFM9, CPU);
 
-	direccionServidor direccionDIEGO = levantarDeConfiguracion("IP_DIEGO", "PUERTO_DIEGO", ARCHIVO_CONFIGURACION, archivoConfiguracion);
+	direccionServidor direccionDIEGO = levantarDeConfiguracion("IP_DIEGO", "PUERTO_DIEGO", ARCHIVO_CONFIGURACION);
 	socketDIEGO= conectarConServidor(direccionDIEGO.puerto, inet_addr(direccionDIEGO.ip));
 
 	pthread_t hiloConsola = crearHilo(&consola, socketSAFA);

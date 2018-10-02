@@ -14,7 +14,6 @@ u_int32_t socketMDJ;
 u_int32_t socketSAFA;
 t_queue* colaOperaciones;
 
-t_config* archivoConfiguracion;
 pthread_mutex_t mutexColaOperaciones;
 sem_t semHayEnColaOperaciones;
 

@@ -71,11 +71,9 @@ void entenderMensaje(int emisor, char header){
 int main(void) {
 	//TODO Debe iniciar en estado corrupto
 
-	inicializarMutex(&mutexIdsDTB);
-	contadorIds = 1;
-	direccionServidor direccionSAFA = levantarDeConfiguracion(NULL, "PUERTO", ARCHIVO_CONFIGURACION, archivoConfiguracion);
+	direccionServidor direccionSAFA = levantarDeConfiguracion(NULL, "PUERTO", ARCHIVO_CONFIGURACION);
 	int servidor = crearServidor(direccionSAFA.puerto, INADDR_ANY);
-
+	inicializarPlanificadores();
 	parametrosEscucharClientes parametros;
 	parametros.servidor = servidor;
 	parametros.funcion = &entenderMensaje;
@@ -83,7 +81,6 @@ int main(void) {
 	pthread_t hiloAdministradorDeConexiones = crearHilo(&escucharClientes, &parametros);
 	pthread_t hiloConsola = crearHilo(&consola, NULL);
 
-	inicializarPlanificadores();
 	pthread_t hiloPlanificadorALargoPlazo = crearHilo(&planificadorALargoPlazo, NULL);
 	pthread_t hiloPlanificadorACortoPlazo = crearHilo(&planificadorACortoPlazo, NULL);
 

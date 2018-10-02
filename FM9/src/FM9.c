@@ -98,7 +98,7 @@ void init(){
 int main(void) {
 	init();
 
-	direccionServidor direccionFM9 = levantarDeConfiguracion(NULL, "PUERTO", ARCHIVO_CONFIGURACION, archivoConfiguracion);
+	direccionServidor direccionFM9 = levantarDeConfiguracion(NULL, "PUERTO", ARCHIVO_CONFIGURACION);
 	int servidor = crearServidor(direccionFM9.puerto, INADDR_ANY);
 
 	parametrosEscucharClientes parametros;
