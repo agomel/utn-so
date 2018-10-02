@@ -25,16 +25,14 @@ typedef struct{
 	char accion;
 }Operacion;
 
-void entenderMensaje(int emisor, char header);
-
-void escuchar(int servidor);
-
+void inicializarDAM();
+void enviarAMDJ(Operacion operacion);
+void agregarOperacionACola(int emisor, char accion);
+void enviarDatosAFM9(char* datos);
+void recibirDatosDeFM9(void* buffer, u_int32_t* desplazamiento);
+void consumirCola();
+void escucharCPU(int socketCPU);
 int main(void);
 
-void inicializarDAM();
-
-void agregarDTBAColaMDJ(int emisor, int esDummy, char operacion);
-
-void enviarAMDJ();
 
 #endif /*DAM_H_*/

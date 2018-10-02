@@ -111,9 +111,8 @@ u_int32_t deserializarInt(u_int32_t emisor){
 
 char deserializarChar(u_int32_t emisor){
 	char mensaje;
-	printf("deserializar char del emisor %d \n", emisor);
 	recibirMensaje(emisor, &mensaje, sizeof(char));
-	printf("El mensaje es %c \n", mensaje);
+	printf("Recibi %c de parte de %d \n" , mensaje, emisor);
 	return mensaje;
 }
 

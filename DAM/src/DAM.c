@@ -11,7 +11,7 @@
 
 void inicializarDAM(){
 	inicializarMutex(&mutexColaOperaciones);
-	inicializarSem(semHayEnColaOperaciones, 0);
+	inicializarSem(&semHayEnColaOperaciones, 0);
 }
 void enviarAMDJ(Operacion operacion){
 	u_int32_t tamanioBuffer = (strlen(operacion.path)+1) + sizeof(u_int32_t)*3 + sizeof(char);
@@ -64,19 +64,6 @@ void recibirDatosDeFM9(void* buffer, u_int32_t* desplazamiento){
 	}
 }
 
-void escuchar(int servidor){
-	int a = 1;
-	while(a){
-		char* buffer = asignarMemoria(150);
-		int bytesRecibidos = recibirMensaje(servidor,&buffer,150);
-		if(bytesRecibidos <= 0){
-			a = 0;
-		}
-		printf("%s \n", buffer);
-		free(buffer);
-	}
-}
-
 void consumirCola(){
 	while(1){
 		waitSem(&semHayEnColaOperaciones);
@@ -87,7 +74,7 @@ void consumirCola(){
 		switch(operacion->accion){
 			case CARGAR_ESCRIPTORIO://Dummy
 				//aca tengo que pedirle al mdj esperar etc...
-				enviarAMDJ(operacion);
+				enviarAMDJ(*operacion);
 				char* datos = deserializarString(socketMDJ);
 				enviarDatosAFM9(datos);
 				void* buffer;
@@ -118,10 +105,6 @@ int main(void) {
 	direccionServidor direccionDAM = levantarDeConfiguracion(NULL, "PUERTO", ARCHIVO_CONFIGURACION);
 	int servidorDAM = crearServidor(direccionDAM.puerto, INADDR_ANY);
 
-	parametrosEscucharClientes parametros;
-	parametros.servidor = servidorDAM;
-	parametros.funcion = &entenderMensaje;
-
 	//crear servidores para ser cliente de ellos
 	direccionServidor direccionSAFA = levantarDeConfiguracion("IP_SAFA", "PUERTO_SAFA", ARCHIVO_CONFIGURACION);
 	socketSAFA = conectarConServidor(direccionSAFA.puerto, inet_addr(direccionSAFA.ip));
@@ -139,7 +122,7 @@ int main(void) {
 
 	//TODO crear hilo de la otra forma
 	crearHilo(&consumirCola, NULL);
-
+	empezarAEscuchar(servidorDAM, 100);
 	while(1){
 		int cpu = aceptarCliente(servidorDAM);
 		//TODO crear hilo de la otra forma
