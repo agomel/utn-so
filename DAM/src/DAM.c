@@ -62,6 +62,7 @@ void recibirDatosDeFM9YEnviarASafa(u_int32_t idDTB){
 		concatenarInt(buffer, &desplazamiento, idDTB);
 	}else{
 		//TODO que pasa si esta ok lo que guardo el MDJ ?
+
 		//deserializar lista int
 		//TODO hacer lo  que pasa si vuelve bien
 		//TODO deserializar lista y ver que onda
@@ -72,6 +73,7 @@ void recibirDatosDeFM9YEnviarASafa(u_int32_t idDTB){
 		//TODO concatenar lista de tabla de paginas
 	}
 	enviarMensaje(socketSAFA, buffer, desplazamiento);
+	free(buffer);
 }
 
 void consumirCola(){
@@ -83,12 +85,11 @@ void consumirCola(){
 
 		switch(operacion->accion){
 			case CARGAR_ESCRIPTORIO://Dummy
-				//aca tengo que pedirle al mdj esperar etc...
 				enviarAMDJ(*operacion);
 				char* datos = deserializarString(socketMDJ);
 				enviarDatosAFM9(datos);
 				recibirDatosDeFM9YEnviarASafa(operacion->idDTB);
-			break;
+				break;
 			default:
 				perror("Cualquiera ese header flaco");
 			}
