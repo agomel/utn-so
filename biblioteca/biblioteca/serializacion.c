@@ -95,13 +95,8 @@ char* deserializarString(u_int32_t emisor){
 	u_int32_t tamanioMensaje = deserializarInt(emisor);
 	char* mensaje = asignarMemoria(tamanioMensaje);
 	recibirMensaje(emisor, mensaje, tamanioMensaje);
-	char respuesta[tamanioMensaje];
-	for(int i = 0; i<tamanioMensaje; i++){
-		respuesta[i] = mensaje[i];
-	}
-	free(mensaje);
-	printf("Recibi %s de parte de %d \n" , respuesta, emisor);
-	return respuesta;
+	printf("Recibi %s de parte de %d \n" , mensaje, emisor);
+	return mensaje;
 }
 
 u_int32_t deserializarInt(u_int32_t emisor){

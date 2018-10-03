@@ -43,7 +43,7 @@ void serializarYEnviarDTB(int receptor, DTB dtb){
 
 DTB deserializarDTB(int emisor){
 	DTB dtb;
-	dtb.escriptorio = deserializarString(emisor);
+	dtb.escriptorio = deserializarString(emisor);;
 	dtb.flag = deserializarInt(emisor);
 	dtb.id = deserializarInt(emisor);
 	dtb.programCounter = deserializarInt(emisor);
