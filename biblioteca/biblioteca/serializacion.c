@@ -119,7 +119,7 @@ char deserializarChar(u_int32_t emisor){
 
 t_list* deserializarListaInt(u_int32_t emisor){
 	u_int32_t elementosDeLalista = deserializarInt(emisor);
-	t_list* respuesta;
+	t_list* respuesta = list_create();
 	for(int i = 0; i<elementosDeLalista; i++){
 		list_add(respuesta, deserializarInt(emisor));
 	}

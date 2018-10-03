@@ -13,6 +13,7 @@ DTB crearDTB (char* parametro){
 	dtb.escriptorio = parametro;
 	dtb.flag = 1;
 	dtb.id = obtenerId();
+	dtb.tablaDireccionesArchivos = list_create();
 	//TODO poner valor valido en programCounter
 	dtb.programCounter = 0;
 	return dtb;
@@ -21,7 +22,8 @@ DTB crearDTB (char* parametro){
 void serializarYEnviarDTB(int receptor, DTB dtb){
 	//Asigno tamanio al buffer
 	u_int32_t tamanioEscriptorio = strlen(dtb.escriptorio) + 1;
-	u_int32_t tamanioBuffer = sizeof(char) + sizeof(u_int32_t)*5 + tamanioEscriptorio + sizeof(u_int32_t)*(dtb.tablaDireccionesArchivos->elements_count);
+	u_int32_t tamanioLista = dtb.tablaDireccionesArchivos->elements_count;
+	u_int32_t tamanioBuffer = sizeof(char) + sizeof(u_int32_t)*5 + tamanioEscriptorio + sizeof(u_int32_t)*(tamanioLista);
 	void* buffer = asignarMemoria(tamanioBuffer);
 
 	//Lleno el buffer

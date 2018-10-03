@@ -1,9 +1,9 @@
 #include "plp.h"
 
-void planificadorALargoPlazo(){
+void planificadorALargoPlazo() {
 	u_int32_t a = 1;
-	while(a){
-		if(!queue_is_empty(colaNEW)){
+	while (a) {
+		if (!queue_is_empty(colaNEW)) {
 			printf("hay procesos en la cola new\n");
 			waitMutex(&mutexNEW);
 			DTB* dtb = queue_pop(colaNEW);
@@ -13,7 +13,7 @@ void planificadorALargoPlazo(){
 			list_add(colaEsperandoDummy, dtb);
 			signal(mutexColaDummy);
 
-			cargarDummy(dtb);
+			cargarDummy(*dtb);
 
 			waitSem(&gradoMultiprogramacion);
 			waitMutex(&mutexREADY);
@@ -25,23 +25,24 @@ void planificadorALargoPlazo(){
 }
 
 /*void dtbListo(DTBListo datos){
-	//Busco en la lista el dtb con el id de datos dtb
-	DTB dtb;
-	waitSem(&espacioDisponibleREADY);
-	waitMutex(&mutexREADY);
-	queue_push(colaREADY, dtb);
-	signalMutex(&mutexREADY);
-	signalSem(&cantidadTotalREADY);
-}*/
-void cargarDummy(DTB dtb){
+ //Busco en la lista el dtb con el id de datos dtb
+ DTB dtb;
+ waitSem(&espacioDisponibleREADY);
+ waitMutex(&mutexREADY);
+ queue_push(colaREADY, dtb);
+ signalMutex(&mutexREADY);
+ signalSem(&cantidadTotalREADY);
+ }*/
+void cargarDummy(DTB dtb) {
 	waitMutex(&mutexDummy);
 	dtbDummy->flag = 0;
 	dtbDummy->escriptorio = dtb.escriptorio;
 	dtbDummy->id = dtb.id;
+	dtbDummy->tablaDireccionesArchivos = list_create();
 	//serializarYEnviarDTB(socketCPU, dtbDummy);
 }
 
-void ponerProcesoEnNew(char* escriptorio){
+void ponerProcesoEnNew(char* escriptorio) {
 	DTB* dtb = asignarMemoria(sizeof(DTB));
 	*dtb = crearDTB(escriptorio);
 	waitMutex(&mutexNEW);
@@ -50,11 +51,11 @@ void ponerProcesoEnNew(char* escriptorio){
 	free(dtb);
 }
 
-void enviarDTB(DTB dtb){
+void enviarDTB(DTB dtb) {
 	serializarYEnviarDTB(socketCPU, dtb);
 }
 
-void ponerEnReadyProcesoDummyOk(DTB* dtb){
+void ponerEnReadyProcesoDummyOk(DTB* dtb) {
 	waitSem(&gradoMultiprogramacion);
 	waitMutex(&mutexREADY);
 	list_add(colaREADY, &dtb);
