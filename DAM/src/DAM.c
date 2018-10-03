@@ -12,6 +12,7 @@
 void inicializarDAM(){
 	inicializarMutex(&mutexColaOperaciones);
 	inicializarSem(&semHayEnColaOperaciones, 0);
+	colaOperaciones = queue_create();
 }
 void enviarAMDJ(Operacion operacion){
 	u_int32_t tamanioBuffer = (strlen(operacion.path)+1) + sizeof(u_int32_t)*3 + sizeof(char);
@@ -75,10 +76,10 @@ void recibirDatosDeFM9YEnviarASafa(u_int32_t idDTB){
 
 void consumirCola(){
 	while(1){
-		Operacion* operacion = asignarMemoria(sizeof(Operacion));
+
 		waitSem(&semHayEnColaOperaciones);
 		waitMutex(&mutexColaOperaciones);
-		operacion = queue_pop(colaOperaciones);
+		Operacion* operacion = queue_pop(colaOperaciones);
 		signalMutex(&mutexColaOperaciones);
 
 		switch(operacion->accion){

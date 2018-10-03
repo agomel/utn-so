@@ -13,6 +13,7 @@ DTB crearDTB (char* parametro){
 	dtb.escriptorio = parametro;
 	dtb.flag = 1;
 	dtb.id = obtenerId();
+	printf("id del dtb %d \n",dtb.id);
 	dtb.tablaDireccionesArchivos = list_create();
 	//TODO poner valor valido en programCounter
 	dtb.programCounter = 0;
