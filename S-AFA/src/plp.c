@@ -17,7 +17,7 @@ void planificadorALargoPlazo(){
 
 			waitSem(&gradoMultiprogramacion);
 			waitMutex(&mutexREADY);
-			list_add(colaREADY, &dtbDummy);
+			list_add(colaREADY, dtbDummy);
 			signalMutex(&mutexREADY);
 			signalSem(&cantidadTotalREADY);
 		}
@@ -35,9 +35,9 @@ void planificadorALargoPlazo(){
 }*/
 void cargarDummy(DTB dtb){
 	waitMutex(&mutexDummy);
-	dtbDummy.flag = 0;
-	dtbDummy.escriptorio = dtb.escriptorio;
-	dtbDummy.id = dtb.id;
+	dtbDummy->flag = 0;
+	dtbDummy->escriptorio = dtb.escriptorio;
+	dtbDummy->id = dtb.id;
 	//serializarYEnviarDTB(socketCPU, dtbDummy);
 }
 

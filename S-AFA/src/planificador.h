@@ -29,7 +29,7 @@ sem_t gradoMultiprogramacion;
 sem_t cantidadTotalREADY;
 
 //Habria que hacer un malloc para el dummy?
-DTB dtbDummy;
+DTB* dtbDummy;
 pthread_mutex_t mutexDummy;
 
 void inicializarPlanificadores();

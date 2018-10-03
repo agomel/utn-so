@@ -4,6 +4,7 @@
 void inicializarPlanificadores(){
 	inicializarColas();
 	inicializarSemaforos();
+	dtbDummy = asignarMemoria(sizeof(DTB));
 }
 
 void inicializarColas(){

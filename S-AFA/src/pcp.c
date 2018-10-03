@@ -10,8 +10,7 @@ void planificadorACortoPlazo(){
 			//El list remove hace un get y lo borra de la lista
 			waitSem(&cantidadTotalREADY);
 			waitMutex(&mutexREADY);
-			DTB* dtb = list_get(colaREADY, indexElegido);
-			list_remove(colaREADY, indexElegido);
+			DTB* dtb = list_remove(colaREADY, 0);
 			signalMutex(&mutexREADY);
 
 			serializarYEnviarDTB(socketCPU, *dtb);
