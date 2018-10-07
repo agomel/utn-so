@@ -19,7 +19,7 @@ u_int32_t conectadoCPU;
 u_int32_t conectadoDAM;
 
 enum ESTADOSAFA{
-	CORRUPTO = 'c', ACTIVO = 'a'
+	CORRUPTO = 'c', OPERATIVO = 'a'
 };
 
 char estado;

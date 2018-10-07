@@ -95,13 +95,13 @@ int main(void) {
 	parametros.servidor = servidor;
 	parametros.funcion = &entenderMensaje;
 	pthread_t hiloAdministradorDeConexiones = crearHilo(&escucharClientes, &parametros);
-
+	pthread_t hiloConsola = crearHilo(&consola, NULL);
 	pthread_t hiloPlanificadorALargoPlazo = crearHilo(&planificadorALargoPlazo, NULL);
 	pthread_t hiloPlanificadorACortoPlazo = crearHilo(&planificadorACortoPlazo, NULL);
 
-	while(!conectadoCPU && !conectadoDAM);
-	estado = ACTIVO;
-	pthread_t hiloConsola = crearHilo(&consola, NULL);
+
+	while(!conectadoCPU || !conectadoDAM);
+	estado = OPERATIVO;
 
 	esperarHilo(hiloAdministradorDeConexiones);
 	esperarHilo(hiloConsola);
