@@ -27,13 +27,20 @@ void inicializarSemaforos(){
 	inicializarMutex(&mutexIdsDTB);
 	inicializarMutex(&mutexListaDTBs);
 	inicializarMutex(&mutexDummy);
-	contadorIds = 1;
 
 	t_config* configuracion = config_create(ARCHIVO_CONFIGURACION);
 
 	u_int32_t multiprogramacion = config_get_int_value(configuracion, "MULTIPROGRAMACION");
 	inicializarSem(&gradoMultiprogramacion, multiprogramacion);
 	inicializarSem(&cantidadTotalREADY, 0);
+	inicializarSem(&semCantidadEnNew, 0);
+}
+
+t_list* filtrarListaPorEstado(char estado){
+	bool estaEnEstado(DTB* dtb){
+		return (dtb->estado == estado);
+	}
+	return list_filter(listaDeTodosLosDTBs, estaEnEstado);
 }
 
 DTB* cambiarDTBDeColaBuscandoloEnListaDeTodos(DTB* dtb, t_list* nuevaLista){

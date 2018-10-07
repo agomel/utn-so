@@ -43,7 +43,9 @@ void entenderMensaje(int emisor, char header){
 		case FALLO_LA_CARGA_DEL_SCRIPTORIO:
 			idDTB = deserializarInt(emisor);
 			waitMutex(&mutexColaDummy);
-			pasarDTBAExit(idDTB, colaEsperandoDummy);
+			DTB* dtb = obtenerDTBDeCola(listaDeTodosLosDTBs, idDTB);
+			t_list* lista = obtenerColaSinNew(dtb->estado);
+			pasarDTBAExit(idDTB, lista);
 			signal(&mutexColaDummy);
 			break;
 
@@ -51,6 +53,7 @@ void entenderMensaje(int emisor, char header){
 			*dtb = deserializarDTB(emisor);
 			desbloquearDTB(dtb);
 			break;
+
 		case BLOQUEAR_DTB:
 			*dtb = deserializarDTB(emisor);
 			bloquearDTB(dtb);
@@ -82,6 +85,8 @@ int main(void) {
 
 	direccionServidor direccionSAFA = levantarDeConfiguracion(NULL, "PUERTO", ARCHIVO_CONFIGURACION);
 	int servidor = crearServidor(direccionSAFA.puerto, INADDR_ANY);
+	//Inicializando contador de IDS
+	contadorIds = 1;
 	inicializarPlanificadores();
 	parametrosEscucharClientes parametros;
 	parametros.servidor = servidor;
