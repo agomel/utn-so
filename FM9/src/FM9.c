@@ -10,9 +10,8 @@
 
 #include "FM9.h"
 t_list* guardarDatos(char* datos){
-	t_list* direccionesGuardadas;
-	list_create(direccionesGuardadas);
-	list_add(direccionesGuardadas,offset);
+	t_list* direccionesGuardadas = list_create();
+	list_add(direccionesGuardadas, offset);
 	waitMutex(&mutexStorage);
 	memcpy(&storage, datos, strlen(datos) + 1);
 	signalMutex(&mutexStorage);
