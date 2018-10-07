@@ -57,6 +57,7 @@ t_list* obtenerColaSinNew(char estado){
 		case EXIT:
 			return colaEXIT;
 			break;
+		case
 		default:
 			perror("No se encontro el DTB en ninguna cola");
 	}

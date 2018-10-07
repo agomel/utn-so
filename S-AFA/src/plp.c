@@ -12,10 +12,10 @@ void planificadorALargoPlazo() {
 			wait(&mutexColaDummy);
 			list_add(colaEsperandoDummy, dtb);
 			signal(&mutexColaDummy);
+			dtb->estado = ESPERANDO_DUMMY;
 			wait(&mutexDummy);
 			cargarDummy(*dtb);
 
-			waitSem(&gradoMultiprogramacion);
 			waitMutex(&mutexREADY);
 			list_add(colaREADY, dtbDummy);
 			signalMutex(&mutexREADY);
@@ -39,6 +39,7 @@ void cargarDummy(DTB dtb) {
 	dtbDummy->escriptorio = dtb.escriptorio;
 	dtbDummy->id = dtb.id;
 	dtbDummy->tablaDireccionesArchivos = list_create();
+	dtbDummy->estado = READY;
 	//serializarYEnviarDTB(socketCPU, dtbDummy);
 }
 
@@ -65,6 +66,7 @@ void ponerEnReadyProcesoDummyOk(DTB* dtb) {
 	list_add(colaREADY, dtb);
 	signalMutex(&mutexREADY);
 	signalSem(&cantidadTotalREADY);
+	dtb->estado = READY;
 }
 
 void pasarDTBAExit(u_int32_t idDTB, t_list* listaDeDTB){
@@ -74,10 +76,11 @@ void pasarDTBAExit(u_int32_t idDTB, t_list* listaDeDTB){
 		if(dtb->id == idDTB){
 			list_remove(listaDeDTB, i);
 			signalSem(&gradoMultiprogramacion);
-			break;//para cortar el for
+			break;
 		}
 	}
 	waitMutex(&mutexEXIT);
 	list_add(colaEXIT, dtb);
 	signalMutex(&mutexEXIT);
+	dtb->estado = EXIT;
 }
