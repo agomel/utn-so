@@ -39,7 +39,6 @@ void agregarOperacionACola(int emisor, char accion){
 	waitMutex(&mutexColaOperaciones);
 	queue_push(colaOperaciones, operacion);
 	signalMutex(&mutexColaOperaciones);
-	free(operacion);
 	signalSem(&semHayEnColaOperaciones);
 }
 
