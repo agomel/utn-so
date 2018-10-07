@@ -9,6 +9,15 @@
  */
 #include "DAM.h"
 
+void freeOperacion(Operacion* operacion){
+	free(operacion->accion);
+	free(operacion->idDTB);
+	free(operacion->offset);
+	free(operacion->path);
+	free(operacion->size);
+	free(operacion);
+}
+
 void inicializarDAM(){
 	inicializarMutex(&mutexColaOperaciones);
 	inicializarSem(&semHayEnColaOperaciones, 0);
@@ -91,7 +100,8 @@ void consumirCola(){
 			default:
 				perror("Cualquiera ese header flaco");
 			}
-		free(operacion);
+
+		freeOperacion(operacion);
 	}
 }
 
