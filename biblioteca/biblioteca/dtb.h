@@ -15,6 +15,7 @@ typedef struct{
 	u_int32_t flag;
 	t_list* tablaDireccionesArchivos;
 	u_int32_t quantum;
+	char estado;
 }DTB;
 
 DTB crearDTB (char* parametro);
