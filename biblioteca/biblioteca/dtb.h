@@ -28,7 +28,6 @@ void serializarYEnviarDTB(int receptor, DTB dtb);
 
 DTB deserializarDTB(int emisor);
 
-
 DTB* obtenerDTBDeColaRemoviendolo(t_list* cola, u_int32_t idDTB);
 
 DTB* obtenerDTBDeCola(t_list* cola, u_int32_t idDTB);
