@@ -13,10 +13,10 @@
 #define ARCHIVO_LOG "../../log.txt"
 
 enum OPERACIONES{
-	IDENTIFICARSE = 'a', MANDAR_TEXTO = 'b', MANDAR_MENSAJITO = 'c', CARGAR_ESCRIPTORIO = 'd',
-	VALIDAR_ARCHIVO = 'e', CREAR_ARCHIVO = 'f', OBTENER_DATOS = 'g', GUARDAR_DATOS = 'h', ENVIAR_DTB = 'i',
-	DATOS_CONSEGUIDOS = 'j', DTB_LISTO = 'k' , RESPUESTA_CARGA = 'l',
-	FALLO_LA_CARGA_DEL_SCRIPTORIO = 'm', PASAR_READY = 'n', DESBLOQUEAR_DTB = 'o', BLOQUEAR_DTB = 'p'
+	IDENTIFICARSE = 'a', MANDAR_TEXTO = 'b', CARGAR_ESCRIPTORIO = 'c',
+	VALIDAR_ARCHIVO = 'd', CREAR_ARCHIVO = 'e', OBTENER_DATOS = 'f', GUARDAR_DATOS = 'g', ENVIAR_DTB = 'h',
+	DATOS_CONSEGUIDOS = 'i', DTB_LISTO = 'j' , RESPUESTA_CARGA = 'k',
+	FALLO_LA_CARGA_DEL_SCRIPTORIO = 'l', PASAR_READY = 'm', DESBLOQUEAR_DTB = 'n', BLOQUEAR_DTB = 'o'
 };
 
 enum MODULOS{
@@ -47,13 +47,5 @@ typedef struct {
 	} parametrosEscucharClientes;
 
 int escucharClientes(parametrosEscucharClientes* parametros);
-
-
-typedef struct{
-	char* texto1;
-	int numero;
-	char* texto2;
-	char caracter;
-}mensajito;
 
 #endif /*UTILIDADES_H_*/

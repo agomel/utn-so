@@ -83,3 +83,13 @@ DTB* obtenerDTBDeCola(t_list* cola, u_int32_t idDTB){
 	return dtb;
 }
 
+void freeDTB(DTB* dtb){
+	free(dtb->escriptorio);
+	free(dtb->estado);
+	free(dtb->flag);
+	free(dtb->id);
+	free(dtb->programCounter);
+	free(dtb->quantum);
+	free(dtb);
+}
+
