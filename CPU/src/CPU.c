@@ -8,9 +8,10 @@ int socketFM9;
 int socketSAFA;
 void consola(int servidor){
 	while(1){
-		char* texto = malloc(1000);
+		char* texto = asignarMemoria(1000);
 		scanf("%s", texto);
 		enviarYSerializarString(servidor, texto, MANDAR_TEXTO);
+		free(texto);
 	}
 }
 void escuchar(int servidor){
@@ -43,8 +44,19 @@ void escuchar(int servidor){
 
 						enviarMensaje(socketDIEGO, buffer, tamanioBuffer);
 						free(buffer);
+						desplazamiento = 0;
+						//MensajeNano: Esperando a que bren haga merge.
+						concatenarChar(buffer, &desplazamiento, DESBLOQUEAR_DTB);
+						buffer = asignarMemoria(sizeof(char));
+						enviarMensaje(socketSAFA, buffer, sizeof(char));
+						serializarYEnviarDTB(socketSAFA, dtbRecibido);
 					}else{
 						//No es el dummy
+						for (q = 0; q < dtbRecibido.quantum; ++q) {
+
+						}
+						dtbRecibido.tablaDireccionesArchivos
+						//MensajeNano: Enviarle al Safa BLOQUEAR_DTB con el dtbrecibido
 						printf("Ejecutar dtb");
 					}
 					break;

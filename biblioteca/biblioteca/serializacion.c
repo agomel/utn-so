@@ -125,7 +125,7 @@ t_list* deserializarListaInt(u_int32_t emisor){
 voidDeserealizado deserializarVoid(u_int32_t emisor){
 	voidDeserealizado mensajeADeserealizar;
 	mensajeADeserealizar.tamanioMensaje = deserializarInt(emisor);
-	char* mensaje = malloc(mensajeADeserealizar.tamanioMensaje);
+	char* mensaje = asignarMemoria(mensajeADeserealizar.tamanioMensaje);
 	recibirMensaje(emisor, mensaje, mensajeADeserealizar.tamanioMensaje);
 	mensajeADeserealizar.mensaje = *mensaje;
 	free(mensaje);
