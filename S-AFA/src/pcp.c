@@ -25,4 +25,21 @@ void planificadorACortoPlazo(){
 	}
 }
 
+void pasarDTBAReady(DTB* dtb){
+	obtenerDTBDeColaRemoviendolo(colaBLOCKED, dtb->id);
+	list_add(colaREADY, dtb);
+}
+
+void bloquearDTB(DTB* dtb){
+	cambiarDTBDeColaBuscandoloEnListaDeTodos(dtb, colaBLOCKED);
+}
+
+
+void desbloquearDTB(DTB* dtb){
+	if(dtb->flag == 0){
+		signalMutex(&mutexDummy);
+	}else{
+		pasarDTBAReady(dtb);
+	}
+}
 
