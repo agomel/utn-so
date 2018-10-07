@@ -16,7 +16,7 @@ enum OPERACIONES{
 	IDENTIFICARSE = 'a', MANDAR_TEXTO = 'b', MANDAR_MENSAJITO = 'c', CARGAR_ESCRIPTORIO = 'd',
 	VALIDAR_ARCHIVO = 'e', CREAR_ARCHIVO = 'f', OBTENER_DATOS = 'g', GUARDAR_DATOS = 'h', ENVIAR_DTB = 'i',
 	DATOS_CONSEGUIDOS = 'j', DTB_LISTO = 'k' , RESPUESTA_CARGA = 'l',
-	FALLO_LA_CARGA_DEL_SCRIPTORIO = 'm', PASAR_READY = 'n', TRAER_LINEA_ESCRIPTORIO = 'o'
+	FALLO_LA_CARGA_DEL_SCRIPTORIO = 'm', PASAR_READY = 'n', TRAER_LINEA_ESCRIPTORIO = 'o', DESBLOQUEAR_DTB = 'p', BLOQUEAR_DTB = 'q'
 };
 
 enum MODULOS{
@@ -28,7 +28,7 @@ enum COLAS{
 };
 
 enum ESTADO{
-	NEW = 'n', READY = 'r', BLOCKED = 'b', EXIT = 'e', EXECUTED = 'e'
+	NEW = 'a', READY = 'b', BLOCKED = 'c', EXIT = 'd', EXECUTED = 'e'
 };
 
 void* asignarMemoria(int cantidad);

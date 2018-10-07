@@ -14,6 +14,7 @@ void inicializarColas(){
 	colaEXECUTE = list_create();
 	colaBLOCKED = list_create();
 	colaEXIT = list_create();
+	listaDeTodosLosDTBs = list_create();
 }
 
 void inicializarSemaforos(){
@@ -24,6 +25,8 @@ void inicializarSemaforos(){
 	inicializarMutex(&mutexEXIT);
 	inicializarMutex(&mutexColaDummy);
 	inicializarMutex(&mutexIdsDTB);
+	inicializarMutex(&mutexListaDTBs);
+	inicializarMutex(&mutexDummy);
 	contadorIds = 1;
 
 	t_config* configuracion = config_create(ARCHIVO_CONFIGURACION);
@@ -33,12 +36,28 @@ void inicializarSemaforos(){
 	inicializarSem(&cantidadTotalREADY, 0);
 }
 
-/*DTB* buscarDTB(int id, t_list listaDeDTB){
-	bool esElDTB(DTB* dtb){
-		return dtb->id == id;
+DTB* cambiarDTBDeColaBuscandoloEnListaDeTodos(DTB* dtb, t_list* nuevaLista){
+	obtenerDTBDeCola(listaDeTodosLosDTBs, dtb->id);
+	t_list* listaDTB = obtenerColaSinNew(dtb->estado);
+	obtenerDTBDeColaRemoviendolo(listaDTB, dtb->id);
+	list_add(nuevaLista, dtb);
+}
+
+t_list* obtenerColaSinNew(char estado){
+	switch(estado){
+		case BLOCKED:
+			return colaBLOCKED;
+			break;
+		case READY:
+			return colaREADY;
+			break;
+		case EXECUTED:
+			return colaEXECUTE;
+			break;
+		case EXIT:
+			return colaEXIT;
+			break;
+		default:
+			perror("No se encontro el DTB en ninguna cola");
 	}
-	return list_find(listaDeDTB, (void*)esElDTB);
-}*///Lo comento, puede que en el futuro lo usemos o no...
-
-
-
+}

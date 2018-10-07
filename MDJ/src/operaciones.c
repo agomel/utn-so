@@ -15,12 +15,12 @@ void guardarDatos(u_int32_t emisor){
 	int tamanioALeer = deserializarInt(emisor);
 	char* datos = deserializarString(emisor);
 	printf("Guardados datos recibidos de %d \n" , emisor);
-	//TODO guardar datos posta
+	//TODO guardar datos posta y hacer free de los strings
 }
 char* obtenerDatos(u_int32_t emisor){
 	char* rutaArchivo = deserializarString(emisor);
 	int offset = deserializarInt(emisor);
 	int tamanioALeer = deserializarInt(emisor);
 	return "leyendo de archivo";
-	//TODO leer archivos posta
+	//TODO leer archivos posta y hacer free de los strings
  }

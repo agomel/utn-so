@@ -47,6 +47,15 @@ void entenderMensaje(int emisor, char header){
 			signal(&mutexColaDummy);
 			break;
 
+		case DESBLOQUEAR_DTB:
+			*dtb = deserializarDTB(emisor);
+			desbloquearDTB(dtb);
+			break;
+		case BLOQUEAR_DTB:
+			*dtb = deserializarDTB(emisor);
+			bloquearDTB(dtb);
+			break;
+
 		case PASAR_READY:
 			//TODO deserializar estructura que envia dam
 			colaOrigen = deserializarChar(emisor);
@@ -54,7 +63,7 @@ void entenderMensaje(int emisor, char header){
 			switch(colaOrigen){
 				case COLA_NEW:
 					tablaDeDIreccionesYArchivos = deserializarListaInt(emisor);
-					dtb = obtenerProcesoDeCola(colaEsperandoDummy, idDTB);
+					dtb = obtenerDTBDeColaRemoviendolo(colaEsperandoDummy, idDTB);
 					dtb->tablaDireccionesArchivos = tablaDeDIreccionesYArchivos;
 					//es el dummy que avisa que el proceso esta listo
 					ponerEnReadyProcesoDummyOk(dtb);

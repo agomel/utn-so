@@ -12,6 +12,7 @@
 
 u_int32_t socketCPU;
 u_int32_t socketDAM;
+pthread_mutex_t mutexDummy;
 
 void entenderMensaje(int emisor, char header);
 
