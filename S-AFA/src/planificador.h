@@ -35,6 +35,8 @@ sem_t semCantidadEnNew;
 DTB* dtbDummy;
 pthread_mutex_t mutexDummy;
 
+t_config* configuracion;
+
 void inicializarPlanificadores();
 
 void inicializarColas();

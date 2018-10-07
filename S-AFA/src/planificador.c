@@ -2,6 +2,7 @@
 #include "S-AFA.h"
 
 void inicializarPlanificadores(){
+	configuracion = config_create(ARCHIVO_CONFIGURACION);
 	inicializarColas();
 	inicializarSemaforos();
 	dtbDummy = asignarMemoria(sizeof(DTB));
@@ -27,8 +28,6 @@ void inicializarSemaforos(){
 	inicializarMutex(&mutexIdsDTB);
 	inicializarMutex(&mutexListaDTBs);
 	inicializarMutex(&mutexDummy);
-
-	t_config* configuracion = config_create(ARCHIVO_CONFIGURACION);
 
 	u_int32_t multiprogramacion = config_get_int_value(configuracion, "MULTIPROGRAMACION");
 	inicializarSem(&gradoMultiprogramacion, multiprogramacion);

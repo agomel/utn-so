@@ -77,7 +77,7 @@ DTB* obtenerDTBDeCola(t_list* cola, u_int32_t idDTB){
 	int index = 0;
 	for(int index = 0; index < cola->elements_count; index++){
 		dtb = list_get(cola, index);
-		if(dtb->id == idDTB){
+		if(dtb->id == idDTB && dtb->flag != 0){
 			break;
 		}
 	}

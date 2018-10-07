@@ -6,7 +6,7 @@
 #include <string.h>
 #include <commons/log.h>
 
-t_log* crearLogger(char* file, char *programName);
+//t_log* crearLogger(char* file, char *programName);
 
 
 #endif /*LOG_H_*/
