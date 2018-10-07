@@ -12,7 +12,7 @@ void planificadorALargoPlazo();
 void ponerProcesoEnNew(char* escriptorio);
 
 void enviarDTB(DTB proceso);
-//TODO no recibe int recibe la estructura de guardado
+
 void ponerEnReadyProcesoDummyOk(DTB* dtb);
 
 void pasarDTBAExit(u_int32_t idDTB, t_list* listaDeDTB);
