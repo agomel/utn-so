@@ -3,7 +3,7 @@
 void planificadorALargoPlazo() {
 	u_int32_t a = 1;
 	while (a) {
-		waitMutex(&semCantidadEnNew);
+		waitSem(&semCantidadEnNew);
 		printf("hay procesos en la cola new\n");
 		waitMutex(&mutexNEW);
 		DTB* dtb = queue_pop(colaNEW);
