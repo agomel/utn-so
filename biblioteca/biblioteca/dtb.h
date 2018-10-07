@@ -13,7 +13,7 @@ typedef struct{
 	char* escriptorio;
 	u_int32_t programCounter;
 	u_int32_t flag;
-	t_list* tablaDireccionesArchivos;
+	t_dictionary* direccionesArchivos;
 	u_int32_t quantum;
 	char estado;
 }DTB;

@@ -30,10 +30,13 @@ char* deserializarString(u_int32_t emisor);
 u_int32_t deserializarInt(u_int32_t emisor);
 char deserializarChar(u_int32_t emisor);
 t_list* deserializarListaInt(u_int32_t emisor);
+t_dictionary* deserializarDiccionario(u_int32_t emisor);
+u_int32_t obtenerTamanioDiccionario(t_dictionary* diccionario);
 void concatenarChar(void* buffer, u_int32_t* desplazamiento, char mensaje);
 void concatenarInt(void* buffer, u_int32_t* desplazamiento, u_int32_t numero);
 void concatenarString(void* buffer, u_int32_t* desplazamiento, char* mensaje);
 void concatenarListaInt(void* buffer, u_int32_t* desplazamiento, t_list* listaArchivos);
+void concatenarDiccionario(void* buffer, u_int32_t* desplazamiento, t_dictionary* diccionario);
 
 voidDeserealizado deserializarVoid(u_int32_t emisor);
 

@@ -91,6 +91,17 @@ void concatenarListaInt(void* buffer, u_int32_t* desplazamiento, t_list* listaAr
 	}
 }
 
+void concatenarDiccionario(void* buffer, u_int32_t* desplazamiento, t_dictionary* diccionario){
+
+	concatenarInt(buffer, desplazamiento, diccionario->elements_amount);
+	void concatenarElemento(char* key, t_list* value){
+		concatenarString(buffer, desplazamiento, key);
+		concatenarListaInt(buffer, desplazamiento, value);
+	}
+
+	dictionary_iterator(diccionario, concatenarElemento);
+}
+
 char* deserializarString(u_int32_t emisor){
 	u_int32_t tamanioMensaje = deserializarInt(emisor);
 	char* mensaje = asignarMemoria(tamanioMensaje);
@@ -119,6 +130,27 @@ t_list* deserializarListaInt(u_int32_t emisor){
 	for(int i = 0; i<elementosDeLalista; i++){
 		list_add(respuesta, deserializarInt(emisor));
 	}
+	return respuesta;
+}
+
+t_dictionary* deserializarDiccionario(u_int32_t emisor){
+	u_int32_t cantidadElementos = deserializarInt(emisor);
+	t_dictionary* respuesta = dictionary_create();
+	for(int i = 0; i<cantidadElementos; i++){
+			char* clave = deserializarString(emisor);
+			t_list* valor = deserializarListaInt(emisor);
+			dictionary_put(respuesta, clave, valor);
+	}
+	return respuesta;
+}
+
+u_int32_t obtenerTamanioDiccionario(t_dictionary* diccionario){
+	u_int32_t respuesta = 0;
+	void sumarPuntaje(char* key, t_list* value){
+		respuesta += strlen(key + 1);
+		respuesta += sizeof(u_int32_t) + sizeof(u_int32_t)*value->elements_count;
+	}
+	dictionary_iterator(diccionario, sumarPuntaje);
 	return respuesta;
 }
 

@@ -27,7 +27,7 @@ void cargarDummy(DTB dtb) {
 	dtbDummy->flag = 0;
 	dtbDummy->escriptorio = dtb.escriptorio;
 	dtbDummy->id = dtb.id;
-	dtbDummy->tablaDireccionesArchivos = list_create();
+	dtbDummy->direccionesArchivos = dictionary_create();
 	dtbDummy->estado = READY;
 }
 
@@ -49,7 +49,7 @@ void enviarDTB(DTB dtb) {
 	serializarYEnviarDTB(socketCPU, dtb);
 }
 
-void ponerEnReadyProcesoDummyOk(DTB* dtb) {
+void ponerEnReady(DTB* dtb) {
 	waitSem(&gradoMultiprogramacion);
 	waitMutex(&mutexREADY);
 	list_add(colaREADY, dtb);

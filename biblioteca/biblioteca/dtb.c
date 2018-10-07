@@ -14,7 +14,7 @@ DTB crearDTB (char* parametro){
 	dtb.flag = 1;
 	dtb.id = obtenerId();
 	printf("id del dtb %d \n",dtb.id);
-	dtb.tablaDireccionesArchivos = list_create();
+	dtb.direccionesArchivos = dictionary_create();
 	//TODO poner valor valido en programCounter
 	dtb.programCounter = 0;
 	dtb.estado = NEW;
@@ -24,8 +24,7 @@ DTB crearDTB (char* parametro){
 void serializarYEnviarDTB(int receptor, DTB dtb){
 	//Asigno tamanio al buffer
 	u_int32_t tamanioEscriptorio = strlen(dtb.escriptorio) + 1;
-	u_int32_t tamanioLista = dtb.tablaDireccionesArchivos->elements_count;
-	u_int32_t tamanioBuffer = sizeof(char)*2 + sizeof(u_int32_t)*6 + tamanioEscriptorio + sizeof(u_int32_t)*(tamanioLista);
+	u_int32_t tamanioBuffer = sizeof(char)*2 + sizeof(u_int32_t)*6 + tamanioEscriptorio + obtenerTamanioDiccionario(dtb.direccionesArchivos);
 	void* buffer = asignarMemoria(tamanioBuffer);
 
 	//Lleno el buffer
@@ -37,7 +36,7 @@ void serializarYEnviarDTB(int receptor, DTB dtb){
 	concatenarInt(buffer, &desplazamiento, dtb.id);
 	printf("Concatenando id %d \n",dtb.id);
 	concatenarInt(buffer, &desplazamiento, dtb.programCounter);
-	concatenarListaInt(buffer, &desplazamiento, dtb.tablaDireccionesArchivos);
+	concatenarDiccionario(buffer, &desplazamiento, dtb.direccionesArchivos);
 	concatenarInt(buffer, &desplazamiento, dtb.quantum);
 	concatenarChar(buffer, &desplazamiento, dtb.estado);
 	enviarMensaje(receptor, buffer, tamanioBuffer);
@@ -52,7 +51,7 @@ DTB deserializarDTB(int emisor){
 	dtb.id = deserializarInt(emisor);
 	printf("Deserializando id %d \n",dtb.id);
 	dtb.programCounter = deserializarInt(emisor);
-	dtb.tablaDireccionesArchivos = deserializarListaInt(emisor);
+	dtb.direccionesArchivos = deserializarDiccionario(emisor);
 	dtb.quantum = deserializarInt(emisor);
 	dtb.estado = deserializarChar(emisor);
 	return dtb;
