@@ -48,11 +48,12 @@ void entenderMensaje(int emisor, char header){
 			break;
 
 		case DESBLOQUEAR_DTB:
-			DTB* dtb = deserializarDTB(emisor);
+			*dtb = deserializarDTB(emisor);
 			desbloquearDTB(dtb);
 			break;
 		case BLOQUEAR_DTB:
-			//TODO bloquear DTB
+			*dtb = deserializarDTB(emisor);
+			bloquearDTB(dtb);
 			break;
 
 		case PASAR_READY:
@@ -62,7 +63,7 @@ void entenderMensaje(int emisor, char header){
 			switch(colaOrigen){
 				case COLA_NEW:
 					tablaDeDIreccionesYArchivos = deserializarListaInt(emisor);
-					dtb = obtenerProcesoDeCola(colaEsperandoDummy, idDTB);
+					dtb = obtenerDTBDeColaRemoviendolo(colaEsperandoDummy, idDTB);
 					dtb->tablaDireccionesArchivos = tablaDeDIreccionesYArchivos;
 					//es el dummy que avisa que el proceso esta listo
 					ponerEnReadyProcesoDummyOk(dtb);

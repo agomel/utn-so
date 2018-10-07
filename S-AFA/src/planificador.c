@@ -36,3 +36,28 @@ void inicializarSemaforos(){
 	inicializarSem(&cantidadTotalREADY, 0);
 }
 
+DTB* cambiarDTBDeColaBuscandoloEnListaDeTodos(DTB* dtb, t_list* nuevaLista){
+	obtenerDTBDeCola(listaDeTodosLosDTBs, dtb->id);
+	t_list* listaDTB = obtenerColaSinNew(dtb->estado);
+	obtenerDTBDeColaRemoviendolo(listaDTB, dtb->id);
+	list_add(nuevaLista, dtb);
+}
+
+t_list* obtenerColaSinNew(char estado){
+	switch(estado){
+		case BLOCKED:
+			return colaBLOCKED;
+			break;
+		case READY:
+			return colaREADY;
+			break;
+		case EXECUTED:
+			return colaEXECUTE;
+			break;
+		case EXIT:
+			return colaEXIT;
+			break;
+		default:
+			perror("No se encontro el DTB en ninguna cola");
+	}
+}

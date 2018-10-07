@@ -39,4 +39,8 @@ void inicializarPlanificadores();
 void inicializarColas();
 void inicializarSemaforos();
 
+DTB* cambiarDTBDeColaBuscandoloEnListaDeTodos(DTB* dtb, t_list* nuevaLista);
+
+t_list* obtenerColaSinNew(char estado);
+
 #endif /*PLANIFICADOR_H_*/

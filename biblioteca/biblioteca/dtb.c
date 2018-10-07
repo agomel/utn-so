@@ -59,7 +59,7 @@ DTB deserializarDTB(int emisor){
 }
 
 
-DTB* obtenerDTBDeCola(t_list* cola, u_int32_t idDTB){
+DTB* obtenerDTBDeColaRemoviendolo(t_list* cola, u_int32_t idDTB){
 	DTB* dtb;
 	int index = 0;
 	for(int index = 0; index < cola->elements_count; index++){
@@ -71,3 +71,16 @@ DTB* obtenerDTBDeCola(t_list* cola, u_int32_t idDTB){
 	}
 	return dtb;
 }
+
+DTB* obtenerDTBDeCola(t_list* cola, u_int32_t idDTB){
+	DTB* dtb;
+	int index = 0;
+	for(int index = 0; index < cola->elements_count; index++){
+		dtb = list_get(cola, index);
+		if(dtb->id == idDTB){
+			break;
+		}
+	}
+	return dtb;
+}
+
