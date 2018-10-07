@@ -3,6 +3,7 @@
 #include <biblioteca/hilos.h>
 #include <biblioteca/utilidades.h>
 #include <biblioteca/dtb.h>
+
 int socketDIEGO;
 int socketFM9;
 int socketSAFA;
@@ -12,6 +13,27 @@ void consola(int servidor){
 		scanf("%s", texto);
 		enviarYSerializarString(servidor, texto, MANDAR_TEXTO);
 		free(texto);
+	}
+}
+void entenderMensaje(char* lineaEjecutando){
+	if(strncmp(lineaEjecutando, "abrir", 5) == 0){
+		//Abrir
+	}else if(strncmp(lineaEjecutando, "concentrar", 10) == 0){
+		//Concentrar
+	}else if(strncmp(lineaEjecutando, "asignar", 7) == 0){
+		//Asignar
+	}else if(strncmp(lineaEjecutando, "wait", 4) == 0){
+		//Wait
+	}else if(strncmp(lineaEjecutando, "signal", 6) == 0){
+		//Signal
+	}else if(strncmp(lineaEjecutando, "flush", 5) == 0){
+		//Flush
+	}else if(strncmp(lineaEjecutando, "close", 5) == 0){
+		//Close
+	}else if(strncmp(lineaEjecutando, "crear", 5) == 0){
+		//Crear
+	}else if(strncmp(lineaEjecutando, "borrar",6) == 0){
+		//Borrar
 	}
 }
 void escuchar(int servidor){
@@ -46,23 +68,36 @@ void escuchar(int servidor){
 						free(buffer);
 						desplazamiento = 0;
 						//MensajeNano: Esperando a que bren haga merge.
-						concatenarChar(buffer, &desplazamiento, DESBLOQUEAR_DTB);
+						//concatenarChar(buffer, &desplazamiento, DESBLOQUEAR_DTB);
 						buffer = asignarMemoria(sizeof(char));
 						enviarMensaje(socketSAFA, buffer, sizeof(char));
 						serializarYEnviarDTB(socketSAFA, dtbRecibido);
 					}else{
 						//No es el dummy
-						for (q = 0; q < dtbRecibido.quantum; ++q) {
+						for (u_int32_t q = 0; q < dtbRecibido.quantum; ++q){
+							tamanioBuffer = sizeof(char) + sizeof(u_int32_t) + list_size(dtbRecibido.tablaDireccionesArchivos);
+							desplazamiento = 0;
+							buffer = asignarMemoria(tamanioBuffer);
 
-						}
-						dtbRecibido.tablaDireccionesArchivos
+							concatenarChar(buffer, &desplazamiento, TRAER_LINEA_ESCRIPTORIO);
+							concatenarInt(buffer, &desplazamiento, dtbRecibido.programCounter);
+							concatenarListaInt(buffer, &desplazamiento, dtbRecibido.tablaDireccionesArchivos);
+
+							char* lineaAEjecutar = deserializarString(socketFM9);
+							if(lineaAEjecutar[0] == '#'){
+								//MensajeNano: Fijarse si las lineas de mas hay que ignorarlas o si directamente no me las mandan
+								q--;
+							}else {
+								entenderMensaje(lineaAEjecutar);
+							}
 						//MensajeNano: Enviarle al Safa BLOQUEAR_DTB con el dtbrecibido
 						printf("Ejecutar dtb");
+						}
 					}
 					break;
 		default:
 					perror("Cualquiera ese header flaco");
-			}
+					}
 	}
 }
 
