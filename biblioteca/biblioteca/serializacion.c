@@ -102,6 +102,7 @@ char* deserializarString(u_int32_t emisor){
 u_int32_t deserializarInt(u_int32_t emisor){
 	u_int32_t mensaje;
 	recibirMensaje(emisor, &mensaje, sizeof(u_int32_t));
+	printf("Recibi %d de parte de %d \n" , mensaje, emisor);
 	return mensaje;
 }
 
