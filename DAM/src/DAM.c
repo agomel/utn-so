@@ -88,9 +88,17 @@ void consumirCola(){
 				enviarDatosAFM9(datos);
 				recibirDatosDeFM9YEnviarASafa(operacion->idDTB);
 				break;
+			//“Ehhh, voy a buscar [path] para [pid]”
+			case GUARDAR_ESCRIPTORIO:
+				enviarAFM9();// TODO
+				char* datos = deserializarString(socketFM9);
+				enviarDatosAMDJ();//TODO
+				recibirDatosDeMDJYEnviarASafa();//TODO
+				break;
 			default:
 				perror("Cualquiera ese header flaco");
 			}
+
 		free(operacion);
 	}
 }
