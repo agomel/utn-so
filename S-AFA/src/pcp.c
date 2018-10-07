@@ -12,6 +12,7 @@ void planificadorACortoPlazo(){
 			waitMutex(&mutexREADY);
 			DTB* dtb;
 			dtb = list_remove(colaREADY, 0);
+			dtb->quantum = -1;
 			signalMutex(&mutexREADY);
 
 			serializarYEnviarDTB(socketCPU, *dtb);

@@ -14,6 +14,7 @@ typedef struct{
 	u_int32_t programCounter;
 	u_int32_t flag;
 	t_list* tablaDireccionesArchivos;
+	u_int32_t quantum;
 }DTB;
 
 DTB crearDTB (char* parametro);

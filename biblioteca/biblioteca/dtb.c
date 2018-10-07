@@ -37,6 +37,7 @@ void serializarYEnviarDTB(int receptor, DTB dtb){
 	printf("Concatenando id %d \n",dtb.id);
 	concatenarInt(buffer, &desplazamiento, dtb.programCounter);
 	concatenarListaInt(buffer, &desplazamiento, dtb.tablaDireccionesArchivos);
+	concatenarInt(buffer, &desplazamiento, dtb.quantum);
 
 	enviarMensaje(receptor, buffer, tamanioBuffer);
 
@@ -51,7 +52,7 @@ DTB deserializarDTB(int emisor){
 	printf("Deserializando id %d \n",dtb.id);
 	dtb.programCounter = deserializarInt(emisor);
 	dtb.tablaDireccionesArchivos = deserializarListaInt(emisor);
-
+	dtb.quantum = deserializarInt(emisor);
 	return dtb;
 }
 
