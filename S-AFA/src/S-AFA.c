@@ -85,6 +85,8 @@ int main(void) {
 
 	direccionServidor direccionSAFA = levantarDeConfiguracion(NULL, "PUERTO", ARCHIVO_CONFIGURACION);
 	int servidor = crearServidor(direccionSAFA.puerto, INADDR_ANY);
+	//Inicializando contador de IDS
+	contadorIds = 1;
 	inicializarPlanificadores();
 	parametrosEscucharClientes parametros;
 	parametros.servidor = servidor;

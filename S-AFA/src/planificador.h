@@ -29,6 +29,7 @@ pthread_mutex_t mutexListaDTBs;
 
 sem_t gradoMultiprogramacion;
 sem_t cantidadTotalREADY;
+sem_t semCantidadEnNew;
 
 //Habria que hacer un malloc para el dummy?
 DTB* dtbDummy;
@@ -39,6 +40,7 @@ void inicializarPlanificadores();
 void inicializarColas();
 void inicializarSemaforos();
 
+t_list* filtrarListaPorEstado(char estado);
 DTB* cambiarDTBDeColaBuscandoloEnListaDeTodos(DTB* dtb, t_list* nuevaLista);
 
 t_list* obtenerColaSinNew(char estado);

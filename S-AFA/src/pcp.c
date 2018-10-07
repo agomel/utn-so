@@ -20,6 +20,7 @@ void planificadorACortoPlazo(){
 	}
 }
 
+
 void pasarDTBAReadyDesdeBlocked(DTB* dtb){
 	obtenerDTBDeColaRemoviendolo(colaBLOCKED, dtb->id);
 	list_add(colaREADY, dtb);
