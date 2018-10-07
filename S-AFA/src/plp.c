@@ -57,7 +57,7 @@ void enviarDTB(DTB dtb) {
 void ponerEnReadyProcesoDummyOk(DTB* dtb) {
 	waitSem(&gradoMultiprogramacion);
 	waitMutex(&mutexREADY);
-	list_add(colaREADY, &dtb);
+	list_add(colaREADY, dtb);
 	signalMutex(&mutexREADY);
 	signalSem(&cantidadTotalREADY);
 }
