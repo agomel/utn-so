@@ -38,6 +38,7 @@ void escuchar(int servidor){
 						concatenarChar(buffer, &desplazamiento, CARGAR_ESCRIPTORIO);
 						concatenarString(buffer, &desplazamiento, dtbRecibido.escriptorio);
 						concatenarInt(buffer, &desplazamiento, dtbRecibido.id);
+						printf("Concatenando id %d \n",dtbRecibido.id);
 						concatenarInt(buffer, &desplazamiento, 0); //Offset (Desde el principio)
 						concatenarInt(buffer, &desplazamiento, -1); //size  (Hasta el final)
 

@@ -34,6 +34,7 @@ void serializarYEnviarDTB(int receptor, DTB dtb){
 	concatenarString(buffer, &desplazamiento, dtb.escriptorio);
 	concatenarInt(buffer, &desplazamiento, dtb.flag);
 	concatenarInt(buffer, &desplazamiento, dtb.id);
+	printf("Concatenando id %d \n",dtb.id);
 	concatenarInt(buffer, &desplazamiento, dtb.programCounter);
 	concatenarListaInt(buffer, &desplazamiento, dtb.tablaDireccionesArchivos);
 
@@ -47,6 +48,7 @@ DTB deserializarDTB(int emisor){
 	dtb.escriptorio = deserializarString(emisor);;
 	dtb.flag = deserializarInt(emisor);
 	dtb.id = deserializarInt(emisor);
+	printf("Deserializando id %d \n",dtb.id);
 	dtb.programCounter = deserializarInt(emisor);
 	dtb.tablaDireccionesArchivos = deserializarListaInt(emisor);
 

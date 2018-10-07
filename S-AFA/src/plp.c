@@ -48,7 +48,6 @@ void ponerProcesoEnNew(char* escriptorio) {
 	waitMutex(&mutexNEW);
 	queue_push(colaNEW, dtb);
 	signalMutex(&mutexNEW);
-	free(dtb);
 }
 
 void enviarDTB(DTB dtb) {
