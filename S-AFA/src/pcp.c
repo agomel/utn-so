@@ -25,4 +25,24 @@ void planificadorACortoPlazo(){
 	}
 }
 
+void pasarDTBAReady(DTB* dtb){
+	//TODO hacer el obtenerCola diferenciando si es new o sino llamar a obtenercola
+	//TODO sacarlo de la cola de bloqueados y ponerla en ready
+	//TODO hacer bloquear dtb que lo saque de cualquier cola y lo ponga en bloqued
+}
+
+void desbloquearDTB(DTB* dtb){
+	if(dtb->flag == 0){
+		signalMutex(&mutexDummy);
+	}else{
+		pasarDTBAReady(dtb);
+	}
+}
+
+t_list* obtenerCola(char estado){
+	switch(estado){
+		case NEW:
+			return col
+	}
+}
 

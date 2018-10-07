@@ -5,5 +5,6 @@
 #include "S-AFA.h"
 
 void planificadorACortoPlazo();
+void desbloquearDTB(DTB* dtb);
 
 #endif /*PCP_H_*/

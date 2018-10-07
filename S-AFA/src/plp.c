@@ -9,10 +9,10 @@ void planificadorALargoPlazo() {
 			DTB* dtb = queue_pop(colaNEW);
 			signalMutex(&mutexNEW);
 
-			wait(mutexColaDummy);
+			wait(&mutexColaDummy);
 			list_add(colaEsperandoDummy, dtb);
-			signal(mutexColaDummy);
-
+			signal(&mutexColaDummy);
+			wait(&mutexDummy);
 			cargarDummy(*dtb);
 
 			waitSem(&gradoMultiprogramacion);
@@ -45,9 +45,14 @@ void cargarDummy(DTB dtb) {
 void ponerProcesoEnNew(char* escriptorio) {
 	DTB* dtb = asignarMemoria(sizeof(DTB));
 	*dtb = crearDTB(escriptorio);
+
 	waitMutex(&mutexNEW);
 	queue_push(colaNEW, dtb);
 	signalMutex(&mutexNEW);
+
+	waitMutex(&mutexListaDTBs);
+	list_add(listaDeTodosLosDTBs, dtb);
+	signalMutex(&mutexListaDTBs);
 }
 
 void enviarDTB(DTB dtb) {

@@ -47,6 +47,14 @@ void entenderMensaje(int emisor, char header){
 			signal(&mutexColaDummy);
 			break;
 
+		case DESBLOQUEAR_DTB:
+			DTB* dtb = deserializarDTB(emisor);
+			desbloquearDTB(dtb);
+			break;
+		case BLOQUEAR_DTB:
+			//TODO bloquear DTB
+			break;
+
 		case PASAR_READY:
 			//TODO deserializar estructura que envia dam
 			colaOrigen = deserializarChar(emisor);
