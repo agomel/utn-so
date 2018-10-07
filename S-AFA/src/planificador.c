@@ -33,21 +33,6 @@ void inicializarSemaforos(){
 	inicializarSem(&cantidadTotalREADY, 0);
 }
 
-void pasarDTBAExit(u_int32_t idDTB, t_list* listaDeDTB){
-	DTB* dtb;
-	for(u_int32_t i = 0; i < listaDeDTB->elements_count; i++){
-		dtb = list_get(listaDeDTB, i);
-		if(dtb->id == idDTB){
-			list_remove(listaDeDTB, i);
-			signalSem(&gradoMultiprogramacion);
-			break;//para cortar el for
-		}
-	}
-	waitMutex(&mutexEXIT);
-	list_add(colaEXIT, dtb);
-	signalMutex(&mutexEXIT);
-}
-
 /*DTB* buscarDTB(int id, t_list listaDeDTB){
 	bool esElDTB(DTB* dtb){
 		return dtb->id == id;
