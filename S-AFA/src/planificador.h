@@ -17,6 +17,7 @@ t_list* colaEXECUTE;
 t_list* colaBLOCKED;
 t_list* colaEXIT;
 t_list* colaEsperandoDummy;
+t_list* listaDeTodosLosDTBs;
 
 pthread_mutex_t mutexNEW;
 pthread_mutex_t mutexREADY;
@@ -24,6 +25,7 @@ pthread_mutex_t mutexEXECUTE;
 pthread_mutex_t mutexBLOCKED;
 pthread_mutex_t mutexEXIT;
 pthread_mutex_t mutexColaDummy;
+pthread_mutex_t mutexListaDTBs;
 
 sem_t gradoMultiprogramacion;
 sem_t cantidadTotalREADY;
@@ -36,5 +38,9 @@ void inicializarPlanificadores();
 
 void inicializarColas();
 void inicializarSemaforos();
+
+DTB* cambiarDTBDeColaBuscandoloEnListaDeTodos(DTB* dtb, t_list* nuevaLista);
+
+t_list* obtenerColaSinNew(char estado);
 
 #endif /*PLANIFICADOR_H_*/
