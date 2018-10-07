@@ -32,9 +32,20 @@ void entenderMensaje(char* lineaEjecutando){
 		//Close
 	}else if(strncmp(lineaEjecutando, "crear", 5) == 0){
 		//Crear
-	}else if(strncmp(lineaEjecutando, "borrar",6) == 0){
+	}else if(strncmp(lineaEjecutando, "borrar", 6) == 0){
 		//Borrar
 	}
+}
+void pedirCosasDelFM9(DTB dtbRecibido){
+	void* buffer;
+	u_int32_t desplazamiento = 0;
+	u_int32_t tamanioBuffer = sizeof(char) + sizeof(u_int32_t) + list_size(dtbRecibido.tablaDireccionesArchivos);
+	buffer = asignarMemoria(tamanioBuffer);
+
+	concatenarChar(buffer, &desplazamiento, TRAER_LINEA_ESCRIPTORIO);
+	concatenarInt(buffer, &desplazamiento, dtbRecibido.programCounter);
+	concatenarListaInt(buffer, &desplazamiento, dtbRecibido.tablaDireccionesArchivos);
+	enviarMensaje(socketFM9, buffer, tamanioBuffer);
 }
 void escuchar(int servidor){
 	int a = 1;
@@ -67,31 +78,37 @@ void escuchar(int servidor){
 						enviarMensaje(socketDIEGO, buffer, tamanioBuffer);
 						free(buffer);
 						desplazamiento = 0;
-						//MensajeNano: Esperando a que bren haga merge.
-						//concatenarChar(buffer, &desplazamiento, DESBLOQUEAR_DTB);
+						concatenarChar(buffer, &desplazamiento, DESBLOQUEAR_DTB);
 						buffer = asignarMemoria(sizeof(char));
 						enviarMensaje(socketSAFA, buffer, sizeof(char));
 						serializarYEnviarDTB(socketSAFA, dtbRecibido);
 					}else{
 						//No es el dummy
-						for (u_int32_t q = 0; q < dtbRecibido.quantum; ++q){
-							tamanioBuffer = sizeof(char) + sizeof(u_int32_t) + list_size(dtbRecibido.tablaDireccionesArchivos);
-							desplazamiento = 0;
-							buffer = asignarMemoria(tamanioBuffer);
-
-							concatenarChar(buffer, &desplazamiento, TRAER_LINEA_ESCRIPTORIO);
-							concatenarInt(buffer, &desplazamiento, dtbRecibido.programCounter);
-							concatenarListaInt(buffer, &desplazamiento, dtbRecibido.tablaDireccionesArchivos);
-
-							char* lineaAEjecutar = deserializarString(socketFM9);
-							if(lineaAEjecutar[0] == '#'){
-								//MensajeNano: Fijarse si las lineas de mas hay que ignorarlas o si directamente no me las mandan
-								q--;
-							}else {
-								entenderMensaje(lineaAEjecutar);
+						if(dtbRecibido.quantum > 0){
+							for (u_int32_t q = 0; q < dtbRecibido.quantum; ++q){
+								pedirCosasDelFM9(dtbRecibido);
+								char* lineaAEjecutar = deserializarString(socketFM9);
+								if(lineaAEjecutar[0] == '#'){
+									//MensajeNano: Fijarse si las lineas de mas hay que ignorarlas o si directamente no me las mandan
+									q--;
+								}else if(lineaAEjecutar[0] == '@'){
+									//Fin de archivo
+									q--;
+									dtbRecibido.quantum = dtbRecibido.quantum - q;
+									break;
+								}else if(lineaAEjecutar[0] == '!'){
+									//MensajeNano: Hubo un acceso invalido o error en el FM9. Mandarle al Safa que ponga el dtb en exit
+								}else{
+									entenderMensaje(lineaAEjecutar);
+								}
+							//MensajeNano: Enviarle al Safa BLOQUEAR_DTB con el dtbrecibido
+							printf("Ejecutar dtb");
 							}
-						//MensajeNano: Enviarle al Safa BLOQUEAR_DTB con el dtbrecibido
-						printf("Ejecutar dtb");
+						}else{
+							while()
+							pedirCosasDelFM9(dtbRecibido);
+							char* lineaAEjecutar = deserializarString(socketFM9);
+							entenderMensaje(lineaAEjecutar);
 						}
 					}
 					break;
