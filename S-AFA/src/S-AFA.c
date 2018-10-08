@@ -19,7 +19,7 @@ void entenderMensaje(int emisor, char header){
 	switch(header){
 		case IDENTIFICARSE:
 			identificado = deserializarChar(emisor);
-			log_debug(logger, "Handshake de: %c \n", identificado);
+			log_debug(logger, "Handshake de: %c", identificado);
 			switch(identificado){
 				case CPU:
 					socketCPU = emisor;
@@ -32,7 +32,7 @@ void entenderMensaje(int emisor, char header){
 				default:
 					log_error(logger, "Conexion rechazada");
 			}
-			log_debug(logger, "Se agrego a las conexiones %c \n" , identificado);
+			log_debug(logger, "Se agrego a las conexiones %c" , identificado);
 			break;
 
 		case MANDAR_TEXTO:
@@ -82,7 +82,7 @@ void entenderMensaje(int emisor, char header){
 			idDTB = deserializarInt(emisor);
 			path = deserializarString(emisor);
 			int error = deserializarInt(emisor);
-			manejarErrores(idDTB, path, error);
+			//manejarErrores(idDTB, path, error);
 			break;
 
 		default:

@@ -15,9 +15,11 @@
 #include <biblioteca/select.h>
 #include <biblioteca/hilos.h>
 #include "operaciones.h"
-
+#include <biblioteca/logger.h>
 
 int socketDAM;
+t_log logger;
+
 void entenderMensaje(int emisor, char header){
 	char identificado;
 	int archivoValido;
@@ -25,15 +27,15 @@ void entenderMensaje(int emisor, char header){
 	switch(header){
 		case IDENTIFICARSE:
 			identificado = deserializarChar(emisor);
-			printf("identificado %c \n", identificado);
+			log_debug(logger, "Handshake de: %c", identificado);
 			switch(identificado){
 				case DAM:
 					socketDAM = emisor;
 					break;
 				default:
-					perror("no acepto a esta conexion");
+					log_error(logger, "Conexion rechazada");
 			}
-			printf("Se agrego a las conexiones %c \n" , identificado);
+			log_debug(logger, "Se agrego a las conexiones %c" , identificado);
 			break;
 			case VALIDAR_ARCHIVO:
 				archivoValido = validarArchivo(emisor);
@@ -55,12 +57,15 @@ void entenderMensaje(int emisor, char header){
 }
 
 int main(void) {
+	logger = crearLogger(ARCHIVO_LOG, "MDJ");
+
 	direccionServidor direccionMDJ = levantarDeConfiguracion(NULL, "PUERTO", ARCHIVO_CONFIGURACION);
 	int servidor = crearServidor(direccionMDJ.puerto, INADDR_ANY);
 
 	parametrosEscucharClientes parametros;
 	parametros.servidor = servidor;
 	parametros.funcion = &entenderMensaje;
+	parametros.logger = logger;
 
 	pthread_t hiloAdministradorDeConexiones = crearHilo(&escucharClientes, &parametros);
 

@@ -53,7 +53,7 @@ t_list* filtrarListaPorEstado(char estado){
 	waitMutex(&mutexListaDTBs);
 	t_list* lista = list_filter(listaDeTodosLosDTBs, estaEnEstado);
 	signalMutex(&mutexListaDTBs);
-	log_debug(logger, "Cantidad de DTBs en estado %c: %d",estado,lista->elements_count);
+	log_debug(logger, "Cantidad de DTBs en estado %c: %d", estado, lista->elements_count);
 	return lista;
 }
 

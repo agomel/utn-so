@@ -46,7 +46,7 @@ void pasarDTBAExit(int idDTB) {
 	cambiarEstado(idDTB, EXIT);
 }
 
-void manejarErrores(int idDTB,char* path,int error){
+/*void manejarErrores(int idDTB,char* path,int error){
 	cambiarEstado(idDTB, EXIT);
 	switch(error){
 		case 10001:
@@ -65,4 +65,4 @@ void manejarErrores(int idDTB,char* path,int error){
 			perror("path inexistente de archivo %s", path);
 			break;
 	}
-}
+}*/

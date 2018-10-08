@@ -11,6 +11,8 @@
 #include <biblioteca/dtb.h>
 #include <stdbool.h>
 #include "listas.h"
+#include "S-AFA.h"
+
 t_list* listaDeTodosLosDTBs;
 pthread_mutex_t mutexListaDTBs;
 
@@ -34,7 +36,7 @@ void inicializarSemaforos();
 
 void cambiarEstado(int idDTB, char nuevoEstado);
 
-void logguearCambioEstado(DTB* dtb, char nuevoEstado)
+void logguearCambioEstado(DTB* dtb, char nuevoEstado);
 
 void cambiarEstadoGuardandoNuevoDTB(DTB* nuevoDTB, char nuevoEstado);
 
