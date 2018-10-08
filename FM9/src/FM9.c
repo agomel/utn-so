@@ -30,7 +30,7 @@ respuestaDeObtencionDeMemoria* obtenerDatosDeMemoria(t_list* posiciones){
 	respuestaDeObtencionDeMemoria* respuesta;
 	respuesta->cantidadDeLineas = 0;
 	t_list* lista = list_create();
-	respuesta->listaDeDirecciones = lista;
+	respuesta->datos = lista;
 	respuesta->pudoGuardarlo = 0;
 	return respuesta;
 }
