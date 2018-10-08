@@ -9,6 +9,7 @@
 #include "plp.h"
 #include "pcp.h"
 #include <biblioteca/dtb.h>
+#include <biblioteca/logger.h>
 
 int socketCPU;
 int socketDAM;
@@ -23,6 +24,7 @@ enum ESTADOSAFA{
 };
 
 char estado;
+t_log* logger;
 
 void entenderMensaje(int emisor, char header);
 

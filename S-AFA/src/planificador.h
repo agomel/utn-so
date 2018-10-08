@@ -34,6 +34,8 @@ void inicializarSemaforos();
 
 void cambiarEstado(int idDTB, char nuevoEstado);
 
+void logguearCambioEstado(DTB* dtb, char nuevoEstado)
+
 void cambiarEstadoGuardandoNuevoDTB(DTB* nuevoDTB, char nuevoEstado);
 
 #endif /*PLANIFICADOR_H_*/

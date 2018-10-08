@@ -4,7 +4,7 @@ void planificadorALargoPlazo() {
 	int a = 1;
 	while (a) {
 		waitSem(&semCantidadEnNew);
-		printf("hay procesos en la cola new\n");
+		log_info(logger, "Hay procesos en la cola new");
 
 		DTB* dtb = obtenerPrimerDTBEnNew();
 

@@ -19,7 +19,7 @@ direccionServidor levantarDeConfiguracion(char* nombreIp, char* nombrePuerto, ch
 }
 
 int escucharClientes(parametrosEscucharClientes* parametros) {
-	printf("Servidor a escuchar %d\n",parametros->servidor);
+	log_debug(parametros->logger, "Servidor a escuchar %d\n", parametros->servidor);
 	empezarAEscuchar(parametros->servidor, 100);
 	recibirConexionesYMensajes(parametros->servidor, parametros->funcion);
 }

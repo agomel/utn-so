@@ -19,7 +19,7 @@ void entenderMensaje(int emisor, char header){
 	switch(header){
 		case IDENTIFICARSE:
 			identificado = deserializarChar(emisor);
-			printf("identificado %c \n", identificado);
+			log_debug(logger, "Handshake de: %c \n", identificado);
 			switch(identificado){
 				case CPU:
 					socketCPU = emisor;
@@ -30,9 +30,9 @@ void entenderMensaje(int emisor, char header){
 					conectadoDAM = 1;
 					break;
 				default:
-					perror("no acepto a esta conexion");
+					log_error(logger, "Conexion rechazada");
 			}
-			printf("Se agrego a las conexiones %c \n" , identificado);
+			log_debug(logger, "Se agrego a las conexiones %c \n" , identificado);
 			break;
 
 		case MANDAR_TEXTO:
@@ -64,7 +64,7 @@ void entenderMensaje(int emisor, char header){
 			cambiarEstado(dtb->id, BLOCKED);
 			break;
 		default:
-			perror("Cualquiera ese header flaco");
+			log_error(logger, "Header desconocido");
 	}
 }
 
@@ -73,17 +73,18 @@ void inicializarSAFA(){
 	contadorIds = 1;
 	conectadoCPU = 0;
 	conectadoDAM = 0;
+	logger = crearLogger(ARCHIVO_LOG, "SAFA");
 
 }
 int main(void) {
 	inicializarSAFA();
-
 	direccionServidor direccionSAFA = levantarDeConfiguracion(NULL, "PUERTO", ARCHIVO_CONFIGURACION);
 	int servidor = crearServidor(direccionSAFA.puerto, INADDR_ANY);
 	inicializarPlanificadores();
 	parametrosEscucharClientes parametros;
 	parametros.servidor = servidor;
 	parametros.funcion = &entenderMensaje;
+	parametros.logger = logger;
 	pthread_t hiloAdministradorDeConexiones = crearHilo(&escucharClientes, &parametros);
 	pthread_t hiloConsola = crearHilo(&consola, NULL);
 	pthread_t hiloPlanificadorALargoPlazo = crearHilo(&planificadorALargoPlazo, NULL);

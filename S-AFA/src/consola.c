@@ -32,26 +32,32 @@ void consola(){
 		char mensaje[1000];
 		scanf("%s", mensaje);
 		if(estado == CORRUPTO){
-			perror("Estoy corrupto, no me puedes pedir nada :(");
+			log_error(logger, "Estado corrupto: No se reciben mensajes");
 		}else{
 
 			comandoCompleto cadenaArmada=rearmarCadena(mensaje);
 			int comando=obtenerComando(cadenaArmada.comando);
 
 			switch(comando){
-				case SALIR: printf("salir\n"); exit(1);
+				case SALIR:
+					log_info(logger, "Comando salir");
+					exit(1);
 					break;
-				case STATUS: printf("seleccionaste status\n");
+				case STATUS:
+					log_info(logger, "Comando status");
 					break;
-				case FINALIZAR: printf("seleccionaste finalizar\n");
+				case FINALIZAR:
+					log_info(logger, "Comando finalizar");
 					break;
-				case METRICAS: printf("seleccionaste metricas\n");
+				case METRICAS:
+					log_info(logger, "Comando metricas");
 					break;
 				case EJECUTAR:
-					printf("seleccionaste ejecutar\n");
+					log_info(logger, "Comando ejecutar");
 					ponerProcesoEnNew(cadenaArmada.parametro);
 					break;
-				default:perror("no entendes los comandos\n");
+				default:
+					log_error(logger, "Comando erroneo");
 			}
 		}
 	}

@@ -8,9 +8,10 @@
 #include "socket.h"
 #include <stdbool.h>
 #include <commons/config.h>
+#include "logger.h"
 
 #define ARCHIVO_CONFIGURACION "configuraciones/configuracion.txt"
-#define ARCHIVO_LOG "../../log.txt"
+#define ARCHIVO_LOG "log.txt"
 
 enum OPERACIONES{
 	IDENTIFICARSE = 'a', MANDAR_TEXTO = 'b', MANDAR_MENSAJITO = 'c', CARGAR_ESCRIPTORIO_EN_MEMORIA = 'd',
@@ -45,6 +46,7 @@ direccionServidor levantarDeConfiguracion(char* nombreIp, char* nombrePuerto, ch
 typedef struct {
 		int servidor;
 		void* funcion;
+		t_log* logger;
 	} parametrosEscucharClientes;
 
 int escucharClientes(parametrosEscucharClientes* parametros);

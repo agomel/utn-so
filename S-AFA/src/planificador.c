@@ -36,9 +36,7 @@ void cambiarEstado(int idDTB, char nuevoEstado){
 	}
 	dtb->estado = nuevoEstado;
 
-	t_list* lista = dictionary_get(dtb->direccionesArchivos, dtb->escriptorio);
-	printf("Pasado a %c dtb con id &d con escriptorio %s, quantum: %d, y el primer escriptorio se encuentra en la posicion%d \n",
-			 nuevoEstado, dtb->id, dtb->escriptorio, dtb->quantum, list_get(lista, 0));
+	logguearCambioEstado(dtb, nuevoEstado);
 	waitMutex(&mutexListaDTBs);
 	list_add(listaDeTodosLosDTBs, dtb);
 	signalMutex(&mutexListaDTBs);
@@ -50,12 +48,17 @@ void cambiarEstadoGuardandoNuevoDTB(DTB* nuevoDTB, char nuevoEstado){
 	signalMutex(&mutexListaDTBs);
 	nuevoDTB->estado = nuevoEstado;
 
-	t_list* lista = dictionary_get(nuevoDTB->direccionesArchivos, nuevoDTB->escriptorio);
-	printf("Pasado a %c nuevo dtb con id &d con escriptorio %s, quantum: %d, y el primer escriptorio se encuentra en la posicion%d \n",
-			 nuevoEstado, nuevoDTB->id, nuevoDTB->escriptorio, nuevoDTB->quantum, list_get(lista, 0));
+	logguearCambioEstado(nuevoDTB, nuevoEstado);
 	waitMutex(&mutexListaDTBs);
 	list_add(listaDeTodosLosDTBs, nuevoDTB);
 	signalMutex(&mutexListaDTBs);
+}
+
+void logguearCambioEstado(DTB* dtb, char nuevoEstado){
+	t_list* lista = dictionary_get(dtb->direccionesArchivos, dtb->escriptorio);
+		log_info(logger,
+				"Pasado a %c dtb con id: %d, escriptorio: %s, quantum: %d, y escriptorio en: %d",
+				 nuevoEstado, dtb->id, dtb->escriptorio, dtb->quantum, list_get(lista, 0));
 }
 
 
