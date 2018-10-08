@@ -88,3 +88,18 @@ cambiarEstadoDummy(char estado){
 	dummy->estado = estado;
 	agregarDTBALista(dummy);
 }
+
+int obtenerCPUDisponibleYOcupar(int id){
+
+	bool estaDisponible(SocketCPU* socket){
+		return (socket->ocupado == 0);
+	}
+	waitMutex(&mutexSocketsCPus);
+	SocketCPU* socketCPU = list_find(socketsCPUs, estaDisponible);
+	signalMutex(&mutexSocketsCPus);
+
+	socketCPU->ocupado = 1;
+
+	waitMutex(&mutexEjecutandoCPU);
+	dictionary_put(ejecutandoCPU, intToString(id), socketCPU->socket);
+}

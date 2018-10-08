@@ -11,18 +11,24 @@
 #include <biblioteca/dtb.h>
 #include <biblioteca/logger.h>
 
-int socketCPU;
 int socketDAM;
 pthread_mutex_t mutexDummy;
-int socketCPU;
 int socketDAM;
 int conectadoCPU;
 int conectadoDAM;
+t_list* socketsCPUs;
+pthread_mutex_t mutexSocketsCPus;
+pthread_mutex_t mutexEjecutandoCPU;
+t_dictionary* ejecutandoCPU;
 
 enum ESTADOSAFA{
 	CORRUPTO = 'c', OPERATIVO = 'a'
 };
 
+typedef struct{
+	int socket;
+	int ocupado;
+}SocketCPU;
 char estado;
 t_log* logger;
 

@@ -12,8 +12,6 @@ void ponerProcesoEnNew(char* escriptorio);
 
 void cargarDummy(DTB dtb);
 
-void enviarDTB(DTB proceso);
-
 void ponerEnReady(int dtb);
 
 void pasarDTBAExit(int idDTB);
