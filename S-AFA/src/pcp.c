@@ -39,13 +39,18 @@ void planificadorACortoPlazo(){
 		waitSem(&cantidadTotalREADY);
 		waitSem(&gradoMultiprocesamiento);
 		DTB* dtb = seleccionarDTB();
-		cambiarEstado(dtb->id, EXECUTE);
+		if(dtb->flag == 0){
+			cambiarEstadoDummy(EXECUTE);
+		}else{
+			cambiarEstado(dtb->id, EXECUTE);
+		}
 		serializarYEnviarDTB(socketCPU, *dtb);
 	}
 }
 
 void desbloquearDTB(DTB* dtb){
 	if(dtb->flag == 0){
+		cambiarEstadoDummy(BLOCKED);
 		signalMutex(&mutexDummy);
 	}else{
 		if(strcmp(algoritmo, "VRR")){

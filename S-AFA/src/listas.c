@@ -30,6 +30,22 @@ DTB* obtenerDTBDeColaRemoviendolo(int idDTB){
 	}
 	return dtb;
 }
+DTB* obtenerDummyDeColaRemoviendolo(){
+	DTB* dtb;
+	int index = 0;
+	for(int index = 0; index < listaDeTodosLosDTBs->elements_count; index++){
+		waitMutex(&mutexListaDTBs);
+		dtb = list_get(listaDeTodosLosDTBs, index);
+		signalMutex(&mutexListaDTBs);
+		if(dtb->flag == 0){
+			waitMutex(&mutexListaDTBs);
+			list_remove(listaDeTodosLosDTBs, index);
+			signalMutex(&mutexListaDTBs);
+			break;
+		}
+	}
+	return dtb;
+}
 t_list* filtrarListaPorEstado(char estado){
 	bool estaEnEstado(DTB* dtb){
 		return (dtb->estado == estado);
@@ -65,4 +81,10 @@ DTB* removerDTBPorIndice(int indice){
 	DTB* dtb = list_remove(listaDeTodosLosDTBs, 0);
 	signalMutex(&mutexListaDTBs);
 	return dtb;
+}
+
+cambiarEstadoDummy(char estado){
+	DTB* dummy = obtenerDummyDeColaRemoviendolo();
+	dummy->estado = estado;
+	agregarDTBALista(dummy);
 }
