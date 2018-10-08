@@ -3,10 +3,13 @@
 #include <biblioteca/hilos.h>
 #include <biblioteca/utilidades.h>
 #include <biblioteca/dtb.h>
+#include <biblioteca/logger.h>
 
 int socketDIEGO;
 int socketFM9;
 int socketSAFA;
+t_log* logger;
+
 void consola(int servidor){
 	while(1){
 		char* texto = asignarMemoria(1000);
@@ -18,23 +21,31 @@ void consola(int servidor){
 
 char entendiendoLinea(char* lineaEjecutando){ //Devuelve 'b' si lo llama al diego para que el safa lo bloquee, sino devuelve 's' para que siga ejecutando el escriptorio
 	if(strncmp(lineaEjecutando, "abrir", 5) == 0){
-		//Abrir
+		log_info(logger, "Ejecutando instruccion abrir");
 	}else if(strncmp(lineaEjecutando, "concentrar", 10) == 0){
 		//Concentrar
+		log_info(logger, "Ejecutando instruccion concentrar");
 	}else if(strncmp(lineaEjecutando, "asignar", 7) == 0){
 		//Asignar
+		log_info(logger, "Ejecutando instruccion asignar");
 	}else if(strncmp(lineaEjecutando, "wait", 4) == 0){
 		//Wait
+		log_info(logger, "Ejecutando instruccion wait");
 	}else if(strncmp(lineaEjecutando, "signal", 6) == 0){
 		//Signal
+		log_info(logger, "Ejecutando instruccion signal");
 	}else if(strncmp(lineaEjecutando, "flush", 5) == 0){
 		//Flush
+		log_info(logger, "Ejecutando instruccion flush");
 	}else if(strncmp(lineaEjecutando, "close", 5) == 0){
 		//Close
+		log_info(logger, "Ejecutando instruccion close");
 	}else if(strncmp(lineaEjecutando, "crear", 5) == 0){
 		//Crear
+		log_info(logger, "Ejecutando instruccion crear");
 	}else if(strncmp(lineaEjecutando, "borrar", 6) == 0){
 		//Borrar
+		log_info(logger, "Ejecutando instruccion borrar");
 	}
 }
 
@@ -66,7 +77,7 @@ void escuchar(int servidor){
 		char mensajeEntendido = 's';
 			switch(header){
 				case ENVIAR_DTB:
-					printf("llego un dtb\n");
+					log_debug(logger, "Recibiendo un dtb");
 					dtbRecibido = deserializarDTB(servidor);
 					if(dtbRecibido.flag == 0){
 						//Es el dummy
@@ -113,7 +124,7 @@ void escuchar(int servidor){
 									dtbRecibido.programCounter++;
 									dtbRecibido.quantum--;
 							//MensajeNano: Enviarle al Safa BLOQUEAR_DTB con el dtbrecibido si interviene el DAM en la ejecucion
-							printf("Ejecutando una linea del escriptorio");
+							log_info(logger, "Ejecutando una linea del escriptorio");
 							}if(dtbRecibido.quantum == 0){
 								enviarMensaje(socketSAFA, TERMINO_QUANTUM, sizeof(char));
 								serializarYEnviarDTB(socketSAFA, dtbRecibido);
@@ -143,16 +154,17 @@ void escuchar(int servidor){
 					}
 					break;
 				default:
-					perror("Cualquiera ese header flaco");
+					log_error(logger, "Header desconocido");
 		}
 	}
 }
 
 int main(void) {
+	logger = crearLogger(ARCHIVO_LOG, "CPU");
+
 	direccionServidor direccionSAFA = levantarDeConfiguracion("IP_SAFA", "PUERTO_SAFA", ARCHIVO_CONFIGURACION);
 	socketSAFA = conectarConServidor(direccionSAFA.puerto, inet_addr(direccionSAFA.ip));
 	handshake(socketSAFA, CPU);
-	printf("Socket del safa %d \n", socketSAFA);
 
 	direccionServidor direccionFM9 = levantarDeConfiguracion("IP_FM9", "PUERTO_FM9", ARCHIVO_CONFIGURACION);
 	socketFM9 = conectarConServidor(direccionFM9.puerto, inet_addr(direccionFM9.ip));

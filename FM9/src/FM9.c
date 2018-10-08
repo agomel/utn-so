@@ -34,7 +34,7 @@ respuestaDeCargaEnMemoria cargarDatosEnMemoria(char* datos){
 	}else{
 		respuesta.pudoGuardarlo = 0;
 	}
-	printf("guardado en memoria: %s", datos);
+	log_info(logger, "Guardados datos: %s", datos);
 	return respuesta; //pudo guardar. TODO hacer si tuvo un error return 0
 }
 
@@ -52,7 +52,7 @@ void entenderMensaje(int emisor, int header){
 		switch(header){
 			case IDENTIFICARSE:
 				identificado = deserializarChar(emisor);
-				//log_debug(logger, "Handshake de: %c", identificado);
+				log_debug(logger, "Handshake de: %c", identificado);
 				switch(identificado){
 					case CPU:
 						socketCPU = emisor;
@@ -61,9 +61,9 @@ void entenderMensaje(int emisor, int header){
 						socketDAM = emisor;
 						break;
 					default:
-						perror("no acepto a esta conexion");
+						log_error(logger, "Conexion rechazada");
 				}
-				//log_debug(logger, "Se agrego a las conexiones %c" , identificado);
+				log_debug(logger, "Se agrego a las conexiones %c" , identificado);
 				break;
 
 			case GUARDAR_DATOS:
@@ -85,7 +85,7 @@ void entenderMensaje(int emisor, int header){
 				break;
 
 			default:
-				perror("Cualquiera ese header flaco");
+				log_error(logger, "Header desconocido");
 		}
 }
 
@@ -95,6 +95,7 @@ void init(){
 	//TODO cargar storage
 	storage = asignarMemoria(1000);
 	offset = 0;
+	logger = crearLogger(ARCHIVO_LOG, "FM9");
 }
 
 int main(void) {
@@ -106,6 +107,7 @@ int main(void) {
 	parametrosEscucharClientes parametros;
 	parametros.servidor = servidor;
 	parametros.funcion = &entenderMensaje;
+	parametros.logger = logger;
 	pthread_t hiloAdministradorDeConexiones = crearHilo(&escucharClientes, &parametros);
 
 	esperarHilo(hiloAdministradorDeConexiones);

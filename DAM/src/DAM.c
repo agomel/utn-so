@@ -205,7 +205,8 @@ void consumirCola(){
 				}
 				break;
 			default:
-				perror("Cualquiera ese header flaco");
+				printf("no");
+				//log_error(logger, "Header desconocido");
 			}
 		freeOperacion(operacion);
 	}
