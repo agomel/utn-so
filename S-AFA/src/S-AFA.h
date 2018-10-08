@@ -10,9 +10,19 @@
 #include "pcp.h"
 #include <biblioteca/dtb.h>
 
-u_int32_t socketCPU;
-u_int32_t socketDAM;
+int socketCPU;
+int socketDAM;
 pthread_mutex_t mutexDummy;
+int socketCPU;
+int socketDAM;
+int conectadoCPU;
+int conectadoDAM;
+
+enum ESTADOSAFA{
+	CORRUPTO = 'c', OPERATIVO = 'a'
+};
+
+char estado;
 
 void entenderMensaje(int emisor, char header);
 

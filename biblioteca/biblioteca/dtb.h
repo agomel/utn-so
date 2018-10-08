@@ -9,12 +9,12 @@
 #include "socket.h"
 
 typedef struct{
-	u_int32_t id;
+	int id;
 	char* escriptorio;
-	u_int32_t programCounter;
-	u_int32_t flag;
-	t_list* tablaDireccionesArchivos;
-	u_int32_t quantum;
+	int programCounter;
+	int flag;
+	t_dictionary* direccionesArchivos;
+	int quantum;
 	char estado;
 }DTB;
 
@@ -28,9 +28,10 @@ void serializarYEnviarDTB(int receptor, DTB dtb);
 
 DTB deserializarDTB(int emisor);
 
+DTB* obtenerDTBDeColaRemoviendolo(t_list* cola, int idDTB);
 
-DTB* obtenerDTBDeColaRemoviendolo(t_list* cola, u_int32_t idDTB);
+DTB* obtenerDTBDeCola(t_list* cola, int idDTB);
 
-DTB* obtenerDTBDeCola(t_list* cola, u_int32_t idDTB);
+void freeDTB(DTB* dtb);
 
 #endif /*DTB_H_*/

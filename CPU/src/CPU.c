@@ -15,7 +15,7 @@ void consola(int servidor){
 		free(texto);
 	}
 }
-void entenderMensaje(char* lineaEjecutando){
+void entendiendoLinea(char* lineaEjecutando){
 	if(strncmp(lineaEjecutando, "abrir", 5) == 0){
 		//Abrir
 	}else if(strncmp(lineaEjecutando, "concentrar", 10) == 0){
@@ -39,21 +39,25 @@ void entenderMensaje(char* lineaEjecutando){
 void pedirCosasDelFM9(DTB dtbRecibido){
 	void* buffer;
 	u_int32_t desplazamiento = 0;
-	u_int32_t tamanioBuffer = sizeof(char) + sizeof(u_int32_t) + list_size(dtbRecibido.tablaDireccionesArchivos);
+	t_list* listaDeDirecciones = list_create();
+	listaDeDirecciones = dictionary_get(dtbRecibido.direccionesArchivos, dtbRecibido.escriptorio);
+	u_int32_t tamanioBuffer = sizeof(char) + sizeof(u_int32_t)*2 + sizeof(u_int32_t)*(listaDeDirecciones->elements_count);
 	buffer = asignarMemoria(tamanioBuffer);
 
 	concatenarChar(buffer, &desplazamiento, TRAER_LINEA_ESCRIPTORIO);
 	concatenarInt(buffer, &desplazamiento, dtbRecibido.programCounter);
-	concatenarListaInt(buffer, &desplazamiento, dtbRecibido.tablaDireccionesArchivos);
+	concatenarInt(buffer, &desplazamiento, listaDeDirecciones->elements_count);
+	concatenarListaInt(buffer, &desplazamiento, listaDeDirecciones);
 	enviarMensaje(socketFM9, buffer, tamanioBuffer);
+	free(buffer);
 }
 void escuchar(int servidor){
 	int a = 1;
-	u_int32_t tamanioPathEscriptorio;
-	u_int32_t tamanioBuffer;
+	int tamanioPathEscriptorio;
+	int tamanioBuffer;
 	void* buffer;
-	u_int32_t desplazamiento;
-	u_int32_t sizeDelEscriptorio = 10;
+	int desplazamiento;
+	int sizeDelEscriptorio = 10;
 
 	while(a){
 		DTB dtbRecibido;
@@ -65,11 +69,11 @@ void escuchar(int servidor){
 					if(dtbRecibido.flag == 0){
 						//Es el dummy
 						tamanioPathEscriptorio = strlen(dtbRecibido.escriptorio) + 1;
-						tamanioBuffer = sizeof(char) + tamanioPathEscriptorio + sizeof(u_int32_t)*4;
+						tamanioBuffer = sizeof(char) + tamanioPathEscriptorio + sizeof(int)*4;
 						buffer = asignarMemoria(tamanioBuffer);
 						desplazamiento = 0;
 
-						concatenarChar(buffer, &desplazamiento, CARGAR_ESCRIPTORIO);
+						concatenarChar(buffer, &desplazamiento, CARGAR_ESCRIPTORIO_EN_MEMORIA);
 						concatenarString(buffer, &desplazamiento, dtbRecibido.escriptorio);
 						concatenarInt(buffer, &desplazamiento, dtbRecibido.id);
 						concatenarInt(buffer, &desplazamiento, 0); //Offset (Desde el principio)
@@ -81,13 +85,15 @@ void escuchar(int servidor){
 						concatenarChar(buffer, &desplazamiento, DESBLOQUEAR_DTB);
 						buffer = asignarMemoria(sizeof(char));
 						enviarMensaje(socketSAFA, buffer, sizeof(char));
+						free(buffer);
 						serializarYEnviarDTB(socketSAFA, dtbRecibido);
 					}else{
+						char* lineaAEjecutar;
 						//No es el dummy
 						if(dtbRecibido.quantum > 0){
 							for (u_int32_t q = 0; q < dtbRecibido.quantum; ++q){
 								pedirCosasDelFM9(dtbRecibido);
-								char* lineaAEjecutar = deserializarString(socketFM9);
+								lineaAEjecutar = deserializarString(socketFM9);
 								if(lineaAEjecutar[0] == '#'){
 									//MensajeNano: Fijarse si las lineas de mas hay que ignorarlas o si directamente no me las mandan
 									q--;
@@ -99,16 +105,21 @@ void escuchar(int servidor){
 								}else if(lineaAEjecutar[0] == '!'){
 									//MensajeNano: Hubo un acceso invalido o error en el FM9. Mandarle al Safa que ponga el dtb en exit
 								}else{
-									entenderMensaje(lineaAEjecutar);
+									entendiendoLinea(lineaAEjecutar);
 								}
 							//MensajeNano: Enviarle al Safa BLOQUEAR_DTB con el dtbrecibido
 							printf("Ejecutar dtb");
+							dtbRecibido.programCounter++;
 							}
 						}else{
-							while()
 							pedirCosasDelFM9(dtbRecibido);
-							char* lineaAEjecutar = deserializarString(socketFM9);
-							entenderMensaje(lineaAEjecutar);
+							lineaAEjecutar = deserializarString(socketFM9);
+							while(lineaAEjecutar != '#'){
+								entendiendoLinea(lineaAEjecutar);
+								dtbRecibido.programCounter++;
+								pedirCosasDelFM9(dtbRecibido);
+								lineaAEjecutar = deserializarString(socketFM9);
+							}
 						}
 					}
 					break;

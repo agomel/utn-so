@@ -2,6 +2,7 @@
 #include "S-AFA.h"
 
 void inicializarPlanificadores(){
+	configuracion = config_create(ARCHIVO_CONFIGURACION);
 	inicializarColas();
 	inicializarSemaforos();
 	dtbDummy = asignarMemoria(sizeof(DTB));
@@ -27,13 +28,18 @@ void inicializarSemaforos(){
 	inicializarMutex(&mutexIdsDTB);
 	inicializarMutex(&mutexListaDTBs);
 	inicializarMutex(&mutexDummy);
-	contadorIds = 1;
 
-	t_config* configuracion = config_create(ARCHIVO_CONFIGURACION);
-
-	u_int32_t multiprogramacion = config_get_int_value(configuracion, "MULTIPROGRAMACION");
+	int multiprogramacion = config_get_int_value(configuracion, "MULTIPROGRAMACION");
 	inicializarSem(&gradoMultiprogramacion, multiprogramacion);
 	inicializarSem(&cantidadTotalREADY, 0);
+	inicializarSem(&semCantidadEnNew, 0);
+}
+
+t_list* filtrarListaPorEstado(char estado){
+	bool estaEnEstado(DTB* dtb){
+		return (dtb->estado == estado);
+	}
+	return list_filter(listaDeTodosLosDTBs, estaEnEstado);
 }
 
 DTB* cambiarDTBDeColaBuscandoloEnListaDeTodos(DTB* dtb, t_list* nuevaLista){
@@ -51,11 +57,14 @@ t_list* obtenerColaSinNew(char estado){
 		case READY:
 			return colaREADY;
 			break;
-		case EXECUTED:
+		case EXECUTE:
 			return colaEXECUTE;
 			break;
 		case EXIT:
 			return colaEXIT;
+			break;
+		case ESPERANDO_DUMMY:
+			return colaEsperandoDummy;
 			break;
 		default:
 			perror("No se encontro el DTB en ninguna cola");

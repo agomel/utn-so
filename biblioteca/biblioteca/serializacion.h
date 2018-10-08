@@ -16,25 +16,28 @@
 
 typedef struct{
 		void* mensaje;
-		u_int32_t tamanioMensaje;
+		int tamanioMensaje;
 	}voidDeserealizado;
 
 
-void handshake(u_int32_t servidor, char modulo);
+void handshake(int servidor, char modulo);
 
-void enviarYSerializarString(u_int32_t destino, char* texto,char operacion);
-void enviarYSerializarStringSinHeader(u_int32_t destino, char* texto);
-void enviarYSerializarInt(u_int32_t destino, u_int32_t numero,char operacion);
-void enviarYSerializarIntSinHeader(u_int32_t destino, u_int32_t numero);
-char* deserializarString(u_int32_t emisor);
-u_int32_t deserializarInt(u_int32_t emisor);
-char deserializarChar(u_int32_t emisor);
-t_list* deserializarListaInt(u_int32_t emisor);
-void concatenarChar(void* buffer, u_int32_t* desplazamiento, char mensaje);
-void concatenarInt(void* buffer, u_int32_t* desplazamiento, u_int32_t numero);
-void concatenarString(void* buffer, u_int32_t* desplazamiento, char* mensaje);
-void concatenarListaInt(void* buffer, u_int32_t* desplazamiento, t_list* listaArchivos);
+void enviarYSerializarString(int destino, char* texto,char operacion);
+void enviarYSerializarStringSinHeader(int destino, char* texto);
+void enviarYSerializarInt(int destino, int numero,char operacion);
+void enviarYSerializarIntSinHeader(int destino, int numero);
+char* deserializarString(int emisor);
+int deserializarInt(int emisor);
+char deserializarChar(int emisor);
+t_list* deserializarListaInt(int emisor);
+t_dictionary* deserializarDiccionario(int emisor);
+int obtenerTamanioDiccionario(t_dictionary* diccionario);
+void concatenarChar(void* buffer, int* desplazamiento, char mensaje);
+void concatenarInt(void* buffer, int* desplazamiento, int numero);
+void concatenarString(void* buffer, int* desplazamiento, char* mensaje);
+void concatenarListaInt(void* buffer, int* desplazamiento, t_list* listaArchivos);
+void concatenarDiccionario(void* buffer, int* desplazamiento, t_dictionary* diccionario);
 
-voidDeserealizado deserializarVoid(u_int32_t emisor);
+voidDeserealizado deserializarVoid(int emisor);
 
 #endif /*SERIALIZACION_H_*/

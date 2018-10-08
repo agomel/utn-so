@@ -13,10 +13,11 @@
 #define ARCHIVO_LOG "../../log.txt"
 
 enum OPERACIONES{
-	IDENTIFICARSE = 'a', MANDAR_TEXTO = 'b', MANDAR_MENSAJITO = 'c', CARGAR_ESCRIPTORIO = 'd',
+	IDENTIFICARSE = 'a', MANDAR_TEXTO = 'b', MANDAR_MENSAJITO = 'c', CARGAR_ESCRIPTORIO_EN_MEMORIA = 'd',
 	VALIDAR_ARCHIVO = 'e', CREAR_ARCHIVO = 'f', OBTENER_DATOS = 'g', GUARDAR_DATOS = 'h', ENVIAR_DTB = 'i',
 	DATOS_CONSEGUIDOS = 'j', DTB_LISTO = 'k' , RESPUESTA_CARGA = 'l',
-	FALLO_LA_CARGA_DEL_SCRIPTORIO = 'm', PASAR_READY = 'n', TRAER_LINEA_ESCRIPTORIO = 'o', DESBLOQUEAR_DTB = 'p', BLOQUEAR_DTB = 'q'
+	FALLO_LA_CARGA_DEL_SCRIPTORIO = 'm', OK_CARGA_DEL_SCRIPTORIO = 'n', GUARDAR_ESCRIPTORIO = 'o', FALLO_EL_GUARDADO_EN_MDJ = 'p',
+	GUARDADO_CON_EXITO_EN_MDJ = 'q', ERROR = 'r', DESBLOQUEAR_DTB = 's', BLOQUEAR_DTB = 't', TRAER_LINEA_ESCRIPTORIO = 'u'
 };
 
 enum MODULOS{
@@ -28,7 +29,7 @@ enum COLAS{
 };
 
 enum ESTADO{
-	NEW = 'a', READY = 'b', BLOCKED = 'c', EXIT = 'd', EXECUTED = 'e'
+	NEW = 'a', READY = 'b', BLOCKED = 'c', EXIT = 'd', EXECUTE = 'e', ESPERANDO_DUMMY = 'f', READY_PRIORIDAD = 'g'
 };
 
 void* asignarMemoria(int cantidad);
@@ -47,13 +48,5 @@ typedef struct {
 	} parametrosEscucharClientes;
 
 int escucharClientes(parametrosEscucharClientes* parametros);
-
-
-typedef struct{
-	char* texto1;
-	int numero;
-	char* texto2;
-	char caracter;
-}mensajito;
 
 #endif /*UTILIDADES_H_*/
