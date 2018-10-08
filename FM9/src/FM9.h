@@ -25,7 +25,14 @@ typedef struct{
 	int pudoGuardarlo;
 }respuestaDeCargaEnMemoria;
 
+typedef struct{
+	t_list* listaDeDirecciones;
+	int cantidadDeLineas;
+	int pudoGuardarlo;
+}respuestaDeObtencionDeMemoria;
+
 respuestaDeCargaEnMemoria cargarDatosEnMemoria(char* datos);
+respuestaDeObtencionDeMemoria* obtenerDatosDeMemoria(t_list* posiciones);
 
 void init();
 void entenderMensaje(int emisor, int header);
