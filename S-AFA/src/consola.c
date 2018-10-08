@@ -48,6 +48,7 @@ void consola(){
 					break;
 				case FINALIZAR:
 					log_info(logger, "Comando finalizar");
+					pasarDTBAExit(cadenaArmada.parametro);
 					break;
 				case METRICAS:
 					log_info(logger, "Comando metricas");
