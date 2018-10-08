@@ -25,15 +25,25 @@ void inicializarDAM(){
 	archivoConfig = config_create(ARCHIVO_CONFIGURACION);
 	transferSize = config_get_int_value(archivoConfig, "TRANSFER_SIZE");
 }
-void enviarAMDJ(Operacion operacion){
-	int tamanioBuffer = (strlen(operacion.path)+1) + sizeof(int)*3 + sizeof(char);
+int validarArchivoMDJ(Operacion* operacion){
+	void* buffer = asignarMemoria(sizeof(char) + strlen(operacion->path)+1);
+	int desplazamiento = 0;
+	concatenarChar(buffer, &desplazamiento, VALIDAR_ARCHIVO);
+	concatenarString(buffer, &desplazamiento, operacion->path);
+	enviarMensaje(socketMDJ, buffer, desplazamiento);
+	free(buffer);
+	return deserializarInt(socketMDJ);
+
+}
+void enviarAMDJ(Operacion* operacion){
+	int tamanioBuffer = (strlen(operacion->path)+1) + sizeof(int)*3 + sizeof(char);
 	void* buffer = asignarMemoria(tamanioBuffer);
 	int desplazamiento = 0;
 
 	concatenarChar(buffer, &desplazamiento, OBTENER_DATOS);
-	concatenarString(buffer, &desplazamiento, operacion.path);
-	concatenarInt(buffer, &desplazamiento, operacion.offset);
-	concatenarInt(buffer, &desplazamiento, operacion.size);
+	concatenarString(buffer, &desplazamiento, operacion->path);
+	concatenarInt(buffer, &desplazamiento, operacion->offset);
+	concatenarInt(buffer, &desplazamiento, operacion->size);
 
 	enviarMensaje(socketMDJ, buffer, tamanioBuffer);
 	free(buffer);
@@ -63,24 +73,24 @@ void enviarDatosAFM9(char* datos){
 	enviarMensaje(socketFM9, buffer, tamanioBuffer);
 	free(buffer);
 }
-void recibirDatosDeFM9YEnviarASafa(Operacion operacion){
+void recibirDatosDeFM9YEnviarASafa(Operacion* operacion){
 	void* buffer;
 	int desplazamiento = 0;
 	int estadoDeCarga = deserializarInt(socketFM9);
-	int tamanioPath = strlen(operacion.path) + 1;
+	int tamanioPath = strlen(operacion->path) + 1;
 	if(estadoDeCarga == 0){ //No pudo cargar
 		buffer = asignarMemoria(sizeof(char) + sizeof(int) + sizeof(int) + tamanioPath);
 		concatenarChar(buffer, &desplazamiento, FALLO_LA_CARGA_DEL_SCRIPTORIO);
-		concatenarInt(buffer, &desplazamiento, operacion.idDTB);
-		concatenarString(buffer, &desplazamiento, operacion.path);
+		concatenarInt(buffer, &desplazamiento, operacion->idDTB);
+		concatenarString(buffer, &desplazamiento, operacion->path);
 	}else{
 		t_list* listaDirecciones = deserializarListaInt(socketFM9);
 		int tamanioBuffer = sizeof(char) + sizeof(int)
 				+ sizeof(int) + tamanioPath + sizeof(int) + sizeof(int)*(listaDirecciones->elements_count);
 		buffer = asignarMemoria(tamanioBuffer);
 		concatenarChar(buffer, &desplazamiento, OK_CARGA_DEL_SCRIPTORIO);
-		concatenarInt(buffer, &desplazamiento, operacion.idDTB);
-		concatenarString(buffer, &desplazamiento, operacion.path);
+		concatenarInt(buffer, &desplazamiento, operacion->idDTB);
+		concatenarString(buffer, &desplazamiento, operacion->path);
 		concatenarListaInt(buffer, &desplazamiento, listaDirecciones);
 	}
 	enviarMensaje(socketSAFA, buffer, desplazamiento);
@@ -155,10 +165,15 @@ void consumirCola(){
 		switch(operacion->accion){
 			case CARGAR_ESCRIPTORIO_EN_MEMORIA:
 				printf("Ehhh, voy a buscar %s para %d \n", operacion->path, operacion->idDTB);//Esto tendria que ser un log
-				enviarAMDJ(*operacion);
-				char* datos = deserializarString(socketMDJ);
-				enviarDatosAFM9(datos);
-				recibirDatosDeFM9YEnviarASafa(*operacion);
+				u_int32_t validarArchivo = validarArchivoMDJ(operacion);
+				if(validarArchivo != 0){
+					enviarError(operacion, validarArchivo);
+				}else {
+					enviarAMDJ(operacion);
+					char* datos = deserializarString(socketMDJ);
+					enviarDatosAFM9(datos);
+					recibirDatosDeFM9YEnviarASafa(operacion);
+				}
 				break;
 			case GUARDAR_ESCRIPTORIO:
 				//TODO enviarAFM9(operacion);// TODO definir que tengo que mandar para que el FM9 lo pueda buscar
