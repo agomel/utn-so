@@ -30,30 +30,61 @@ DTB* obtenerDTBDeColaRemoviendolo(int idDTB){
 	}
 	return dtb;
 }
+DTB* obtenerDummyDeColaRemoviendolo(){
+	DTB* dtb;
+	int index = 0;
+	for(int index = 0; index < listaDeTodosLosDTBs->elements_count; index++){
+		waitMutex(&mutexListaDTBs);
+		dtb = list_get(listaDeTodosLosDTBs, index);
+		signalMutex(&mutexListaDTBs);
+		if(dtb->flag == 0){
+			waitMutex(&mutexListaDTBs);
+			list_remove(listaDeTodosLosDTBs, index);
+			signalMutex(&mutexListaDTBs);
+			break;
+		}
+	}
+	return dtb;
+}
 t_list* filtrarListaPorEstado(char estado){
 	bool estaEnEstado(DTB* dtb){
 		return (dtb->estado == estado);
 	}
-	waitMutex(&listaDeTodosLosDTBs);
+	waitMutex(&mutexListaDTBs);
 	t_list* lista = list_filter(listaDeTodosLosDTBs, estaEnEstado);
-	signalMutex(&listaDeTodosLosDTBs);
+	signalMutex(&mutexListaDTBs);
+	printf("tamanio nueva lista de estado %c: %d\n",estado,lista->elements_count);
 	return lista;
+}
+
+void agregarDTBALista(DTB* dtb){
+	waitMutex(&mutexListaDTBs);
+	list_add(listaDeTodosLosDTBs, dtb);
+	signalMutex(&mutexListaDTBs);
+}
+
+void pasarDTBAlFinalDeLista(int idDTB){
+	DTB* dtb = obtenerDTBDeColaRemoviendolo(idDTB);
+	agregarDTBALista(dtb);
 }
 
 DTB* obtenerPrimerDTBEnNew(){
 	t_list* lista = filtrarListaPorEstado(NEW);
-	return list_get(lista, 0);
+	DTB* dtb = list_get(lista, 0);
+	pasarDTBAlFinalDeLista(dtb->id);
+	return dtb;
 }
 
-void agregarDTBALista(DTB* dtb){
-	waitMutex(&listaDeTodosLosDTBs);
-	list_add(listaDeTodosLosDTBs, dtb);
-	signalMutex(&listaDeTodosLosDTBs);
-}
 
 DTB* removerDTBPorIndice(int indice){
-	waitMutex(&listaDeTodosLosDTBs);
+	waitMutex(&mutexListaDTBs);
 	DTB* dtb = list_remove(listaDeTodosLosDTBs, 0);
-	signalMutex(&listaDeTodosLosDTBs);
+	signalMutex(&mutexListaDTBs);
 	return dtb;
+}
+
+cambiarEstadoDummy(char estado){
+	DTB* dummy = obtenerDummyDeColaRemoviendolo();
+	dummy->estado = estado;
+	agregarDTBALista(dummy);
 }

@@ -29,9 +29,9 @@ typedef struct{
 }Operacion;
 
 void inicializarDAM();
-void enviarAMDJ(Operacion operacion);
+void enviarAMDJ(Operacion* operacion);
 void agregarOperacionACola(int emisor, char accion);
-void enviarDatosAFM9(char* datos);
+int enviarDatosAFM9(char* datos);
 void recibirDatosDeFM9(void* buffer, int* desplazamiento);
 void verificarDatosDeMDJYEnviarASafa(Operacion* operacion);
 void consumirCola();

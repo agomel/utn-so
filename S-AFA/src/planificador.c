@@ -6,6 +6,8 @@ void inicializarPlanificadores(){
 	inicializarColas();
 	inicializarSemaforos();
 	dtbDummy = asignarMemoria(sizeof(DTB));
+	quantum = config_get_int_value(configuracion, "QUANTUM");
+	algoritmo = config_get_string_value(configuracion, "ALGORITMO");
 }
 
 void inicializarColas(){
@@ -46,6 +48,9 @@ void cambiarEstadoGuardandoNuevoDTB(DTB* nuevoDTB, char nuevoEstado){
 	waitMutex(&mutexListaDTBs);
 	obtenerDTBDeColaRemoviendolo(nuevoDTB->id);
 	signalMutex(&mutexListaDTBs);
+	if(nuevoDTB->estado == EXECUTE){
+		signalMutex(&gradoMultiprocesamiento);
+	}
 	nuevoDTB->estado = nuevoEstado;
 
 	t_list* lista = dictionary_get(nuevoDTB->direccionesArchivos, nuevoDTB->escriptorio);

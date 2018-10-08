@@ -37,7 +37,7 @@ void entenderMensaje(int emisor, char header){
 			break;
 			case VALIDAR_ARCHIVO:
 				archivoValido = validarArchivo(emisor);
-				enviarYSerializarIntSinseHeader(emisor, archivoValido);
+				enviarYSerializarIntSinHeader(emisor, archivoValido);
 				break;
 			case CREAR_ARCHIVO:
 				crearArchivo(emisor);

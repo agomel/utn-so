@@ -19,4 +19,6 @@ void ponerEnReady(int dtb);
 
 void pasarDTBAExit(int idDTB);
 
+void manejarErrores(int idDTB,char* path,int error);
+
 #endif /*PLP_H_*/
