@@ -9,6 +9,7 @@
 #include <biblioteca/select.h>
 #include <biblioteca/hilos.h>
 #include <commons/collections/list.h>
+#include <biblioteca/logger.h>
 
 t_dictionary* conexiones;
 int socketCPU;
@@ -17,15 +18,21 @@ char* storage;
 pthread_mutex_t mutexStorage;
 int offset;
 pthread_mutex_t mutexOffset;
-
+t_log* logger;
 
 typedef struct{
 	t_list* listaDeDirecciones;
 	int pudoGuardarlo;
 }respuestaDeCargaEnMemoria;
 
+typedef struct{
+	t_list* listaDeDirecciones;
+	int cantidadDeLineas;
+	int pudoGuardarlo;
+}respuestaDeObtencionDeMemoria;
 
 respuestaDeCargaEnMemoria cargarDatosEnMemoria(char* datos);
+respuestaDeObtencionDeMemoria* obtenerDatosDeMemoria(t_list* posiciones);
 
 void init();
 void entenderMensaje(int emisor, int header);

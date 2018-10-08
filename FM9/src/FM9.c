@@ -25,16 +25,21 @@ t_list* guardarDatos(char* datos){
 	return direccionesGuardadas;
 }
 
+respuestaDeObtencionDeMemoria* obtenerDatosDeMemoria(t_list* posiciones){
+	//TODO OBTENER DATOS
+	respuestaDeObtencionDeMemoria* respuesta;
+	respuesta->cantidadDeLineas = 0;
+	t_list* lista = list_create();
+	respuesta->listaDeDirecciones = lista;
+	respuesta->pudoGuardarlo = 0;
+	return respuesta;
+}
+
 respuestaDeCargaEnMemoria cargarDatosEnMemoria(char* datos){
 	respuestaDeCargaEnMemoria respuesta;
-	respuesta.listaDeDirecciones = guardarDatos(datos);
-	//TODO pudoGuardarlo()
-	if(1){
-		respuesta.pudoGuardarlo = 1;
-	}else{
-		respuesta.pudoGuardarlo = 0;
-	}
-	printf("guardado en memoria: %s", datos);
+	respuesta.listaDeDirecciones = guardarDatos(datos);// TODO
+	respuesta.pudoGuardarlo = 0;//0 significa que pudo, si no, numero de error
+	log_info(logger, "Guardados datos: %s", datos);
 	return respuesta; //pudo guardar. TODO hacer si tuvo un error return 0
 }
 
@@ -42,6 +47,7 @@ void entenderMensaje(int emisor, int header){
 	char identificado;
 	char* datos;
 	respuestaDeCargaEnMemoria respuestaDeCarga;
+	respuestaDeObtencionDeMemoria* respuestaDeObtener;
 	int id;
 	int tamanioBuffer;
 	int offset;
@@ -49,10 +55,12 @@ void entenderMensaje(int emisor, int header){
 	int desplazamiento;
 	int tamanioPath;
 	void* buffer;
+	t_list* posiciones;
+
 		switch(header){
 			case IDENTIFICARSE:
 				identificado = deserializarChar(emisor);
-				//log_debug(logger, "Handshake de: %c", identificado);
+				log_debug(logger, "Handshake de: %c", identificado);
 				switch(identificado){
 					case CPU:
 						socketCPU = emisor;
@@ -61,16 +69,16 @@ void entenderMensaje(int emisor, int header){
 						socketDAM = emisor;
 						break;
 					default:
-						perror("no acepto a esta conexion");
+						log_error(logger, "Conexion rechazada");
 				}
-				//log_debug(logger, "Se agrego a las conexiones %c" , identificado);
+				log_debug(logger, "Se agrego a las conexiones %c" , identificado);
 				break;
 
 			case GUARDAR_DATOS:
 				datos = deserializarString(emisor);
 				respuestaDeCarga = cargarDatosEnMemoria(datos);
 
-				if(respuestaDeCarga.pudoGuardarlo){
+				if(respuestaDeCarga.pudoGuardarlo == 0){
 					desplazamiento = 0;
 					tamanioBuffer = sizeof(int) + sizeof(int) + sizeof(int)*(respuestaDeCarga.listaDeDirecciones->elements_count);
 					buffer = asignarMemoria(tamanioBuffer);
@@ -83,9 +91,20 @@ void entenderMensaje(int emisor, int header){
 					enviarYSerializarIntSinHeader(socketDAM, respuestaDeCarga.pudoGuardarlo);
 				}
 				break;
+			case OBTENER_DATOS:
+				posiciones = deserializarListaInt(emisor);
+				respuestaDeObtener = obtenerDatosDeMemoria(posiciones); //TODO
 
+				desplazamiento = 0;
+				tamanioBuffer = sizeof(int) + sizeof(int) + strlen("hola") + 1;
+				buffer = asignarMemoria(tamanioBuffer);
+				concatenarInt(buffer, &desplazamiento, 0);
+				concatenarInt(buffer, &desplazamiento, 1);
+				concatenarString(buffer, &desplazamiento, "hola");
+				enviarMensaje(socketDAM, buffer, tamanioBuffer);
+				break;
 			default:
-				perror("Cualquiera ese header flaco");
+				log_error(logger, "Header desconocido");
 		}
 }
 
@@ -95,6 +114,7 @@ void init(){
 	//TODO cargar storage
 	storage = asignarMemoria(1000);
 	offset = 0;
+	logger = crearLogger(ARCHIVO_LOG, "FM9");
 }
 
 int main(void) {
@@ -106,6 +126,7 @@ int main(void) {
 	parametrosEscucharClientes parametros;
 	parametros.servidor = servidor;
 	parametros.funcion = &entenderMensaje;
+	parametros.logger = logger;
 	pthread_t hiloAdministradorDeConexiones = crearHilo(&escucharClientes, &parametros);
 
 	esperarHilo(hiloAdministradorDeConexiones);
