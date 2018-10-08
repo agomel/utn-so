@@ -47,8 +47,7 @@ void pasarDTBAExit(int idDTB) {
 }
 
 void manejarErrores(int idDTB,char* path,int error){
-	cambiarEstado(idDTB, EXIT);
-	signalSem(&gradoMultiprocesamiento);
+	pasarDTBAExit(idDTB);
 	switch(error){
 		case 10001:
 			printf("path inexistente de archivo %s", path);
