@@ -50,21 +50,20 @@ void entenderMensaje(int emisor, char header){
 			break;
 
 		case PASAR_READY:
-			//TODO deserializar estructura que envia dam
-			colaOrigen = deserializarChar(emisor);
 			idDTB = deserializarInt(emisor);
-			switch(colaOrigen){
-				case COLA_NEW:
-					path = deserializarString(emisor);
-					direccionesYArchivos = deserializarListaInt(emisor);
-					dtb = obtenerDTBDeCola(listaDeTodosLosDTBs, idDTB);
-					dictionary_put(dtb->direccionesArchivos, path, direccionesYArchivos);
-					//es el dummy que avisa que el proceso esta listo
-					ponerEnReady(dtb);
-					break;
-				default:
-					break;
+			path = deserializarString(emisor);
+			direccionesYArchivos = deserializarListaInt(emisor);
+			dtb = obtenerDTBDeCola(listaDeTodosLosDTBs, idDTB);
+			if(dtb->estado == NEW){
+
+			}else{
+				t_list* lista = obtenerColaSinNew(dtb->estado);
+				obtenerDTBDeColaRemoviendolo(lista, dtb->id);
+				//TODO remove by condition
 			}
+			dictionary_put(dtb->direccionesArchivos, path, direccionesYArchivos);
+			//es el dummy que avisa que el proceso esta listo
+			ponerEnReady(dtb);
 			break;
 
 		case DESBLOQUEAR_DTB:
@@ -86,6 +85,7 @@ void inicializarSAFA(){
 	contadorIds = 1;
 	conectadoCPU = 0;
 	conectadoDAM = 0;
+
 }
 int main(void) {
 	inicializarSAFA();
