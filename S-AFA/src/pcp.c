@@ -43,7 +43,7 @@ void planificadorACortoPlazo(){
 		waitSem(&cantidadTotalREADY);
 		if(!list_is_empty(colaREADY)){
 			DTB* dtb = seleccionarDTB();
-			dtb->estado = EXECUTED;
+			dtb->estado = EXECUTE;
 			//TODO hacer a cola de execute
 			serializarYEnviarDTB(socketCPU, *dtb);
 		}

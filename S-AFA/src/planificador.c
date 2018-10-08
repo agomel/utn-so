@@ -57,7 +57,7 @@ t_list* obtenerColaSinNew(char estado){
 		case READY:
 			return colaREADY;
 			break;
-		case EXECUTED:
+		case EXECUTE:
 			return colaEXECUTE;
 			break;
 		case EXIT:

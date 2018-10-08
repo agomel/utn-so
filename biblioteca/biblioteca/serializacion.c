@@ -151,8 +151,8 @@ t_dictionary* deserializarDiccionario(int emisor){
 int obtenerTamanioDiccionario(t_dictionary* diccionario){
 	int respuesta = 0;
 	void sumarPuntaje(char* key, t_list* value){
-		respuesta += strlen(key + 1);
-		respuesta += sizeof(int) + sizeof(int)*value->elements_count;
+		respuesta += strlen(key) + 1;
+		respuesta += sizeof(int) + sizeof(int)*(value->elements_count);
 	}
 	dictionary_iterator(diccionario, sumarPuntaje);
 	return respuesta;
