@@ -10,15 +10,6 @@ int socketFM9;
 int socketSAFA;
 t_log* logger;
 
-void consola(int servidor){
-	while(1){
-		char* texto = asignarMemoria(1000);
-		scanf("%s", texto);
-		enviarYSerializarString(servidor, texto, MANDAR_TEXTO);
-		free(texto);
-	}
-}
-
 char entendiendoLinea(char* lineaEjecutando){ //Devuelve 'b' si lo llama al diego para que el safa lo bloquee, sino devuelve 's' para que siga ejecutando el escriptorio
 	if(strncmp(lineaEjecutando, "abrir", 5) == 0){
 		log_info(logger, "Ejecutando instruccion abrir");
@@ -95,19 +86,21 @@ void escuchar(int servidor){
 						desplazamiento = 0;
 						enviarMensaje(socketSAFA, DESBLOQUEAR_DTB, sizeof(char));
 						serializarYEnviarDTB(socketSAFA, dtbRecibido);
+						freeDTB(&dtbRecibido);
 					}else{
 						char* lineaAEjecutar;
 						//No es el dummy
 						if(dtbRecibido.quantum > 0){
 							while(dtbRecibido.quantum > 0){
+								//MensajeNano: Preguntarle al safa si quiere que deje de ejecutar
 								pedirCosasDelFM9(dtbRecibido);
 								lineaAEjecutar = deserializarString(socketFM9);
-								if(lineaAEjecutar[0] == '@'){
+								if(lineaAEjecutar[0] == 'FIN_ARCHIVO'){
 									//Fin de archivo
 									enviarMensaje(socketSAFA, PASAR_A_EXIT, sizeof(char));
 									serializarYEnviarDTB(socketSAFA, dtbRecibido);
 									break;
-								}else if(lineaAEjecutar[0] == '!'){
+								}else if(lineaAEjecutar[0] == 'ERROR_O_ACCESO_INVALIDO'){
 									//Hubo error en FM9
 									dtbRecibido.quantum--;
 									enviarMensaje(socketSAFA, PASAR_A_EXIT, sizeof(char));
@@ -123,17 +116,17 @@ void escuchar(int servidor){
 								}
 									dtbRecibido.programCounter++;
 									dtbRecibido.quantum--;
-							//MensajeNano: Enviarle al Safa BLOQUEAR_DTB con el dtbrecibido si interviene el DAM en la ejecucion
 							log_info(logger, "Ejecutando una linea del escriptorio");
 							}if(dtbRecibido.quantum == 0){
 								enviarMensaje(socketSAFA, TERMINO_QUANTUM, sizeof(char));
 								serializarYEnviarDTB(socketSAFA, dtbRecibido);
 							}
 						}else{
+							//MensajeNano: Preguntarle al safa si quiere que deje de ejecutar
 							pedirCosasDelFM9(dtbRecibido);
 							lineaAEjecutar = deserializarString(socketFM9);
 							while(1){
-								if(lineaAEjecutar[0] == '@'|| lineaAEjecutar[0] == '!'){
+								if(lineaAEjecutar[0] == ERROR_O_ACCESO_INVALIDO || lineaAEjecutar[0] == FIN_ARCHIVO){
 									//Fin de archivo o hubo un error
 									enviarMensaje(socketSAFA, PASAR_A_EXIT, sizeof(char));
 									serializarYEnviarDTB(socketSAFA, dtbRecibido);
@@ -147,6 +140,7 @@ void escuchar(int servidor){
 									}
 								}
 								dtbRecibido.programCounter++;
+								//MensajeNano: Preguntarle al safa si quiere que deje de ejecutar
 								pedirCosasDelFM9(dtbRecibido);
 								lineaAEjecutar = deserializarString(socketFM9);
 							}
@@ -173,14 +167,6 @@ int main(void) {
 	direccionServidor direccionDIEGO = levantarDeConfiguracion("IP_DIEGO", "PUERTO_DIEGO", ARCHIVO_CONFIGURACION);
 	socketDIEGO= conectarConServidor(direccionDIEGO.puerto, inet_addr(direccionDIEGO.ip));
 
-	pthread_t hiloConsola = crearHilo(&consola, socketSAFA);
-	pthread_t hiloEscuchadorSAFA = crearHilo(&escuchar, socketSAFA);
-	pthread_t hiloEscuchadorFM9= crearHilo(&escuchar, socketFM9);
-	pthread_t hiloEscuchadorDIEGO = crearHilo(&escuchar, socketDIEGO);
-
-	esperarHilo(hiloConsola);
-	esperarHilo(hiloEscuchadorSAFA);
-	esperarHilo(hiloEscuchadorFM9);
-	esperarHilo(hiloEscuchadorDIEGO);
+	escuchar(socketSAFA);
 	return 0;
 }
