@@ -56,6 +56,9 @@ void ponerEnReady(DTB* dtb) {
 	signalMutex(&mutexREADY);
 	signalSem(&cantidadTotalREADY);
 	dtb->estado = READY;
+	t_list* lista = dictionary_get(dtb->direccionesArchivos, dtb->escriptorio);
+	printf("DTB al ponerlo en READY tiene escriptorio %s, quantum: %d, y el escriptorio se encuentra en la posicion%d \n"
+			, dtb->escriptorio, dtb->quantum, list_get(lista, 0));
 }
 
 void pasarDTBAExit(u_int32_t idDTB, t_list* listaDeDTB) {
