@@ -96,7 +96,7 @@ void entenderMensaje(int emisor, int header){
 				respuestaDeObtener = obtenerDatosDeMemoria(posiciones); //TODO
 
 				desplazamiento = 0;
-				tamanioBuffer = sizeof(int) + sizeof(int) + strlen("hola") + 1;
+				tamanioBuffer = sizeof(int) + sizeof(int) + sizeof(int) + strlen("hola") + 1;
 				buffer = asignarMemoria(tamanioBuffer);
 				concatenarInt(buffer, &desplazamiento, 0);
 				concatenarInt(buffer, &desplazamiento, 1);
