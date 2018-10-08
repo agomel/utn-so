@@ -46,7 +46,7 @@ void pasarDTBAExit(int idDTB) {
 	cambiarEstado(idDTB, EXIT);
 }
 
-/*void manejarErrores(int idDTB,char* path,int error){
+/*void manejarErrores(int idDTB, char* path, int error){
 	cambiarEstado(idDTB, EXIT);
 	signalSem(&gradoMultiprocesamiento);
 	switch(error){
@@ -81,6 +81,9 @@ void pasarDTBAExit(int idDTB) {
 			break;
 		case 50002:
 			printf("Espacio insuficiente en path: %s", path);
+			break;
+		case 60001:
+			printf("El archivo no existe en path: %s", path);
 			break;
 		default:
 			perror("No reconozco el error, pero te termino el dtb");

@@ -15,10 +15,8 @@
 #include <biblioteca/select.h>
 #include <biblioteca/hilos.h>
 #include "operaciones.h"
-#include <biblioteca/logger.h>
 
 int socketDAM;
-t_log logger;
 
 void entenderMensaje(int emisor, char header){
 	char identificado;
@@ -52,7 +50,7 @@ void entenderMensaje(int emisor, char header){
 				guardarDatos(emisor);
 				break;
 		default:
-			perror("Cualquiera ese header flaco");
+			log_error(logger, "Header desconocido");
 	}
 }
 

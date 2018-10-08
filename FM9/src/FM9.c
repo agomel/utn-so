@@ -52,7 +52,7 @@ void entenderMensaje(int emisor, int header){
 		switch(header){
 			case IDENTIFICARSE:
 				identificado = deserializarChar(emisor);
-				log_debug(logger, "Handshake de: %c", identificado);
+				//log_debug(logger, "Handshake de: %c", identificado);
 				switch(identificado){
 					case CPU:
 						socketCPU = emisor;
@@ -63,7 +63,7 @@ void entenderMensaje(int emisor, int header){
 					default:
 						perror("no acepto a esta conexion");
 				}
-				log_debug(logger, "Se agrego a las conexiones %c" , identificado);
+				//log_debug(logger, "Se agrego a las conexiones %c" , identificado);
 				break;
 
 			case GUARDAR_DATOS:
