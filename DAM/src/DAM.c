@@ -125,7 +125,7 @@ void verificarDatosDeMDJYEnviarASafa(Operacion* operacion){
 	}
 }
 void enviarError(Operacion* operacion, u_int32_t error){
-	void* buffer = asignarMemoria(sizeof(char) + sizeof(u_int32_t));
+	void* buffer = asignarMemoria(sizeof(char) + sizeof(u_int32_t) + strlen(operacion->path)+1);
 	u_int32_t desplazamiento = 0;
 	concatenarChar(buffer, &desplazamiento, ERROR);
 	concatenarInt(buffer, &desplazamiento, operacion->idDTB);
