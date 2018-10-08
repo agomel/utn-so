@@ -14,10 +14,12 @@ t_list* filtrarListaPorEstado(char estado);
 
 DTB* obtenerPrimerDTBEnNew();
 
-void agregarDTBALista(dtb);
+void agregarDTBALista(DTB* dtb);
 
 void pasarDTBAlFinalDeLista(int idDTB);
 
 DTB* removerDTBPorIndice(int indice);
+
+cambiarEstadoDummy(char estado);
 
 #endif /*LISTAS_H_*/

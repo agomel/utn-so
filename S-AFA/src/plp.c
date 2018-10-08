@@ -45,3 +45,24 @@ void pasarDTBAExit(int idDTB) {
 	signalSem(&gradoMultiprogramacion);
 	cambiarEstado(idDTB, EXIT);
 }
+
+void manejarErrores(int idDTB,char* path,int error){
+	cambiarEstado(idDTB, EXIT);
+	switch(error){
+		case 10001:
+			perror("path inexistente de archivo %s", path);
+			break;
+
+		case 10001:
+			perror("path inexistente de archivo %s", path);
+			break;
+
+		case 10001:
+			perror("path inexistente de archivo %s", path);
+			break;
+
+		case 10001:
+			perror("path inexistente de archivo %s", path);
+			break;
+	}
+}

@@ -61,8 +61,30 @@ void entenderMensaje(int emisor, char header){
 
 		case BLOQUEAR_DTB:
 			*dtb = deserializarDTB(emisor);
+			//TODO cambiar quantum
 			cambiarEstado(dtb->id, BLOCKED);
 			break;
+
+		case PASAR_A_EXIT:
+			*dtb = deserializarDTB(emisor);
+			cambiarEstado(dtb->id, EXIT);
+			signalSem(&gradoMultiprocesamiento);
+			break;
+
+		case TERMINO_QUANTUM:
+			*dtb = deserializarDTB(emisor);
+			cambiarEstado(dtb->id, READY);
+			signalSem(&gradoMultiprocesamiento);
+			signalSem(&cantidadTotalREADY);
+			break;
+
+		case ERROR:
+			idDTB = deserializarInt(emisor);
+			path = deserializarString(emisor);
+			int error = deserializarInt(emisor);
+			manejarErrores(idDTB, path, error);
+			break;
+
 		default:
 			log_error(logger, "Header desconocido");
 	}
