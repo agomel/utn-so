@@ -15,11 +15,11 @@ void consola(int servidor){
 }
 void escuchar(int servidor){
 	int a = 1;
-	u_int32_t tamanioPathEscriptorio;
-	u_int32_t tamanioBuffer;
+	int tamanioPathEscriptorio;
+	int tamanioBuffer;
 	void* buffer;
-	u_int32_t desplazamiento;
-	u_int32_t sizeDelEscriptorio = 10;
+	int desplazamiento;
+	int sizeDelEscriptorio = 10;
 
 	while(a){
 		DTB dtbRecibido;
@@ -31,7 +31,7 @@ void escuchar(int servidor){
 					if(dtbRecibido.flag == 0){
 						//Es el dummy
 						tamanioPathEscriptorio = strlen(dtbRecibido.escriptorio) + 1;
-						tamanioBuffer = sizeof(char) + tamanioPathEscriptorio + sizeof(u_int32_t)*4;
+						tamanioBuffer = sizeof(char) + tamanioPathEscriptorio + sizeof(int)*4;
 						buffer = asignarMemoria(tamanioBuffer);
 						desplazamiento = 0;
 

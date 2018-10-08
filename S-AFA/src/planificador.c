@@ -29,7 +29,7 @@ void inicializarSemaforos(){
 	inicializarMutex(&mutexListaDTBs);
 	inicializarMutex(&mutexDummy);
 
-	u_int32_t multiprogramacion = config_get_int_value(configuracion, "MULTIPROGRAMACION");
+	int multiprogramacion = config_get_int_value(configuracion, "MULTIPROGRAMACION");
 	inicializarSem(&gradoMultiprogramacion, multiprogramacion);
 	inicializarSem(&cantidadTotalREADY, 0);
 	inicializarSem(&semCantidadEnNew, 0);
@@ -62,6 +62,9 @@ t_list* obtenerColaSinNew(char estado){
 			break;
 		case EXIT:
 			return colaEXIT;
+			break;
+		case ESPERANDO_DUMMY:
+			return colaEsperandoDummy;
 			break;
 		default:
 			perror("No se encontro el DTB en ninguna cola");

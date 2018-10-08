@@ -53,12 +53,12 @@ void entenderMensaje(int emisor, char header){
 		case OK_CARGA_DEL_SCRIPTORIO:
 			idDTB = deserializarInt(emisor);
 			path = deserializarString(emisor);
-			direccionesYArchivos = deserializarListaInt(emisor);
+			t_list* listaDirecciones = deserializarListaInt(emisor);
 			dtb = obtenerDTBDeCola(listaDeTodosLosDTBs, idDTB);
 			lista = obtenerColaSinNew(dtb->estado);
 			obtenerDTBDeColaRemoviendolo(lista, dtb->id);
 			//TODO remove by condition
-			dictionary_put(dtb->direccionesArchivos, path, direccionesYArchivos);
+			dictionary_put(dtb->direccionesArchivos, path, listaDirecciones);
 			//es el dummy que avisa que el proceso esta listo
 			ponerEnReady(dtb);
 			break;

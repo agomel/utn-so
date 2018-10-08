@@ -1,7 +1,7 @@
 #include "plp.h"
 
 void planificadorALargoPlazo() {
-	u_int32_t a = 1;
+	int a = 1;
 	while (a) {
 		waitSem(&semCantidadEnNew);
 		printf("hay procesos en la cola new\n");
@@ -61,9 +61,9 @@ void ponerEnReady(DTB* dtb) {
 			, dtb->escriptorio, dtb->quantum, list_get(lista, 0));
 }
 
-void pasarDTBAExit(u_int32_t idDTB, t_list* listaDeDTB) {
+void pasarDTBAExit(int idDTB, t_list* listaDeDTB) {
 	DTB* dtb;
-	for (u_int32_t i = 0; i < listaDeDTB->elements_count; i++) {
+	for (int i = 0; i < listaDeDTB->elements_count; i++) {
 		dtb = list_get(listaDeDTB, i);
 		if (dtb->id == idDTB) {
 			list_remove(listaDeDTB, i);

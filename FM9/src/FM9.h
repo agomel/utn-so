@@ -11,17 +11,17 @@
 #include <commons/collections/list.h>
 
 t_dictionary* conexiones;
-u_int32_t socketCPU;
-u_int32_t socketDAM;
+int socketCPU;
+int socketDAM;
 char* storage;
 pthread_mutex_t mutexStorage;
-u_int32_t offset;
+int offset;
 pthread_mutex_t mutexOffset;
 
 
 typedef struct{
 	t_list* listaDeDirecciones;
-	u_int32_t pudoGuardarlo;
+	int pudoGuardarlo;
 }respuestaDeCargaEnMemoria;
 
 

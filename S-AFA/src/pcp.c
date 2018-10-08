@@ -38,7 +38,7 @@ void* seleccionarDTB(){
 	}
 }
 void planificadorACortoPlazo(){
-	u_int32_t a = 1;
+	int a = 1;
 	while(a){
 		waitSem(&cantidadTotalREADY);
 		if(!list_is_empty(colaREADY)){

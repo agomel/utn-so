@@ -1,8 +1,8 @@
 #include "dtb.h"
 
-u_int32_t obtenerId(){
+int obtenerId(){
 	waitMutex(&mutexIdsDTB);
-	u_int32_t id = contadorIds;
+	int id = contadorIds;
 	contadorIds++;
 	signalMutex(&mutexIdsDTB);
 	return id;
@@ -23,12 +23,12 @@ DTB crearDTB (char* parametro){
 
 void serializarYEnviarDTB(int receptor, DTB dtb){
 	//Asigno tamanio al buffer
-	u_int32_t tamanioEscriptorio = strlen(dtb.escriptorio) + 1;
-	u_int32_t tamanioBuffer = sizeof(char)*2 + sizeof(u_int32_t)*6 + tamanioEscriptorio + obtenerTamanioDiccionario(dtb.direccionesArchivos);
+	int tamanioEscriptorio = strlen(dtb.escriptorio) + 1;
+	int tamanioBuffer = sizeof(char)*2 + sizeof(int)*6 + tamanioEscriptorio + obtenerTamanioDiccionario(dtb.direccionesArchivos);
 	void* buffer = asignarMemoria(tamanioBuffer);
 
 	//Lleno el buffer
-	u_int32_t desplazamiento = 0;
+	int desplazamiento = 0;
 
 	concatenarChar(buffer, &desplazamiento, ENVIAR_DTB);
 	concatenarString(buffer, &desplazamiento, dtb.escriptorio);
@@ -58,7 +58,7 @@ DTB deserializarDTB(int emisor){
 }
 
 
-DTB* obtenerDTBDeColaRemoviendolo(t_list* cola, u_int32_t idDTB){
+DTB* obtenerDTBDeColaRemoviendolo(t_list* cola, int idDTB){
 	DTB* dtb;
 	int index = 0;
 	for(int index = 0; index < cola->elements_count; index++){
@@ -71,7 +71,7 @@ DTB* obtenerDTBDeColaRemoviendolo(t_list* cola, u_int32_t idDTB){
 	return dtb;
 }
 
-DTB* obtenerDTBDeCola(t_list* cola, u_int32_t idDTB){
+DTB* obtenerDTBDeCola(t_list* cola, int idDTB){
 	DTB* dtb;
 	int index = 0;
 	for(int index = 0; index < cola->elements_count; index++){

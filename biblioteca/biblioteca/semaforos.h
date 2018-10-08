@@ -11,19 +11,19 @@
 
 void inicializarMutex(pthread_mutex_t* semaforo);
 
-u_int32_t waitMutex(pthread_mutex_t* semaforo);
+int waitMutex(pthread_mutex_t* semaforo);
 
-u_int32_t signalMutex(pthread_mutex_t* semaforo);
+int signalMutex(pthread_mutex_t* semaforo);
 
 /////////////////
 
 //CONTADOR
 
-void inicializarSem(sem_t* semaforo, u_int32_t valorInicial);
+void inicializarSem(sem_t* semaforo, int valorInicial);
 
-u_int32_t waitSem(sem_t* semaforo);
+int waitSem(sem_t* semaforo);
 
-u_int32_t signalSem(sem_t* semaforo);
+int signalSem(sem_t* semaforo);
 
 //////////////
 

@@ -15,6 +15,6 @@ void enviarDTB(DTB proceso);
 
 void ponerEnReady(DTB* dtb);
 
-void pasarDTBAExit(u_int32_t idDTB, t_list* listaDeDTB);
+void pasarDTBAExit(int idDTB, t_list* listaDeDTB);
 
 #endif /*PLP_H_*/

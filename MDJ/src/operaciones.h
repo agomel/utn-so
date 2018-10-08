@@ -7,10 +7,10 @@
 #include <malloc.h>
 #include <commons/config.h>
 
-u_int32_t validarArchivo(int emisor);
+int validarArchivo(int emisor);
 void crearArchivo(int emisor);
-void guardarDatos(u_int32_t emisor);
-char* obtenerDatos(u_int32_t emisor);
+void guardarDatos(int emisor);
+char* obtenerDatos(int emisor);
 
 
 #endif /*OPERACIONES_H_*/
