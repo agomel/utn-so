@@ -48,6 +48,9 @@ void cambiarEstadoGuardandoNuevoDTB(DTB* nuevoDTB, char nuevoEstado){
 	waitMutex(&mutexListaDTBs);
 	obtenerDTBDeColaRemoviendolo(nuevoDTB->id);
 	signalMutex(&mutexListaDTBs);
+	if(nuevoDTB->estado == EXECUTE){
+		signalMutex(&gradoMultiprocesamiento);
+	}
 	nuevoDTB->estado = nuevoEstado;
 
 	t_list* lista = dictionary_get(nuevoDTB->direccionesArchivos, nuevoDTB->escriptorio);
