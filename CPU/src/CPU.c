@@ -35,7 +35,7 @@ void escuchar(int servidor){
 						buffer = asignarMemoria(tamanioBuffer);
 						desplazamiento = 0;
 
-						concatenarChar(buffer, &desplazamiento, CARGAR_ESCRIPTORIO);
+						concatenarChar(buffer, &desplazamiento, CARGAR_ESCRIPTORIO_EN_MEMORIA);
 						concatenarString(buffer, &desplazamiento, dtbRecibido.escriptorio);
 						concatenarInt(buffer, &desplazamiento, dtbRecibido.id);
 						concatenarInt(buffer, &desplazamiento, 0); //Offset (Desde el principio)

@@ -50,7 +50,7 @@ void entenderMensaje(int emisor, char header){
 			signal(&mutexColaDummy);
 			break;
 
-		case PASAR_READY:
+		case OK_CARGA_DEL_SCRIPTORIO:
 			idDTB = deserializarInt(emisor);
 			path = deserializarString(emisor);
 			direccionesYArchivos = deserializarListaInt(emisor);

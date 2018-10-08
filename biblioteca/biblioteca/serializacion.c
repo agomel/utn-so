@@ -101,6 +101,10 @@ void concatenarDiccionario(void* buffer, u_int32_t* desplazamiento, t_dictionary
 
 	dictionary_iterator(diccionario, concatenarElemento);
 }
+void concatenarVoid(void* buffer, u_int32_t* desplazamiento, void* mensaje, u_int32_t tamanio){
+	memcpy(buffer + *desplazamiento, mensaje, tamanio);
+	*desplazamiento = *desplazamiento + tamanio;
+}
 
 char* deserializarString(u_int32_t emisor){
 	u_int32_t tamanioMensaje = deserializarInt(emisor);
