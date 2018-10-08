@@ -122,8 +122,8 @@ void enviarDatosAMDJ(void* datosTotales){
 	}
 }
 void verificarDatosDeMDJYEnviarASafa(Operacion *operacion){
-	int estadoDeCarga = deserializarInt(socketMDJ);
-	if(estadoDeCarga != 1){ //No pudo cargar osea el estado de carga es el numero del error
+	u_int32_t estadoDeCarga = deserializarInt(socketMDJ);
+	if(estadoDeCarga != 0){ //No pudo cargar osea el estado de carga es el numero del error
 		enviarError(operacion, estadoDeCarga);
 	}else{ //si lo pudo cargar, envio el path donde guardo
 		void* buffer = asignarMemoria(sizeof(char) + sizeof(int) + strlen(operacion->path)+1);
@@ -153,7 +153,7 @@ void consumirCola(){
 		signalMutex(&mutexColaOperaciones);
 		int estadoDeOperacion;
 		switch(operacion->accion){
-			case CARGAR_ESCRIPTORIO_EN_MEMORIA://Dummy
+			case CARGAR_ESCRIPTORIO_EN_MEMORIA:
 				printf("Ehhh, voy a buscar %s para %d \n", operacion->path, operacion->idDTB);//Esto tendria que ser un log
 				enviarAMDJ(*operacion);
 				char* datos = deserializarString(socketMDJ);
@@ -163,8 +163,8 @@ void consumirCola(){
 			case GUARDAR_ESCRIPTORIO:
 				//TODO enviarAFM9(operacion);// TODO definir que tengo que mandar para que el FM9 lo pueda buscar
 				estadoDeOperacion = deserializarInt(socketFM9);
-				if(estadoDeOperacion == 0){
-					enviarError(operacion, 30002);
+				if(estadoDeOperacion != 0){
+					enviarError(operacion, estadoDeOperacion);
 				}else{
 					void* datosFlush = recibirFlushFM9();
 					enviarDatosAMDJ(datosFlush);
@@ -175,7 +175,6 @@ void consumirCola(){
 			default:
 				perror("Cualquiera ese header flaco");
 			}
-
 		freeOperacion(operacion);
 	}
 }
