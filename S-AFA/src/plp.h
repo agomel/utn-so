@@ -11,10 +11,12 @@ void planificadorALargoPlazo();
 
 void ponerProcesoEnNew(char* escriptorio);
 
+void cargarDummy(DTB dtb);
+
 void enviarDTB(DTB proceso);
 
-void ponerEnReady(DTB* dtb);
+void ponerEnReady(int dtb);
 
-void pasarDTBAExit(int idDTB, t_list* listaDeDTB);
+void pasarDTBAExit(int idDTB);
 
 #endif /*PLP_H_*/

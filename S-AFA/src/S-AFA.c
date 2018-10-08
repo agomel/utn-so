@@ -11,7 +11,6 @@
 
 void entenderMensaje(int emisor, char header){
 	char identificado;
-	char colaOrigen;
 	int idDTB;
 	DTB* dtb;
 	t_dictionary* direccionesYArchivos;
@@ -43,24 +42,16 @@ void entenderMensaje(int emisor, char header){
 
 		case FALLO_LA_CARGA_DEL_SCRIPTORIO:
 			idDTB = deserializarInt(emisor);
-			waitMutex(&mutexColaDummy);
-			dtb = obtenerDTBDeCola(listaDeTodosLosDTBs, idDTB);
-			lista = obtenerColaSinNew(dtb->estado);
-			pasarDTBAExit(idDTB, lista);
-			signalMutex(&mutexColaDummy);
+			pasarDTBAExit(idDTB);
 			break;
 
 		case OK_CARGA_DEL_SCRIPTORIO:
 			idDTB = deserializarInt(emisor);
 			path = deserializarString(emisor);
 			t_list* listaDirecciones = deserializarListaInt(emisor);
-			dtb = obtenerDTBDeCola(listaDeTodosLosDTBs, idDTB);
-			lista = obtenerColaSinNew(dtb->estado);
-			obtenerDTBDeColaRemoviendolo(lista, dtb->id);
-			//TODO remove by condition
+			dtb = obtenerDTBDeCola(idDTB);
 			dictionary_put(dtb->direccionesArchivos, path, listaDirecciones);
-			//es el dummy que avisa que el proceso esta listo
-			ponerEnReady(dtb);
+			ponerEnReady(dtb->id);
 			break;
 
 		case DESBLOQUEAR_DTB:
@@ -70,7 +61,7 @@ void entenderMensaje(int emisor, char header){
 
 		case BLOQUEAR_DTB:
 			*dtb = deserializarDTB(emisor);
-			bloquearDTB(dtb);
+			cambiarEstado(dtb->id, BLOCKED);
 			break;
 		default:
 			perror("Cualquiera ese header flaco");

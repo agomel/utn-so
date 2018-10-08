@@ -57,32 +57,6 @@ DTB deserializarDTB(int emisor){
 	return dtb;
 }
 
-
-DTB* obtenerDTBDeColaRemoviendolo(t_list* cola, int idDTB){
-	DTB* dtb;
-	int index = 0;
-	for(int index = 0; index < cola->elements_count; index++){
-		dtb = list_get(cola, index);
-		if(dtb->id == idDTB){
-			list_remove(cola, index);
-			break;
-		}
-	}
-	return dtb;
-}
-
-DTB* obtenerDTBDeCola(t_list* cola, int idDTB){
-	DTB* dtb;
-	int index = 0;
-	for(int index = 0; index < cola->elements_count; index++){
-		dtb = list_get(cola, index);
-		if(dtb->id == idDTB && dtb->flag != 0){
-			break;
-		}
-	}
-	return dtb;
-}
-
 void freeDTB(DTB* dtb){
 	free(dtb->escriptorio);
 	free(dtb->estado);
