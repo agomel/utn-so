@@ -15,7 +15,7 @@ void consola(int servidor){
 		free(texto);
 	}
 }
-void entendiendoLinea(char* lineaEjecutando){
+char entendiendoLinea(char* lineaEjecutando){
 	if(strncmp(lineaEjecutando, "abrir", 5) == 0){
 		//Abrir
 	}else if(strncmp(lineaEjecutando, "concentrar", 10) == 0){
@@ -57,11 +57,11 @@ void escuchar(int servidor){
 	int tamanioBuffer;
 	void* buffer;
 	int desplazamiento;
-	int sizeDelEscriptorio = 10;
 
 	while(a){
 		DTB dtbRecibido;
 		char header = deserializarChar(servidor);
+		char mensajeEntendido;
 			switch(header){
 				case ENVIAR_DTB:
 					printf("llego un dtb\n");
@@ -69,53 +69,60 @@ void escuchar(int servidor){
 					if(dtbRecibido.flag == 0){
 						//Es el dummy
 						tamanioPathEscriptorio = strlen(dtbRecibido.escriptorio) + 1;
-						tamanioBuffer = sizeof(char) + tamanioPathEscriptorio + sizeof(int)*4;
+						tamanioBuffer = sizeof(char) + tamanioPathEscriptorio + sizeof(int)*2;
 						buffer = asignarMemoria(tamanioBuffer);
 						desplazamiento = 0;
 
 						concatenarChar(buffer, &desplazamiento, CARGAR_ESCRIPTORIO_EN_MEMORIA);
 						concatenarString(buffer, &desplazamiento, dtbRecibido.escriptorio);
 						concatenarInt(buffer, &desplazamiento, dtbRecibido.id);
-						concatenarInt(buffer, &desplazamiento, 0); //Offset (Desde el principio)
-						concatenarInt(buffer, &desplazamiento, -1); //size  (Hasta el final)
 
 						enviarMensaje(socketDIEGO, buffer, tamanioBuffer);
 						free(buffer);
 						desplazamiento = 0;
-						concatenarChar(buffer, &desplazamiento, DESBLOQUEAR_DTB);
-						buffer = asignarMemoria(sizeof(char));
-						enviarMensaje(socketSAFA, buffer, sizeof(char));
-						free(buffer);
+						enviarMensaje(socketSAFA, DESBLOQUEAR_DTB, sizeof(char));
 						serializarYEnviarDTB(socketSAFA, dtbRecibido);
 					}else{
 						char* lineaAEjecutar;
 						//No es el dummy
 						if(dtbRecibido.quantum > 0){
-							for (u_int32_t q = 0; q < dtbRecibido.quantum; ++q){
+							while(dtbRecibido.quantum > 0){
 								pedirCosasDelFM9(dtbRecibido);
 								lineaAEjecutar = deserializarString(socketFM9);
-								if(lineaAEjecutar[0] == '#'){
-									//MensajeNano: Fijarse si las lineas de mas hay que ignorarlas o si directamente no me las mandan
-									q--;
-								}else if(lineaAEjecutar[0] == '@'){
+								if(lineaAEjecutar[0] == '@'){
 									//Fin de archivo
-									q--;
-									dtbRecibido.quantum = dtbRecibido.quantum - q;
+									enviarMensaje(socketSAFA, PASAR_A_EXIT, sizeof(char));
+									serializarYEnviarDTB(socketSAFA, dtbRecibido);
 									break;
 								}else if(lineaAEjecutar[0] == '!'){
-									//MensajeNano: Hubo un acceso invalido o error en el FM9. Mandarle al Safa que ponga el dtb en exit
-								}else{
+									//Hubo error en FM9
+									dtbRecibido.quantum--;
+									enviarMensaje(socketSAFA, PASAR_A_EXIT, sizeof(char));
+									serializarYEnviarDTB(socketSAFA, dtbRecibido);
+									break;
+								}else if(lineaAEjecutar[0] != '#'){
 									entendiendoLinea(lineaAEjecutar);
+									dtbRecibido.quantum--;
 								}
-							//MensajeNano: Enviarle al Safa BLOQUEAR_DTB con el dtbrecibido
-							printf("Ejecutar dtb");
-							dtbRecibido.programCounter++;
+									dtbRecibido.programCounter++;
+							//MensajeNano: Enviarle al Safa BLOQUEAR_DTB con el dtbrecibido si interviene el DAM en la ejecucion
+							printf("Ejecutando una linea del escriptorio");
+							}if(dtbRecibido.quantum == 0){
+								enviarMensaje(socketSAFA, TERMINO_QUANTUM, sizeof(char));
+								serializarYEnviarDTB(socketSAFA, dtbRecibido);
 							}
 						}else{
 							pedirCosasDelFM9(dtbRecibido);
 							lineaAEjecutar = deserializarString(socketFM9);
-							while(lineaAEjecutar != '#'){
-								entendiendoLinea(lineaAEjecutar);
+							while(1){
+								if(lineaAEjecutar[0] == '@'|| lineaAEjecutar[0] == '!'){
+									//Fin de archivo o hubo un error
+									enviarMensaje(socketSAFA, PASAR_A_EXIT, sizeof(char));
+									serializarYEnviarDTB(socketSAFA, dtbRecibido);
+									break;
+								}else if(lineaAEjecutar[0] != '#'){
+									entendiendoLinea(lineaAEjecutar);
+								}
 								dtbRecibido.programCounter++;
 								pedirCosasDelFM9(dtbRecibido);
 								lineaAEjecutar = deserializarString(socketFM9);
