@@ -8,6 +8,7 @@
 #include <biblioteca/serializacion.h>
 #include <biblioteca/dtb.h>
 #include <commons/collections/queue.h>
+#include <biblioteca/logger.h>
 
 int transferSize;
 
@@ -15,10 +16,10 @@ int socketFM9;
 int socketMDJ;
 int socketSAFA;
 t_queue* colaOperaciones;
-
 pthread_mutex_t mutexColaOperaciones;
 sem_t semHayEnColaOperaciones;
-t_config * archivoConfig;
+t_config* configuraciones;
+t_log* logger;
 
 typedef struct{
 	char* path;

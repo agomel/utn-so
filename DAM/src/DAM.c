@@ -22,8 +22,9 @@ void inicializarDAM(){
 	inicializarMutex(&mutexColaOperaciones);
 	inicializarSem(&semHayEnColaOperaciones, 0);
 	colaOperaciones = queue_create();
-	archivoConfig = config_create(ARCHIVO_CONFIGURACION);
-	transferSize = config_get_int_value(archivoConfig, "TRANSFER_SIZE");
+	configuraciones = config_create(ARCHIVO_CONFIGURACION);
+	transferSize = config_get_int_value(configuraciones, "TRANSFER_SIZE");
+	logger = crearLogger(ARCHIVO_LOG, "DAM");
 }
 int validarArchivoMDJ(Operacion* operacion){
 	void* buffer = asignarMemoria(sizeof(char) + sizeof(u_int32_t) + strlen(operacion->path)+1);
@@ -164,7 +165,7 @@ void consumirCola(){
 
 		switch(operacion->accion){
 			case CARGAR_ESCRIPTORIO_EN_MEMORIA:
-				printf("Ehhh, voy a buscar %s para %d \n", operacion->path, operacion->idDTB);//Esto tendria que ser un log
+				log_info(logger, "Ehhh, voy a buscar %s para %d", operacion->path, operacion->idDTB);//Esto tendria que ser un log
 				u_int32_t validarArchivo = validarArchivoMDJ(operacion);
 				if(validarArchivo != 0){
 					enviarError(operacion, validarArchivo);
@@ -182,7 +183,7 @@ void consumirCola(){
 				//TODO definir que tengo que mandar para que el FM9 lo pueda buscar
 				//TODO estadoDeOperacion = enviarAFM9(operacion);
 				// le pido a FM9 los datos y espero la respuesta a ver si hay un error
-				printf("mierda");
+				log_debug(logger, "Guardando escriptorio");
 				int estadoDeOperacion = 0;
 				if(estadoDeOperacion != 0){
 					enviarError(operacion, estadoDeOperacion);
@@ -206,15 +207,14 @@ void consumirCola(){
 				}
 				break;
 			default:
-				printf("no");
-				//log_error(logger, "Header desconocido");
+				log_error(logger, "Header desconocido");
 			}
 		freeOperacion(operacion);
 	}
 }
 
 void escucharCPU(int socketCPU){
-	printf("Escuchando a cpu \n");
+	log_debug(logger, "Escuchando a cpu");
 	while(1){
 		char header;
 		recibirMensaje(socketCPU, &header, sizeof(char));

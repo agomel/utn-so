@@ -7,6 +7,7 @@
 #include "semaforos.h"
 #include "serializacion.h"
 #include "socket.h"
+#include "logger.h"
 
 typedef struct{
 	int id;
@@ -24,7 +25,7 @@ int contadorIds;
 
 pthread_mutex_t mutexIdsDTB;
 
-void serializarYEnviarDTB(int receptor, DTB dtb);
+void serializarYEnviarDTB(int receptor, DTB dtb, t_log* logger);
 
 DTB deserializarDTB(int emisor);
 

@@ -32,7 +32,7 @@ void ponerProcesoEnNew(char* escriptorio) {
 }
 
 void enviarDTB(DTB dtb) {
-	serializarYEnviarDTB(socketCPU, dtb);
+	serializarYEnviarDTB(socketCPU, dtb, logger);
 }
 
 void ponerEnReady(int idDTB) {
