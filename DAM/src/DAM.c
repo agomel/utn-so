@@ -12,9 +12,8 @@
 void freeOperacion(Operacion* operacion){
 	free(operacion->accion);
 	free(operacion->idDTB);
-	free(operacion->offset);
 	free(operacion->path);
-	free(operacion->size);
+	//TODO hacer el free de la lista de direcciones
 	free(operacion);
 }
 
@@ -67,9 +66,9 @@ void agregarOperacionACola(int emisor, char accion){
 	Operacion* operacion = asignarMemoria(sizeof(Operacion));
 	operacion->path = deserializarString(emisor);
 	operacion->idDTB = deserializarInt(emisor);
-	operacion->offset = deserializarInt(emisor);
-	operacion->size = deserializarInt(emisor);
 	operacion->accion = accion;
+	if(accion == GUARDAR_ESCRIPTORIO)
+		operacion->direcciones = deserializarListaInt(emisor);
 
 	waitMutex(&mutexColaOperaciones);
 	queue_push(colaOperaciones, operacion);
@@ -100,9 +99,19 @@ int crearArchivoEnMDJ(Operacion* operacion, int cantidadDeLineas){
 	free(buffer);
 	return deserializarInt(socketMDJ);
 }
-void* recibirFlushFM9(){
+int pedirDatosAFM9(Operacion* operacion){
+	void* buffer = asignarMemoria(sizeof(char) + sizeof(u_int32_t) + (sizeof(u_int32_t)*operacion->direcciones->elements_count));
+	int desplazamiento = 0;
+
+	concatenarChar(buffer, &desplazamiento, OBTENER_DATOS);
+	concatenarListaInt(buffer, &desplazamiento, operacion->direcciones);
+	enviarMensaje(socketFM9, buffer, desplazamiento);
+
+	return deserializarInt(socketFM9);
+}
+char* recibirFlushFM9(){
 	int cantidadTotal = deserializarInt(socketFM9);
-	void* memoriaTotal = asignarMemoria(cantidadTotal);
+	char* memoriaTotal = asignarMemoria(cantidadTotal);
 	int desplazamiento = 0;
 	while(cantidadTotal > 0){
 		int cantidadARecibir;
@@ -179,29 +188,25 @@ void consumirCola(){
 				}
 				break;
 			case GUARDAR_ESCRIPTORIO:
-				//TODO definir que tengo que mandar para que el FM9 lo pueda buscar
-				//TODO estadoDeOperacion = enviarAFM9(operacion);
-				// le pido a FM9 los datos y espero la respuesta a ver si hay un error
-				int estadoDeOperacion;
+				printf("mierda");
+				int estadoDeOperacion = pedirDatosAFM9(operacion);
 				if(estadoDeOperacion != 0){
 					enviarError(operacion, estadoDeOperacion);
 				}else{
-					//TODO
-					u_int32_t cantidadDeLineas = deserializarInt(socketFM9);
-					//hay que hacer esta funcionalidad, que reciba la cantidad de lineas a guardar
+					int cantidadDeLineas = deserializarInt(socketFM9);
+					void* datos = recibirFlushFM9();
 					u_int32_t crearArchivo = crearArchivoEnMDJ(operacion, cantidadDeLineas);
 					if(crearArchivo != 0){
 						enviarError(operacion, crearArchivo);
 					}else{
-						void* datosFlush = recibirFlushFM9();
-						u_int32_t guardarDatos = guardarDatosEnMDJ(datosFlush);
-						free(datosFlush);
+						u_int32_t guardarDatos = guardarDatosEnMDJ(datos);
 						if(guardarDatos != 0){
 							enviarError(operacion, guardarDatos);
 						}else{
 							notificarASafa(operacion);
 						}
 					}
+					free(datos);
 				}
 				break;
 			default:
