@@ -24,6 +24,8 @@ DTB* dtbDummy;
 pthread_mutex_t mutexDummy;
 
 t_config* configuracion;
+int quantum;
+char* algoritmo;
 
 void inicializarPlanificadores();
 

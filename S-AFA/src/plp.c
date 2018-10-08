@@ -10,7 +10,6 @@ void planificadorALargoPlazo() {
 
 		cargarDummy(*dtb);
 
-		agregarDTBALista(dtb);
 		signalSem(&cantidadTotalREADY);
 	}
 }
@@ -22,6 +21,7 @@ void cargarDummy(DTB dtb) {
 	dtbDummy->id = dtb.id;
 	dtbDummy->direccionesArchivos = dictionary_create();
 	dtbDummy->estado = READY;
+	agregarDTBALista(dtbDummy);
 }
 
 void ponerProcesoEnNew(char* escriptorio) {

@@ -10,7 +10,7 @@ DTB* planificarPorFIFO(){
 DTB* planificarPorRR(){
 	t_list* listaReady = filtrarListaPorEstado(READY);
 	DTB* dtb = list_get(listaReady, 0);
-	dtb->quantum = config_get_int_value(configuracion, "QUANTUM");
+	dtb->quantum = quantum;
 	return dtb;
 }
 
@@ -25,7 +25,6 @@ DTB* planificarPorVRR(){
 }
 
 DTB* seleccionarDTB(){
-	char* algoritmo = config_get_string_value(configuracion, "ALGORITMO");
 	if(strcmp(algoritmo, "FIFO")){
 		return planificarPorFIFO();
 	}else if(strcmp(algoritmo, "RR")){
@@ -49,7 +48,11 @@ void desbloquearDTB(DTB* dtb){
 	if(dtb->flag == 0){
 		signalMutex(&mutexDummy);
 	}else{
-		cambiarEstadoGuardandoNuevoDTB(dtb, READY);
+		if(strcmp(algoritmo, "VRR")){
+			cambiarEstadoGuardandoNuevoDTB(dtb, READY_PRIORIDAD);
+		}else{
+			cambiarEstadoGuardandoNuevoDTB(dtb, READY);
+		}
 	}
 }
 

@@ -6,6 +6,8 @@ void inicializarPlanificadores(){
 	inicializarColas();
 	inicializarSemaforos();
 	dtbDummy = asignarMemoria(sizeof(DTB));
+	quantum = config_get_int_value(configuracion, "QUANTUM");
+	algoritmo = config_get_string_value(configuracion, "ALGORITMO");
 }
 
 void inicializarColas(){

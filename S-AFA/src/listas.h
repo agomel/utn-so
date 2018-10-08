@@ -16,6 +16,8 @@ DTB* obtenerPrimerDTBEnNew();
 
 void agregarDTBALista(dtb);
 
+void pasarDTBAlFinalDeLista(int idDTB);
+
 DTB* removerDTBPorIndice(int indice);
 
 #endif /*LISTAS_H_*/
