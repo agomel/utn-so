@@ -24,6 +24,12 @@ typedef struct{
 	int pudoGuardarlo;
 }respuestaDeCargaEnMemoria;
 
+typedef struct{
+	t_list* listaDeDirecciones;
+	int cantidadDeLineas;
+	int pudoGuardarlo;
+}respuestaDeObtencionDeMemoria;
+
 
 respuestaDeCargaEnMemoria cargarDatosEnMemoria(char* datos);
 

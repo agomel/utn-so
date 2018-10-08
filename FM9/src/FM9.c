@@ -27,13 +27,8 @@ t_list* guardarDatos(char* datos){
 
 respuestaDeCargaEnMemoria cargarDatosEnMemoria(char* datos){
 	respuestaDeCargaEnMemoria respuesta;
-	respuesta.listaDeDirecciones = guardarDatos(datos);
-	//TODO pudoGuardarlo()
-	if(1){
-		respuesta.pudoGuardarlo = 1;
-	}else{
-		respuesta.pudoGuardarlo = 0;
-	}
+	respuesta.listaDeDirecciones = guardarDatos(datos);// TODO
+	respuesta.pudoGuardarlo = 0;//0 significa que pudo, si no, numero de error
 	printf("guardado en memoria: %s", datos);
 	return respuesta; //pudo guardar. TODO hacer si tuvo un error return 0
 }
@@ -42,6 +37,7 @@ void entenderMensaje(int emisor, int header){
 	char identificado;
 	char* datos;
 	respuestaDeCargaEnMemoria respuestaDeCarga;
+	respuestaDeObtencionDeMemoria respuestaDeObtener;
 	int id;
 	int tamanioBuffer;
 	int offset;
@@ -70,7 +66,7 @@ void entenderMensaje(int emisor, int header){
 				datos = deserializarString(emisor);
 				respuestaDeCarga = cargarDatosEnMemoria(datos);
 
-				if(respuestaDeCarga.pudoGuardarlo){
+				if(respuestaDeCarga.pudoGuardarlo == 0){
 					desplazamiento = 0;
 					tamanioBuffer = sizeof(int) + sizeof(int) + sizeof(int)*(respuestaDeCarga.listaDeDirecciones->elements_count);
 					buffer = asignarMemoria(tamanioBuffer);
@@ -83,7 +79,18 @@ void entenderMensaje(int emisor, int header){
 					enviarYSerializarIntSinHeader(socketDAM, respuestaDeCarga.pudoGuardarlo);
 				}
 				break;
+			case OBTENER_DATOS:
+				datos = deserializarListaInt(emisor);
+				respuestaDeObtener = obtenerDatosDeMemoria(datos); //TODO
 
+				desplazamiento = 0;
+				tamanioBuffer = sizeof(int) + sizeof(int) + strlen("hola") + 1;
+				buffer = asignarMemoria(tamanioBuffer);
+				concatenarInt(buffer, &desplazamiento, 0);
+				concatenarInt(buffer, &desplazamiento, 1);
+				concatenarString(buffer, &desplazamiento, "hola");
+				enviarMensaje(socketDAM, buffer, tamanioBuffer);
+				break;
 			default:
 				perror("Cualquiera ese header flaco");
 		}
