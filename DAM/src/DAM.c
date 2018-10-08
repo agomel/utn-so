@@ -43,7 +43,7 @@ void agregarOperacionACola(int emisor, char accion){
 }
 
 void enviarDatosAFM9(char* datos){
-	u_int32_t tamanioBuffer = strlen(datos)+1 + sizeof(u_int32_t) + sizeof(char);
+	u_int32_t tamanioBuffer = sizeof(char) + sizeof(u_int32_t) + strlen(datos)+1;
 	void* buffer = asignarMemoria(tamanioBuffer);
 	u_int32_t desplazamiento = 0;
 
@@ -111,16 +111,18 @@ void enviarDatosAMDJ(void* datosTotales){
 	}
 }
 void verificarDatosDeMDJYEnviarASafa(Operacion* operacion){
-	void* buffer = asignarMemoria(sizeof(char));
-	u_int32_t desplazamiento = 0;
 	u_int32_t estadoDeCarga = deserializarInt(socketMDJ);
 	if(estadoDeCarga != 1){ //No pudo cargar osea el estado de carga es el numero del error
 		enviarError(operacion, estadoDeCarga);
 	}else{ //si lo pudo cargar, envio el path donde guardo
+		void* buffer = asignarMemoria(sizeof(char) + sizeof(u_int32_t) + strlen(operacion->path)+1);
+		u_int32_t desplazamiento = 0;
 		concatenarChar(buffer, &desplazamiento, GUARDADO_CON_EXITO_EN_MDJ);
+		concatenarInt(buffer, &desplazamiento, operacion->idDTB);
+		concatenarString(buffer, &desplazamiento, operacion->path);
+		enviarMensaje(socketSAFA, buffer, desplazamiento);
+		free(buffer);
 	}
-	enviarMensaje(socketSAFA, buffer, desplazamiento);
-	free(buffer);
 }
 void enviarError(Operacion* operacion, u_int32_t error){
 	void* buffer = asignarMemoria(sizeof(char) + sizeof(u_int32_t));
