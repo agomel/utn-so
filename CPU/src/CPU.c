@@ -3,15 +3,53 @@
 #include <biblioteca/hilos.h>
 #include <biblioteca/utilidades.h>
 #include <biblioteca/dtb.h>
+
 int socketDIEGO;
 int socketFM9;
 int socketSAFA;
 void consola(int servidor){
 	while(1){
-		char* texto = malloc(1000);
+		char* texto = asignarMemoria(1000);
 		scanf("%s", texto);
 		enviarYSerializarString(servidor, texto, MANDAR_TEXTO);
+		free(texto);
 	}
+}
+void entendiendoLinea(char* lineaEjecutando){
+	if(strncmp(lineaEjecutando, "abrir", 5) == 0){
+		//Abrir
+	}else if(strncmp(lineaEjecutando, "concentrar", 10) == 0){
+		//Concentrar
+	}else if(strncmp(lineaEjecutando, "asignar", 7) == 0){
+		//Asignar
+	}else if(strncmp(lineaEjecutando, "wait", 4) == 0){
+		//Wait
+	}else if(strncmp(lineaEjecutando, "signal", 6) == 0){
+		//Signal
+	}else if(strncmp(lineaEjecutando, "flush", 5) == 0){
+		//Flush
+	}else if(strncmp(lineaEjecutando, "close", 5) == 0){
+		//Close
+	}else if(strncmp(lineaEjecutando, "crear", 5) == 0){
+		//Crear
+	}else if(strncmp(lineaEjecutando, "borrar", 6) == 0){
+		//Borrar
+	}
+}
+void pedirCosasDelFM9(DTB dtbRecibido){
+	void* buffer;
+	u_int32_t desplazamiento = 0;
+	t_list* listaDeDirecciones = list_create();
+	listaDeDirecciones = dictionary_get(dtbRecibido.direccionesArchivos, dtbRecibido.escriptorio);
+	u_int32_t tamanioBuffer = sizeof(char) + sizeof(u_int32_t)*2 + sizeof(u_int32_t)*(listaDeDirecciones->elements_count);
+	buffer = asignarMemoria(tamanioBuffer);
+
+	concatenarChar(buffer, &desplazamiento, TRAER_LINEA_ESCRIPTORIO);
+	concatenarInt(buffer, &desplazamiento, dtbRecibido.programCounter);
+	concatenarInt(buffer, &desplazamiento, listaDeDirecciones->elements_count);
+	concatenarListaInt(buffer, &desplazamiento, listaDeDirecciones);
+	enviarMensaje(socketFM9, buffer, tamanioBuffer);
+	free(buffer);
 }
 void escuchar(int servidor){
 	int a = 1;
@@ -43,14 +81,51 @@ void escuchar(int servidor){
 
 						enviarMensaje(socketDIEGO, buffer, tamanioBuffer);
 						free(buffer);
+						desplazamiento = 0;
+						concatenarChar(buffer, &desplazamiento, DESBLOQUEAR_DTB);
+						buffer = asignarMemoria(sizeof(char));
+						enviarMensaje(socketSAFA, buffer, sizeof(char));
+						free(buffer);
+						serializarYEnviarDTB(socketSAFA, dtbRecibido);
 					}else{
+						char* lineaAEjecutar;
 						//No es el dummy
-						printf("Ejecutar dtb");
+						if(dtbRecibido.quantum > 0){
+							for (u_int32_t q = 0; q < dtbRecibido.quantum; ++q){
+								pedirCosasDelFM9(dtbRecibido);
+								lineaAEjecutar = deserializarString(socketFM9);
+								if(lineaAEjecutar[0] == '#'){
+									//MensajeNano: Fijarse si las lineas de mas hay que ignorarlas o si directamente no me las mandan
+									q--;
+								}else if(lineaAEjecutar[0] == '@'){
+									//Fin de archivo
+									q--;
+									dtbRecibido.quantum = dtbRecibido.quantum - q;
+									break;
+								}else if(lineaAEjecutar[0] == '!'){
+									//MensajeNano: Hubo un acceso invalido o error en el FM9. Mandarle al Safa que ponga el dtb en exit
+								}else{
+									entendiendoLinea(lineaAEjecutar);
+								}
+							//MensajeNano: Enviarle al Safa BLOQUEAR_DTB con el dtbrecibido
+							printf("Ejecutar dtb");
+							dtbRecibido.programCounter++;
+							}
+						}else{
+							pedirCosasDelFM9(dtbRecibido);
+							lineaAEjecutar = deserializarString(socketFM9);
+							while(lineaAEjecutar != '#'){
+								entendiendoLinea(lineaAEjecutar);
+								dtbRecibido.programCounter++;
+								pedirCosasDelFM9(dtbRecibido);
+								lineaAEjecutar = deserializarString(socketFM9);
+							}
+						}
 					}
 					break;
 		default:
 					perror("Cualquiera ese header flaco");
-			}
+					}
 	}
 }
 

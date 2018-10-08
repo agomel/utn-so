@@ -161,7 +161,7 @@ int obtenerTamanioDiccionario(t_dictionary* diccionario){
 voidDeserealizado deserializarVoid(int emisor){
 	voidDeserealizado mensajeADeserealizar;
 	mensajeADeserealizar.tamanioMensaje = deserializarInt(emisor);
-	char* mensaje = malloc(mensajeADeserealizar.tamanioMensaje);
+	char* mensaje = asignarMemoria(mensajeADeserealizar.tamanioMensaje);
 	recibirMensaje(emisor, mensaje, mensajeADeserealizar.tamanioMensaje);
 	mensajeADeserealizar.mensaje = *mensaje;
 	free(mensaje);
