@@ -15,6 +15,7 @@ void entenderMensaje(int emisor, char header){
 	int idDTB;
 	t_dictionary* direccionesYArchivos;
 	DTB* dtb;
+	t_list* lista;
 	char* path;
 	switch(header){
 		case IDENTIFICARSE:
@@ -44,7 +45,7 @@ void entenderMensaje(int emisor, char header){
 			idDTB = deserializarInt(emisor);
 			waitMutex(&mutexColaDummy);
 			DTB* dtb = obtenerDTBDeCola(listaDeTodosLosDTBs, idDTB);
-			t_list* lista = obtenerColaSinNew(dtb->estado);
+			lista = obtenerColaSinNew(dtb->estado);
 			pasarDTBAExit(idDTB, lista);
 			signal(&mutexColaDummy);
 			break;
@@ -54,13 +55,9 @@ void entenderMensaje(int emisor, char header){
 			path = deserializarString(emisor);
 			direccionesYArchivos = deserializarListaInt(emisor);
 			dtb = obtenerDTBDeCola(listaDeTodosLosDTBs, idDTB);
-			if(dtb->estado == NEW){
-
-			}else{
-				t_list* lista = obtenerColaSinNew(dtb->estado);
-				obtenerDTBDeColaRemoviendolo(lista, dtb->id);
-				//TODO remove by condition
-			}
+			lista = obtenerColaSinNew(dtb->estado);
+			obtenerDTBDeColaRemoviendolo(lista, dtb->id);
+			//TODO remove by condition
 			dictionary_put(dtb->direccionesArchivos, path, direccionesYArchivos);
 			//es el dummy que avisa que el proceso esta listo
 			ponerEnReady(dtb);
