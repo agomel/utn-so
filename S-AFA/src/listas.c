@@ -56,6 +56,7 @@ DTB* obtenerPrimerDTBEnNew(){
 	t_list* lista = filtrarListaPorEstado(NEW);
 	DTB* dtb = list_get(lista, 0);
 	pasarDTBAlFinalDeLista(dtb->id);
+	return dtb;
 }
 
 
