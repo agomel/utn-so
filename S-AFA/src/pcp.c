@@ -27,7 +27,7 @@ DTB* planificarPorVRR(){
 	}
 }
 
-void* seleccionarDTB(){
+DTB* seleccionarDTB(){
 	char* algoritmo = config_get_string_value(configuracion, "ALGORITMO");
 	if(strcmp(algoritmo, "FIFO")){
 		return planificarPorFIFO();
@@ -49,7 +49,6 @@ void planificadorACortoPlazo(){
 		}
 	}
 }
-
 
 void pasarDTBAReadyDesdeBlocked(DTB* dtb){
 	obtenerDTBDeColaRemoviendolo(colaBLOCKED, dtb->id);
