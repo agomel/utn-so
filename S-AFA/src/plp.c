@@ -48,21 +48,41 @@ void pasarDTBAExit(int idDTB) {
 
 void manejarErrores(int idDTB,char* path,int error){
 	cambiarEstado(idDTB, EXIT);
+	signalSem(&gradoMultiprocesamiento);
 	switch(error){
 		case 10001:
-			perror("path inexistente de archivo %s", path);
+			print("path inexistente de archivo %s", path);
 			break;
 
-		case 10001:
-			perror("path inexistente de archivo %s", path);
+		case 10002:
+		case 20003:
+			print("espacio insuficiente en FM9 para archivo %s", path);
 			break;
 
-		case 10001:
-			perror("path inexistente de archivo %s", path);
+		case 20001:
+		case 30001:
+		case 40001:
+			print("El archivo no se encuentra abierto %s", path);
 			break;
 
-		case 10001:
-			perror("path inexistente de archivo %s", path);
+		case 20002:
+		case 30002:
+		case 40002:
+			print("Fallo de segmento/memoria en path %s", path);
 			break;
+		case 30003:
+			print("Espacio insuficiente en MDJ para archivo %s", path);
+			break;
+		case 30004:
+			print("El archivo no existe en MDJ, fue borrado previamente MDJ path: %s", path);
+			break;
+		case 50001:
+			print("Archivo ya existente: %s", path);
+			break;
+		case 50002:
+			print("Espacio insuficiente en path: %s", path);
+			break;
+		default:
+			perror("No reconozco el error, pero te termino el dtb");
 	}
 }
