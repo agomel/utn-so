@@ -1,9 +1,9 @@
 #include "serializacion.h"
 
-void handshake(u_int32_t servidor, char modulo){
-	u_int32_t tamanioMensaje = sizeof(char)*2;
+void handshake(int servidor, char modulo){
+	int tamanioMensaje = sizeof(char)*2;
 	void* mensaje = asignarMemoria(tamanioMensaje);
-	u_int32_t desplazamiento = 0;
+	int desplazamiento = 0;
 
 	concatenarChar(mensaje, &desplazamiento, IDENTIFICARSE);
 	concatenarChar(mensaje, &desplazamiento, modulo);
@@ -12,12 +12,12 @@ void handshake(u_int32_t servidor, char modulo){
 	free(mensaje);
 }
 
-void enviarYSerializarString(u_int32_t destino, char* texto,char operacion){
-	u_int32_t tamanioTexto = strlen(texto) + 1;
-	u_int32_t tamanioMensaje = sizeof(char) + sizeof(u_int32_t) + tamanioTexto;
+void enviarYSerializarString(int destino, char* texto,char operacion){
+	int tamanioTexto = strlen(texto) + 1;
+	int tamanioMensaje = sizeof(char) + sizeof(int) + tamanioTexto;
 	void* mensaje = asignarMemoria(tamanioMensaje);
 
-	u_int32_t desplazamiento = 0;
+	int desplazamiento = 0;
 
 	concatenarChar(mensaje, &desplazamiento, operacion);
 	concatenarString(mensaje, &desplazamiento, texto);
@@ -27,12 +27,12 @@ void enviarYSerializarString(u_int32_t destino, char* texto,char operacion){
 	free(mensaje);
 }
 
-void enviarYSerializarStringSinHeader(u_int32_t destino, char* texto){
-	u_int32_t tamanioTexto = strlen(texto) + 1;
-	u_int32_t tamanioMensaje = sizeof(u_int32_t) + tamanioTexto;
+void enviarYSerializarStringSinHeader(int destino, char* texto){
+	int tamanioTexto = strlen(texto) + 1;
+	int tamanioMensaje = sizeof(int) + tamanioTexto;
 	void* mensaje = asignarMemoria(tamanioMensaje);
 
-	u_int32_t desplazamiento = 0;
+	int desplazamiento = 0;
 
 	concatenarString(mensaje, &desplazamiento, texto);
 
@@ -41,11 +41,11 @@ void enviarYSerializarStringSinHeader(u_int32_t destino, char* texto){
 	free(mensaje);
 }
 
-void enviarYSerializarInt(u_int32_t destino, u_int32_t numero,char operacion){
-	u_int32_t tamanioMensaje = sizeof(u_int32_t) + sizeof(char);
+void enviarYSerializarInt(int destino, int numero,char operacion){
+	int tamanioMensaje = sizeof(int) + sizeof(char);
 	void* mensaje = asignarMemoria(tamanioMensaje);
 
-	u_int32_t desplazamiento = 0;
+	int desplazamiento = 0;
 
 	concatenarChar(mensaje, &desplazamiento, operacion);
 	concatenarInt(mensaje, &desplazamiento, numero);
@@ -55,11 +55,11 @@ void enviarYSerializarInt(u_int32_t destino, u_int32_t numero,char operacion){
 	free(mensaje);
 }
 
-void enviarYSerializarIntSinHeader(u_int32_t destino, u_int32_t numero){
-	u_int32_t tamanioMensaje = sizeof(u_int32_t);
+void enviarYSerializarIntSinHeader(int destino, int numero){
+	int tamanioMensaje = sizeof(int);
 	void* mensaje = asignarMemoria(tamanioMensaje);
 
-	u_int32_t desplazamiento = 0;
+	int desplazamiento = 0;
 
 	concatenarInt(mensaje, &desplazamiento, numero);
 
@@ -68,30 +68,30 @@ void enviarYSerializarIntSinHeader(u_int32_t destino, u_int32_t numero){
 	free(mensaje);
 }
 
-void concatenarChar(void* buffer, u_int32_t* desplazamiento, char mensaje){
+void concatenarChar(void* buffer, int* desplazamiento, char mensaje){
 	memcpy(buffer + *desplazamiento, &mensaje, sizeof(char));
 	*desplazamiento = *desplazamiento + sizeof(char);
 }
 
-void concatenarInt(void* buffer, u_int32_t* desplazamiento, u_int32_t numero){
-	memcpy(buffer + *desplazamiento, &numero, sizeof(u_int32_t));
-	*desplazamiento = *desplazamiento + sizeof(u_int32_t);
+void concatenarInt(void* buffer, int* desplazamiento, int numero){
+	memcpy(buffer + *desplazamiento, &numero, sizeof(int));
+	*desplazamiento = *desplazamiento + sizeof(int);
 }
 
-void concatenarString(void* buffer, u_int32_t* desplazamiento, char* mensaje){
+void concatenarString(void* buffer, int* desplazamiento, char* mensaje){
 	concatenarInt(buffer, desplazamiento, strlen(mensaje) + 1);
 	memcpy(buffer + *desplazamiento, mensaje, strlen(mensaje) + 1);
 	*desplazamiento = *desplazamiento + strlen(mensaje) + 1;
 }
 
-void concatenarListaInt(void* buffer, u_int32_t* desplazamiento, t_list* listaArchivos){
+void concatenarListaInt(void* buffer, int* desplazamiento, t_list* listaArchivos){
 	concatenarInt(buffer, desplazamiento, listaArchivos->elements_count);
 	for(int i = 0; i < (listaArchivos->elements_count); i++){
 		concatenarInt(buffer, desplazamiento, list_get(listaArchivos, i));
 	}
 }
 
-void concatenarDiccionario(void* buffer, u_int32_t* desplazamiento, t_dictionary* diccionario){
+void concatenarDiccionario(void* buffer, int* desplazamiento, t_dictionary* diccionario){
 
 	concatenarInt(buffer, desplazamiento, diccionario->elements_amount);
 	void concatenarElemento(char* key, t_list* value){
@@ -101,35 +101,35 @@ void concatenarDiccionario(void* buffer, u_int32_t* desplazamiento, t_dictionary
 
 	dictionary_iterator(diccionario, concatenarElemento);
 }
-void concatenarVoid(void* buffer, u_int32_t* desplazamiento, void* mensaje, u_int32_t tamanio){
+void concatenarVoid(void* buffer, int* desplazamiento, void* mensaje, int tamanio){
 	memcpy(buffer + *desplazamiento, mensaje, tamanio);
 	*desplazamiento = *desplazamiento + tamanio;
 }
 
-char* deserializarString(u_int32_t emisor){
-	u_int32_t tamanioMensaje = deserializarInt(emisor);
+char* deserializarString(int emisor){
+	int tamanioMensaje = deserializarInt(emisor);
 	char* mensaje = asignarMemoria(tamanioMensaje);
 	recibirMensaje(emisor, mensaje, tamanioMensaje);
 	printf("Recibi %s de parte de %d \n" , mensaje, emisor);
 	return mensaje;
 }
 
-u_int32_t deserializarInt(u_int32_t emisor){
-	u_int32_t mensaje;
-	recibirMensaje(emisor, &mensaje, sizeof(u_int32_t));
+int deserializarInt(int emisor){
+	int mensaje;
+	recibirMensaje(emisor, &mensaje, sizeof(int));
 	printf("Recibi %d de parte de %d \n" , mensaje, emisor);
 	return mensaje;
 }
 
-char deserializarChar(u_int32_t emisor){
+char deserializarChar(int emisor){
 	char mensaje;
 	recibirMensaje(emisor, &mensaje, sizeof(char));
 	printf("Recibi %c de parte de %d \n" , mensaje, emisor);
 	return mensaje;
 }
 
-t_list* deserializarListaInt(u_int32_t emisor){
-	u_int32_t elementosDeLalista = deserializarInt(emisor);
+t_list* deserializarListaInt(int emisor){
+	int elementosDeLalista = deserializarInt(emisor);
 	t_list* respuesta = list_create();
 	for(int i = 0; i<elementosDeLalista; i++){
 		list_add(respuesta, deserializarInt(emisor));
@@ -137,8 +137,8 @@ t_list* deserializarListaInt(u_int32_t emisor){
 	return respuesta;
 }
 
-t_dictionary* deserializarDiccionario(u_int32_t emisor){
-	u_int32_t cantidadElementos = deserializarInt(emisor);
+t_dictionary* deserializarDiccionario(int emisor){
+	int cantidadElementos = deserializarInt(emisor);
 	t_dictionary* respuesta = dictionary_create();
 	for(int i = 0; i<cantidadElementos; i++){
 			char* clave = deserializarString(emisor);
@@ -148,17 +148,17 @@ t_dictionary* deserializarDiccionario(u_int32_t emisor){
 	return respuesta;
 }
 
-u_int32_t obtenerTamanioDiccionario(t_dictionary* diccionario){
-	u_int32_t respuesta = 0;
+int obtenerTamanioDiccionario(t_dictionary* diccionario){
+	int respuesta = 0;
 	void sumarPuntaje(char* key, t_list* value){
-		respuesta += strlen(key + 1);
-		respuesta += sizeof(u_int32_t) + sizeof(u_int32_t)*value->elements_count;
+		respuesta += strlen(key) + 1;
+		respuesta += sizeof(int) + sizeof(int)*(value->elements_count);
 	}
 	dictionary_iterator(diccionario, sumarPuntaje);
 	return respuesta;
 }
 
-voidDeserealizado deserializarVoid(u_int32_t emisor){
+voidDeserealizado deserializarVoid(int emisor){
 	voidDeserealizado mensajeADeserealizar;
 	mensajeADeserealizar.tamanioMensaje = deserializarInt(emisor);
 	char* mensaje = malloc(mensajeADeserealizar.tamanioMensaje);

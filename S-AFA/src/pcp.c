@@ -27,7 +27,7 @@ DTB* planificarPorVRR(){
 	}
 }
 
-void* seleccionarDTB(){
+DTB* seleccionarDTB(){
 	char* algoritmo = config_get_string_value(configuracion, "ALGORITMO");
 	if(strcmp(algoritmo, "FIFO")){
 		return planificarPorFIFO();
@@ -38,18 +38,17 @@ void* seleccionarDTB(){
 	}
 }
 void planificadorACortoPlazo(){
-	u_int32_t a = 1;
+	int a = 1;
 	while(a){
 		waitSem(&cantidadTotalREADY);
 		if(!list_is_empty(colaREADY)){
 			DTB* dtb = seleccionarDTB();
-			dtb->estado = EXECUTED;
+			dtb->estado = EXECUTE;
 			//TODO hacer a cola de execute
 			serializarYEnviarDTB(socketCPU, *dtb);
 		}
 	}
 }
-
 
 void pasarDTBAReadyDesdeBlocked(DTB* dtb){
 	obtenerDTBDeColaRemoviendolo(colaBLOCKED, dtb->id);

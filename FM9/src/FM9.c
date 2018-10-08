@@ -11,9 +11,12 @@
 #include "FM9.h"
 t_list* guardarDatos(char* datos){
 	t_list* direccionesGuardadas = list_create();
+	waitMutex(&mutexOffset);
 	list_add(direccionesGuardadas, offset);
+	signalMutex(&mutexOffset);
+
 	waitMutex(&mutexStorage);
-	memcpy(&storage, datos, strlen(datos) + 1);
+	memcpy(storage, datos, strlen(datos) + 1);
 	signalMutex(&mutexStorage);
 
 	waitMutex(&mutexOffset);
@@ -39,12 +42,12 @@ void entenderMensaje(int emisor, int header){
 	char identificado;
 	char* datos;
 	respuestaDeCargaEnMemoria respuestaDeCarga;
-	u_int32_t id;
-	u_int32_t tamanioBuffer;
-	u_int32_t offset;
-	u_int32_t sizeDeLaRespuesta;
-	u_int32_t desplazamiento;
-	u_int32_t tamanioPath;
+	int id;
+	int tamanioBuffer;
+	int offset;
+	int sizeDeLaRespuesta;
+	int desplazamiento;
+	int tamanioPath;
 	void* buffer;
 		switch(header){
 			case IDENTIFICARSE:
@@ -69,7 +72,7 @@ void entenderMensaje(int emisor, int header){
 
 				if(respuestaDeCarga.pudoGuardarlo){
 					desplazamiento = 0;
-					tamanioBuffer = sizeof(u_int32_t) + sizeof(u_int32_t) + sizeof(u_int32_t)*(respuestaDeCarga.listaDeDirecciones->elements_count);
+					tamanioBuffer = sizeof(int) + sizeof(int) + sizeof(int)*(respuestaDeCarga.listaDeDirecciones->elements_count);
 					buffer = asignarMemoria(tamanioBuffer);
 					concatenarInt(buffer, &desplazamiento, respuestaDeCarga.pudoGuardarlo);
 					concatenarListaInt(buffer, &desplazamiento, respuestaDeCarga.listaDeDirecciones);

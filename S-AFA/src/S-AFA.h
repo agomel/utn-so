@@ -10,13 +10,13 @@
 #include "pcp.h"
 #include <biblioteca/dtb.h>
 
-u_int32_t socketCPU;
-u_int32_t socketDAM;
+int socketCPU;
+int socketDAM;
 pthread_mutex_t mutexDummy;
-u_int32_t socketCPU;
-u_int32_t socketDAM;
-u_int32_t conectadoCPU;
-u_int32_t conectadoDAM;
+int socketCPU;
+int socketDAM;
+int conectadoCPU;
+int conectadoDAM;
 
 enum ESTADOSAFA{
 	CORRUPTO = 'c', OPERATIVO = 'a'

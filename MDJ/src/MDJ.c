@@ -17,10 +17,10 @@
 #include "operaciones.h"
 
 
-u_int32_t socketDAM;
+int socketDAM;
 void entenderMensaje(int emisor, char header){
 	char identificado;
-	u_int32_t archivoValido;
+	int archivoValido;
 	char* datos;
 	switch(header){
 		case IDENTIFICARSE:

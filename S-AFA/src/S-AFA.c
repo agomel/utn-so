@@ -13,8 +13,8 @@ void entenderMensaje(int emisor, char header){
 	char identificado;
 	char colaOrigen;
 	int idDTB;
-	t_dictionary* direccionesYArchivos;
 	DTB* dtb;
+	t_dictionary* direccionesYArchivos;
 	t_list* lista;
 	char* path;
 	switch(header){
@@ -44,21 +44,21 @@ void entenderMensaje(int emisor, char header){
 		case FALLO_LA_CARGA_DEL_SCRIPTORIO:
 			idDTB = deserializarInt(emisor);
 			waitMutex(&mutexColaDummy);
-			DTB* dtb = obtenerDTBDeCola(listaDeTodosLosDTBs, idDTB);
+			dtb = obtenerDTBDeCola(listaDeTodosLosDTBs, idDTB);
 			lista = obtenerColaSinNew(dtb->estado);
 			pasarDTBAExit(idDTB, lista);
-			signal(&mutexColaDummy);
+			signalMutex(&mutexColaDummy);
 			break;
 
 		case OK_CARGA_DEL_SCRIPTORIO:
 			idDTB = deserializarInt(emisor);
 			path = deserializarString(emisor);
-			direccionesYArchivos = deserializarListaInt(emisor);
+			t_list* listaDirecciones = deserializarListaInt(emisor);
 			dtb = obtenerDTBDeCola(listaDeTodosLosDTBs, idDTB);
 			lista = obtenerColaSinNew(dtb->estado);
 			obtenerDTBDeColaRemoviendolo(lista, dtb->id);
 			//TODO remove by condition
-			dictionary_put(dtb->direccionesArchivos, path, direccionesYArchivos);
+			dictionary_put(dtb->direccionesArchivos, path, listaDirecciones);
 			//es el dummy que avisa que el proceso esta listo
 			ponerEnReady(dtb);
 			break;
