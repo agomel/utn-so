@@ -9,6 +9,8 @@
 #include <biblioteca/dtb.h>
 #include <commons/collections/queue.h>
 
+u_int32_t transferSize;
+
 u_int32_t socketFM9;
 u_int32_t socketMDJ;
 u_int32_t socketSAFA;

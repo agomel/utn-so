@@ -91,6 +91,11 @@ void concatenarListaInt(void* buffer, u_int32_t* desplazamiento, t_list* listaAr
 	}
 }
 
+void concatenarVoid(void* buffer, u_int32_t* desplazamiento, void* mensaje, u_int32_t tamanio){
+	memcpy(buffer + *desplazamiento, mensaje, tamanio);
+	*desplazamiento = *desplazamiento + tamanio;
+}
+
 char* deserializarString(u_int32_t emisor){
 	u_int32_t tamanioMensaje = deserializarInt(emisor);
 	char* mensaje = asignarMemoria(tamanioMensaje);
