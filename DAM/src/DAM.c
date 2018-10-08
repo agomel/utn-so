@@ -174,7 +174,7 @@ void escucharCPU(int socketCPU){
 		char header;
 		recibirMensaje(socketCPU, &header, sizeof(char));
 		agregarOperacionACola(socketCPU, header);
-		//esto solo agrega operaciones ala colas
+		//esto solo agrega operaciones a la cola
 	}
 }
 
