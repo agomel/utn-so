@@ -84,6 +84,7 @@ void escuchar(int servidor){
 						desplazamiento = 0;
 						enviarMensaje(socketSAFA, DESBLOQUEAR_DTB, sizeof(char));
 						serializarYEnviarDTB(socketSAFA, dtbRecibido);
+						freeDTB(&dtbRecibido);
 					}else{
 						char* lineaAEjecutar;
 						//No es el dummy
