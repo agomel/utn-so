@@ -10,24 +10,12 @@
 #include <biblioteca/semaforos.h>
 #include <biblioteca/dtb.h>
 #include <stdbool.h>
-
-t_queue* colaNEW;
-t_list* colaREADY;
-t_list* colaEXECUTE;
-t_list* colaBLOCKED;
-t_list* colaEXIT;
-t_list* colaEsperandoDummy;
+#include "listas.h"
 t_list* listaDeTodosLosDTBs;
-
-pthread_mutex_t mutexNEW;
-pthread_mutex_t mutexREADY;
-pthread_mutex_t mutexEXECUTE;
-pthread_mutex_t mutexBLOCKED;
-pthread_mutex_t mutexEXIT;
-pthread_mutex_t mutexColaDummy;
 pthread_mutex_t mutexListaDTBs;
 
 sem_t gradoMultiprogramacion;
+sem_t gradoMultiprocesamiento;
 sem_t cantidadTotalREADY;
 sem_t semCantidadEnNew;
 
@@ -42,9 +30,8 @@ void inicializarPlanificadores();
 void inicializarColas();
 void inicializarSemaforos();
 
-t_list* filtrarListaPorEstado(char estado);
-DTB* cambiarDTBDeColaBuscandoloEnListaDeTodos(DTB* dtb, t_list* nuevaLista);
+void cambiarEstado(int idDTB, char nuevoEstado);
 
-t_list* obtenerColaSinNew(char estado);
+void cambiarEstadoGuardandoNuevoDTB(DTB* nuevoDTB, char nuevoEstado);
 
 #endif /*PLANIFICADOR_H_*/

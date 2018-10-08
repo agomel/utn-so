@@ -9,64 +9,51 @@ void inicializarPlanificadores(){
 }
 
 void inicializarColas(){
-	colaNEW = queue_create();
-	colaREADY = list_create();
-	colaEsperandoDummy = list_create();
-	colaEXECUTE = list_create();
-	colaBLOCKED = list_create();
-	colaEXIT = list_create();
 	listaDeTodosLosDTBs = list_create();
 }
 
 void inicializarSemaforos(){
-	inicializarMutex(&mutexNEW);
-	inicializarMutex(&mutexREADY);
-	inicializarMutex(&mutexEXECUTE);
-	inicializarMutex(&mutexBLOCKED);
-	inicializarMutex(&mutexEXIT);
-	inicializarMutex(&mutexColaDummy);
-	inicializarMutex(&mutexIdsDTB);
 	inicializarMutex(&mutexListaDTBs);
 	inicializarMutex(&mutexDummy);
 
 	int multiprogramacion = config_get_int_value(configuracion, "MULTIPROGRAMACION");
 	inicializarSem(&gradoMultiprogramacion, multiprogramacion);
+	int multiprocesamiento = config_get_int_value(configuracion, "MULTIPROCESAMIENTO");
+	inicializarSem(&gradoMultiprocesamiento, multiprocesamiento);
 	inicializarSem(&cantidadTotalREADY, 0);
 	inicializarSem(&semCantidadEnNew, 0);
 }
 
-t_list* filtrarListaPorEstado(char estado){
-	bool estaEnEstado(DTB* dtb){
-		return (dtb->estado == estado);
+
+void cambiarEstado(int idDTB, char nuevoEstado){
+	waitMutex(&mutexListaDTBs);
+	DTB* dtb = obtenerDTBDeColaRemoviendolo(idDTB);
+	signalMutex(&mutexListaDTBs);
+	if(dtb->estado == EXECUTE){
+		signalMutex(&gradoMultiprocesamiento);
 	}
-	return list_filter(listaDeTodosLosDTBs, estaEnEstado);
+	dtb->estado = nuevoEstado;
+
+	t_list* lista = dictionary_get(dtb->direccionesArchivos, dtb->escriptorio);
+	printf("Pasado a %c dtb con id &d con escriptorio %s, quantum: %d, y el primer escriptorio se encuentra en la posicion%d \n",
+			 nuevoEstado, dtb->id, dtb->escriptorio, dtb->quantum, list_get(lista, 0));
+	waitMutex(&mutexListaDTBs);
+	list_add(listaDeTodosLosDTBs, dtb);
+	signalMutex(&mutexListaDTBs);
 }
 
-DTB* cambiarDTBDeColaBuscandoloEnListaDeTodos(DTB* dtb, t_list* nuevaLista){
-	obtenerDTBDeCola(listaDeTodosLosDTBs, dtb->id);
-	t_list* listaDTB = obtenerColaSinNew(dtb->estado);
-	obtenerDTBDeColaRemoviendolo(listaDTB, dtb->id);
-	list_add(nuevaLista, dtb);
+void cambiarEstadoGuardandoNuevoDTB(DTB* nuevoDTB, char nuevoEstado){
+	waitMutex(&mutexListaDTBs);
+	obtenerDTBDeColaRemoviendolo(nuevoDTB->id);
+	signalMutex(&mutexListaDTBs);
+	nuevoDTB->estado = nuevoEstado;
+
+	t_list* lista = dictionary_get(nuevoDTB->direccionesArchivos, nuevoDTB->escriptorio);
+	printf("Pasado a %c nuevo dtb con id &d con escriptorio %s, quantum: %d, y el primer escriptorio se encuentra en la posicion%d \n",
+			 nuevoEstado, nuevoDTB->id, nuevoDTB->escriptorio, nuevoDTB->quantum, list_get(lista, 0));
+	waitMutex(&mutexListaDTBs);
+	list_add(listaDeTodosLosDTBs, nuevoDTB);
+	signalMutex(&mutexListaDTBs);
 }
 
-t_list* obtenerColaSinNew(char estado){
-	switch(estado){
-		case BLOCKED:
-			return colaBLOCKED;
-			break;
-		case READY:
-			return colaREADY;
-			break;
-		case EXECUTE:
-			return colaEXECUTE;
-			break;
-		case EXIT:
-			return colaEXIT;
-			break;
-		case ESPERANDO_DUMMY:
-			return colaEsperandoDummy;
-			break;
-		default:
-			perror("No se encontro el DTB en ninguna cola");
-	}
-}
+

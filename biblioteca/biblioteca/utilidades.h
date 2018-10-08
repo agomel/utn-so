@@ -29,7 +29,7 @@ enum COLAS{
 };
 
 enum ESTADO{
-	NEW = 'a', READY = 'b', BLOCKED = 'c', EXIT = 'd', EXECUTE = 'e', ESPERANDO_DUMMY = 'f', READY_PRIORIDAD = 'g'
+	NEW = 'a', READY = 'b', BLOCKED = 'c', EXIT = 'd', EXECUTE = 'e', READY_PRIORIDAD = 'g'
 };
 
 void* asignarMemoria(int cantidad);

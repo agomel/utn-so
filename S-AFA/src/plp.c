@@ -5,19 +5,12 @@ void planificadorALargoPlazo() {
 	while (a) {
 		waitSem(&semCantidadEnNew);
 		printf("hay procesos en la cola new\n");
-		waitMutex(&mutexNEW);
-		DTB* dtb = queue_pop(colaNEW);
-		signalMutex(&mutexNEW);
 
-		waitMutex(&mutexColaDummy);
-		list_add(colaEsperandoDummy, dtb);
-		signalMutex(&mutexColaDummy);
-		dtb->estado = ESPERANDO_DUMMY;
+		DTB* dtb = obtenerPrimerDTBEnNew();
+
 		cargarDummy(*dtb);
 
-		waitMutex(&mutexREADY);
-		list_add(colaREADY, dtbDummy);
-		signalMutex(&mutexREADY);
+		agregarDTBALista(dtb);
 		signalSem(&cantidadTotalREADY);
 	}
 }
@@ -34,14 +27,7 @@ void cargarDummy(DTB dtb) {
 void ponerProcesoEnNew(char* escriptorio) {
 	DTB* dtb = asignarMemoria(sizeof(DTB));
 	*dtb = crearDTB(escriptorio);
-
-	waitMutex(&mutexNEW);
-	queue_push(colaNEW, dtb);
-	signalMutex(&mutexNEW);
-
-	waitMutex(&mutexListaDTBs);
-	list_add(listaDeTodosLosDTBs, dtb);
-	signalMutex(&mutexListaDTBs);
+	agregarDTBALista(dtb);
 	signalSem(&semCantidadEnNew);
 }
 
@@ -49,30 +35,13 @@ void enviarDTB(DTB dtb) {
 	serializarYEnviarDTB(socketCPU, dtb);
 }
 
-void ponerEnReady(DTB* dtb) {
-	waitSem(&gradoMultiprogramacion);
-	waitMutex(&mutexREADY);
-	list_add(colaREADY, dtb);
-	signalMutex(&mutexREADY);
+void ponerEnReady(int idDTB) {
+	cambiarEstado(idDTB, READY);
 	signalSem(&cantidadTotalREADY);
-	dtb->estado = READY;
-	t_list* lista = dictionary_get(dtb->direccionesArchivos, dtb->escriptorio);
-	printf("DTB al ponerlo en READY tiene escriptorio %s, quantum: %d, y el escriptorio se encuentra en la posicion%d \n"
-			, dtb->escriptorio, dtb->quantum, list_get(lista, 0));
 }
 
-void pasarDTBAExit(int idDTB, t_list* listaDeDTB) {
+void pasarDTBAExit(int idDTB) {
 	DTB* dtb;
-	for (int i = 0; i < listaDeDTB->elements_count; i++) {
-		dtb = list_get(listaDeDTB, i);
-		if (dtb->id == idDTB) {
-			list_remove(listaDeDTB, i);
-			signalSem(&gradoMultiprogramacion);
-			break;
-		}
-	}
-	waitMutex(&mutexEXIT);
-	list_add(colaEXIT, dtb);
-	signalMutex(&mutexEXIT);
-	dtb->estado = EXIT;
+	signalSem(&gradoMultiprogramacion);
+	cambiarEstado(idDTB, EXIT);
 }
