@@ -15,7 +15,8 @@ void consola(int servidor){
 		free(texto);
 	}
 }
-char entendiendoLinea(char* lineaEjecutando){
+
+char entendiendoLinea(char* lineaEjecutando){ //Devuelve 'b' si lo llama al diego para que el safa lo bloquee, sino devuelve 's' para que siga ejecutando el escriptorio
 	if(strncmp(lineaEjecutando, "abrir", 5) == 0){
 		//Abrir
 	}else if(strncmp(lineaEjecutando, "concentrar", 10) == 0){
@@ -36,6 +37,7 @@ char entendiendoLinea(char* lineaEjecutando){
 		//Borrar
 	}
 }
+
 void pedirCosasDelFM9(DTB dtbRecibido){
 	void* buffer;
 	u_int32_t desplazamiento = 0;
@@ -61,7 +63,7 @@ void escuchar(int servidor){
 	while(a){
 		DTB dtbRecibido;
 		char header = deserializarChar(servidor);
-		char mensajeEntendido;
+		char mensajeEntendido = 's';
 			switch(header){
 				case ENVIAR_DTB:
 					printf("llego un dtb\n");
@@ -101,10 +103,15 @@ void escuchar(int servidor){
 									serializarYEnviarDTB(socketSAFA, dtbRecibido);
 									break;
 								}else if(lineaAEjecutar[0] != '#'){
-									entendiendoLinea(lineaAEjecutar);
-									dtbRecibido.quantum--;
+									mensajeEntendido = entendiendoLinea(lineaAEjecutar);
+									if(mensajeEntendido == 'b'){
+										dtbRecibido.programCounter++;
+										enviarMensaje(socketSAFA, BLOQUEAR_DTB, sizeof(char));
+										serializarYEnviarDTB(socketSAFA, dtbRecibido);
+									}
 								}
 									dtbRecibido.programCounter++;
+									dtbRecibido.quantum--;
 							//MensajeNano: Enviarle al Safa BLOQUEAR_DTB con el dtbrecibido si interviene el DAM en la ejecucion
 							printf("Ejecutando una linea del escriptorio");
 							}if(dtbRecibido.quantum == 0){
@@ -121,7 +128,12 @@ void escuchar(int servidor){
 									serializarYEnviarDTB(socketSAFA, dtbRecibido);
 									break;
 								}else if(lineaAEjecutar[0] != '#'){
-									entendiendoLinea(lineaAEjecutar);
+									mensajeEntendido = entendiendoLinea(lineaAEjecutar);
+									if(mensajeEntendido == 'b'){
+										dtbRecibido.programCounter++;
+										enviarMensaje(socketSAFA, BLOQUEAR_DTB, sizeof(char));
+										serializarYEnviarDTB(socketSAFA, dtbRecibido);
+									}
 								}
 								dtbRecibido.programCounter++;
 								pedirCosasDelFM9(dtbRecibido);
@@ -130,9 +142,9 @@ void escuchar(int servidor){
 						}
 					}
 					break;
-		default:
+				default:
 					perror("Cualquiera ese header flaco");
-					}
+		}
 	}
 }
 
