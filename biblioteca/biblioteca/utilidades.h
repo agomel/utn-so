@@ -50,4 +50,6 @@ typedef struct {
 
 int escucharClientes(parametrosEscucharClientes* parametros);
 
+char* intToString(int numero);
+
 #endif /*UTILIDADES_H_*/

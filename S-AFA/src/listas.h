@@ -22,4 +22,6 @@ DTB* removerDTBPorIndice(int indice);
 
 cambiarEstadoDummy(char estado);
 
+int obtenerCPUDisponibleYOcupar(int id);
+
 #endif /*LISTAS_H_*/

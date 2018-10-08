@@ -23,3 +23,9 @@ int escucharClientes(parametrosEscucharClientes* parametros) {
 	empezarAEscuchar(parametros->servidor, 100);
 	recibirConexionesYMensajes(parametros->servidor, parametros->funcion);
 }
+
+char* intToString(int numero){
+	char* texto;
+	itoa(numero, texto, 10);
+	return texto;
+}
