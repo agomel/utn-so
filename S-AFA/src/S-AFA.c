@@ -40,12 +40,7 @@ void entenderMensaje(int emisor, char header){
 			deserializarString(emisor);
 			break;
 
-		case FALLO_LA_CARGA_DEL_SCRIPTORIO:
-			idDTB = deserializarInt(emisor);
-			pasarDTBAExit(idDTB);
-			break;
-
-		case OK_CARGA_DEL_SCRIPTORIO:
+		case GUARDADO_CON_EXITO:
 			idDTB = deserializarInt(emisor);
 			path = deserializarString(emisor);
 			t_list* listaDirecciones = deserializarListaInt(emisor);
