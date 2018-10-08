@@ -161,7 +161,7 @@ void consumirCola(){
 		waitMutex(&mutexColaOperaciones);
 		Operacion* operacion = queue_pop(colaOperaciones);
 		signalMutex(&mutexColaOperaciones);
-		int estadoDeOperacion;
+
 		switch(operacion->accion){
 			case CARGAR_ESCRIPTORIO_EN_MEMORIA:
 				printf("Ehhh, voy a buscar %s para %d \n", operacion->path, operacion->idDTB);//Esto tendria que ser un log
@@ -182,7 +182,7 @@ void consumirCola(){
 				//TODO definir que tengo que mandar para que el FM9 lo pueda buscar
 				//TODO estadoDeOperacion = enviarAFM9(operacion);
 				// le pido a FM9 los datos y espero la respuesta a ver si hay un error
-				estadoDeOperacion;
+				int estadoDeOperacion;
 				if(estadoDeOperacion != 0){
 					enviarError(operacion, estadoDeOperacion);
 				}else{
