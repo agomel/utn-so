@@ -26,7 +26,7 @@ typedef struct{
 }respuestaDeCargaEnMemoria;
 
 typedef struct{
-	t_list* listaDeDirecciones;
+	char* datos;
 	int cantidadDeLineas;
 	int pudoGuardarlo;
 }respuestaDeObtencionDeMemoria;

@@ -20,8 +20,7 @@ void inicializarSemaforos(){
 
 	int multiprogramacion = config_get_int_value(configuracion, "MULTIPROGRAMACION");
 	inicializarSem(&gradoMultiprogramacion, multiprogramacion);
-	int multiprocesamiento = config_get_int_value(configuracion, "MULTIPROCESAMIENTO");
-	inicializarSem(&gradoMultiprocesamiento, multiprocesamiento);
+	inicializarSem(&gradoMultiprocesamiento, 0);
 	inicializarSem(&cantidadTotalREADY, 0);
 	inicializarSem(&semCantidadEnNew, 0);
 }

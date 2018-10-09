@@ -24,9 +24,8 @@ t_log* logger;
 typedef struct{
 	char* path;
 	int idDTB;
-	int offset;
-	int size;
 	char accion;
+	t_list* direcciones;
 }Operacion;
 
 void inicializarDAM();

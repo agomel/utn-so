@@ -22,8 +22,14 @@ void entenderMensaje(int emisor, char header){
 			log_debug(logger, "Handshake de: %c", identificado);
 			switch(identificado){
 				case CPU:
-					socketCPU = emisor;
 					conectadoCPU = 1;
+					SocketCPU* socketCPU = asignarMemoria(sizeof(SocketCPU));
+					socketCPU->socket = emisor;
+					socketCPU->ocupado = 0;
+					waitMutex(&mutexSocketsCPus);
+					list_add(socketsCPUs, socketCPU);
+					signalMutex(&mutexSocketsCPus);
+					signalSem(&gradoMultiprocesamiento);
 					break;
 				case DAM:
 					socketDAM = emisor;
@@ -91,7 +97,10 @@ void inicializarSAFA(){
 	conectadoCPU = 0;
 	conectadoDAM = 0;
 	logger = crearLogger(ARCHIVO_LOG, "SAFA");
-
+	socketsCPUs = list_create();
+	inicializarMutex(&mutexSocketsCPus);
+	ejecutandoCPU = dictionary_create();
+	inicializarMutex(&mutexEjecutandoCPU);
 }
 int main(void) {
 	inicializarSAFA();

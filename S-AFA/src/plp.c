@@ -31,10 +31,6 @@ void ponerProcesoEnNew(char* escriptorio) {
 	signalSem(&semCantidadEnNew);
 }
 
-void enviarDTB(DTB dtb) {
-	serializarYEnviarDTB(socketCPU, dtb, logger);
-}
-
 void ponerEnReady(int idDTB) {
 	cambiarEstado(idDTB, READY);
 	signalSem(&cantidadTotalREADY);

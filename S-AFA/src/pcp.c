@@ -45,6 +45,8 @@ void planificadorACortoPlazo(){
 			cambiarEstado(dtb->id, EXECUTE);
 		}
 		printf("enviando a ejecutar dtb con id %d \n", dtb->id);
+
+		int socketCPU = obtenerCPUDisponibleYOcupar(dtb->id);
 		serializarYEnviarDTB(socketCPU, *dtb, logger);
 	}
 }
