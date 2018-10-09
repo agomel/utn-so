@@ -48,7 +48,24 @@ void consola(){
 					break;
 				case FINALIZAR:
 					log_info(logger, "Comando finalizar");
-					pasarDTBAExit(cadenaArmada.parametro);
+					DTB* dtb = obtenerDTBDeCola(cadenaArmada.parametro);
+					if(dtb->estado = EXECUTE){
+						int tamanioBuffer = sizeof(char);
+						void* buffer = asignarMemoria(tamanioBuffer);
+
+						//Lleno el buffer
+						int desplazamiento = 0;
+
+						concatenarChar(buffer, &desplazamiento, FINALIZAR);
+						waitMutex(&mutexSocketsCPus);
+						int socketCPU = dictionary_get(socketsCPUs, intToString(cadenaArmada.parametro));
+						signalMutex(&mutexSocketsCPus);
+						enviarMensaje(socketCPU, buffer, tamanioBuffer);
+
+						free(buffer);
+					}else{
+						pasarDTBAExit(cadenaArmada.parametro);
+					}
 					break;
 				case METRICAS:
 					log_info(logger, "Comando metricas");
