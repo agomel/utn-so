@@ -45,41 +45,41 @@ void manejarErrores(int idDTB, char* path, int error){
 	pasarDTBAExit(idDTB);
 	switch(error){
 		case 10001:
-			printf("path inexistente de archivo %s", path);
+			log_error(logger, "path inexistente de archivo %s", path);
 			break;
 
 		case 10002:
 		case 20003:
-			printf("espacio insuficiente en FM9 para archivo %s", path);
+			log_error(logger, "espacio insuficiente en FM9 para archivo %s", path);
 			break;
 
 		case 20001:
 		case 30001:
 		case 40001:
-			printf("El archivo no se encuentra abierto %s", path);
+			log_error(logger, "El archivo no se encuentra abierto %s", path);
 			break;
 
 		case 20002:
 		case 30002:
 		case 40002:
-			printf("Fallo de segmento/memoria en path %s", path);
+			log_error(logger, "Fallo de segmento/memoria en path %s", path);
 			break;
 		case 30003:
-			printf("Espacio insuficiente en MDJ para archivo %s", path);
+			log_error(logger, "Espacio insuficiente en MDJ para archivo %s", path);
 			break;
 		case 30004:
-			printf("El archivo no existe en MDJ, fue borrado previamente MDJ path: %s", path);
+			log_error(logger, "El archivo no existe en MDJ, fue borrado previamente MDJ path: %s", path);
 			break;
 		case 50001:
-			printf("Archivo ya existente: %s", path);
+			log_error(logger, "Archivo ya existente: %s", path);
 			break;
 		case 50002:
-			printf("Espacio insuficiente en path: %s", path);
+			log_error(logger, "Espacio insuficiente en path: %s", path);
 			break;
 		case 60001:
-			printf("El archivo no existe en path: %s", path);
+			log_error(logger, "El archivo no existe en path: %s", path);
 			break;
 		default:
-			perror("No reconozco el error, pero te termino el dtb");
+			log_error(logger, "No reconozco el error, pero te termino el dtb");
 	}
 }
