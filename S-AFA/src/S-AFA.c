@@ -63,18 +63,18 @@ void entenderMensaje(int emisor, char header){
 		case BLOQUEAR_DTB:
 			*dtb = deserializarDTB(emisor);
 			//TODO cambiar quantum
-			cambiarEstado(dtb->id, BLOCKED);
+			cambiarEstadoGuardandoNuevoDTB(dtb, BLOCKED);
 			break;
 
 		case PASAR_A_EXIT:
 			*dtb = deserializarDTB(emisor);
-			cambiarEstado(dtb->id, EXIT);
+			cambiarEstadoGuardandoNuevoDTB(dtb, EXIT);
 			signalSem(&gradoMultiprocesamiento);
 			break;
 
 		case TERMINO_QUANTUM:
 			*dtb = deserializarDTB(emisor);
-			cambiarEstado(dtb->id, READY);
+			cambiarEstadoGuardandoNuevoDTB(dtb, READY);
 			signalSem(&gradoMultiprocesamiento);
 			signalSem(&cantidadTotalREADY);
 			break;

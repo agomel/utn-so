@@ -30,6 +30,22 @@ DTB* obtenerDTBDeColaRemoviendolo(int idDTB){
 	}
 	return dtb;
 }
+void removerDTBDeCola(int idDTB){
+	DTB* dtb;
+	int index = 0;
+	for(int index = 0; index < listaDeTodosLosDTBs->elements_count; index++){
+		waitMutex(&mutexListaDTBs);
+		dtb = list_get(listaDeTodosLosDTBs, index);
+		signalMutex(&mutexListaDTBs);
+		if(dtb->id == idDTB && dtb->flag != 0){
+			waitMutex(&mutexListaDTBs);
+			list_remove(listaDeTodosLosDTBs, index);
+			signalMutex(&mutexListaDTBs);
+			freeDTB(dtb);
+			break;
+		}
+	}
+}
 DTB* obtenerDummyDeColaRemoviendolo(){
 	DTB* dtb;
 	int index = 0;

@@ -37,7 +37,6 @@ void ponerEnReady(int idDTB) {
 }
 
 void pasarDTBAExit(int idDTB) {
-	DTB* dtb;
 	signalSem(&gradoMultiprogramacion);
 	cambiarEstado(idDTB, EXIT);
 }

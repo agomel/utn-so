@@ -10,6 +10,8 @@ DTB* obtenerDTBDeCola(int idDTB);
 
 DTB* obtenerDTBDeColaRemoviendolo(int idDTB);
 
+void removerDTBDeCola(int idDTB);
+
 t_list* filtrarListaPorEstado(char estado);
 
 DTB* obtenerPrimerDTBEnNew();

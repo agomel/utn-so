@@ -43,7 +43,7 @@ void cambiarEstado(int idDTB, char nuevoEstado){
 
 void cambiarEstadoGuardandoNuevoDTB(DTB* nuevoDTB, char nuevoEstado){
 	waitMutex(&mutexListaDTBs);
-	obtenerDTBDeColaRemoviendolo(nuevoDTB->id);
+	removerDTBDeCola(nuevoDTB->id);
 	signalMutex(&mutexListaDTBs);
 	if(nuevoDTB->estado == EXECUTE){
 		signalMutex(&gradoMultiprocesamiento);
