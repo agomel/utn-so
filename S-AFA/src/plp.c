@@ -19,6 +19,7 @@ void cargarDummy(DTB dtb) {
 	dtbDummy->flag = 0;
 	dtbDummy->escriptorio = dtb.escriptorio;
 	dtbDummy->id = dtb.id;
+	dtbDummy->programCounter = 0;
 	dtbDummy->direccionesArchivos = dictionary_create();
 	dtbDummy->estado = READY;
 	agregarDTBALista(dtbDummy);

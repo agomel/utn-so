@@ -9,6 +9,7 @@
 #include <stdbool.h>
 #include <commons/config.h>
 #include "logger.h"
+#include <commons/string.h>
 
 #define ARCHIVO_CONFIGURACION "configuraciones/configuracion.txt"
 #define ARCHIVO_LOG "log.txt"

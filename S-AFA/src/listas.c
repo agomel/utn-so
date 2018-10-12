@@ -118,4 +118,6 @@ int obtenerCPUDisponibleYOcupar(int id){
 
 	waitMutex(&mutexEjecutandoCPU);
 	dictionary_put(ejecutandoCPU, intToString(id), socketCPU->socket);
+	signalMutex(&mutexEjecutandoCPU);
+	return socketCPU->socket;
 }

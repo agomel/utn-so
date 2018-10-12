@@ -62,6 +62,7 @@ void freeDTB(DTB* dtb){
 	free(dtb->id);
 	free(dtb->programCounter);
 	free(dtb->quantum);
+	//TODO falta frear las listas
 	free(dtb);
 }
 
