@@ -25,7 +25,5 @@ int escucharClientes(parametrosEscucharClientes* parametros) {
 }
 
 char* intToString(int numero){
-	char* texto;
-	itoa(numero, texto, 10);
-	return texto;
+	return string_from_format("%d", numero);
 }
