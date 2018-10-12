@@ -13,6 +13,7 @@ void entenderMensaje(int emisor, char header){
 	char identificado;
 	int idDTB;
 	DTB* dtb;
+	dtb->id = -1;
 	t_dictionary* direccionesYArchivos;
 	t_list* lista;
 	char* path;
@@ -89,6 +90,7 @@ void entenderMensaje(int emisor, char header){
 		default:
 			log_error(logger, "Header desconocido");
 	}
+	verificarSiPasarAExit(emisor,dtb);
 }
 
 void inicializarSAFA(){
@@ -101,6 +103,8 @@ void inicializarSAFA(){
 	inicializarMutex(&mutexSocketsCPus);
 	ejecutandoCPU = dictionary_create();
 	inicializarMutex(&mutexEjecutandoCPU);
+	cpusAFinalizarDTBs = dictionary_create();
+	inicializarMutex(&mutexCpusAFinalizarDTBs);
 }
 int main(void) {
 	inicializarSAFA();

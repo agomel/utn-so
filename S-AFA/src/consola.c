@@ -1,6 +1,29 @@
 #include "consola.h"
 #include <biblioteca/dtb.h>
 
+void loguearEstadoDeLista(t_list* lista, char estado){
+	log_info(logger, "Estado de lista: %c", estado);
+	log_info(logger, "Cantidad de DTBs en lista: %d", lista->elements_count);
+	log_info(logger, "Ids de DTBs en lista:");
+	for(int i = 0; i<lista->elements_count; i++){
+		log_info(logger, "d", list_get(lista, i));
+	}
+}
+void crearStatusDeMetricas(){
+	t_list* listaNews = filtrarListaPorEstado(NEW);
+	loguearEstadoDeLista(listaNews, NEW);
+	t_list* listaReady = filtrarListaPorEstado(READY);
+	loguearEstadoDeLista(listaReady, READY);
+	t_list* listaBlocked = filtrarListaPorEstado(BLOCKED);
+	loguearEstadoDeLista(listaBlocked, BLOCKED);
+	t_list* listaExit = filtrarListaPorEstado(EXIT);
+	loguearEstadoDeLista(listaExit, EXIT);
+	t_list* listaExecute = filtrarListaPorEstado(EXECUTE);
+	loguearEstadoDeLista(listaExecute, EXECUTE);
+	t_list* listaReadyPrioridad = filtrarListaPorEstado(READY_PRIORIDAD);
+	loguearEstadoDeLista(listaReadyPrioridad, READY_PRIORIDAD);
+}
+
 int obtenerComando(char*ingresado){
 	int comando=6;
 	const char* comandos[] = {"salir","status","finalizar","metricas","ejecutar"};
@@ -45,26 +68,22 @@ void consola(){
 					break;
 				case STATUS:
 					log_info(logger, "Comando status");
+					crearStatusDeMetricas();
 					break;
 				case FINALIZAR:
 					log_info(logger, "Comando finalizar");
 					DTB* dtb = obtenerDTBDeCola(cadenaArmada.parametro);
 					if(dtb->estado = EXECUTE){
-						int tamanioBuffer = sizeof(char);
-						void* buffer = asignarMemoria(tamanioBuffer);
 
-						//Lleno el buffer
-						int desplazamiento = 0;
-
-						concatenarChar(buffer, &desplazamiento, FINALIZAR);
 						waitMutex(&mutexSocketsCPus);
 						int socketCPU = dictionary_get(socketsCPUs, intToString(cadenaArmada.parametro));
 						signalMutex(&mutexSocketsCPus);
-						enviarMensaje(socketCPU, buffer, tamanioBuffer);
 
-						free(buffer);
+						waitMutex(&mutexCpusAFinalizarDTBs);
+						dictionary_put(cpusAFinalizarDTBs, intToString(socketCPU),cadenaArmada.parametro);
+						signalMutex(&mutexCpusAFinalizarDTBs);
 					}else{
-						pasarDTBAExit(cadenaArmada.parametro);
+						pasarDTBAExitGuardandoNuevo(dtb);
 					}
 					break;
 				case METRICAS:

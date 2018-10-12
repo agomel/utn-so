@@ -41,6 +41,10 @@ void pasarDTBAExit(int idDTB) {
 	signalSem(&gradoMultiprogramacion);
 	cambiarEstado(idDTB, EXIT);
 }
+void pasarDTBAExitGuardandoNuevo(DTB* dtb) {
+	signalSem(&gradoMultiprogramacion);
+	cambiarEstadoGuardandoNuevoDTB(dtb, EXIT);
+}
 
 void manejarErrores(int idDTB, char* path, int error){
 	pasarDTBAExit(idDTB);
@@ -82,5 +86,19 @@ void manejarErrores(int idDTB, char* path, int error){
 			break;
 		default:
 			log_error(logger, "No reconozco el error, pero te termino el dtb");
+	}
+}
+
+void verificarSiPasarAExit(int emisor, DTB* dtb){
+	waitMutex(&mutexCpusAFinalizarDTBs);
+	if(dictionary_has_key(cpusAFinalizarDTBs,intToString(emisor))){
+	signalMutex(&mutexCpusAFinalizarDTBs);
+		if(dtb->id == -1){
+			waitMutex(&mutexCpusAFinalizarDTBs);
+			pasarDTBAExit(dictionary_get(cpusAFinalizarDTBs, intToString(emisor)));
+			signalMutex(&mutexCpusAFinalizarDTBs);
+		}else{
+			pasarDTBAExitGuardandoNuevo(dtb);
+		}
 	}
 }

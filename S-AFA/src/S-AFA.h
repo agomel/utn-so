@@ -19,7 +19,11 @@ int conectadoDAM;
 t_list* socketsCPUs;
 pthread_mutex_t mutexSocketsCPus;
 pthread_mutex_t mutexEjecutandoCPU;
+//Clave idDTB valores sockets CPU
 t_dictionary* ejecutandoCPU;
+pthread_mutex_t mutexCpusAFinalizarDTBs;
+//Clave sockets CPU valores idDTB
+t_dictionary* cpusAFinalizarDTBs;
 
 enum ESTADOSAFA{
 	CORRUPTO = 'c', OPERATIVO = 'a'
