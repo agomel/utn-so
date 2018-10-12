@@ -40,3 +40,54 @@
 [DEBUG] 11:12:46:104 SAFA/(6407:6419): Cantidad de DTBs en estado a: 1
 [DEBUG] 11:12:51:237 SAFA/(6407:6421): Cantidad de DTBs en estado b: 1
 [DEBUG] 11:13:14:421 SAFA/(6407:6421): Enviando dtb con id: 1
+[DEBUG] 19:47:17:728 SAFA/(11663:11680): Servidor a escuchar 4
+
+[DEBUG] 19:47:34:957 SAFA/(11663:11680): Handshake de: d
+[DEBUG] 19:47:34:958 SAFA/(11663:11680): Se agrego a las conexiones d
+[DEBUG] 19:48:42:232 SAFA/(11763:11775): Servidor a escuchar 4
+
+[DEBUG] 19:50:11:517 SAFA/(11838:11851): Servidor a escuchar 4
+
+[DEBUG] 20:19:00:563 SAFA/(4753:4779): Escuchando a cpu
+[DEBUG] 20:19:03:593 SAFA/(4753:4779): Handshake de: d
+[DEBUG] 20:19:03:593 SAFA/(4753:4779): Se agrego a las conexiones d
+[DEBUG] 20:19:13:153 SAFA/(4753:4793): Escuchando a cpu
+[DEBUG] 20:19:18:898 SAFA/(4753:4793): Handshake de: c
+[DEBUG] 20:19:18:898 SAFA/(4753:4793): Se agrego a las conexiones c
+[INFO] 20:19:36:791 SAFA/(4753:4795): Comando ejecutar
+[INFO] 20:19:36:792 SAFA/(4753:4799): Hay procesos en la cola new
+[DEBUG] 20:19:36:792 SAFA/(4753:4799): Cantidad de DTBs en estado a: 1
+[DEBUG] 20:19:36:793 SAFA/(4753:4800): Cantidad de DTBs en estado b: 1
+[DEBUG] 20:19:42:778 SAFA/(4753:4800): Enviando dtb con id: 1
+[DEBUG] 20:19:42:778 SAFA/(4753:4803): Handshake de: 
+[ERROR] 20:19:42:778 SAFA/(4753:4803): Conexion rechazada
+[DEBUG] 20:19:42:778 SAFA/(4753:4803): Se agrego a las conexiones 
+[DEBUG] 20:20:47:388 SAFA/(4892:4911): Escuchando a cpu
+[DEBUG] 20:21:08:954 SAFA/(4951:4966): Escuchando a cpu
+[DEBUG] 20:21:11:215 SAFA/(4951:4966): Handshake de: d
+[DEBUG] 20:21:11:215 SAFA/(4951:4966): Se agrego a las conexiones d
+[DEBUG] 20:21:21:894 SAFA/(4951:4991): Escuchando a cpu
+[DEBUG] 20:21:28:633 SAFA/(4951:4991): Handshake de: c
+[DEBUG] 20:21:28:633 SAFA/(4951:4991): Se agrego a las conexiones c
+[INFO] 20:21:41:320 SAFA/(4951:4993): Comando ejecutar
+[INFO] 20:21:41:320 SAFA/(4951:4997): Hay procesos en la cola new
+[DEBUG] 20:21:41:321 SAFA/(4951:4997): Cantidad de DTBs en estado a: 1
+[DEBUG] 20:21:41:321 SAFA/(4951:4998): Cantidad de DTBs en estado b: 1
+[DEBUG] 20:22:02:822 SAFA/(4951:4998): Enviando dtb con id: 1
+[DEBUG] 20:22:02:823 SAFA/(4951:5000): Handshake de: 
+[ERROR] 20:22:02:823 SAFA/(4951:5000): Conexion rechazada
+[DEBUG] 20:22:02:823 SAFA/(4951:5000): Se agrego a las conexiones 
+[DEBUG] 20:37:17:814 SAFA/(5938:5960): Escuchando a cpu
+[DEBUG] 20:37:21:51 SAFA/(5938:5960): Handshake de: d
+[DEBUG] 20:37:21:51 SAFA/(5938:5960): Se agrego a las conexiones d
+[DEBUG] 20:37:25:560 SAFA/(5938:5968): Escuchando a cpu
+[DEBUG] 20:37:28:182 SAFA/(5938:5968): Handshake de: c
+[DEBUG] 20:37:28:182 SAFA/(5938:5968): Se agrego a las conexiones c
+[INFO] 20:37:41:640 SAFA/(5938:5972): Comando ejecutar
+[INFO] 20:37:41:641 SAFA/(5938:5974): Hay procesos en la cola new
+[DEBUG] 20:37:41:641 SAFA/(5938:5974): Cantidad de DTBs en estado a: 1
+[DEBUG] 20:37:41:641 SAFA/(5938:5975): Cantidad de DTBs en estado b: 1
+[DEBUG] 20:37:41:641 SAFA/(5938:5975): Enviando dtb con id: 1
+[DEBUG] 20:37:41:910 SAFA/(5938:5976): Handshake de: 
+[ERROR] 20:37:41:911 SAFA/(5938:5976): Conexion rechazada
+[DEBUG] 20:37:41:912 SAFA/(5938:5976): Se agrego a las conexiones 

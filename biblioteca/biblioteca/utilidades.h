@@ -34,6 +34,11 @@ enum ESTADO{
 	NEW = 'a', READY = 'b', BLOCKED = 'c', EXIT = 'd', EXECUTE = 'e', READY_PRIORIDAD = 'g'
 };
 
+typedef struct{
+	int socket;
+	char header;
+}OperacionSocket;
+
 void* asignarMemoria(int cantidad);
 
 

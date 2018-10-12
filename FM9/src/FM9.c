@@ -43,7 +43,39 @@ respuestaDeCargaEnMemoria cargarDatosEnMemoria(char* datos){
 	return respuesta; //pudo guardar. TODO hacer si tuvo un error return 0
 }
 
-void entenderMensaje(int emisor, int header){
+
+void agregarPedidoACola(char header,int socket){
+	OperacionSocket* operacion = asignarMemoria(sizeof(OperacionSocket));
+	operacion->header = header;
+	operacion->socket = socket;
+	waitMutex(&mutexOperaciones);
+	queue_push(colaOperaciones, operacion);
+	signalMutex(&mutexOperaciones);
+
+}
+
+void escucharCliente(int socket){
+	log_debug(logger, "Escuchando a cpu");
+	while(1){
+		char header;
+		recibirMensaje(socket, &header, sizeof(char));
+		agregarPedidoACola(header, socket);
+		entenderMensaje(socket, header);
+		signalSem(&semOperaciones);
+		//esto solo agrega operaciones a la cola
+	}
+}
+
+void consumirCola(){
+	while(1){
+		waitSem(&semOperaciones);
+		OperacionSocket* operacion = queue_pop(colaOperaciones);
+		entenderMensaje(operacion->socket, operacion->header);
+	}
+
+}
+
+void entenderMensaje(int emisor, char header){
 	char identificado;
 	char* datos;
 	respuestaDeCargaEnMemoria respuestaDeCarga;
@@ -115,6 +147,9 @@ void init(){
 	storage = asignarMemoria(1000);
 	offset = 0;
 	logger = crearLogger(ARCHIVO_LOG, "FM9");
+	inicializarMutex(&mutexOperaciones);
+	colaOperaciones = queue_create();
+	inicializarSem(&semOperaciones, 0);
 }
 
 int main(void) {
@@ -127,9 +162,18 @@ int main(void) {
 	parametros.servidor = servidor;
 	parametros.funcion = &entenderMensaje;
 	parametros.logger = logger;
-	pthread_t hiloAdministradorDeConexiones = crearHilo(&escucharClientes, &parametros);
+	//pthread_t hiloAdministradorDeConexiones = crearHilo(&escucharClientes, &parametros);
 
-	esperarHilo(hiloAdministradorDeConexiones);
+	empezarAEscuchar(servidor, INADDR_ANY);
+	for(int i = 0; i<2; i++){
+		int socket = aceptarCliente(servidor);
+		crearHiloQueMuereSolo(&escucharCliente, socket);
+	}
+
+	pthread_t hiloEscuchador = crearHilo(&consumirCola, NULL);
+
+	//esperarHilo(hiloAdministradorDeConexiones);
+	esperarHilo(hiloEscuchador);
 	free(storage);
 	return 0;
 }

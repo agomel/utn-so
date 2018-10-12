@@ -9,6 +9,37 @@
  */
 #include "S-AFA.h"
 
+void agregarPedidoACola(char header,int socket){
+	OperacionSocket* operacion = asignarMemoria(sizeof(OperacionSocket));
+	operacion->header = header;
+	operacion->socket = socket;
+	waitMutex(&mutexOperaciones);
+	queue_push(colaOperaciones, operacion);
+	signalMutex(&mutexOperaciones);
+
+}
+
+void escucharCliente(int socket){
+	log_debug(logger, "Escuchando a cpu");
+	while(1){
+		char header;
+		recibirMensaje(socket, &header, sizeof(char));
+		agregarPedidoACola(header, socket);
+		entenderMensaje(socket, header);
+		signalSem(&semOperaciones);
+		//esto solo agrega operaciones a la cola
+	}
+}
+
+void consumirCola(){
+	while(1){
+		waitSem(&semOperaciones);
+		OperacionSocket* operacion = queue_pop(colaOperaciones);
+		entenderMensaje(operacion->socket, operacion->header);
+	}
+
+}
+
 void entenderMensaje(int emisor, char header){
 	char identificado;
 	int idDTB;
@@ -105,6 +136,9 @@ void inicializarSAFA(){
 	inicializarMutex(&mutexEjecutandoCPU);
 	cpusAFinalizarDTBs = dictionary_create();
 	inicializarMutex(&mutexCpusAFinalizarDTBs);
+	inicializarMutex(&mutexOperaciones);
+	colaOperaciones = queue_create();
+	inicializarSem(&semOperaciones, 0);
 }
 int main(void) {
 	inicializarSAFA();
@@ -115,16 +149,20 @@ int main(void) {
 	parametros.servidor = servidor;
 	parametros.funcion = &entenderMensaje;
 	parametros.logger = logger;
-	pthread_t hiloAdministradorDeConexiones = crearHilo(&escucharClientes, &parametros);
+	empezarAEscuchar(servidor, INADDR_ANY);
+	for(int i = 0; i<2; i++){
+		int socket = aceptarCliente(servidor);
+		crearHiloQueMuereSolo(&escucharCliente, socket);
+	}
 	pthread_t hiloConsola = crearHilo(&consola, NULL);
 	pthread_t hiloPlanificadorALargoPlazo = crearHilo(&planificadorALargoPlazo, NULL);
 	pthread_t hiloPlanificadorACortoPlazo = crearHilo(&planificadorACortoPlazo, NULL);
 
-
+	pthread_t hiloEscuchador = crearHilo(&consumirCola, NULL);
 	while(!conectadoCPU || !conectadoDAM);
 	estado = OPERATIVO;
 
-	esperarHilo(hiloAdministradorDeConexiones);
+	esperarHilo(hiloEscuchador);
 	esperarHilo(hiloConsola);
 	esperarHilo(hiloPlanificadorALargoPlazo);
 	esperarHilo(hiloPlanificadorACortoPlazo);

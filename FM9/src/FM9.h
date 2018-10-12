@@ -10,6 +10,8 @@
 #include <biblioteca/hilos.h>
 #include <commons/collections/list.h>
 #include <biblioteca/logger.h>
+#include <commons/collections/queue.h>
+#include <biblioteca/semaforos.h>
 
 t_dictionary* conexiones;
 int socketCPU;
@@ -19,6 +21,10 @@ pthread_mutex_t mutexStorage;
 int offset;
 pthread_mutex_t mutexOffset;
 t_log* logger;
+
+t_queue* colaOperaciones;
+pthread_mutex_t mutexOperaciones;
+sem_t semOperaciones;
 
 typedef struct{
 	t_list* listaDeDirecciones;
@@ -35,7 +41,7 @@ respuestaDeCargaEnMemoria cargarDatosEnMemoria(char* datos);
 respuestaDeObtencionDeMemoria* obtenerDatosDeMemoria(t_list* posiciones);
 
 void init();
-void entenderMensaje(int emisor, int header);
+void entenderMensaje(int emisor, char header);
 int main(void);
 
 #endif /*FM9_H_*/

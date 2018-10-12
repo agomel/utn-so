@@ -33,8 +33,13 @@ typedef struct{
 	int socket;
 	int ocupado;
 }SocketCPU;
+
+
 char estado;
 t_log* logger;
+t_queue* colaOperaciones;
+pthread_mutex_t mutexOperaciones;
+sem_t semOperaciones;
 
 void entenderMensaje(int emisor, char header);
 
