@@ -1,0 +1,5 @@
+[DEBUG] 11:36:43:754 MDJ/(7974:7986): Servidor a escuchar 4
+
+[DEBUG] 11:36:48:71 MDJ/(7974:7986): Handshake de: d
+[DEBUG] 11:36:48:71 MDJ/(7974:7986): Se agrego a las conexiones d
+[INFO] 11:37:13:546 MDJ/(7974:7986): Validando archivo en ruta: hola

@@ -37,7 +37,7 @@ int validarArchivoMDJ(Operacion* operacion){
 }
 char* obtenerDatosDeMDJ(Operacion* operacion){
 	u_int32_t offset = 0;
-	char* datosTotales = asignarMemoria(0);
+	/*char* datosTotales = asignarMemoria(0);
 
 	u_int32_t cantidadDeDatos = transferSize;
 	while(cantidadDeDatos == transferSize){
@@ -57,10 +57,13 @@ char* obtenerDatosDeMDJ(Operacion* operacion){
 		char* datosParciales = asignarMemoria(cantidadDeDatos);
 
 		datosTotales = realloc(datosTotales, sizeof(datosTotales) + cantidadDeDatos);
-		concatenarString(datosTotales, offset, datosParciales);
+		recibirMensaje(socketMDJ, datosParciales, cantidadDeDatos);
 
 		offset = offset + cantidadDeDatos;
-	}
+		//TODO ver porque rompe esto
+	}*/
+	//ESTO es jarcodeado
+	char* datosTotales = "estos son los datos";
 	return datosTotales;
 }
 void agregarOperacionACola(int emisor, char accion){

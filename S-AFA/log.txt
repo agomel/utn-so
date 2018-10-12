@@ -1,0 +1,42 @@
+[DEBUG] 10:57:20:949 SAFA/(5683:5710): Servidor a escuchar 4
+
+[DEBUG] 10:57:29:29 SAFA/(5683:5710): Handshake de: d
+[DEBUG] 10:57:29:29 SAFA/(5683:5710): Se agrego a las conexiones d
+[DEBUG] 10:57:33:778 SAFA/(5683:5710): Handshake de: c
+[DEBUG] 10:57:33:778 SAFA/(5683:5710): Se agrego a las conexiones c
+[INFO] 10:57:38:957 SAFA/(5683:5711): Comando ejecutar
+[INFO] 10:57:38:957 SAFA/(5683:5712): Hay procesos en la cola new
+[DEBUG] 10:57:38:957 SAFA/(5683:5712): Cantidad de DTBs en estado a: 1
+[DEBUG] 10:57:46:302 SAFA/(5683:5713): Cantidad de DTBs en estado b: 1
+[DEBUG] 10:57:58:70 SAFA/(5683:5713): Enviando dtb con id: 1
+[DEBUG] 10:58:11:685 SAFA/(5761:5770): Servidor a escuchar 4
+
+[DEBUG] 10:58:14:177 SAFA/(5761:5770): Handshake de: d
+[DEBUG] 10:58:14:177 SAFA/(5761:5770): Se agrego a las conexiones d
+[DEBUG] 10:58:16:261 SAFA/(5761:5770): Handshake de: c
+[DEBUG] 10:58:16:261 SAFA/(5761:5770): Se agrego a las conexiones c
+[INFO] 10:58:20:253 SAFA/(5761:5771): Comando ejecutar
+[INFO] 10:58:20:254 SAFA/(5761:5772): Hay procesos en la cola new
+[DEBUG] 10:58:20:254 SAFA/(5761:5772): Cantidad de DTBs en estado a: 1
+[DEBUG] 10:58:24:611 SAFA/(5761:5773): Cantidad de DTBs en estado b: 1
+[DEBUG] 10:59:38:616 SAFA/(5839:5848): Servidor a escuchar 4
+
+[DEBUG] 10:59:41:395 SAFA/(5839:5848): Handshake de: d
+[DEBUG] 10:59:41:395 SAFA/(5839:5848): Se agrego a las conexiones d
+[DEBUG] 10:59:43:37 SAFA/(5839:5848): Handshake de: c
+[DEBUG] 10:59:43:37 SAFA/(5839:5848): Se agrego a las conexiones c
+[INFO] 10:59:49:190 SAFA/(5839:5849): Comando ejecutar
+[INFO] 10:59:49:191 SAFA/(5839:5850): Hay procesos en la cola new
+[DEBUG] 10:59:49:191 SAFA/(5839:5850): Cantidad de DTBs en estado a: 1
+[DEBUG] 10:59:52:386 SAFA/(5839:5851): Cantidad de DTBs en estado b: 1
+[DEBUG] 11:12:30:88 SAFA/(6407:6417): Servidor a escuchar 4
+
+[DEBUG] 11:12:32:432 SAFA/(6407:6417): Handshake de: d
+[DEBUG] 11:12:32:432 SAFA/(6407:6417): Se agrego a las conexiones d
+[DEBUG] 11:12:34:154 SAFA/(6407:6417): Handshake de: c
+[DEBUG] 11:12:34:154 SAFA/(6407:6417): Se agrego a las conexiones c
+[INFO] 11:12:46:104 SAFA/(6407:6418): Comando ejecutar
+[INFO] 11:12:46:104 SAFA/(6407:6419): Hay procesos en la cola new
+[DEBUG] 11:12:46:104 SAFA/(6407:6419): Cantidad de DTBs en estado a: 1
+[DEBUG] 11:12:51:237 SAFA/(6407:6421): Cantidad de DTBs en estado b: 1
+[DEBUG] 11:13:14:421 SAFA/(6407:6421): Enviando dtb con id: 1

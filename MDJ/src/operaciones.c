@@ -3,7 +3,8 @@
 int validarArchivo(int emisor){
 	char* rutaArchivo = deserializarString(emisor);
 	log_info(logger, "Validando archivo en ruta: %s", rutaArchivo);
-	return true;
+	//0 es archivo valido, en otro caso es error
+	return 0;
 	//TODO validar el archivo posta
 }
 void crearArchivo(int emisor){
