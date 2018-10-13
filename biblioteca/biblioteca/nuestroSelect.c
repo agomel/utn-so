@@ -26,6 +26,7 @@ void consumirCola(Select* select){
 		waitSem(select->semOperaciones);
 		OperacionSocket* operacion = queue_pop(select->colaOperaciones);
 		(*select->funcionEntenderMensaje)(operacion->socket, operacion->header);
+		free(operacion);
 		log_info(select->logger, "Terminada operacion");
 		signalSem(select->semProductores);
 	}

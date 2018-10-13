@@ -32,6 +32,7 @@ char* intToString(int numero){
 	return string_from_format("%d", numero);
 }
 
+
 char* nombreEstado(char estado){
 	switch(estado){
 	case NEW: return "NEW";

@@ -56,6 +56,7 @@ void entenderMensaje(int emisor, char header){
 	int tamanioPath;
 	void* buffer;
 	t_list* posiciones;
+	int programCounter;
 
 		switch(header){
 
@@ -87,6 +88,22 @@ void entenderMensaje(int emisor, char header){
 				concatenarInt(buffer, &desplazamiento, 1);
 				concatenarString(buffer, &desplazamiento, "hola");
 				enviarMensaje(socketDAM, buffer, tamanioBuffer);
+				break;
+			case TRAER_LINEA_ESCRIPTORIO:
+				programCounter = deserializarInt(emisor);
+				posiciones = deserializarListaInt(emisor);
+				char* respuesta = "Respuesta jarcodeada";
+				for(int i = 0; i < posiciones->elements_count; i ++){
+					waitMutex(&mutexStorage);
+					//TODO obtener del storage lo pedido y agregar al string realocandole memoria
+					signalMutex(&mutexStorage);
+				}
+
+				desplazamiento = 0;
+				tamanioBuffer = sizeof(int) + strlen(respuesta) + 1;
+				buffer = asignarMemoria(tamanioBuffer);
+				concatenarString(buffer, &desplazamiento, respuesta);
+				enviarMensaje(socketCPU, buffer, tamanioBuffer);
 				break;
 			default:
 				log_error(logger, "Header desconocido");

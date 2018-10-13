@@ -41,7 +41,7 @@ void removerDTBDeCola(int idDTB){
 			waitMutex(&mutexListaDTBs);
 			list_remove(listaDeTodosLosDTBs, index);
 			signalMutex(&mutexListaDTBs);
-			freeDTB(dtb);
+			freeDTBSAFA(dtb);
 			break;
 		}
 	}
