@@ -91,9 +91,10 @@ void manejarErrores(int idDTB, char* path, int error){
 
 void verificarSiPasarAExit(int emisor, DTB* dtb){
 	waitMutex(&mutexCpusAFinalizarDTBs);
-	if(dictionary_has_key(cpusAFinalizarDTBs,intToString(emisor))){
+	int a = dictionary_has_key(cpusAFinalizarDTBs,intToString(emisor));
 	signalMutex(&mutexCpusAFinalizarDTBs);
-		if(dtb->id == -1){
+	if(a){
+		if(dtb->id == 0){
 			waitMutex(&mutexCpusAFinalizarDTBs);
 			pasarDTBAExit(dictionary_get(cpusAFinalizarDTBs, intToString(emisor)));
 			signalMutex(&mutexCpusAFinalizarDTBs);

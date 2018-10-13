@@ -44,7 +44,7 @@ void entenderMensaje(int emisor, char header){
 	char identificado;
 	int idDTB;
 	DTB* dtb;
-	dtb->id = -1;
+	dtb->id = 0;
 	t_dictionary* direccionesYArchivos;
 	t_list* lista;
 	char* path;
@@ -162,6 +162,10 @@ int main(void) {
 	while(!conectadoCPU || !conectadoDAM);
 	estado = OPERATIVO;
 
+	while(1){
+			int cpu = aceptarCliente(servidor);
+			crearHiloQueMuereSolo(&escucharCliente, socket);
+	}
 	esperarHilo(hiloEscuchador);
 	esperarHilo(hiloConsola);
 	esperarHilo(hiloPlanificadorALargoPlazo);
