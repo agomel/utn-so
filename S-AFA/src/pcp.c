@@ -3,7 +3,7 @@
 DTB* planificarPorFIFO(){
 	t_list* listaReady = filtrarListaPorEstado(READY);
 	DTB* dtb = list_get(listaReady, 0);
-	dtb->quantum = -1;
+	dtb->quantum = 0;
 	return dtb;
 }
 
@@ -41,13 +41,14 @@ void planificadorACortoPlazo(){
 		DTB* dtb = seleccionarDTB();
 		if(dtb->flag == 0){
 			cambiarEstadoDummy(EXECUTE);
+			log_info(logger, "Pasado Dummy a ejecutar con scriptorio %s", dtb->escriptorio);
 		}else{
 			cambiarEstado(dtb->id, EXECUTE);
 		}
 		printf("enviando a ejecutar dtb con id %d \n", dtb->id);
 
 		int socketCPU = obtenerCPUDisponibleYOcupar(dtb->id);
-		serializarYEnviarDTB(socketCPU, *dtb, logger);
+		serializarYEnviarDTB(socketCPU, *dtb, logger, ENVIAR_DTB);
 	}
 }
 

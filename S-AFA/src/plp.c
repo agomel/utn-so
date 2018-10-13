@@ -8,6 +8,8 @@ void planificadorALargoPlazo() {
 
 		DTB* dtb = obtenerPrimerDTBEnNew();
 
+		log_info(logger, "Cargando Dummy para dtb con scriptorio %s", dtb->escriptorio);
+
 		cargarDummy(*dtb);
 
 		signalSem(&cantidadTotalREADY);
@@ -91,9 +93,9 @@ void manejarErrores(int idDTB, char* path, int error){
 
 void verificarSiPasarAExit(int emisor, DTB* dtb){
 	waitMutex(&mutexCpusAFinalizarDTBs);
-	int a = dictionary_has_key(cpusAFinalizarDTBs,intToString(emisor));
+	int tieneLaClave = dictionary_has_key(cpusAFinalizarDTBs, intToString(emisor));
 	signalMutex(&mutexCpusAFinalizarDTBs);
-	if(a){
+	if(tieneLaClave){
 		if(dtb->id == 0){
 			waitMutex(&mutexCpusAFinalizarDTBs);
 			pasarDTBAExit(dictionary_get(cpusAFinalizarDTBs, intToString(emisor)));

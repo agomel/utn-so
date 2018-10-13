@@ -15,6 +15,10 @@ direccionServidor levantarDeConfiguracion(char* nombreIp, char* nombrePuerto, ch
 	direccion.ip = config_get_string_value(configuracion, nombreIp);
 	}
 	direccion.puerto = config_get_int_value(configuracion, nombrePuerto);
+
+	free(configuracion->properties);
+	free(configuracion->path);
+	free(configuracion);
 	return direccion;
 }
 
@@ -26,4 +30,24 @@ int escucharClientes(parametrosEscucharClientes* parametros) {
 
 char* intToString(int numero){
 	return string_from_format("%d", numero);
+}
+
+
+char* nombreEstado(char estado){
+	switch(estado){
+	case NEW: return "NEW";
+		break;
+	case READY: return "READY";
+	break;
+	case BLOCKED: return "BLOCKED";
+	break;
+	case EXIT: return "EXIT";
+		break;
+	case EXECUTE: return "EXECUTE";
+	break;
+	case READY_PRIORIDAD: return "READY_PRIORIDAD";
+		break;
+	default: return "LISTA NO RECONOCIDA";
+	break;
+	}
 }

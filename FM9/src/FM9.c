@@ -56,6 +56,7 @@ void entenderMensaje(int emisor, char header){
 	int tamanioPath;
 	void* buffer;
 	t_list* posiciones;
+	int programCounter;
 
 		switch(header){
 
@@ -87,6 +88,22 @@ void entenderMensaje(int emisor, char header){
 				concatenarInt(buffer, &desplazamiento, 1);
 				concatenarString(buffer, &desplazamiento, "hola");
 				enviarMensaje(socketDAM, buffer, tamanioBuffer);
+				break;
+			case TRAER_LINEA_ESCRIPTORIO:
+				programCounter = deserializarInt(emisor);
+				posiciones = deserializarListaInt(emisor);
+				char* respuesta = "Respuesta jarcodeada";
+				for(int i = 0; i < posiciones->elements_count; i ++){
+					waitMutex(&mutexStorage);
+					//TODO obtener del storage lo pedido y agregar al string realocandole memoria
+					signalMutex(&mutexStorage);
+				}
+
+				desplazamiento = 0;
+				tamanioBuffer = sizeof(int) + strlen(respuesta) + 1;
+				buffer = asignarMemoria(tamanioBuffer);
+				concatenarString(buffer, &desplazamiento, respuesta);
+				enviarMensaje(socketCPU, buffer, tamanioBuffer);
 				break;
 			default:
 				log_error(logger, "Header desconocido");
@@ -124,19 +141,21 @@ void crearSelect(int servidor){
 	select->semOperaciones = &semOperaciones;
 	select->socket = servidor;
 	select->identificarse = &identificarse;
+	select->semProductores = &semProductores;
 	realizarNuestroSelect(select);
-
 }
 void init(){
 	inicializarMutex(&mutexOffset);
 	inicializarMutex(&mutexStorage);
 	//TODO cargar storage
 	storage = asignarMemoria(1000);
+	//TODO el offset no va a ser siempre 0
 	offset = 0;
 	logger = crearLogger(ARCHIVO_LOG, "FM9");
 	inicializarMutex(&mutexOperaciones);
 	colaOperaciones = queue_create();
 	inicializarSem(&semOperaciones, 0);
+	inicializarSem(&semProductores, 0);
 }
 
 int main(void) {

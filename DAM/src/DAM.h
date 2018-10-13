@@ -9,33 +9,27 @@
 #include <biblioteca/dtb.h>
 #include <commons/collections/queue.h>
 #include <biblioteca/logger.h>
+#include <biblioteca/nuestroSelect.h>
+#include "ServicioFM9.h"
 
 int transferSize;
 
 int socketFM9;
 int socketMDJ;
 int socketSAFA;
+
 t_queue* colaOperaciones;
+
 pthread_mutex_t mutexColaOperaciones;
 sem_t semHayEnColaOperaciones;
+sem_t semProductores;
+
 t_config* configuraciones;
+
 t_log* logger;
 
-typedef struct{
-	char* path;
-	int idDTB;
-	char accion;
-	t_list* direcciones;
-}Operacion;
 
 void inicializarDAM();
-void enviarAMDJ(Operacion* operacion);
-void agregarOperacionACola(int emisor, char accion);
-int enviarDatosAFM9(char* datos);
-void recibirDatosDeFM9(void* buffer, int* desplazamiento);
-void verificarDatosDeMDJYEnviarASafa(Operacion* operacion);
-void consumirCola();
-void escucharCPU(int socketCPU);
 int main(void);
 
 

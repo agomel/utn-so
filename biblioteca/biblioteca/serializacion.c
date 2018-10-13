@@ -131,7 +131,7 @@ char deserializarChar(int emisor){
 t_list* deserializarListaInt(int emisor){
 	int elementosDeLalista = deserializarInt(emisor);
 	t_list* respuesta = list_create();
-	for(int i = 0; i<elementosDeLalista; i++){
+	for(int i = 0; i < elementosDeLalista; i++){
 		list_add(respuesta, deserializarInt(emisor));
 	}
 	return respuesta;
@@ -151,7 +151,7 @@ t_dictionary* deserializarDiccionario(int emisor){
 int obtenerTamanioDiccionario(t_dictionary* diccionario){
 	int respuesta = 0;
 	void sumarPuntaje(char* key, t_list* value){
-		respuesta += strlen(key) + 1;
+		respuesta += strlen(key) + 1 + sizeof(int);
 		respuesta += sizeof(int) + sizeof(int)*(value->elements_count);
 	}
 	dictionary_iterator(diccionario, sumarPuntaje);

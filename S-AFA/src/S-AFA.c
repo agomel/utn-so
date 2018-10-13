@@ -23,6 +23,7 @@ int identificarse(int emisor, char header){
 				list_add(socketsCPUs, socketCPU);
 				signalMutex(&mutexSocketsCPus);
 				signalSem(&gradoMultiprocesamiento);
+				log_info(logger, "signal GradoMultiprocesamiento, hay una nueva cpu");
 				break;
 			case DAM:
 				socketDAM = emisor;
@@ -38,10 +39,14 @@ int identificarse(int emisor, char header){
 		return 0;
 	}
 }
+void terminarOperacionDeCPU(int emisor, DTB* dtb){
+	verificarSiPasarAExit(emisor, dtb);
+	liberarCPU(emisor, dtb->id);
+}
+
 void entenderMensaje(int emisor, char header){
 	int idDTB;
 	DTB* dtb;
-	dtb->id = 0;
 	t_dictionary* direccionesYArchivos;
 	t_list* lista;
 	char* path;
@@ -51,7 +56,7 @@ void entenderMensaje(int emisor, char header){
 			deserializarString(emisor);
 			break;
 
-		case GUARDADO_CON_EXITO:
+		case CARGADO_CON_EXITO_EN_MEMORIA:
 			idDTB = deserializarInt(emisor);
 			path = deserializarString(emisor);
 			t_list* listaDirecciones = deserializarListaInt(emisor);
@@ -61,40 +66,45 @@ void entenderMensaje(int emisor, char header){
 			break;
 
 		case DESBLOQUEAR_DTB:
-			*dtb = deserializarDTB(emisor);
+			dtb = deserializarDTB(emisor);
 			desbloquearDTB(dtb);
+
+			terminarOperacionDeCPU(emisor, dtb);
 			break;
 
 		case BLOQUEAR_DTB:
-			*dtb = deserializarDTB(emisor);
+			dtb = deserializarDTB(emisor);
 			//TODO cambiar quantum
 			cambiarEstadoGuardandoNuevoDTB(dtb, BLOCKED);
+
+			terminarOperacionDeCPU(emisor, dtb);
 			break;
 
 		case PASAR_A_EXIT:
-			*dtb = deserializarDTB(emisor);
+			dtb = deserializarDTB(emisor);
 			cambiarEstadoGuardandoNuevoDTB(dtb, EXIT);
-			signalSem(&gradoMultiprocesamiento);
+
+			terminarOperacionDeCPU(emisor, dtb);
 			break;
 
 		case TERMINO_QUANTUM:
-			*dtb = deserializarDTB(emisor);
+			dtb = deserializarDTB(emisor);
 			cambiarEstadoGuardandoNuevoDTB(dtb, READY);
-			signalSem(&gradoMultiprocesamiento);
 			signalSem(&cantidadTotalREADY);
+
+			terminarOperacionDeCPU(emisor, dtb);
 			break;
 
 		case ERROR:
 			idDTB = deserializarInt(emisor);
 			path = deserializarString(emisor);
 			int error = deserializarInt(emisor);
-			//manejarErrores(idDTB, path, error);
+			manejarErrores(idDTB, path, error);
 			break;
 
 		default:
 			log_error(logger, "Header desconocido");
 	}
-	verificarSiPasarAExit(emisor,dtb);
 }
 
 void inicializarSAFA(){
@@ -112,6 +122,7 @@ void inicializarSAFA(){
 	inicializarMutex(&mutexOperaciones);
 	colaOperaciones = queue_create();
 	inicializarSem(&semOperaciones, 0);
+	inicializarSem(&semProductores, 0);
 }
 void crearSelect(int servidor){
 	Select* select = asignarMemoria(sizeof(Select));
@@ -122,8 +133,8 @@ void crearSelect(int servidor){
 	select->semOperaciones = &semOperaciones;
 	select->socket = servidor;
 	select->identificarse = &identificarse;
+	select->semProductores = &semProductores;
 	realizarNuestroSelect(select);
-
 }
 int main(void) {
 	inicializarSAFA();

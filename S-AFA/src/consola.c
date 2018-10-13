@@ -2,7 +2,7 @@
 #include <biblioteca/dtb.h>
 
 void loguearEstadoDeLista(t_list* lista, char estado){
-	log_info(logger, "Estado de lista: %c", estado);
+	log_info(logger, "Estado de lista: %s", nombreEstado(estado));
 	log_info(logger, "Cantidad de DTBs en lista: %d", lista->elements_count);
 	log_info(logger, "Ids de DTBs en lista:");
 	for(int i = 0; i<lista->elements_count; i++){
@@ -27,7 +27,7 @@ void crearStatusDeMetricas(){
 int obtenerComando(char*ingresado){
 	int comando=6;
 	const char* comandos[] = {"salir","status","finalizar","metricas","ejecutar"};
-	for(int i;i<5;i++){
+	for(int i = 0;i<5;i++){
 		if(strcmp(ingresado, comandos[i]) == 0) comando=i;
 	}
 	return comando;

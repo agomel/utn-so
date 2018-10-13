@@ -17,7 +17,7 @@ void escucharCliente(SocketEnSelect* socketEnSelect){
 		recibirMensaje(socketEnSelect->conectado, &header, sizeof(char));
 		agregarPedidoACola(header, socketEnSelect);
 		signalSem(socketEnSelect->select->semOperaciones);
-		//esto solo agrega operaciones a la cola
+		waitSem(socketEnSelect->select->semProductores);
 	}
 }
 
@@ -26,8 +26,10 @@ void consumirCola(Select* select){
 		waitSem(select->semOperaciones);
 		OperacionSocket* operacion = queue_pop(select->colaOperaciones);
 		(*select->funcionEntenderMensaje)(operacion->socket, operacion->header);
+		free(operacion);
+		log_info(select->logger, "Terminada operacion");
+		signalSem(select->semProductores);
 	}
-
 }
 
 void aceptarClientes(Select* select){
@@ -50,4 +52,15 @@ void realizarNuestroSelect(Select* select){
 	empezarAEscuchar(select->socket, INADDR_ANY);
 	crearHiloQueMuereSolo(&aceptarClientes, select);
 	crearHiloQueMuereSolo(&consumirCola, select);
+}
+
+void freeSelect(Select* select){
+	free(select->colaOperaciones);
+	free(select->funcionEntenderMensaje);
+	free(select->identificarse);
+	free(select->logger);
+	free(select->mutexOperaciones);
+	free(select->semOperaciones);
+	free(select->semProductores);
+	free(select);
 }

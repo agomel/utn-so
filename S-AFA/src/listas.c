@@ -41,7 +41,7 @@ void removerDTBDeCola(int idDTB){
 			waitMutex(&mutexListaDTBs);
 			list_remove(listaDeTodosLosDTBs, index);
 			signalMutex(&mutexListaDTBs);
-			freeDTB(dtb);
+			freeDTBSAFA(dtb);
 			break;
 		}
 	}
@@ -69,7 +69,6 @@ t_list* filtrarListaPorEstado(char estado){
 	waitMutex(&mutexListaDTBs);
 	t_list* lista = list_filter(listaDeTodosLosDTBs, estaEnEstado);
 	signalMutex(&mutexListaDTBs);
-	log_debug(logger, "Cantidad de DTBs en estado %c: %d", estado, lista->elements_count);
 	return lista;
 }
 
@@ -114,10 +113,31 @@ int obtenerCPUDisponibleYOcupar(int id){
 	SocketCPU* socketCPU = list_find(socketsCPUs, estaDisponible);
 	signalMutex(&mutexSocketsCPus);
 
-	socketCPU->ocupado = 1;
+	if(socketCPU->ocupado == 0){
+		socketCPU->ocupado = 1;
+	}else{
+		log_error(logger, "No hay CPUs disponibles");
+	}
 
 	waitMutex(&mutexEjecutandoCPU);
 	dictionary_put(ejecutandoCPU, intToString(id), socketCPU->socket);
 	signalMutex(&mutexEjecutandoCPU);
 	return socketCPU->socket;
+}
+
+void liberarCPU(int idSocket, int idDTB){
+
+	bool obtenerCPU(SocketCPU* socket){
+		return (socket->socket == idSocket);
+	}
+	waitMutex(&mutexSocketsCPus);
+	SocketCPU* socketCPU = list_find(socketsCPUs, obtenerCPU);
+	signalMutex(&mutexSocketsCPus);
+
+	socketCPU->ocupado = 0;
+
+	waitMutex(&mutexEjecutandoCPU);
+	dictionary_remove(ejecutandoCPU, intToString(idDTB));
+	signalMutex(&mutexEjecutandoCPU);
+	signalSem(&gradoMultiprocesamiento);
 }

@@ -18,11 +18,19 @@ typedef struct{
 	t_queue* colaOperaciones;
 	void (*funcionEntenderMensaje)(int, char);
 	int (*identificarse)(int, char);
+	sem_t* semProductores;
 }Select;
 
 typedef struct{
 	Select* select;
 	int conectado;
 }SocketEnSelect;
+
+void realizarNuestroSelect(Select* select);
+void aceptarClientes(Select* select);
+void consumirCola(Select* select);
+void escucharCliente(SocketEnSelect* socketEnSelect);
+void agregarPedidoACola(char header,SocketEnSelect* socketEnSelect);
+void freeSelect(Select* select);
 
 #endif /*NUESTROSELECT_H_*/
