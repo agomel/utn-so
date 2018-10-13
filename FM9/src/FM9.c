@@ -44,7 +44,7 @@ respuestaDeCargaEnMemoria cargarDatosEnMemoria(char* datos){
 }
 
 
-void agregarPedidoACola(char header,int socket){
+void agregarPedidoACola(char header, int socket){
 	OperacionSocket* operacion = asignarMemoria(sizeof(OperacionSocket));
 	operacion->header = header;
 	operacion->socket = socket;
@@ -55,12 +55,11 @@ void agregarPedidoACola(char header,int socket){
 }
 
 void escucharCliente(int socket){
-	log_debug(logger, "Escuchando a cpu");
+	log_debug(logger, "Escuchando nuevo cliente en %d", socket);
 	while(1){
 		char header;
 		recibirMensaje(socket, &header, sizeof(char));
 		agregarPedidoACola(header, socket);
-		entenderMensaje(socket, header);
 		signalSem(&semOperaciones);
 		//esto solo agrega operaciones a la cola
 	}
@@ -162,15 +161,13 @@ int main(void) {
 	parametros.servidor = servidor;
 	parametros.funcion = &entenderMensaje;
 	parametros.logger = logger;
-	//pthread_t hiloAdministradorDeConexiones = crearHilo(&escucharClientes, &parametros);
-
+	pthread_t hiloEscuchador = crearHilo(&consumirCola, NULL);
 	empezarAEscuchar(servidor, INADDR_ANY);
-	for(int i = 0; i<2; i++){
+	while(1){
 		int socket = aceptarCliente(servidor);
 		crearHiloQueMuereSolo(&escucharCliente, socket);
 	}
 
-	pthread_t hiloEscuchador = crearHilo(&consumirCola, NULL);
 
 	//esperarHilo(hiloAdministradorDeConexiones);
 	esperarHilo(hiloEscuchador);

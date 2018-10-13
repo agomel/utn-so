@@ -42,7 +42,6 @@ void escucharCliente(int socket){
 		char header;
 		recibirMensaje(socket, &header, sizeof(char));
 		agregarPedidoACola(header, socket);
-		entenderMensaje(socket, header);
 		signalSem(&semOperaciones);
 		//esto solo agrega operaciones a la cola
 	}

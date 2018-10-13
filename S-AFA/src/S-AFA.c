@@ -20,12 +20,11 @@ void agregarPedidoACola(char header,int socket){
 }
 
 void escucharCliente(int socket){
-	log_debug(logger, "Escuchando a cpu");
+	log_debug(logger, "Escuchando nuevo cliente en %d", socket);
 	while(1){
 		char header;
 		recibirMensaje(socket, &header, sizeof(char));
 		agregarPedidoACola(header, socket);
-		entenderMensaje(socket, header);
 		signalSem(&semOperaciones);
 		//esto solo agrega operaciones a la cola
 	}
@@ -140,6 +139,12 @@ void inicializarSAFA(){
 	colaOperaciones = queue_create();
 	inicializarSem(&semOperaciones, 0);
 }
+void aceptarClientes(int servidor){
+	while(1){
+		int socket = aceptarCliente(servidor);
+		crearHiloQueMuereSolo(&escucharCliente, socket);
+	}
+}
 int main(void) {
 	inicializarSAFA();
 	direccionServidor direccionSAFA = levantarDeConfiguracion(NULL, "PUERTO", ARCHIVO_CONFIGURACION);
@@ -150,22 +155,17 @@ int main(void) {
 	parametros.funcion = &entenderMensaje;
 	parametros.logger = logger;
 	empezarAEscuchar(servidor, INADDR_ANY);
-	for(int i = 0; i<2; i++){
-		int socket = aceptarCliente(servidor);
-		crearHiloQueMuereSolo(&escucharCliente, socket);
-	}
+
+	crearHiloQueMuereSolo(&aceptarClientes, servidor);
+	pthread_t hiloEscuchador = crearHilo(&consumirCola, NULL);
+
+	while(!conectadoCPU || !conectadoDAM);
+	estado = OPERATIVO;
 	pthread_t hiloConsola = crearHilo(&consola, NULL);
+
 	pthread_t hiloPlanificadorALargoPlazo = crearHilo(&planificadorALargoPlazo, NULL);
 	pthread_t hiloPlanificadorACortoPlazo = crearHilo(&planificadorACortoPlazo, NULL);
 
-	pthread_t hiloEscuchador = crearHilo(&consumirCola, NULL);
-	while(!conectadoCPU || !conectadoDAM);
-	estado = OPERATIVO;
-
-	while(1){
-			int cpu = aceptarCliente(servidor);
-			crearHiloQueMuereSolo(&escucharCliente, socket);
-	}
 	esperarHilo(hiloEscuchador);
 	esperarHilo(hiloConsola);
 	esperarHilo(hiloPlanificadorALargoPlazo);
