@@ -4,3 +4,9 @@
 [DEBUG] 11:36:48:71 MDJ/(7974:7986): Se agrego a las conexiones d
 [INFO] 11:37:13:546 MDJ/(7974:7986): Validando archivo en ruta: hola
 [DEBUG] 12:47:53:302 MDJ/(4489:4667): Escuchando a socket en 5
+[DEBUG] 12:49:49:30 MDJ/(4734:4764): Escuchando a socket en 5
+[DEBUG] 12:50:49:949 MDJ/(4734:4767): Handshake de: 
+[ERROR] 12:50:49:949 MDJ/(4734:4767): Conexion rechazada
+[DEBUG] 12:50:49:949 MDJ/(4734:4767): Se agrego a las conexiones 
+[DEBUG] 12:51:19:242 MDJ/(4824:4837): Escuchando a socket en 5
+[DEBUG] 12:53:12:411 MDJ/(4900:4913): Escuchando a socket en 5

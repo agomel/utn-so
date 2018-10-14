@@ -104,17 +104,7 @@ int main(void) {
 	direccionServidor direccionMDJ = levantarDeConfiguracion(NULL, "PUERTO", ARCHIVO_CONFIGURACION);
 	int servidor = crearServidor(direccionMDJ.puerto, INADDR_ANY);
 
-	parametrosEscucharClientes parametros;
-	parametros.servidor = servidor;
-	parametros.funcion = &entenderMensaje;
-	parametros.logger = logger;
-
-	//pthread_t hiloAdministradorDeConexiones = crearHilo(&escucharClientes, &parametros);
-
-	//esperarHilo(hiloAdministradorDeConexiones);
-
-
-	empezarAEscuchar(servidor, INADDR_ANY);
+	empezarAEscuchar(servidor, 100);
 	int socket = aceptarCliente(servidor);
 	crearHiloQueMuereSolo(&escucharCliente, socket);
 
