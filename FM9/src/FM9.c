@@ -44,36 +44,6 @@ respuestaDeCargaEnMemoria cargarDatosEnMemoria(char* datos){
 }
 
 
-void agregarPedidoACola(char header, int socket){
-	OperacionSocket* operacion = asignarMemoria(sizeof(OperacionSocket));
-	operacion->header = header;
-	operacion->socket = socket;
-	waitMutex(&mutexOperaciones);
-	queue_push(colaOperaciones, operacion);
-	signalMutex(&mutexOperaciones);
-
-}
-
-void escucharCliente(int socket){
-	log_debug(logger, "Escuchando nuevo cliente en %d", socket);
-	while(1){
-		char header;
-		recibirMensaje(socket, &header, sizeof(char));
-		agregarPedidoACola(header, socket);
-		signalSem(&semOperaciones);
-		//esto solo agrega operaciones a la cola
-	}
-}
-
-void consumirCola(){
-	while(1){
-		waitSem(&semOperaciones);
-		OperacionSocket* operacion = queue_pop(colaOperaciones);
-		entenderMensaje(operacion->socket, operacion->header);
-	}
-
-}
-
 void entenderMensaje(int emisor, char header){
 	char identificado;
 	char* datos;
@@ -89,21 +59,6 @@ void entenderMensaje(int emisor, char header){
 	t_list* posiciones;
 
 		switch(header){
-			case IDENTIFICARSE:
-				identificado = deserializarChar(emisor);
-				log_debug(logger, "Handshake de: %c", identificado);
-				switch(identificado){
-					case CPU:
-						socketCPU = emisor;
-						break;
-					case DAM:
-						socketDAM = emisor;
-						break;
-					default:
-						log_error(logger, "Conexion rechazada");
-				}
-				log_debug(logger, "Se agrego a las conexiones %c" , identificado);
-				break;
 
 			case GUARDAR_DATOS:
 				datos = deserializarString(emisor);
@@ -138,7 +93,41 @@ void entenderMensaje(int emisor, char header){
 				log_error(logger, "Header desconocido");
 		}
 }
+int identificarse(int emisor, char header){
+	if(header == IDENTIFICARSE){
+		char identificado = deserializarChar(emisor);
+		log_debug(logger, "Handshake de: %c", identificado);
+		switch(identificado){
+			case CPU:
+				socketCPU = emisor;
+				break;
+			case DAM:
+				socketDAM = emisor;
+				break;
+			default:
+				log_error(logger, "Conexion rechazada");
+		}
+		log_debug(logger, "Se agrego a las conexiones %c" , identificado);
+		return 1;
+	}else{
+		return 0;
+	}
+}
 
+
+
+void crearSelect(int servidor){
+	Select* select = asignarMemoria(sizeof(Select));
+	select->colaOperaciones = colaOperaciones;
+	select->funcionEntenderMensaje = &entenderMensaje;
+	select->logger = logger;
+	select->mutexOperaciones = &mutexOperaciones;
+	select->semOperaciones = &semOperaciones;
+	select->socket = servidor;
+	select->identificarse = &identificarse;
+	realizarNuestroSelect(select);
+
+}
 void init(){
 	inicializarMutex(&mutexOffset);
 	inicializarMutex(&mutexStorage);
@@ -156,21 +145,8 @@ int main(void) {
 
 	direccionServidor direccionFM9 = levantarDeConfiguracion(NULL, "PUERTO", ARCHIVO_CONFIGURACION);
 	int servidor = crearServidor(direccionFM9.puerto, INADDR_ANY);
-
-	parametrosEscucharClientes parametros;
-	parametros.servidor = servidor;
-	parametros.funcion = &entenderMensaje;
-	parametros.logger = logger;
-	pthread_t hiloEscuchador = crearHilo(&consumirCola, NULL);
-	empezarAEscuchar(servidor, INADDR_ANY);
-	while(1){
-		int socket = aceptarCliente(servidor);
-		crearHiloQueMuereSolo(&escucharCliente, socket);
-	}
-
-
-	//esperarHilo(hiloAdministradorDeConexiones);
-	esperarHilo(hiloEscuchador);
+	crearSelect(servidor);
+	while(1);
 	free(storage);
 	return 0;
 }
