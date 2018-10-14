@@ -1,6 +1,7 @@
 #include "operaciones.h"
 
 int validarArchivo(int emisor){
+	log_info(logger, "Deserializando string de emisor  %d", emisor);
 	char* rutaArchivo = deserializarString(emisor);
 	log_info(logger, "Validando archivo en ruta: %s", rutaArchivo);
 	//0 es archivo valido, en otro caso es error

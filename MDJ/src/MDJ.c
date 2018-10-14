@@ -30,6 +30,7 @@ void entenderMensaje(int emisor, char header){
 	char* datos;
 	switch(header){
 			case VALIDAR_ARCHIVO:
+				log_info(logger, "validando archivo de emisor %d", emisor);
 				archivoValido = validarArchivo(emisor);
 				enviarYSerializarIntSinHeader(emisor, archivoValido);
 				break;

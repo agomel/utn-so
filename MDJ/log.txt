@@ -10,3 +10,12 @@
 [DEBUG] 12:50:49:949 MDJ/(4734:4767): Se agrego a las conexiones 
 [DEBUG] 12:51:19:242 MDJ/(4824:4837): Escuchando a socket en 5
 [DEBUG] 12:53:12:411 MDJ/(4900:4913): Escuchando a socket en 5
+[DEBUG] 19:42:26:960 MDJ/(3723:3745): Handshake de: d
+[DEBUG] 19:42:26:961 MDJ/(3723:3745): Se agrego a las conexiones d
+[DEBUG] 19:42:26:977 MDJ/(3723:3784): Escuchando nuevo cliente en 5
+[DEBUG] 19:50:41:574 MDJ/(4426:4453): Handshake de: d
+[DEBUG] 19:50:41:575 MDJ/(4426:4453): Se agrego a las conexiones d
+[DEBUG] 19:50:41:586 MDJ/(4426:4463): Escuchando nuevo cliente en 5
+[DEBUG] 19:52:25:735 MDJ/(4542:4553): Handshake de: d
+[DEBUG] 19:52:25:735 MDJ/(4542:4553): Se agrego a las conexiones d
+[DEBUG] 19:52:25:752 MDJ/(4542:4562): Escuchando nuevo cliente en 5

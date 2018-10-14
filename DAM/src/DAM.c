@@ -26,13 +26,16 @@ void inicializarDAM(){
 	logger = crearLogger(ARCHIVO_LOG, "DAM");
 }
 int validarArchivoMDJ(Operacion* operacion){
-	void* buffer = asignarMemoria(sizeof(char) + sizeof(int) + strlen(operacion->path)+1);
+	int tamanioMensaje = sizeof(char) + sizeof(int) + strlen(operacion->path)+1;
+	void* buffer = asignarMemoria(tamanioMensaje);
 	int desplazamiento = 0;
 	concatenarChar(buffer, &desplazamiento, VALIDAR_ARCHIVO);
 	concatenarString(buffer, &desplazamiento, operacion->path);
-	enviarMensaje(socketMDJ, buffer, desplazamiento);
+	log_info(logger, "enviando a emisor %d char: %c y escriptorio %s", socketMDJ, VALIDAR_ARCHIVO, operacion->path);
+	enviarMensaje(socketMDJ, buffer, tamanioMensaje);
 	free(buffer);
-	return deserializarInt(socketMDJ);
+	int respuesta =  deserializarInt(socketMDJ);
+	return respuesta;
 
 }
 char* obtenerDatosDeMDJ(Operacion* operacion){
@@ -177,7 +180,7 @@ void consumirCola(){
 
 		switch(operacion->accion){
 			case CARGAR_ESCRIPTORIO_EN_MEMORIA:
-				log_info(logger, "Ehhh, voy a buscar %s para %d", operacion->path, operacion->idDTB);//Esto tendria que ser un log
+				log_info(logger, "Ehhh, voy a buscar %s para %d", operacion->path, operacion->idDTB);
 				int validarArchivo = validarArchivoMDJ(operacion);
 				if(validarArchivo != 0){
 					enviarError(operacion, validarArchivo);
