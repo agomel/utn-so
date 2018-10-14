@@ -42,10 +42,10 @@ char entendiendoLinea(char* lineaEjecutando){ //Devuelve 'b' si lo llama al dieg
 
 void pedirCosasDelFM9(DTB dtbRecibido){
 	void* buffer;
-	u_int32_t desplazamiento = 0;
+	int desplazamiento = 0;
 	t_list* listaDeDirecciones = list_create();
 	listaDeDirecciones = dictionary_get(dtbRecibido.direccionesArchivos, dtbRecibido.escriptorio);
-	u_int32_t tamanioBuffer = sizeof(char) + sizeof(u_int32_t)*2 + sizeof(u_int32_t)*(listaDeDirecciones->elements_count);
+	int tamanioBuffer = sizeof(char) + sizeof(int)*2 + sizeof(int)*(listaDeDirecciones->elements_count);
 	buffer = asignarMemoria(tamanioBuffer);
 
 	concatenarChar(buffer, &desplazamiento, TRAER_LINEA_ESCRIPTORIO);

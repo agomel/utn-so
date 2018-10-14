@@ -26,7 +26,7 @@ void inicializarDAM(){
 	logger = crearLogger(ARCHIVO_LOG, "DAM");
 }
 int validarArchivoMDJ(Operacion* operacion){
-	void* buffer = asignarMemoria(sizeof(char) + sizeof(u_int32_t) + strlen(operacion->path)+1);
+	void* buffer = asignarMemoria(sizeof(char) + sizeof(int) + strlen(operacion->path)+1);
 	int desplazamiento = 0;
 	concatenarChar(buffer, &desplazamiento, VALIDAR_ARCHIVO);
 	concatenarString(buffer, &desplazamiento, operacion->path);
@@ -36,14 +36,14 @@ int validarArchivoMDJ(Operacion* operacion){
 
 }
 char* obtenerDatosDeMDJ(Operacion* operacion){
-	u_int32_t offset = 0;
+	int offset = 0;
 	/*char* datosTotales = asignarMemoria(0);
 
-	u_int32_t cantidadDeDatos = transferSize;
+	int cantidadDeDatos = transferSize;
 	while(cantidadDeDatos == transferSize){
-		void* buffer = asignarMemoria(sizeof(char) + sizeof(u_int32_t) + (strlen(operacion->path)+1)
-				+ sizeof(u_int32_t) + sizeof(u_int32_t));
-		u_int32_t desplazamiento = 0;
+		void* buffer = asignarMemoria(sizeof(char) + sizeof(int) + (strlen(operacion->path)+1)
+				+ sizeof(int) + sizeof(int));
+		int desplazamiento = 0;
 
 		concatenarChar(buffer, &desplazamiento, OBTENER_DATOS);
 		concatenarString(buffer, &desplazamiento, operacion->path);
@@ -94,7 +94,7 @@ int enviarDatosAFM9(char* datos){
 	return deserializarInt(socketFM9);
 }
 int crearArchivoEnMDJ(Operacion* operacion, int cantidadDeLineas){
-	void* buffer = asignarMemoria(sizeof(char) + sizeof(u_int32_t) + (strlen(operacion->path)+1) + sizeof(u_int32_t));
+	void* buffer = asignarMemoria(sizeof(char) + sizeof(int) + (strlen(operacion->path)+1) + sizeof(int));
 	int desplazamiento = 0;
 	concatenarChar(buffer, &desplazamiento, CREAR_ARCHIVO);
 	concatenarString(buffer, &desplazamiento, operacion->path);
@@ -104,7 +104,7 @@ int crearArchivoEnMDJ(Operacion* operacion, int cantidadDeLineas){
 	return deserializarInt(socketMDJ);
 }
 int pedirDatosAFM9(Operacion* operacion){
-	void* buffer = asignarMemoria(sizeof(char) + sizeof(u_int32_t) + (sizeof(u_int32_t)*operacion->direcciones->elements_count));
+	void* buffer = asignarMemoria(sizeof(char) + sizeof(int) + (sizeof(int)*operacion->direcciones->elements_count));
 	int desplazamiento = 0;
 
 	concatenarChar(buffer, &desplazamiento, OBTENER_DATOS);
@@ -178,12 +178,12 @@ void consumirCola(){
 		switch(operacion->accion){
 			case CARGAR_ESCRIPTORIO_EN_MEMORIA:
 				log_info(logger, "Ehhh, voy a buscar %s para %d", operacion->path, operacion->idDTB);//Esto tendria que ser un log
-				u_int32_t validarArchivo = validarArchivoMDJ(operacion);
+				int validarArchivo = validarArchivoMDJ(operacion);
 				if(validarArchivo != 0){
 					enviarError(operacion, validarArchivo);
 				}else {
 					char* datos = obtenerDatosDeMDJ(operacion);
-					u_int32_t estadoDeCarga = enviarDatosAFM9(datos);
+					int estadoDeCarga = enviarDatosAFM9(datos);
 					if(estadoDeCarga != 0){
 						enviarError(operacion, estadoDeCarga);
 					}else{
@@ -199,11 +199,11 @@ void consumirCola(){
 				}else{
 					int cantidadDeLineas = deserializarInt(socketFM9);
 					void* datos = recibirFlushFM9();
-					u_int32_t crearArchivo = crearArchivoEnMDJ(operacion, cantidadDeLineas);
+					int crearArchivo = crearArchivoEnMDJ(operacion, cantidadDeLineas);
 					if(crearArchivo != 0){
 						enviarError(operacion, crearArchivo);
 					}else{
-						u_int32_t guardarDatos = guardarDatosEnMDJ(datos);
+						int guardarDatos = guardarDatosEnMDJ(datos);
 						if(guardarDatos != 0){
 							enviarError(operacion, guardarDatos);
 						}else{
