@@ -35,8 +35,8 @@ char entendiendoLinea(char* lineaEjecutando, DTB dtbRecibido){ //Devuelve 'b' si
 			return 'b';
 		}
 	}else if(string_starts_with(lineaEjecutando, "concentrar")){
-		//Concentrar
 		log_info(logger, "Ejecutando instruccion concentrar");
+		return 's';
 	}else if(string_starts_with(lineaEjecutando, "asignar")){
 		//Asignar
 		log_info(logger, "Ejecutando instruccion asignar");
