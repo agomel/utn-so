@@ -10,31 +10,52 @@ int socketFM9;
 int socketSAFA;
 t_log* logger;
 
-char entendiendoLinea(char* lineaEjecutando){ //Devuelve 'b' si lo llama al diego para que el safa lo bloquee, sino devuelve 's' para que siga ejecutando el escriptorio
-	if(strncmp(lineaEjecutando, "abrir", 5) == 0){
+char entendiendoLinea(char* lineaEjecutando, DTB dtbRecibido){ //Devuelve 'b' si lo llama al diego para que el safa lo bloquee, sino devuelve 's' para que siga ejecutando el escriptorio
+	if(string_starts_with(lineaEjecutando, "abrir")){
 		log_info(logger, "Ejecutando instruccion abrir");
-	}else if(strncmp(lineaEjecutando, "concentrar", 10) == 0){
+		char * pathRecibido = string_substring_from(lineaEjecutando, 4);
+		//Corroborar si ya esta abierto
+		if(dictionary_has_key(dtbRecibido.direccionesArchivos, pathRecibido)){
+			return 's';
+		}else {
+			int tamanioPathEscriptorioACargar;
+			int tamanioBuffer2;
+			int desplazamiento = 0;
+			void* buffer2;
+			tamanioPathEscriptorioACargar = strlen(pathRecibido) + 1;
+			tamanioBuffer2 = sizeof(char) + tamanioPathEscriptorioACargar + sizeof(int)*2;
+			buffer2 = asignarMemoria(tamanioBuffer2);
+
+			concatenarChar(buffer2, &desplazamiento, CARGAR_ESCRIPTORIO_EN_MEMORIA);
+			concatenarString(buffer2, &desplazamiento, dtbRecibido.escriptorio);
+			concatenarInt(buffer2, &desplazamiento, dtbRecibido.id);
+			enviarMensaje(socketDIEGO, buffer2, tamanioBuffer2);
+			free(buffer2);
+
+			return 'b';
+		}
+	}else if(string_starts_with(lineaEjecutando, "concentrar")){
 		//Concentrar
 		log_info(logger, "Ejecutando instruccion concentrar");
-	}else if(strncmp(lineaEjecutando, "asignar", 7) == 0){
+	}else if(string_starts_with(lineaEjecutando, "asignar")){
 		//Asignar
 		log_info(logger, "Ejecutando instruccion asignar");
-	}else if(strncmp(lineaEjecutando, "wait", 4) == 0){
+	}else if(string_starts_with(lineaEjecutando, "wait")){
 		//Wait
 		log_info(logger, "Ejecutando instruccion wait");
-	}else if(strncmp(lineaEjecutando, "signal", 6) == 0){
+	}else if(string_starts_with(lineaEjecutando, "signal")){
 		//Signal
 		log_info(logger, "Ejecutando instruccion signal");
-	}else if(strncmp(lineaEjecutando, "flush", 5) == 0){
+	}else if(string_starts_with(lineaEjecutando, "flush")){
 		//Flush
 		log_info(logger, "Ejecutando instruccion flush");
-	}else if(strncmp(lineaEjecutando, "close", 5) == 0){
+	}else if(string_starts_with(lineaEjecutando, "close")){
 		//Close
 		log_info(logger, "Ejecutando instruccion close");
-	}else if(strncmp(lineaEjecutando, "crear", 5) == 0){
+	}else if(string_starts_with(lineaEjecutando, "crear")){
 		//Crear
 		log_info(logger, "Ejecutando instruccion crear");
-	}else if(strncmp(lineaEjecutando, "borrar", 6) == 0){
+	}else if(string_starts_with(lineaEjecutando, "borrar")){
 		//Borrar
 		log_info(logger, "Ejecutando instruccion borrar");
 	}
@@ -83,7 +104,6 @@ void escuchar(int servidor){
 
 						enviarMensaje(socketDIEGO, buffer, tamanioBuffer);
 						free(buffer);
-						desplazamiento = 0;
 						//enviarMensaje(socketSAFA, DESBLOQUEAR_DTB, sizeof(char));
 						//serializarYEnviarDTB(socketSAFA, dtbRecibido, logger);
 						//freeDTB(&dtbRecibido);
@@ -107,11 +127,13 @@ void escuchar(int servidor){
 									serializarYEnviarDTB(socketSAFA, dtbRecibido, logger);
 									break;
 								}else if(lineaAEjecutar[0] != '#'){
-									mensajeEntendido = entendiendoLinea(lineaAEjecutar);
+									mensajeEntendido = entendiendoLinea(lineaAEjecutar, dtbRecibido);
 									if(mensajeEntendido == 'b'){
 										dtbRecibido.programCounter++;
 										enviarMensaje(socketSAFA, BLOQUEAR_DTB, sizeof(char));
 										serializarYEnviarDTB(socketSAFA, dtbRecibido, logger);
+										freeDTB(*dtbRecibido);
+										break;
 									}
 								}
 									dtbRecibido.programCounter++;
@@ -132,7 +154,7 @@ void escuchar(int servidor){
 									serializarYEnviarDTB(socketSAFA, dtbRecibido, logger);
 									break;
 								}else if(lineaAEjecutar[0] != '#'){
-									mensajeEntendido = entendiendoLinea(lineaAEjecutar);
+									mensajeEntendido = entendiendoLinea(lineaAEjecutar, dtbRecibido);
 									if(mensajeEntendido == 'b'){
 										dtbRecibido.programCounter++;
 										enviarMensaje(socketSAFA, BLOQUEAR_DTB, sizeof(char));
