@@ -27,3 +27,20 @@ int escucharClientes(parametrosEscucharClientes* parametros) {
 char* intToString(int numero){
 	return string_from_format("%d", numero);
 }
+
+char* nombreEstado(char estado){
+	switch(estado){
+	case NEW: return "NEW";
+		break;
+	case READY: return "READY";
+	break;
+	case EXIT: return "EXIT";
+		break;
+	case EXECUTE: return "EXECUTE";
+	break;
+	case READY_PRIORIDAD: return "READY_PRIORIDAD";
+		break;
+	default: return "LISTA NO RECONOCIDA";
+	break;
+	}
+}
