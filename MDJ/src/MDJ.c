@@ -25,38 +25,6 @@ t_queue* colaOperaciones;
 pthread_mutex_t mutexOperaciones;
 sem_t semOperaciones;
 
-
-void agregarPedidoACola(char header,int socket){
-	OperacionSocket* operacion = asignarMemoria(sizeof(OperacionSocket));
-	operacion->header = header;
-	operacion->socket = socket;
-	waitMutex(&mutexOperaciones);
-	queue_push(colaOperaciones, operacion);
-	signalMutex(&mutexOperaciones);
-
-}
-
-void escucharCliente(int socket){
-	log_debug(logger, "Escuchando a socket en %d", socket);
-	while(1){
-		char header;
-		recibirMensaje(socket, &header, sizeof(char));
-		agregarPedidoACola(header, socket);
-		signalSem(&semOperaciones);
-		//esto solo agrega operaciones a la cola
-	}
-}
-
-void consumirCola(){
-	while(1){
-		waitSem(&semOperaciones);
-		OperacionSocket* operacion = queue_pop(colaOperaciones);
-		entenderMensaje(operacion->socket, operacion->header);
-	}
-
-}
-
-
 void entenderMensaje(int emisor, char header){
 	char identificado;
 	int archivoValido;
@@ -92,6 +60,38 @@ void entenderMensaje(int emisor, char header){
 			log_error(logger, "Header desconocido");
 	}
 }
+
+void agregarPedidoACola(char header,int socket){
+	OperacionSocket* operacion = asignarMemoria(sizeof(OperacionSocket));
+	operacion->header = header;
+	operacion->socket = socket;
+	waitMutex(&mutexOperaciones);
+	queue_push(colaOperaciones, operacion);
+	signalMutex(&mutexOperaciones);
+
+}
+
+void escucharCliente(int socket){
+	log_debug(logger, "Escuchando a socket en %d", socket);
+	while(1){
+		char header;
+		recibirMensaje(socket, &header, sizeof(char));
+		agregarPedidoACola(header, socket);
+		signalSem(&semOperaciones);
+		//esto solo agrega operaciones a la cola
+	}
+}
+
+void consumirCola(){
+	while(1){
+		waitSem(&semOperaciones);
+		OperacionSocket* operacion = queue_pop(colaOperaciones);
+		entenderMensaje(operacion->socket, operacion->header);
+	}
+
+}
+
+
 void init(){
 	inicializarMutex(&mutexOperaciones);
 	colaOperaciones = queue_create();
