@@ -10,6 +10,7 @@
 #include "pcp.h"
 #include <biblioteca/dtb.h>
 #include <biblioteca/logger.h>
+#include <biblioteca/nuestroSelect.h>
 
 int socketDAM;
 pthread_mutex_t mutexDummy;

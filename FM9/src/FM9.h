@@ -12,7 +12,7 @@
 #include <biblioteca/logger.h>
 #include <commons/collections/queue.h>
 #include <biblioteca/semaforos.h>
-
+#include <biblioteca/nuestroSelect.h>
 t_dictionary* conexiones;
 int socketCPU;
 int socketDAM;
