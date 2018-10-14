@@ -45,7 +45,6 @@ respuestaDeCargaEnMemoria cargarDatosEnMemoria(char* datos){
 
 
 void entenderMensaje(int emisor, char header){
-	char identificado;
 	char* datos;
 	respuestaDeCargaEnMemoria respuestaDeCarga;
 	respuestaDeObtencionDeMemoria* respuestaDeObtener;

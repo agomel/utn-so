@@ -26,22 +26,9 @@ pthread_mutex_t mutexOperaciones;
 sem_t semOperaciones;
 
 void entenderMensaje(int emisor, char header){
-	char identificado;
 	int archivoValido;
 	char* datos;
 	switch(header){
-		/*case IDENTIFICARSE:
-			identificado = deserializarChar(emisor);
-			log_debug(logger, "Handshake de: %c", identificado);
-			switch(identificado){
-				case DAM:
-					socketDAM = emisor;
-					break;
-				default:
-					log_error(logger, "Conexion rechazada");
-			}
-			log_debug(logger, "Se agrego a las conexiones %c" , identificado);
-			break;*/
 			case VALIDAR_ARCHIVO:
 				archivoValido = validarArchivo(emisor);
 				enviarYSerializarIntSinHeader(emisor, archivoValido);
