@@ -158,10 +158,10 @@ int main(void) {
 
 	crearHiloQueMuereSolo(&aceptarClientes, servidor);
 	pthread_t hiloEscuchador = crearHilo(&consumirCola, NULL);
+	pthread_t hiloConsola = crearHilo(&consola, NULL);
 
 	while(!conectadoCPU || !conectadoDAM);
 	estado = OPERATIVO;
-	pthread_t hiloConsola = crearHilo(&consola, NULL);
 
 	pthread_t hiloPlanificadorALargoPlazo = crearHilo(&planificadorALargoPlazo, NULL);
 	pthread_t hiloPlanificadorACortoPlazo = crearHilo(&planificadorACortoPlazo, NULL);
