@@ -20,3 +20,7 @@
 [INFO] 20:40:00:837 DAM/(6091:6109): Ehhh, voy a buscar hola para 1
 [DEBUG] 20:41:14:104 DAM/(6173:6202): Escuchando a cpu
 [INFO] 20:41:35:665 DAM/(6173:6192): Ehhh, voy a buscar hola para 1
+[DEBUG] 12:40:23:305 DAM/(4244:4271): Escuchando a cpu
+[INFO] 12:40:31:419 DAM/(4244:4265): Ehhh, voy a buscar gola para 1
+[DEBUG] 12:41:51:409 DAM/(4322:4348): Escuchando a cpu
+[INFO] 12:41:57:698 DAM/(4322:4343): Ehhh, voy a buscar hola para 1

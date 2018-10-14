@@ -37,7 +37,7 @@ void agregarPedidoACola(char header,int socket){
 }
 
 void escucharCliente(int socket){
-	log_debug(logger, "Escuchando a cpu");
+	log_debug(logger, "Escuchando a socket en %d", socket);
 	while(1){
 		char header;
 		recibirMensaje(socket, &header, sizeof(char));
