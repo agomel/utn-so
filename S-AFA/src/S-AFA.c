@@ -41,7 +41,6 @@ int identificarse(int emisor, char header){
 void entenderMensaje(int emisor, char header){
 	int idDTB;
 	DTB* dtb;
-	dtb->id = 0;
 	t_dictionary* direccionesYArchivos;
 	t_list* lista;
 	char* path;
@@ -61,40 +60,47 @@ void entenderMensaje(int emisor, char header){
 			break;
 
 		case DESBLOQUEAR_DTB:
-			*dtb = deserializarDTB(emisor);
+			dtb = deserializarDTB(emisor);
 			desbloquearDTB(dtb);
+
+			verificarSiPasarAExit(emisor, dtb);
 			break;
 
 		case BLOQUEAR_DTB:
-			*dtb = deserializarDTB(emisor);
+			dtb = deserializarDTB(emisor);
 			//TODO cambiar quantum
 			cambiarEstadoGuardandoNuevoDTB(dtb, BLOCKED);
+
+			verificarSiPasarAExit(emisor, dtb);
 			break;
 
 		case PASAR_A_EXIT:
-			*dtb = deserializarDTB(emisor);
+			dtb = deserializarDTB(emisor);
 			cambiarEstadoGuardandoNuevoDTB(dtb, EXIT);
 			signalSem(&gradoMultiprocesamiento);
+
+			verificarSiPasarAExit(emisor,dtb);
 			break;
 
 		case TERMINO_QUANTUM:
-			*dtb = deserializarDTB(emisor);
+			dtb = deserializarDTB(emisor);
 			cambiarEstadoGuardandoNuevoDTB(dtb, READY);
 			signalSem(&gradoMultiprocesamiento);
 			signalSem(&cantidadTotalREADY);
+
+			verificarSiPasarAExit(emisor, dtb);
 			break;
 
 		case ERROR:
 			idDTB = deserializarInt(emisor);
 			path = deserializarString(emisor);
 			int error = deserializarInt(emisor);
-			//manejarErrores(idDTB, path, error);
+			manejarErrores(idDTB, path, error);
 			break;
 
 		default:
 			log_error(logger, "Header desconocido");
 	}
-	verificarSiPasarAExit(emisor,dtb);
 }
 
 void inicializarSAFA(){

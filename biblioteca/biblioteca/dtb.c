@@ -44,15 +44,15 @@ void serializarYEnviarDTB(int receptor, DTB dtb, t_log* logger, char operacion){
 	free(buffer);
 }
 
-DTB deserializarDTB(int emisor){
-	DTB dtb;
-	dtb.escriptorio = deserializarString(emisor);;
-	dtb.flag = deserializarInt(emisor);
-	dtb.id = deserializarInt(emisor);
-	dtb.programCounter = deserializarInt(emisor);
-	dtb.direccionesArchivos = deserializarDiccionario(emisor);
-	dtb.quantum = deserializarInt(emisor);
-	dtb.estado = deserializarChar(emisor);
+DTB* deserializarDTB(int emisor){
+	DTB* dtb = asignarMemoria(sizeof(DTB));
+	dtb->escriptorio = deserializarString(emisor);
+	dtb->flag = deserializarInt(emisor);
+	dtb->id = deserializarInt(emisor);
+	dtb->programCounter = deserializarInt(emisor);
+	dtb->direccionesArchivos = deserializarDiccionario(emisor);
+	dtb->quantum = deserializarInt(emisor);
+	dtb->estado = deserializarChar(emisor);
 	return dtb;
 }
 
