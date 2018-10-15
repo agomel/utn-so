@@ -155,7 +155,7 @@ int guardarDatosEnMDJ(void* datosTotales){
 void notificarASafa(Operacion *operacion){
 	void* buffer = asignarMemoria(sizeof(char) + sizeof(int) + strlen(operacion->path)+1);
 	int desplazamiento = 0;
-	concatenarChar(buffer, &desplazamiento, GUARDADO_CON_EXITO);
+	concatenarChar(buffer, &desplazamiento, CARGADO_CON_EXITO_EN_MEMORIA);
 	concatenarInt(buffer, &desplazamiento, operacion->idDTB);
 	concatenarString(buffer, &desplazamiento, operacion->path);
 	enviarMensaje(socketSAFA, buffer, desplazamiento);

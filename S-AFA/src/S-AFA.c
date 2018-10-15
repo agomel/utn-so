@@ -51,7 +51,7 @@ void entenderMensaje(int emisor, char header){
 			deserializarString(emisor);
 			break;
 
-		case GUARDADO_CON_EXITO:
+		case CARGADO_CON_EXITO_EN_MEMORIA:
 			idDTB = deserializarInt(emisor);
 			path = deserializarString(emisor);
 			t_list* listaDirecciones = deserializarListaInt(emisor);
