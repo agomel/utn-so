@@ -56,13 +56,10 @@ DTB deserializarDTB(int emisor){
 }
 
 void freeDTB(DTB* dtb){
+	void destruirLista(t_list* lista){
+		list_destroy(lista);
+	}
 	free(dtb->escriptorio);
-	free(dtb->estado);
-	free(dtb->flag);
-	free(dtb->id);
-	free(dtb->programCounter);
-	free(dtb->quantum);
-	//TODO falta frear las listas
-	free(dtb);
+	dictionary_destroy_and_destroy_elements(dtb->direccionesArchivos, destruirLista);
 }
 
