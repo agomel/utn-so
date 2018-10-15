@@ -17,6 +17,7 @@ DTB crearDTB (char* parametro){
 	//TODO poner valor valido en programCounter
 	dtb.programCounter = 0;
 	dtb.estado = NEW;
+	dtb.quantum = 0;
 	return dtb;
 }
 
@@ -43,26 +44,23 @@ void serializarYEnviarDTB(int receptor, DTB dtb, t_log* logger, char operacion){
 	free(buffer);
 }
 
-DTB deserializarDTB(int emisor){
-	DTB dtb;
-	dtb.escriptorio = deserializarString(emisor);;
-	dtb.flag = deserializarInt(emisor);
-	dtb.id = deserializarInt(emisor);
-	dtb.programCounter = deserializarInt(emisor);
-	dtb.direccionesArchivos = deserializarDiccionario(emisor);
-	dtb.quantum = deserializarInt(emisor);
-	dtb.estado = deserializarChar(emisor);
+DTB* deserializarDTB(int emisor){
+	DTB* dtb = asignarMemoria(sizeof(DTB));
+	dtb->escriptorio = deserializarString(emisor);
+	dtb->flag = deserializarInt(emisor);
+	dtb->id = deserializarInt(emisor);
+	dtb->programCounter = deserializarInt(emisor);
+	dtb->direccionesArchivos = deserializarDiccionario(emisor);
+	dtb->quantum = deserializarInt(emisor);
+	dtb->estado = deserializarChar(emisor);
 	return dtb;
 }
 
 void freeDTB(DTB* dtb){
+	void destruirLista(t_list* lista){
+		list_destroy(lista);
+	}
 	free(dtb->escriptorio);
-	free(dtb->estado);
-	free(dtb->flag);
-	free(dtb->id);
-	free(dtb->programCounter);
-	free(dtb->quantum);
-	//TODO falta frear las listas
-	free(dtb);
+	dictionary_destroy_and_destroy_elements(dtb->direccionesArchivos, destruirLista);
 }
 
