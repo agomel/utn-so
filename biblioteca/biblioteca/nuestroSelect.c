@@ -13,12 +13,11 @@ void agregarPedidoACola(char header,SocketEnSelect* socketEnSelect){
 void escucharCliente(SocketEnSelect* socketEnSelect){
 	log_debug(socketEnSelect->select->logger, "Escuchando nuevo cliente en %d", socketEnSelect->conectado);
 	while(1){
-		waitSem(socketEnSelect->select->semProductores);
 		char header;
 		recibirMensaje(socketEnSelect->conectado, &header, sizeof(char));
 		agregarPedidoACola(header, socketEnSelect);
 		signalSem(socketEnSelect->select->semOperaciones);
-		//esto solo agrega operaciones a la cola
+		waitSem(socketEnSelect->select->semProductores);
 	}
 }
 
