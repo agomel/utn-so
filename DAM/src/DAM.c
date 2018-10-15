@@ -152,10 +152,21 @@ int guardarDatosEnMDJ(void* datosTotales){
 	}
 	return deserializarInt(socketMDJ);
 }
-void notificarASafa(Operacion *operacion){
-	void* buffer = asignarMemoria(sizeof(char) + sizeof(int) + strlen(operacion->path)+1);
+void notificarASafaExitoDeCarga(Operacion *operacion, t_list* direcciones){
+	void* buffer =
+			asignarMemoria(sizeof(char) + sizeof(int) + strlen(operacion->path)+1 + sizeof(int) + direcciones->elements_count*sizeof(int));
 	int desplazamiento = 0;
 	concatenarChar(buffer, &desplazamiento, CARGADO_CON_EXITO_EN_MEMORIA);
+	concatenarInt(buffer, &desplazamiento, operacion->idDTB);
+	concatenarString(buffer, &desplazamiento, operacion->path);
+	concatenarListaInt(buffer, &desplazamiento, direcciones);
+	enviarMensaje(socketSAFA, buffer, desplazamiento);
+	free(buffer);
+}
+void notificarASafaExitoDeGuardado(Operacion *operacion){
+	void* buffer = asignarMemoria(sizeof(char) + sizeof(int) + strlen(operacion->path)+1);
+	int desplazamiento = 0;
+	concatenarChar(buffer, &desplazamiento, GUARDADO_CON_EXITO_EN_MDJ);
 	concatenarInt(buffer, &desplazamiento, operacion->idDTB);
 	concatenarString(buffer, &desplazamiento, operacion->path);
 	enviarMensaje(socketSAFA, buffer, desplazamiento);
@@ -190,7 +201,8 @@ void consumirCola(){
 					if(estadoDeCarga != 0){
 						enviarError(operacion, estadoDeCarga);
 					}else{
-						notificarASafa(operacion);
+						t_list* direcciones = deserializarListaInt(socketFM9);
+						notificarASafaExitoDeCarga(operacion, direcciones);
 					}
 				}
 				break;
@@ -210,7 +222,7 @@ void consumirCola(){
 						if(guardarDatos != 0){
 							enviarError(operacion, guardarDatos);
 						}else{
-							notificarASafa(operacion);
+							notificarASafaExitoDeGuardado(operacion);
 						}
 					}
 					free(datos);
