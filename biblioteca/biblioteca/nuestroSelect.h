@@ -18,6 +18,7 @@ typedef struct{
 	t_queue* colaOperaciones;
 	void (*funcionEntenderMensaje)(int, char);
 	int (*identificarse)(int, char);
+	sem_t* semProductores;
 }Select;
 
 typedef struct{

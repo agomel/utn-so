@@ -112,6 +112,7 @@ void inicializarSAFA(){
 	inicializarMutex(&mutexOperaciones);
 	colaOperaciones = queue_create();
 	inicializarSem(&semOperaciones, 0);
+	inicializarSem(&semProductores, 0);
 }
 void crearSelect(int servidor){
 	Select* select = asignarMemoria(sizeof(Select));
@@ -122,6 +123,7 @@ void crearSelect(int servidor){
 	select->semOperaciones = &semOperaciones;
 	select->socket = servidor;
 	select->identificarse = &identificarse;
+	select->semProductores = &semProductores;
 	realizarNuestroSelect(select);
 
 }

@@ -18,6 +18,7 @@ void escucharCliente(SocketEnSelect* socketEnSelect){
 		agregarPedidoACola(header, socketEnSelect);
 		signalSem(socketEnSelect->select->semOperaciones);
 		//esto solo agrega operaciones a la cola
+		waitSem(socketEnSelect->select->semProductores);
 	}
 }
 
@@ -26,8 +27,8 @@ void consumirCola(Select* select){
 		waitSem(select->semOperaciones);
 		OperacionSocket* operacion = queue_pop(select->colaOperaciones);
 		(*select->funcionEntenderMensaje)(operacion->socket, operacion->header);
+		signalSem(select->semProductores);
 	}
-
 }
 
 void aceptarClientes(Select* select){

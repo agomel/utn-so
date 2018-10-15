@@ -25,6 +25,7 @@ t_log* logger;
 t_queue* colaOperaciones;
 pthread_mutex_t mutexOperaciones;
 sem_t semOperaciones;
+sem_t semProductores;
 
 typedef struct{
 	t_list* listaDeDirecciones;

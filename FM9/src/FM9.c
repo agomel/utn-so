@@ -124,6 +124,7 @@ void crearSelect(int servidor){
 	select->semOperaciones = &semOperaciones;
 	select->socket = servidor;
 	select->identificarse = &identificarse;
+	select->semProductores = &semProductores;
 	realizarNuestroSelect(select);
 
 }
@@ -137,6 +138,7 @@ void init(){
 	inicializarMutex(&mutexOperaciones);
 	colaOperaciones = queue_create();
 	inicializarSem(&semOperaciones, 0);
+	inicializarSem(&semProductores, 0);
 }
 
 int main(void) {
