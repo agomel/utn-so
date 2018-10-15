@@ -10,10 +10,14 @@ int socketFM9;
 int socketSAFA;
 t_log* logger;
 
-char entendiendoLinea(char* lineaEjecutando, DTB dtbRecibido){ //Devuelve 'b' si lo llama al diego para que el safa lo bloquee, sino devuelve 's' para que siga ejecutando el escriptorio
+char entendiendoLinea(char* lineaEjecutando, DTB dtbRecibido){
+	//Devuelve 'b' si lo llama al diego para que el safa lo bloquee
+	//sino devuelve 's' para que siga ejecutando el escriptorio
+	//'a' si hay que abortar el G.DT
 	if(string_starts_with(lineaEjecutando, "abrir")){
 		log_info(logger, "Ejecutando instruccion abrir");
-		char * pathRecibido = string_substring_from(lineaEjecutando, 4);
+		char* pathRecibido = asignarMemoria(strlen(lineaEjecutando)-4);
+		pathRecibido = string_substring_from(lineaEjecutando, 5);
 		//Corroborar si ya esta abierto
 		if(dictionary_has_key(dtbRecibido.direccionesArchivos, pathRecibido)){
 			return 's';
@@ -31,24 +35,68 @@ char entendiendoLinea(char* lineaEjecutando, DTB dtbRecibido){ //Devuelve 'b' si
 			concatenarInt(buffer2, &desplazamiento, dtbRecibido.id);
 			enviarMensaje(socketDIEGO, buffer2, tamanioBuffer2);
 			free(buffer2);
-
+			free(pathRecibido);
 			return 'b';
 		}
+
 	}else if(string_starts_with(lineaEjecutando, "concentrar")){
 		log_info(logger, "Ejecutando instruccion concentrar");
 		return 's';
+
 	}else if(string_starts_with(lineaEjecutando, "asignar")){
 		//Asignar
 		log_info(logger, "Ejecutando instruccion asignar");
+
 	}else if(string_starts_with(lineaEjecutando, "wait")){
-		//Wait
 		log_info(logger, "Ejecutando instruccion wait");
+		char* recursoRecibido = asignarMemoria(strlen(lineaEjecutando)-3);
+		recursoRecibido = string_substring_from(lineaEjecutando, 4);
+		enviarYSerializarString(socketSAFA, recursoRecibido, RETENCION_DE_RECURSO);
+		char seguirConEjecucion = deserializarChar(socketSAFA);
+		free(recursoRecibido);
+		if(seguirConEjecucion == 'LIBERAR_DTB_DE_EJECUCION'){
+			return 'b';
+		}else{
+			return 's';
+		}
+
 	}else if(string_starts_with(lineaEjecutando, "signal")){
-		//Signal
 		log_info(logger, "Ejecutando instruccion signal");
+		char* recursoRecibido = asignarMemoria(strlen(lineaEjecutando)-5);
+		recursoRecibido = string_substring_from(lineaEjecutando, 6);
+		enviarYSerializarString(socketSAFA, recursoRecibido, LIBERAR_RECURSO);
+		char seguirConEjecucion = deserializarChar(socketSAFA);
+		free(recursoRecibido);
+		if(seguirConEjecucion == 'LIBERAR_DTB_DE_EJECUCION'){
+			return 'b';
+		}else{
+			return 's';
+		}
+
 	}else if(string_starts_with(lineaEjecutando, "flush")){
 		//Flush
 		log_info(logger, "Ejecutando instruccion flush");
+		char* pathRecibido = asignarMemoria(strlen(lineaEjecutando)-4);
+		pathRecibido = string_substring_from(lineaEjecutando, 5);
+		if(dictionary_has_key(dtbRecibido.direccionesArchivos, pathRecibido)){
+			//Esta abierto
+			void* buffer;
+			int desplazamiento = 0;
+			int tamanioBuffer = sizeof(char) + (strlen(pathRecibido)+1) + sizeof(int)*2 + obtenerTamanioDiccionario(dtbRecibido.direccionesArchivos);
+			buffer = asignarMemoria(tamanioBuffer);
+
+			concatenarChar(buffer, &desplazamiento, GUARDAR_ESCRIPTORIO);
+			concatenarString(buffer, &desplazamiento, pathRecibido);
+			concatenarDiccionario(buffer, &desplazamiento, dtbRecibido.direccionesArchivos);
+			enviarMensaje(socketDIEGO, buffer, tamanioBuffer);
+			free(buffer);
+			free(pathRecibido);
+			return 'b';
+		}else{
+			//No esta abierto ese archivo
+			return 'a';
+		}
+
 	}else if(string_starts_with(lineaEjecutando, "close")){
 		//Close
 		log_info(logger, "Ejecutando instruccion close");
@@ -128,6 +176,11 @@ void escuchar(int servidor){
 									if(mensajeEntendido == 'b'){
 										dtbRecibido->programCounter++;
 										serializarYEnviarDTB(socketSAFA, *dtbRecibido, logger, BLOQUEAR_DTB);
+										freeDTB(dtbRecibido);
+										break;
+									}else if(mensajeEntendido == 'a'){
+										serializarYEnviarDTB(socketSAFA, *dtbRecibido, logger, PASAR_A_EXIT);
+										freeDTB(dtbRecibido);
 										break;
 									}
 								}
