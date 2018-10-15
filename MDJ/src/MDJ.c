@@ -86,7 +86,7 @@ void init(){
 	inicializarMutex(&mutexOperaciones);
 	colaOperaciones = queue_create();
 	inicializarSem(&semOperaciones, 0);
-	inicializarSem(&semProductores, 0);
+	inicializarSem(&semProductores, 1);
 }
 int main(void) {
 	init();
