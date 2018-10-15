@@ -9,75 +9,48 @@
  */
 #include "S-AFA.h"
 
-void agregarPedidoACola(char header,int socket){
-	OperacionSocket* operacion = asignarMemoria(sizeof(OperacionSocket));
-	operacion->header = header;
-	operacion->socket = socket;
-	waitMutex(&mutexOperaciones);
-	queue_push(colaOperaciones, operacion);
-	signalMutex(&mutexOperaciones);
+int identificarse(int emisor, char header){
+	if(header == IDENTIFICARSE){
+		char identificado = deserializarChar(emisor);
+		log_debug(logger, "Handshake de: %c", identificado);
+		switch(identificado){
+			case CPU:
+				conectadoCPU = 1;
+				SocketCPU* socketCPU = asignarMemoria(sizeof(SocketCPU));
+				socketCPU->socket = emisor;
+				socketCPU->ocupado = 0;
+				waitMutex(&mutexSocketsCPus);
+				list_add(socketsCPUs, socketCPU);
+				signalMutex(&mutexSocketsCPus);
+				signalSem(&gradoMultiprocesamiento);
+				break;
+			case DAM:
+				socketDAM = emisor;
+				conectadoDAM = 1;
+				break;
+			default:
+				log_error(logger, "Conexion rechazada");
+		}
+		log_debug(logger, "Se agrego a las conexiones %c" , identificado);
+		return 1;
 
-}
-
-void escucharCliente(int socket){
-	log_debug(logger, "Escuchando nuevo cliente en %d", socket);
-	while(1){
-		char header;
-		recibirMensaje(socket, &header, sizeof(char));
-		agregarPedidoACola(header, socket);
-		signalSem(&semOperaciones);
-		//esto solo agrega operaciones a la cola
+	}else{
+		return 0;
 	}
 }
-
-void consumirCola(){
-	while(1){
-		waitSem(&semOperaciones);
-		OperacionSocket* operacion = queue_pop(colaOperaciones);
-		entenderMensaje(operacion->socket, operacion->header);
-	}
-
-}
-
 void entenderMensaje(int emisor, char header){
-	char identificado;
 	int idDTB;
 	DTB* dtb;
-	dtb->id = 0;
 	t_dictionary* direccionesYArchivos;
 	t_list* lista;
 	char* path;
 	switch(header){
-		case IDENTIFICARSE:
-			identificado = deserializarChar(emisor);
-			log_debug(logger, "Handshake de: %c", identificado);
-			switch(identificado){
-				case CPU:
-					conectadoCPU = 1;
-					SocketCPU* socketCPU = asignarMemoria(sizeof(SocketCPU));
-					socketCPU->socket = emisor;
-					socketCPU->ocupado = 0;
-					waitMutex(&mutexSocketsCPus);
-					list_add(socketsCPUs, socketCPU);
-					signalMutex(&mutexSocketsCPus);
-					signalSem(&gradoMultiprocesamiento);
-					break;
-				case DAM:
-					socketDAM = emisor;
-					conectadoDAM = 1;
-					break;
-				default:
-					log_error(logger, "Conexion rechazada");
-			}
-			log_debug(logger, "Se agrego a las conexiones %c" , identificado);
-			break;
-
 		case MANDAR_TEXTO:
 			//TODO esta operacion es basura, es para probar a serializacion y deserializacion
 			deserializarString(emisor);
 			break;
 
-		case GUARDADO_CON_EXITO:
+		case CARGADO_CON_EXITO_EN_MEMORIA:
 			idDTB = deserializarInt(emisor);
 			path = deserializarString(emisor);
 			t_list* listaDirecciones = deserializarListaInt(emisor);
@@ -87,40 +60,47 @@ void entenderMensaje(int emisor, char header){
 			break;
 
 		case DESBLOQUEAR_DTB:
-			*dtb = deserializarDTB(emisor);
+			dtb = deserializarDTB(emisor);
 			desbloquearDTB(dtb);
+
+			verificarSiPasarAExit(emisor, dtb);
 			break;
 
 		case BLOQUEAR_DTB:
-			*dtb = deserializarDTB(emisor);
+			dtb = deserializarDTB(emisor);
 			//TODO cambiar quantum
 			cambiarEstadoGuardandoNuevoDTB(dtb, BLOCKED);
+
+			verificarSiPasarAExit(emisor, dtb);
 			break;
 
 		case PASAR_A_EXIT:
-			*dtb = deserializarDTB(emisor);
+			dtb = deserializarDTB(emisor);
 			cambiarEstadoGuardandoNuevoDTB(dtb, EXIT);
 			signalSem(&gradoMultiprocesamiento);
+
+			verificarSiPasarAExit(emisor,dtb);
 			break;
 
 		case TERMINO_QUANTUM:
-			*dtb = deserializarDTB(emisor);
+			dtb = deserializarDTB(emisor);
 			cambiarEstadoGuardandoNuevoDTB(dtb, READY);
 			signalSem(&gradoMultiprocesamiento);
 			signalSem(&cantidadTotalREADY);
+
+			verificarSiPasarAExit(emisor, dtb);
 			break;
 
 		case ERROR:
 			idDTB = deserializarInt(emisor);
 			path = deserializarString(emisor);
 			int error = deserializarInt(emisor);
-			//manejarErrores(idDTB, path, error);
+			manejarErrores(idDTB, path, error);
 			break;
 
 		default:
 			log_error(logger, "Header desconocido");
 	}
-	verificarSiPasarAExit(emisor,dtb);
 }
 
 void inicializarSAFA(){
@@ -138,26 +118,27 @@ void inicializarSAFA(){
 	inicializarMutex(&mutexOperaciones);
 	colaOperaciones = queue_create();
 	inicializarSem(&semOperaciones, 0);
+	inicializarSem(&semProductores, 0);
 }
-void aceptarClientes(int servidor){
-	while(1){
-		int socket = aceptarCliente(servidor);
-		crearHiloQueMuereSolo(&escucharCliente, socket);
-	}
+void crearSelect(int servidor){
+	Select* select = asignarMemoria(sizeof(Select));
+	select->colaOperaciones = colaOperaciones;
+	select->funcionEntenderMensaje = &entenderMensaje;
+	select->logger = logger;
+	select->mutexOperaciones = &mutexOperaciones;
+	select->semOperaciones = &semOperaciones;
+	select->socket = servidor;
+	select->identificarse = &identificarse;
+	select->semProductores = &semProductores;
+	realizarNuestroSelect(select);
+
 }
 int main(void) {
 	inicializarSAFA();
 	direccionServidor direccionSAFA = levantarDeConfiguracion(NULL, "PUERTO", ARCHIVO_CONFIGURACION);
 	int servidor = crearServidor(direccionSAFA.puerto, INADDR_ANY);
 	inicializarPlanificadores();
-	parametrosEscucharClientes parametros;
-	parametros.servidor = servidor;
-	parametros.funcion = &entenderMensaje;
-	parametros.logger = logger;
-	empezarAEscuchar(servidor, INADDR_ANY);
-
-	crearHiloQueMuereSolo(&aceptarClientes, servidor);
-	pthread_t hiloEscuchador = crearHilo(&consumirCola, NULL);
+	crearSelect(servidor);
 	pthread_t hiloConsola = crearHilo(&consola, NULL);
 
 	while(!conectadoCPU || !conectadoDAM);
@@ -166,7 +147,6 @@ int main(void) {
 	pthread_t hiloPlanificadorALargoPlazo = crearHilo(&planificadorALargoPlazo, NULL);
 	pthread_t hiloPlanificadorACortoPlazo = crearHilo(&planificadorACortoPlazo, NULL);
 
-	esperarHilo(hiloEscuchador);
 	esperarHilo(hiloConsola);
 	esperarHilo(hiloPlanificadorALargoPlazo);
 	esperarHilo(hiloPlanificadorACortoPlazo);

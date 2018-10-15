@@ -10,6 +10,7 @@
 #include "pcp.h"
 #include <biblioteca/dtb.h>
 #include <biblioteca/logger.h>
+#include <biblioteca/nuestroSelect.h>
 
 int socketDAM;
 pthread_mutex_t mutexDummy;
@@ -40,6 +41,7 @@ t_log* logger;
 t_queue* colaOperaciones;
 pthread_mutex_t mutexOperaciones;
 sem_t semOperaciones;
+sem_t semProductores;
 
 void entenderMensaje(int emisor, char header);
 

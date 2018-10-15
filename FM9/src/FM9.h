@@ -12,7 +12,7 @@
 #include <biblioteca/logger.h>
 #include <commons/collections/queue.h>
 #include <biblioteca/semaforos.h>
-
+#include <biblioteca/nuestroSelect.h>
 t_dictionary* conexiones;
 int socketCPU;
 int socketDAM;
@@ -25,6 +25,7 @@ t_log* logger;
 t_queue* colaOperaciones;
 pthread_mutex_t mutexOperaciones;
 sem_t semOperaciones;
+sem_t semProductores;
 
 typedef struct{
 	t_list* listaDeDirecciones;
