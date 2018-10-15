@@ -17,6 +17,7 @@ DTB crearDTB (char* parametro){
 	//TODO poner valor valido en programCounter
 	dtb.programCounter = 0;
 	dtb.estado = NEW;
+	dtb.quantum = 0;
 	return dtb;
 }
 

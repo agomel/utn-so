@@ -27,9 +27,7 @@ void inicializarSemaforos(){
 
 
 void cambiarEstado(int idDTB, char nuevoEstado){
-	waitMutex(&mutexListaDTBs);
 	DTB* dtb = obtenerDTBDeColaRemoviendolo(idDTB);
-	signalMutex(&mutexListaDTBs);
 	if(dtb->estado == EXECUTE){
 		signalMutex(&gradoMultiprocesamiento);
 	}
@@ -42,9 +40,7 @@ void cambiarEstado(int idDTB, char nuevoEstado){
 }
 
 void cambiarEstadoGuardandoNuevoDTB(DTB* nuevoDTB, char nuevoEstado){
-	waitMutex(&mutexListaDTBs);
 	removerDTBDeCola(nuevoDTB->id);
-	signalMutex(&mutexListaDTBs);
 	if(nuevoDTB->estado == EXECUTE){
 		signalMutex(&gradoMultiprocesamiento);
 	}

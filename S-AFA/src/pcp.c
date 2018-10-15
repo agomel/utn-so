@@ -3,7 +3,7 @@
 DTB* planificarPorFIFO(){
 	t_list* listaReady = filtrarListaPorEstado(READY);
 	DTB* dtb = list_get(listaReady, 0);
-	dtb->quantum = -1;
+	dtb->quantum = 0;
 	return dtb;
 }
 
