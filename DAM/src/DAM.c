@@ -111,7 +111,7 @@ void enviarError(int idDTB, char* path, int error){
 	enviarMensaje(socketSAFA, buffer, desplazamiento);
 }
 
-void consumirCola(int emisor, char header){
+void entenderMensaje(int emisor, char header){
 	int idDTB = deserializarInt(emisor);
 	char* path = deserializarString(emisor);
 
@@ -174,7 +174,7 @@ int identificarse(int emisor, char header){
 void crearSelect(int servidor){
 	Select* select = asignarMemoria(sizeof(Select));
 	select->colaOperaciones = colaOperaciones;
-	select->funcionEntenderMensaje = &consumirCola;
+	select->funcionEntenderMensaje = &entenderMensaje;
 	select->logger = logger;
 	select->mutexOperaciones = &mutexColaOperaciones;
 	select->semOperaciones = &semHayEnColaOperaciones;

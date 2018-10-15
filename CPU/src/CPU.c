@@ -159,6 +159,7 @@ int main(void) {
 
 	direccionServidor direccionDIEGO = levantarDeConfiguracion("IP_DIEGO", "PUERTO_DIEGO", ARCHIVO_CONFIGURACION);
 	socketDIEGO= conectarConServidor(direccionDIEGO.puerto, inet_addr(direccionDIEGO.ip));
+	handshake(socketDIEGO, CPU);
 
 	escuchar(socketSAFA);
 	return 0;
