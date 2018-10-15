@@ -8,9 +8,15 @@ void planificadorALargoPlazo() {
 
 		DTB* dtb = obtenerPrimerDTBEnNew();
 
+		log_info(logger, "Cargando Dummy para dtb con scriptorio %s", dtb->escriptorio);
+
 		cargarDummy(*dtb);
 
+		log_info(logger, "Puesto Dummy en ready");
+
 		signalSem(&cantidadTotalREADY);
+
+		log_info(logger, "Signal cantidadTotalEnReady");
 	}
 }
 

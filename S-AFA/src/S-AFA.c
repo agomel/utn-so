@@ -23,6 +23,7 @@ int identificarse(int emisor, char header){
 				list_add(socketsCPUs, socketCPU);
 				signalMutex(&mutexSocketsCPus);
 				signalSem(&gradoMultiprocesamiento);
+				log_info(logger, "signal GradoMultiprocesamiento");
 				break;
 			case DAM:
 				socketDAM = emisor;
@@ -38,6 +39,11 @@ int identificarse(int emisor, char header){
 		return 0;
 	}
 }
+void terminarOperacionDeCPU(int emisor, DTB* dtb){
+	verificarSiPasarAExit(emisor, dtb);
+	liberarCPU(emisor, dtb->id);
+}
+
 void entenderMensaje(int emisor, char header){
 	int idDTB;
 	DTB* dtb;
@@ -63,7 +69,7 @@ void entenderMensaje(int emisor, char header){
 			dtb = deserializarDTB(emisor);
 			desbloquearDTB(dtb);
 
-			verificarSiPasarAExit(emisor, dtb);
+			terminarOperacionDeCPU(emisor, dtb);
 			break;
 
 		case BLOQUEAR_DTB:
@@ -71,7 +77,7 @@ void entenderMensaje(int emisor, char header){
 			//TODO cambiar quantum
 			cambiarEstadoGuardandoNuevoDTB(dtb, BLOCKED);
 
-			verificarSiPasarAExit(emisor, dtb);
+			terminarOperacionDeCPU(emisor, dtb);
 			break;
 
 		case PASAR_A_EXIT:
@@ -79,7 +85,7 @@ void entenderMensaje(int emisor, char header){
 			cambiarEstadoGuardandoNuevoDTB(dtb, EXIT);
 			signalSem(&gradoMultiprocesamiento);
 
-			verificarSiPasarAExit(emisor,dtb);
+			terminarOperacionDeCPU(emisor, dtb);
 			break;
 
 		case TERMINO_QUANTUM:
@@ -88,7 +94,7 @@ void entenderMensaje(int emisor, char header){
 			signalSem(&gradoMultiprocesamiento);
 			signalSem(&cantidadTotalREADY);
 
-			verificarSiPasarAExit(emisor, dtb);
+			terminarOperacionDeCPU(emisor, dtb);
 			break;
 
 		case ERROR:
