@@ -54783,3 +54783,85 @@
 [DEBUG] 19:05:55:16 SAFA/(968:1015): Escuchando nuevo cliente en 5
 [DEBUG] 19:06:09:97 SAFA/(968:987): Handshake de: d
 [DEBUG] 19:06:13:428 SAFA/(968:987): Se agrego a las conexiones d
+[DEBUG] 20:20:56:320 SAFA/(5478:5489): Handshake de: d
+[DEBUG] 20:20:56:321 SAFA/(5478:5489): Se agrego a las conexiones d
+[DEBUG] 20:20:56:333 SAFA/(5478:5515): Escuchando nuevo cliente en 5
+[DEBUG] 20:20:58:11 SAFA/(5478:5489): Handshake de: c
+[DEBUG] 20:20:58:11 SAFA/(5478:5489): Se agrego a las conexiones c
+[DEBUG] 20:21:03:707 SAFA/(5478:5524): Escuchando nuevo cliente en 6
+[INFO] 20:21:08:108 SAFA/(5478:5491): Comando ejecutar
+[INFO] 20:21:08:108 SAFA/(5478:5536): Hay procesos en la cola new
+[DEBUG] 20:21:08:108 SAFA/(5478:5536): Cantidad de DTBs en estado a: 1
+[DEBUG] 20:21:08:108 SAFA/(5478:5537): Cantidad de DTBs en estado b: 1
+[DEBUG] 20:21:08:108 SAFA/(5478:5537): Enviando dtb con id: 1
+[ERROR] 20:21:08:109 SAFA/(5478:5490): Header desconocido
+[DEBUG] 20:22:06:44 SAFA/(5579:5591): Handshake de: d
+[DEBUG] 20:22:06:45 SAFA/(5579:5591): Se agrego a las conexiones d
+[DEBUG] 20:22:06:55 SAFA/(5579:5604): Escuchando nuevo cliente en 5
+[DEBUG] 20:22:07:921 SAFA/(5579:5591): Handshake de: c
+[DEBUG] 20:22:07:921 SAFA/(5579:5591): Se agrego a las conexiones c
+[DEBUG] 20:22:07:936 SAFA/(5579:5607): Escuchando nuevo cliente en 6
+[INFO] 20:22:59:496 SAFA/(5579:5593): Comando ejecutar
+[INFO] 20:22:59:496 SAFA/(5579:5610): Hay procesos en la cola new
+[DEBUG] 20:22:59:496 SAFA/(5579:5610): Cantidad de DTBs en estado a: 1
+[DEBUG] 20:22:59:496 SAFA/(5579:5611): Cantidad de DTBs en estado b: 1
+[DEBUG] 20:22:59:496 SAFA/(5579:5611): Enviando dtb con id: 1
+[ERROR] 20:23:28:425 SAFA/(5579:5592): Header desconocido
+[DEBUG] 20:26:20:960 SAFA/(5903:5915): Handshake de: d
+[DEBUG] 20:26:20:961 SAFA/(5903:5915): Se agrego a las conexiones d
+[DEBUG] 20:26:20:978 SAFA/(5903:5929): Escuchando nuevo cliente en 5
+[DEBUG] 20:26:33:79 SAFA/(5903:5915): Handshake de: c
+[DEBUG] 20:26:33:79 SAFA/(5903:5915): Se agrego a las conexiones c
+[DEBUG] 20:26:33:85 SAFA/(5903:5935): Escuchando nuevo cliente en 6
+[INFO] 20:26:41:427 SAFA/(5903:5917): Comando ejecutar
+[INFO] 20:26:41:427 SAFA/(5903:5938): Hay procesos en la cola new
+[DEBUG] 20:26:41:427 SAFA/(5903:5938): Cantidad de DTBs en estado a: 1
+[DEBUG] 20:26:41:427 SAFA/(5903:5939): Cantidad de DTBs en estado b: 1
+[DEBUG] 20:26:41:428 SAFA/(5903:5939): Enviando dtb con id: 1
+[ERROR] 20:26:54:859 SAFA/(5903:5916): Header desconocido
+[DEBUG] 20:30:52:316 SAFA/(6170:6183): Handshake de: d
+[DEBUG] 20:30:52:321 SAFA/(6170:6183): Se agrego a las conexiones d
+[DEBUG] 20:30:52:337 SAFA/(6170:6197): Escuchando nuevo cliente en 5
+[DEBUG] 20:31:02:807 SAFA/(6170:6183): Handshake de: c
+[DEBUG] 20:31:02:807 SAFA/(6170:6183): Se agrego a las conexiones c
+[DEBUG] 20:31:02:817 SAFA/(6170:6209): Escuchando nuevo cliente en 6
+[INFO] 20:31:12:154 SAFA/(6170:6185): Comando ejecutar
+[INFO] 20:31:12:154 SAFA/(6170:6212): Hay procesos en la cola new
+[DEBUG] 20:31:12:154 SAFA/(6170:6212): Cantidad de DTBs en estado a: 1
+[DEBUG] 20:31:12:154 SAFA/(6170:6213): Cantidad de DTBs en estado b: 1
+[DEBUG] 20:31:12:154 SAFA/(6170:6213): Enviando dtb con id: 1
+[ERROR] 20:31:24:336 SAFA/(6170:6184): Header desconocido
+[DEBUG] 20:41:25:729 SAFA/(6973:6985): Handshake de: d
+[DEBUG] 20:41:25:731 SAFA/(6973:6985): Se agrego a las conexiones d
+[DEBUG] 20:41:25:778 SAFA/(6973:7008): Escuchando nuevo cliente en 5
+[DEBUG] 20:41:32:367 SAFA/(6973:6985): Handshake de: c
+[DEBUG] 20:41:32:367 SAFA/(6973:6985): Se agrego a las conexiones c
+[DEBUG] 20:41:32:381 SAFA/(6973:7016): Escuchando nuevo cliente en 6
+[INFO] 20:41:41:12 SAFA/(6973:6987): Comando ejecutar
+[INFO] 20:41:41:12 SAFA/(6973:7019): Hay procesos en la cola new
+[DEBUG] 20:41:41:12 SAFA/(6973:7019): Cantidad de DTBs en estado a: 1
+[DEBUG] 20:41:41:12 SAFA/(6973:7020): Cantidad de DTBs en estado b: 1
+[DEBUG] 20:41:41:12 SAFA/(6973:7020): Enviando dtb con id: 1
+[ERROR] 20:41:51:589 SAFA/(6973:6986): Header desconocido
+[DEBUG] 09:37:37:311 SAFA/(9539:9550): Handshake de: d
+[DEBUG] 09:37:37:315 SAFA/(9539:9550): Se agrego a las conexiones d
+[DEBUG] 09:37:37:337 SAFA/(9539:9584): Escuchando nuevo cliente en 5
+[DEBUG] 09:37:50:129 SAFA/(9539:9550): Handshake de: c
+[DEBUG] 09:37:50:129 SAFA/(9539:9550): Se agrego a las conexiones c
+[DEBUG] 09:37:50:139 SAFA/(9539:9599): Escuchando nuevo cliente en 6
+[INFO] 09:37:57:144 SAFA/(9539:9552): Comando ejecutar
+[INFO] 09:37:57:145 SAFA/(9539:9601): Hay procesos en la cola new
+[DEBUG] 09:37:57:145 SAFA/(9539:9601): Cantidad de DTBs en estado a: 1
+[DEBUG] 09:37:57:145 SAFA/(9539:9603): Cantidad de DTBs en estado b: 1
+[DEBUG] 09:37:57:145 SAFA/(9539:9603): Enviando dtb con id: 1
+[DEBUG] 09:39:09:804 SAFA/(9664:9676): Handshake de: d
+[DEBUG] 09:39:09:806 SAFA/(9664:9676): Se agrego a las conexiones d
+[DEBUG] 09:39:09:852 SAFA/(9664:9692): Escuchando nuevo cliente en 5
+[DEBUG] 09:39:11:524 SAFA/(9664:9676): Handshake de: c
+[DEBUG] 09:39:11:524 SAFA/(9664:9676): Se agrego a las conexiones c
+[DEBUG] 09:39:11:536 SAFA/(9664:9694): Escuchando nuevo cliente en 6
+[INFO] 09:39:16:654 SAFA/(9664:9678): Comando ejecutar
+[INFO] 09:39:16:654 SAFA/(9664:9697): Hay procesos en la cola new
+[DEBUG] 09:39:16:654 SAFA/(9664:9697): Cantidad de DTBs en estado a: 1
+[DEBUG] 09:39:16:654 SAFA/(9664:9698): Cantidad de DTBs en estado b: 1
+[DEBUG] 09:39:16:654 SAFA/(9664:9698): Enviando dtb con id: 1

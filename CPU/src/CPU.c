@@ -83,9 +83,7 @@ void escuchar(int servidor){
 
 						enviarMensaje(socketDIEGO, buffer, tamanioBuffer);
 						free(buffer);
-						desplazamiento = 0;
-						//enviarMensaje(socketSAFA, DESBLOQUEAR_DTB, sizeof(char));
-						//serializarYEnviarDTB(socketSAFA, dtbRecibido, logger);
+						serializarYEnviarDTB(socketSAFA, dtbRecibido, logger, DESBLOQUEAR_DTB);
 						//freeDTB(&dtbRecibido);
 					}else{
 						char* lineaAEjecutar;
@@ -97,29 +95,25 @@ void escuchar(int servidor){
 								lineaAEjecutar = deserializarString(socketFM9);
 								if(lineaAEjecutar[0] == 'FIN_ARCHIVO'){
 									//Fin de archivo
-									enviarMensaje(socketSAFA, PASAR_A_EXIT, sizeof(char));
-									serializarYEnviarDTB(socketSAFA, dtbRecibido, logger);
+									serializarYEnviarDTB(socketSAFA, dtbRecibido, logger, PASAR_A_EXIT);
 									break;
 								}else if(lineaAEjecutar[0] == 'ERROR_O_ACCESO_INVALIDO'){
 									//Hubo error en FM9
 									dtbRecibido.quantum--;
-									enviarMensaje(socketSAFA, PASAR_A_EXIT, sizeof(char));
-									serializarYEnviarDTB(socketSAFA, dtbRecibido, logger);
+									serializarYEnviarDTB(socketSAFA, dtbRecibido, logger, PASAR_A_EXIT);
 									break;
 								}else if(lineaAEjecutar[0] != '#'){
 									mensajeEntendido = entendiendoLinea(lineaAEjecutar);
 									if(mensajeEntendido == 'b'){
 										dtbRecibido.programCounter++;
-										enviarMensaje(socketSAFA, BLOQUEAR_DTB, sizeof(char));
-										serializarYEnviarDTB(socketSAFA, dtbRecibido, logger);
+										serializarYEnviarDTB(socketSAFA, dtbRecibido, logger, BLOQUEAR_DTB);
 									}
 								}
 									dtbRecibido.programCounter++;
 									dtbRecibido.quantum--;
 							log_info(logger, "Ejecutando una linea del escriptorio");
 							}if(dtbRecibido.quantum == 0){
-								enviarMensaje(socketSAFA, TERMINO_QUANTUM, sizeof(char));
-								serializarYEnviarDTB(socketSAFA, dtbRecibido, logger);
+								serializarYEnviarDTB(socketSAFA, dtbRecibido, logger, TERMINO_QUANTUM);
 							}
 						}else{
 							//MensajeNano: Preguntarle al safa si quiere que deje de ejecutar
@@ -128,15 +122,13 @@ void escuchar(int servidor){
 							while(1){
 								if(lineaAEjecutar[0] == ERROR_O_ACCESO_INVALIDO || lineaAEjecutar[0] == FIN_ARCHIVO){
 									//Fin de archivo o hubo un error
-									enviarMensaje(socketSAFA, PASAR_A_EXIT, sizeof(char));
-									serializarYEnviarDTB(socketSAFA, dtbRecibido, logger);
+									serializarYEnviarDTB(socketSAFA, dtbRecibido, logger, PASAR_A_EXIT);
 									break;
 								}else if(lineaAEjecutar[0] != '#'){
 									mensajeEntendido = entendiendoLinea(lineaAEjecutar);
 									if(mensajeEntendido == 'b'){
 										dtbRecibido.programCounter++;
-										enviarMensaje(socketSAFA, BLOQUEAR_DTB, sizeof(char));
-										serializarYEnviarDTB(socketSAFA, dtbRecibido, logger);
+										serializarYEnviarDTB(socketSAFA, dtbRecibido, logger, BLOQUEAR_DTB);
 									}
 								}
 								dtbRecibido.programCounter++;

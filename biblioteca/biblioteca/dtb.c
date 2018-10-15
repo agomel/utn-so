@@ -20,7 +20,7 @@ DTB crearDTB (char* parametro){
 	return dtb;
 }
 
-void serializarYEnviarDTB(int receptor, DTB dtb, t_log* logger){
+void serializarYEnviarDTB(int receptor, DTB dtb, t_log* logger, char operacion){
 	//Asigno tamanio al buffer
 	log_debug(logger, "Enviando dtb con id: %d", dtb.id);
 	int tamanioEscriptorio = strlen(dtb.escriptorio) + 1;
@@ -30,7 +30,7 @@ void serializarYEnviarDTB(int receptor, DTB dtb, t_log* logger){
 	//Lleno el buffer
 	int desplazamiento = 0;
 
-	concatenarChar(buffer, &desplazamiento, ENVIAR_DTB);
+	concatenarChar(buffer, &desplazamiento, operacion);
 	concatenarString(buffer, &desplazamiento, dtb.escriptorio);
 	concatenarInt(buffer, &desplazamiento, dtb.flag);
 	concatenarInt(buffer, &desplazamiento, dtb.id);

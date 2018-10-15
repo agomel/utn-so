@@ -34,6 +34,8 @@ char* nombreEstado(char estado){
 		break;
 	case READY: return "READY";
 	break;
+	case BLOCKED: return "BLOCKED";
+	break;
 	case EXIT: return "EXIT";
 		break;
 	case EXECUTE: return "EXECUTE";

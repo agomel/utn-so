@@ -19,3 +19,15 @@
 [DEBUG] 19:52:25:735 MDJ/(4542:4553): Handshake de: d
 [DEBUG] 19:52:25:735 MDJ/(4542:4553): Se agrego a las conexiones d
 [DEBUG] 19:52:25:752 MDJ/(4542:4562): Escuchando nuevo cliente en 5
+[DEBUG] 09:27:00:995 MDJ/(8472:8485): Handshake de: d
+[DEBUG] 09:27:00:998 MDJ/(8472:8485): Se agrego a las conexiones d
+[DEBUG] 09:27:01:12 MDJ/(8472:8493): Escuchando nuevo cliente en 5
+[INFO] 09:27:41:206 MDJ/(8472:8486): validando archivo de emisor 5
+[DEBUG] 09:28:40:530 MDJ/(8577:8591): Handshake de: d
+[DEBUG] 09:28:40:531 MDJ/(8577:8591): Se agrego a las conexiones d
+[DEBUG] 09:28:40:546 MDJ/(8577:8604): Escuchando nuevo cliente en 5
+[INFO] 09:28:54:992 MDJ/(8577:8592): validando archivo de emisor 5
+[DEBUG] 09:30:00:424 MDJ/(8805:8854): Handshake de: d
+[DEBUG] 09:30:00:425 MDJ/(8805:8854): Se agrego a las conexiones d
+[DEBUG] 09:30:00:445 MDJ/(8805:8871): Escuchando nuevo cliente en 5
+[INFO] 09:30:30:821 MDJ/(8805:8855): validando archivo de emisor 5
