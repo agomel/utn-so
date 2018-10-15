@@ -72,18 +72,18 @@ void escuchar(int servidor){
 					dtbRecibido = deserializarDTB(servidor);
 					if(dtbRecibido->flag == 0){
 						//Es el dummy
-						//tamanioPathEscriptorio = strlen(dtbRecibido->escriptorio) + 1;
-						//tamanioBuffer = sizeof(char) + tamanioPathEscriptorio + sizeof(int)*2;
-						//buffer = asignarMemoria(tamanioBuffer);
-						//desplazamiento = 0;
+						tamanioPathEscriptorio = strlen(dtbRecibido->escriptorio) + 1;
+						tamanioBuffer = sizeof(char) + tamanioPathEscriptorio + sizeof(int)*2;
+						buffer = asignarMemoria(tamanioBuffer);
+						desplazamiento = 0;
 
-						//concatenarChar(buffer, &desplazamiento, CARGAR_ESCRIPTORIO_EN_MEMORIA);
-						//concatenarInt(buffer, &desplazamiento, dtbRecibido->id);
-						//concatenarString(buffer, &desplazamiento, dtbRecibido->escriptorio);
+						concatenarChar(buffer, &desplazamiento, CARGAR_ESCRIPTORIO_EN_MEMORIA);
+						concatenarInt(buffer, &desplazamiento, dtbRecibido->id);
+						concatenarString(buffer, &desplazamiento, dtbRecibido->escriptorio);
 
 
-						//enviarMensaje(socketDIEGO, buffer, tamanioBuffer);
-						//free(buffer);
+						enviarMensaje(socketDIEGO, buffer, tamanioBuffer);
+						free(buffer);
 						serializarYEnviarDTB(socketSAFA, *dtbRecibido, logger, DESBLOQUEAR_DTB);
 						freeDTB(dtbRecibido);
 					}else{
