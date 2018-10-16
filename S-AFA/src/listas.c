@@ -69,7 +69,6 @@ t_list* filtrarListaPorEstado(char estado){
 	waitMutex(&mutexListaDTBs);
 	t_list* lista = list_filter(listaDeTodosLosDTBs, estaEnEstado);
 	signalMutex(&mutexListaDTBs);
-	log_debug(logger, "Cantidad de DTBs en estado %s: %d", nombreEstado(estado), lista->elements_count);
 	return lista;
 }
 
@@ -102,6 +101,9 @@ DTB* removerDTBPorIndice(int indice){
 cambiarEstadoDummy(char estado){
 	DTB* dummy = obtenerDummyDeColaRemoviendolo();
 	dummy->estado = estado;
+	if(dummy->estado == EXECUTE){
+		signalSem(&gradoMultiprocesamiento);
+	}
 	agregarDTBALista(dummy);
 }
 
@@ -120,4 +122,20 @@ int obtenerCPUDisponibleYOcupar(int id){
 	dictionary_put(ejecutandoCPU, intToString(id), socketCPU->socket);
 	signalMutex(&mutexEjecutandoCPU);
 	return socketCPU->socket;
+}
+
+void liberarCPU(int idSocket, int idDTB){
+
+	bool obtenerCPU(SocketCPU* socket){
+		return (socket->socket == idSocket);
+	}
+	waitMutex(&mutexSocketsCPus);
+	SocketCPU* socketCPU = list_find(socketsCPUs, obtenerCPU);
+	signalMutex(&mutexSocketsCPus);
+
+	socketCPU->ocupado = 0;
+
+	waitMutex(&mutexEjecutandoCPU);
+	dictionary_remove(ejecutandoCPU, intToString(idDTB));
+	signalMutex(&mutexEjecutandoCPU);
 }
