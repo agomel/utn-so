@@ -204,6 +204,10 @@ void escuchar(int servidor){
 									if(mensajeEntendido == 'b'){
 										dtbRecibido->programCounter++;
 										serializarYEnviarDTB(socketSAFA, *dtbRecibido, logger, BLOQUEAR_DTB);
+									}else if(mensajeEntendido == 'a'){
+										serializarYEnviarDTB(socketSAFA, *dtbRecibido, logger, PASAR_A_EXIT);
+										freeDTB(dtbRecibido);
+										break;
 									}
 								}
 								dtbRecibido->programCounter++;
