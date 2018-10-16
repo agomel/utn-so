@@ -194,22 +194,22 @@ void escuchar(int socketSAFA){//MensajeNano: Verificar los punteros de DTB
 								lineaAEjecutar = deserializarString(socketFM9);
 								if(lineaAEjecutar[0] == 'FIN_ARCHIVO'){
 									//Fin de archivo
-									serializarYEnviarDTB(socketSAFA, &dtbRecibido, logger, PASAR_A_EXIT);
+									serializarYEnviarDTB(socketSAFA, *dtbRecibido, logger, PASAR_A_EXIT);
 									break;
 								}else if(lineaAEjecutar[0] == 'ERROR_O_ACCESO_INVALIDO'){
 									//Hubo error en FM9
 									dtbRecibido->quantum--;
-									serializarYEnviarDTB(socketSAFA, &dtbRecibido, logger, PASAR_A_EXIT);
+									serializarYEnviarDTB(socketSAFA, *dtbRecibido, logger, PASAR_A_EXIT);
 									break;
 								}else if(lineaAEjecutar[0] != '#'){
 									mensajeEntendido = entendiendoLinea(lineaAEjecutar, dtbRecibido);
 									if(mensajeEntendido == 'b'){
 										dtbRecibido->programCounter++;
-										serializarYEnviarDTB(socketSAFA, &dtbRecibido, logger, BLOQUEAR_DTB);
+										serializarYEnviarDTB(socketSAFA, *dtbRecibido, logger, BLOQUEAR_DTB);
 										freeDTB(dtbRecibido);
 										break;
 									}else if(mensajeEntendido == 'a'){
-										serializarYEnviarDTB(socketSAFA, &dtbRecibido, logger, PASAR_A_EXIT);
+										serializarYEnviarDTB(socketSAFA, *dtbRecibido, logger, PASAR_A_EXIT);
 										freeDTB(dtbRecibido);
 										break;
 									}
@@ -218,7 +218,7 @@ void escuchar(int socketSAFA){//MensajeNano: Verificar los punteros de DTB
 									dtbRecibido->quantum--;
 							log_info(logger, "Ejecutando una linea del escriptorio");
 							}if(dtbRecibido->quantum == 0){
-								serializarYEnviarDTB(socketSAFA, &dtbRecibido, logger, TERMINO_QUANTUM);
+								serializarYEnviarDTB(socketSAFA, *dtbRecibido, logger, TERMINO_QUANTUM);
 							}
 						}else{
 							//MensajeNano: Preguntarle al safa si quiere que deje de ejecutar
@@ -227,15 +227,15 @@ void escuchar(int socketSAFA){//MensajeNano: Verificar los punteros de DTB
 							while(1){
 								if(lineaAEjecutar[0] == ERROR_O_ACCESO_INVALIDO || lineaAEjecutar[0] == FIN_ARCHIVO){
 									//Fin de archivo o hubo un error
-									serializarYEnviarDTB(socketSAFA, &dtbRecibido, logger, PASAR_A_EXIT);
+									serializarYEnviarDTB(socketSAFA, *dtbRecibido, logger, PASAR_A_EXIT);
 									break;
 								}else if(lineaAEjecutar[0] != '#'){
 									mensajeEntendido = entendiendoLinea(lineaAEjecutar, dtbRecibido);
 									if(mensajeEntendido == 'b'){
 										dtbRecibido->programCounter++;
-										serializarYEnviarDTB(socketSAFA, &dtbRecibido, logger, BLOQUEAR_DTB);
+										serializarYEnviarDTB(socketSAFA, *dtbRecibido, logger, BLOQUEAR_DTB);
 									}else if(mensajeEntendido == 'a'){
-										serializarYEnviarDTB(socketSAFA, &dtbRecibido, logger, PASAR_A_EXIT);
+										serializarYEnviarDTB(socketSAFA, *dtbRecibido, logger, PASAR_A_EXIT);
 										freeDTB(dtbRecibido);
 										break;
 									}
