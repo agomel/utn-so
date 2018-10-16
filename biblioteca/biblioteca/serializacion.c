@@ -131,7 +131,7 @@ char deserializarChar(int emisor){
 t_list* deserializarListaInt(int emisor){
 	int elementosDeLalista = deserializarInt(emisor);
 	t_list* respuesta = list_create();
-	for(int i = 0; i<elementosDeLalista; i++){
+	for(int i = 0; i < elementosDeLalista; i++){
 		list_add(respuesta, deserializarInt(emisor));
 	}
 	return respuesta;

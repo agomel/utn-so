@@ -82,14 +82,14 @@ int guardarDatosEnMDJ(void* datosTotales){
 	return deserializarInt(socketMDJ);
 }
 void notificarASafaExitoDeCarga(int idDTB, char* path, t_list* direcciones){
-	void* buffer =
-			asignarMemoria(sizeof(char) + sizeof(int) + strlen(path)+1 + sizeof(int) + direcciones->elements_count*sizeof(int));
+	int tamanio = sizeof(char) + sizeof(int)*2 + strlen(path)+1 + sizeof(int) + direcciones->elements_count*sizeof(int);
+	void* buffer = asignarMemoria(tamanio);
 	int desplazamiento = 0;
 	concatenarChar(buffer, &desplazamiento, CARGADO_CON_EXITO_EN_MEMORIA);
 	concatenarInt(buffer, &desplazamiento, idDTB);
 	concatenarString(buffer, &desplazamiento, path);
 	concatenarListaInt(buffer, &desplazamiento, direcciones);
-	enviarMensaje(socketSAFA, buffer, desplazamiento);
+	enviarMensaje(socketSAFA, buffer, tamanio);
 	free(buffer);
 }
 void notificarASafaExitoDeGuardado(int idDTB, char* path){

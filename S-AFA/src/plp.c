@@ -12,11 +12,7 @@ void planificadorALargoPlazo() {
 
 		cargarDummy(*dtb);
 
-		log_info(logger, "Puesto Dummy en ready");
-
 		signalSem(&cantidadTotalREADY);
-
-		log_info(logger, "Signal cantidadTotalEnReady");
 	}
 }
 

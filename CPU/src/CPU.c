@@ -55,93 +55,94 @@ void pedirCosasDelFM9(DTB dtbRecibido){
 	enviarMensaje(socketFM9, buffer, tamanioBuffer);
 	free(buffer);
 }
-void escuchar(int servidor){
+
+void enviarDTB(){
+	char mensajeEntendido = 's';
+	log_debug(logger, "Recibiendo un dtb");
+	DTB* dtbRecibido = deserializarDTB(socketSAFA);
+	if(dtbRecibido->flag == 0){
+		//Es el dummy
+		int tamanioPathEscriptorio = strlen(dtbRecibido->escriptorio) + 1;
+		int tamanioBuffer = sizeof(char) + tamanioPathEscriptorio + sizeof(int)*2;
+		void* buffer = asignarMemoria(tamanioBuffer);
+		int desplazamiento = 0;
+
+		concatenarChar(buffer, &desplazamiento, CARGAR_ESCRIPTORIO_EN_MEMORIA);
+		concatenarInt(buffer, &desplazamiento, dtbRecibido->id);
+		concatenarString(buffer, &desplazamiento, dtbRecibido->escriptorio);
+
+
+		enviarMensaje(socketDIEGO, buffer, tamanioBuffer);
+		free(buffer);
+		serializarYEnviarDTB(socketSAFA, *dtbRecibido, logger, DESBLOQUEAR_DTB);
+		freeDTB(dtbRecibido);
+	}else{
+		char* lineaAEjecutar;
+		//No es el dummy
+		if(dtbRecibido->quantum > 0){
+			while(dtbRecibido->quantum > 0){
+				pedirCosasDelFM9(*dtbRecibido);
+				lineaAEjecutar = deserializarString(socketFM9);
+				if(lineaAEjecutar[0] == 'FIN_ARCHIVO'){
+					//Fin de archivo
+					serializarYEnviarDTB(socketSAFA, *dtbRecibido, logger, PASAR_A_EXIT);
+					break;
+				}else if(lineaAEjecutar[0] == 'ERROR_O_ACCESO_INVALIDO'){
+					//Hubo error en FM9
+					dtbRecibido->quantum--;
+					serializarYEnviarDTB(socketSAFA, *dtbRecibido, logger, PASAR_A_EXIT);
+					break;
+				}else if(lineaAEjecutar[0] != '#'){
+					mensajeEntendido = entendiendoLinea(lineaAEjecutar);
+					if(mensajeEntendido == 'b'){
+						dtbRecibido->programCounter++;
+						serializarYEnviarDTB(socketSAFA, *dtbRecibido, logger, BLOQUEAR_DTB);
+					}
+				}
+				dtbRecibido->programCounter++;
+				dtbRecibido->quantum--;
+				log_info(logger, "Ejecutando una linea del escriptorio");
+			}if(dtbRecibido->quantum == 0){
+				serializarYEnviarDTB(socketSAFA, *dtbRecibido, logger, TERMINO_QUANTUM);
+			}
+		}else{
+			pedirCosasDelFM9(*dtbRecibido);
+			lineaAEjecutar = deserializarString(socketFM9);
+			while(1){
+				if(lineaAEjecutar[0] == ERROR_O_ACCESO_INVALIDO || lineaAEjecutar[0] == FIN_ARCHIVO){
+					//Fin de archivo o hubo un error
+					serializarYEnviarDTB(socketSAFA, *dtbRecibido, logger, PASAR_A_EXIT);
+					break;
+				}else if(lineaAEjecutar[0] != '#'){
+					mensajeEntendido = entendiendoLinea(lineaAEjecutar);
+					if(mensajeEntendido == 'b'){
+						dtbRecibido->programCounter++;
+						serializarYEnviarDTB(socketSAFA, *dtbRecibido, logger, BLOQUEAR_DTB);
+					}
+				}
+				dtbRecibido->programCounter++;
+				pedirCosasDelFM9(*dtbRecibido);
+				lineaAEjecutar = deserializarString(socketFM9);
+			}
+		}
+	}
+}
+void escuchar(int socketSAFA){
 	int a = 1;
 	int tamanioPathEscriptorio;
 	int tamanioBuffer;
 	void* buffer;
 	int desplazamiento;
 
+
 	while(a){
-		DTB* dtbRecibido;
-		char header = deserializarChar(servidor);
-		char mensajeEntendido = 's';
-			switch(header){
-				case ENVIAR_DTB:
-					log_debug(logger, "Recibiendo un dtb");
-					dtbRecibido = deserializarDTB(servidor);
-					if(dtbRecibido->flag == 0){
-						//Es el dummy
-						tamanioPathEscriptorio = strlen(dtbRecibido->escriptorio) + 1;
-						tamanioBuffer = sizeof(char) + tamanioPathEscriptorio + sizeof(int)*2;
-						buffer = asignarMemoria(tamanioBuffer);
-						desplazamiento = 0;
-
-						concatenarChar(buffer, &desplazamiento, CARGAR_ESCRIPTORIO_EN_MEMORIA);
-						concatenarInt(buffer, &desplazamiento, dtbRecibido->id);
-						concatenarString(buffer, &desplazamiento, dtbRecibido->escriptorio);
-
-
-						enviarMensaje(socketDIEGO, buffer, tamanioBuffer);
-						free(buffer);
-						serializarYEnviarDTB(socketSAFA, *dtbRecibido, logger, DESBLOQUEAR_DTB);
-						freeDTB(dtbRecibido);
-					}else{
-						char* lineaAEjecutar;
-						//No es el dummy
-						if(dtbRecibido->quantum > 0){
-							while(dtbRecibido->quantum > 0){
-								//MensajeNano: Preguntarle al safa si quiere que deje de ejecutar
-								pedirCosasDelFM9(*dtbRecibido);
-								lineaAEjecutar = deserializarString(socketFM9);
-								if(lineaAEjecutar[0] == 'FIN_ARCHIVO'){
-									//Fin de archivo
-									serializarYEnviarDTB(socketSAFA, *dtbRecibido, logger, PASAR_A_EXIT);
-									break;
-								}else if(lineaAEjecutar[0] == 'ERROR_O_ACCESO_INVALIDO'){
-									//Hubo error en FM9
-									dtbRecibido->quantum--;
-									serializarYEnviarDTB(socketSAFA, *dtbRecibido, logger, PASAR_A_EXIT);
-									break;
-								}else if(lineaAEjecutar[0] != '#'){
-									mensajeEntendido = entendiendoLinea(lineaAEjecutar);
-									if(mensajeEntendido == 'b'){
-										dtbRecibido->programCounter++;
-										serializarYEnviarDTB(socketSAFA, *dtbRecibido, logger, BLOQUEAR_DTB);
-									}
-								}
-									dtbRecibido->programCounter++;
-									dtbRecibido->quantum--;
-							log_info(logger, "Ejecutando una linea del escriptorio");
-							}if(dtbRecibido->quantum == 0){
-								serializarYEnviarDTB(socketSAFA, *dtbRecibido, logger, TERMINO_QUANTUM);
-							}
-						}else{
-							//MensajeNano: Preguntarle al safa si quiere que deje de ejecutar
-							pedirCosasDelFM9(*dtbRecibido);
-							lineaAEjecutar = deserializarString(socketFM9);
-							while(1){
-								if(lineaAEjecutar[0] == ERROR_O_ACCESO_INVALIDO || lineaAEjecutar[0] == FIN_ARCHIVO){
-									//Fin de archivo o hubo un error
-									serializarYEnviarDTB(socketSAFA, *dtbRecibido, logger, PASAR_A_EXIT);
-									break;
-								}else if(lineaAEjecutar[0] != '#'){
-									mensajeEntendido = entendiendoLinea(lineaAEjecutar);
-									if(mensajeEntendido == 'b'){
-										dtbRecibido->programCounter++;
-										serializarYEnviarDTB(socketSAFA, *dtbRecibido, logger, BLOQUEAR_DTB);
-									}
-								}
-								dtbRecibido->programCounter++;
-								//MensajeNano: Preguntarle al safa si quiere que deje de ejecutar
-								pedirCosasDelFM9(*dtbRecibido);
-								lineaAEjecutar = deserializarString(socketFM9);
-							}
-						}
-					}
-					break;
-				default:
-					log_error(logger, "Header desconocido");
+		char header = deserializarChar(socketSAFA);
+		switch(header){
+			case ENVIAR_DTB:
+				enviarDTB();
+				break;
+			default:
+				log_error(logger, "Header desconocido");
 		}
 	}
 }

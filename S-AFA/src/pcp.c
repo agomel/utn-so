@@ -36,11 +36,8 @@ DTB* seleccionarDTB(){
 void planificadorACortoPlazo(){
 	int a = 1;
 	while(a){
-		log_info(logger, "Wait cantidadTotalEnReady");
 		waitSem(&cantidadTotalREADY);
-		log_info(logger, "Wait gradoMultiprocesamiento");
 		waitSem(&gradoMultiprocesamiento);
-		log_info(logger, "Paso gradoMultiprocesamiento");
 		DTB* dtb = seleccionarDTB();
 		if(dtb->flag == 0){
 			cambiarEstadoDummy(EXECUTE);

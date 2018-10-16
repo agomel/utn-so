@@ -69,7 +69,6 @@ t_list* filtrarListaPorEstado(char estado){
 	waitMutex(&mutexListaDTBs);
 	t_list* lista = list_filter(listaDeTodosLosDTBs, estaEnEstado);
 	signalMutex(&mutexListaDTBs);
-	log_debug(logger, "Cantidad de DTBs en estado %s: %d", nombreEstado(estado), lista->elements_count);
 	return lista;
 }
 
@@ -104,7 +103,6 @@ cambiarEstadoDummy(char estado){
 	dummy->estado = estado;
 	if(dummy->estado == EXECUTE){
 		signalSem(&gradoMultiprocesamiento);
-		log_info(logger, "signal Dummy gradoMultiprocesamiento");
 	}
 	agregarDTBALista(dummy);
 }
