@@ -3,7 +3,7 @@
 
 void notificarASafaExitoDeCarga(int idDTB, char* path, t_list* direcciones){
 	void* buffer =
-			asignarMemoria(sizeof(char) + sizeof(int) + strlen(path)+1 + sizeof(int) + direcciones->elements_count*sizeof(int));
+			sizeof(char) + sizeof(int) + sizeof(int) + strlen(path)+1 + sizeof(int) + direcciones->elements_count*sizeof(int);
 	int desplazamiento = 0;
 	concatenarChar(buffer, &desplazamiento, CARGADO_CON_EXITO_EN_MEMORIA);
 	concatenarInt(buffer, &desplazamiento, idDTB);
