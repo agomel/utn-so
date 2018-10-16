@@ -26,7 +26,7 @@ int pedirDatosAFM9(t_list* direcciones){
 	return deserializarInt(socketFM9);
 }
 
-char* recibirFlushFM9(int transferSize){
+char* recibirFlushFM9(){
 	int cantidadTotal = deserializarInt(socketFM9);
 	char* memoriaTotal = asignarMemoria(cantidadTotal);
 	int desplazamiento = 0;
