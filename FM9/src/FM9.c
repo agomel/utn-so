@@ -133,6 +133,7 @@ void init(){
 	inicializarMutex(&mutexStorage);
 	//TODO cargar storage
 	storage = asignarMemoria(1000);
+	//TODO el offset no va a ser siempre 0
 	offset = 0;
 	logger = crearLogger(ARCHIVO_LOG, "FM9");
 	inicializarMutex(&mutexOperaciones);

@@ -27,6 +27,7 @@ void entenderMensaje(int emisor, char header){
 					enviarError(idDTB, path, estadoDeCarga);
 				}else{
 					t_list* direcciones = recibirListaDeDireccionesDeFM9();
+					log_info(logger,"Recibio la lista de direcciones");
 					notificarASafaExitoDeCarga(idDTB, path, direcciones);
 				}
 			}

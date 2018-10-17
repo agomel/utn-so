@@ -28,9 +28,6 @@ void inicializarSemaforos(){
 
 void cambiarEstado(int idDTB, char nuevoEstado){
 	DTB* dtb = obtenerDTBDeColaRemoviendolo(idDTB);
-	if(dtb->estado == EXECUTE){
-		signalSem(&gradoMultiprocesamiento);
-	}
 	dtb->estado = nuevoEstado;
 
 	logguearCambioEstado(dtb, nuevoEstado);
@@ -41,9 +38,6 @@ void cambiarEstado(int idDTB, char nuevoEstado){
 
 void cambiarEstadoGuardandoNuevoDTB(DTB* nuevoDTB, char nuevoEstado){
 	removerDTBDeCola(nuevoDTB->id);
-	if(nuevoDTB->estado == EXECUTE){
-		signalSem(&gradoMultiprocesamiento);
-	}
 	nuevoDTB->estado = nuevoEstado;
 
 	logguearCambioEstado(nuevoDTB, nuevoEstado);

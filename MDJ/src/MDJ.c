@@ -20,19 +20,17 @@
 #include <biblioteca/nuestroSelect.h>
 int socketDAM;
 
-
 t_queue* colaOperaciones;
 pthread_mutex_t mutexOperaciones;
 sem_t semOperaciones;
 sem_t semProductores;
 
 void entenderMensaje(int emisor, char header){
-	int archivoValido;
 	char* datos;
 	switch(header){
 			case VALIDAR_ARCHIVO:
 				log_info(logger, "validando archivo de emisor %d", emisor);
-				archivoValido = validarArchivo(emisor);
+				int archivoValido = validarArchivo(emisor);
 				enviarYSerializarIntSinHeader(emisor, archivoValido);
 				break;
 			case CREAR_ARCHIVO:

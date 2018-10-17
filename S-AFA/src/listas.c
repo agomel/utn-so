@@ -101,9 +101,6 @@ DTB* removerDTBPorIndice(int indice){
 cambiarEstadoDummy(char estado){
 	DTB* dummy = obtenerDummyDeColaRemoviendolo();
 	dummy->estado = estado;
-	if(dummy->estado == EXECUTE){
-		signalSem(&gradoMultiprocesamiento);
-	}
 	agregarDTBALista(dummy);
 }
 
@@ -116,7 +113,11 @@ int obtenerCPUDisponibleYOcupar(int id){
 	SocketCPU* socketCPU = list_find(socketsCPUs, estaDisponible);
 	signalMutex(&mutexSocketsCPus);
 
-	socketCPU->ocupado = 1;
+	if(socketCPU->ocupado == 0){
+		socketCPU->ocupado = 1;
+	}else{
+		log_error(logger, "No hay CPUs disponibles");
+	}
 
 	waitMutex(&mutexEjecutandoCPU);
 	dictionary_put(ejecutandoCPU, intToString(id), socketCPU->socket);
@@ -138,4 +139,5 @@ void liberarCPU(int idSocket, int idDTB){
 	waitMutex(&mutexEjecutandoCPU);
 	dictionary_remove(ejecutandoCPU, intToString(idDTB));
 	signalMutex(&mutexEjecutandoCPU);
+	signalSem(&gradoMultiprocesamiento);
 }

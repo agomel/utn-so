@@ -182,8 +182,6 @@ void escuchar(int socketSAFA){//MensajeNano: Verificar los punteros de DTB
 						free(buffer);
 						serializarYEnviarDTB(socketSAFA, *dtbRecibido, logger, DESBLOQUEAR_DTB);
 						freeDTB(dtbRecibido);
-						serializarYEnviarDTB(socketSAFA, *dtbRecibido, logger, DESBLOQUEAR_DTB);
-						freeDTB(dtbRecibido);
 					}else{
 						char* lineaAEjecutar;
 						//No es el dummy
