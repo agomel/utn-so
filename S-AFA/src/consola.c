@@ -27,7 +27,7 @@ void crearStatusDeMetricas(){
 int obtenerComando(char*ingresado){
 	int comando=6;
 	const char* comandos[] = {"salir","status","finalizar","metricas","ejecutar"};
-	for(int i;i<5;i++){
+	for(int i = 0;i<5;i++){
 		if(strcmp(ingresado, comandos[i]) == 0) comando=i;
 	}
 	return comando;
