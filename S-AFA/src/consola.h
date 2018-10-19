@@ -5,6 +5,8 @@
 #include <stdio.h>
 #include <string.h>
 #include "S-AFA.h"
+#include <biblioteca/dtb.h>
+#include <biblioteca/traductor.h>
 
 enum{
 	SALIR = 0, STATUS = 1, FINALIZAR = 2, METRICAS = 3, EJECUTAR=4

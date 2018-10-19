@@ -1,8 +1,7 @@
 #include "consola.h"
-#include <biblioteca/dtb.h>
 
 void loguearEstadoDeLista(t_list* lista, char estado){
-	log_info(logger, "Estado de lista: %s", nombreEstado(estado));
+	log_info(logger, "Estado de lista: %s", traducirEstado(estado));
 	log_info(logger, "Cantidad de DTBs en lista: %d", lista->elements_count);
 	log_info(logger, "Ids de DTBs en lista:");
 	for(int i = 0; i<lista->elements_count; i++){

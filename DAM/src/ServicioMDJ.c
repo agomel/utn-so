@@ -16,7 +16,6 @@ int validarArchivoMDJ(char* path){
 char* obtenerDatosDeMDJ(char* path){
 	int offset = 0;
 	char* datosTotales = asignarMemoria(offset);
-	printf("PUTO\n");
 	int cantidadDeDatos = transferSize;
 	while(cantidadDeDatos == transferSize){
 		void* buffer = asignarMemoria(sizeof(char) + sizeof(int) + (strlen(path)+1)
