@@ -12,7 +12,7 @@
 int identificarse(int emisor, char header){
 	if(header == IDENTIFICARSE){
 		char identificado = deserializarChar(emisor);
-		log_debug(logger, "Handshake de: %c", identificado);
+		log_debug(logger, "Handshake de: %s", traducirModulo(identificado));
 		switch(identificado){
 			case CPU:
 				conectadoCPU = 1;
@@ -32,7 +32,7 @@ int identificarse(int emisor, char header){
 			default:
 				log_error(logger, "Conexion rechazada");
 		}
-		log_debug(logger, "Se agrego a las conexiones %c" , identificado);
+		log_debug(logger, "Se agrego a las conexiones %s" , traducirModulo(identificado));
 		return 1;
 
 	}else{
