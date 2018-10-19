@@ -135,7 +135,6 @@ void crearSelect(int servidor){
 	select->identificarse = &identificarse;
 	select->semProductores = &semProductores;
 	realizarNuestroSelect(select);
-
 }
 int main(void) {
 	inicializarSAFA();

@@ -52,3 +52,14 @@ void realizarNuestroSelect(Select* select){
 	crearHiloQueMuereSolo(&aceptarClientes, select);
 	crearHiloQueMuereSolo(&consumirCola, select);
 }
+
+void freeSelect(Select* select){
+	free(select->colaOperaciones);
+	free(select->funcionEntenderMensaje);
+	free(select->identificarse);
+	free(select->logger);
+	free(select->mutexOperaciones);
+	free(select->semOperaciones);
+	free(select->semProductores);
+	free(select);
+}

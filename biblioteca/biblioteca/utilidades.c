@@ -15,6 +15,10 @@ direccionServidor levantarDeConfiguracion(char* nombreIp, char* nombrePuerto, ch
 	direccion.ip = config_get_string_value(configuracion, nombreIp);
 	}
 	direccion.puerto = config_get_int_value(configuracion, nombrePuerto);
+
+	free(configuracion->properties);
+	free(configuracion->path);
+	free(configuracion);
 	return direccion;
 }
 

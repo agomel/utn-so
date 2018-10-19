@@ -78,8 +78,8 @@ void crearSelect(int servidor){
 	select->identificarse = &identificarse;
 	select->semProductores = &semProductores;
 	realizarNuestroSelect(select);
-
 }
+
 void init(){
 	inicializarMutex(&mutexOperaciones);
 	colaOperaciones = queue_create();
