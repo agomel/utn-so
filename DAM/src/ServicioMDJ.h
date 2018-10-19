@@ -12,7 +12,7 @@ extern int transferSize;
 extern t_log* logger;
 
 int validarArchivoMDJ(char* path);
-char* obtenerDatosDeMDJ(int transferSize);
+char* obtenerDatosDeMDJ(char* path);
 int crearArchivoEnMDJ(char* path, int cantidadDeLineas);
 int guardarDatosEnMDJ(void* datosTotales);
 

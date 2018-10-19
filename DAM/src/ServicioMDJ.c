@@ -13,18 +13,18 @@ int validarArchivoMDJ(char* path){
 	return respuesta;
 }
 
-char* obtenerDatosDeMDJ(int transferSize){
+char* obtenerDatosDeMDJ(char* path){
 	int offset = 0;
-	/*char* datosTotales = asignarMemoria(0);
-
+	char* datosTotales = asignarMemoria(offset);
+	printf("PUTO\n");
 	int cantidadDeDatos = transferSize;
 	while(cantidadDeDatos == transferSize){
-		void* buffer = asignarMemoria(sizeof(char) + sizeof(int) + (strlen(operacion->path)+1)
+		void* buffer = asignarMemoria(sizeof(char) + sizeof(int) + (strlen(path)+1)
 				+ sizeof(int) + sizeof(int));
 		int desplazamiento = 0;
 
 		concatenarChar(buffer, &desplazamiento, OBTENER_DATOS);
-		concatenarString(buffer, &desplazamiento, operacion->path);
+		concatenarString(buffer, &desplazamiento, path);
 		concatenarInt(buffer, &desplazamiento, offset);
 		concatenarInt(buffer, &desplazamiento, transferSize);
 
@@ -32,16 +32,10 @@ char* obtenerDatosDeMDJ(int transferSize){
 		free(buffer);
 
 		cantidadDeDatos = deserializarInt(socketMDJ);
-		char* datosParciales = asignarMemoria(cantidadDeDatos);
-
-		datosTotales = realloc(datosTotales, sizeof(datosTotales) + cantidadDeDatos);
-		recibirMensaje(socketMDJ, datosParciales, cantidadDeDatos);
-
+		datosTotales = realloc(datosTotales, offset + cantidadDeDatos);
+		recibirMensaje(socketMDJ, datosTotales+offset, cantidadDeDatos);
 		offset = offset + cantidadDeDatos;
-		//TODO ver porque rompe esto
-	}*/
-	//ESTO es jarcodeado
-	char* datosTotales = "estos son los datos";
+	}
 	return datosTotales;
 }
 

@@ -21,7 +21,7 @@ void entenderMensaje(int emisor, char header){
 			if(validarArchivo != 0){
 				enviarError(idDTB, path, validarArchivo);
 			}else {
-				char* datos = obtenerDatosDeMDJ();
+				char* datos = obtenerDatosDeMDJ(path);
 				int estadoDeCarga = enviarDatosAFM9(datos);
 				if(estadoDeCarga != 0){
 					enviarError(idDTB, path, estadoDeCarga);
