@@ -11,6 +11,7 @@
 #include <biblioteca/logger.h>
 #include <biblioteca/nuestroSelect.h>
 #include "ServicioFM9.h"
+#include <biblioteca/traductor.h>
 
 int transferSize;
 

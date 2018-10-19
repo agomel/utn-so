@@ -63,7 +63,7 @@ void entenderMensaje(int emisor, char header){
 int identificarse(int emisor, char header){
 	if(header == IDENTIFICARSE){
 		char identificado = deserializarChar(emisor);
-		log_debug(logger, "Handshake de: %c", identificado);
+		log_debug(logger, "Handshake de: %s", traducirModulo(identificado));
 		if(identificado == CPU)
 			return 1;
 	}

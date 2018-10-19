@@ -12,6 +12,7 @@
 #include <stdbool.h>
 #include "listas.h"
 #include "S-AFA.h"
+#include <biblioteca/traductor.h>
 
 t_list* listaDeTodosLosDTBs;
 pthread_mutex_t mutexListaDTBs;

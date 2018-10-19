@@ -13,6 +13,8 @@
 #include <commons/collections/queue.h>
 #include <biblioteca/semaforos.h>
 #include <biblioteca/nuestroSelect.h>
+#include <biblioteca/traductor.h>
+
 t_dictionary* conexiones;
 int socketCPU;
 int socketDAM;
