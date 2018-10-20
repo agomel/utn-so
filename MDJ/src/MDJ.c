@@ -91,8 +91,12 @@ int main(void) {
 	init();
 	logger = crearLogger(ARCHIVO_LOG, "MDJ");
 
-	direccionServidor direccionMDJ = levantarDeConfiguracion(NULL, "PUERTO", ARCHIVO_CONFIGURACION);
+	t_config* configuracion = config_create(ARCHIVO_CONFIGURACION);
+
+	direccionServidor direccionMDJ = levantarDeConfiguracion(NULL, "PUERTO", configuracion);
 	int servidor = crearServidor(direccionMDJ.puerto, INADDR_ANY);
+	config_destroy(configuracion);
+
 	crearSelect(servidor);
 	while(1);
 	return 0;

@@ -138,8 +138,12 @@ void crearSelect(int servidor){
 }
 int main(void) {
 	inicializarSAFA();
-	direccionServidor direccionSAFA = levantarDeConfiguracion(NULL, "PUERTO", ARCHIVO_CONFIGURACION);
+	t_config* configuracion = config_create(ARCHIVO_CONFIGURACION);
+
+	direccionServidor direccionSAFA = levantarDeConfiguracion(NULL, "PUERTO", configuracion);
 	int servidor = crearServidor(direccionSAFA.puerto, INADDR_ANY);
+	config_destroy(configuracion);
+
 	inicializarPlanificadores();
 	crearSelect(servidor);
 	pthread_t hiloConsola = crearHilo(&consola, NULL);

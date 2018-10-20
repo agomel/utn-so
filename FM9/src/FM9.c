@@ -92,7 +92,7 @@ void entenderMensaje(int emisor, char header){
 			case TRAER_LINEA_ESCRIPTORIO:
 				programCounter = deserializarInt(emisor);
 				posiciones = deserializarListaInt(emisor);
-				char* respuesta = "Respuesta jarcodeada";
+				char* respuesta = "Respuesta hardcodeada";
 				for(int i = 0; i < posiciones->elements_count; i ++){
 					waitMutex(&mutexStorage);
 					//TODO obtener del storage lo pedido y agregar al string realocandole memoria
@@ -122,6 +122,7 @@ int identificarse(int emisor, char header){
 				break;
 			default:
 				log_error(logger, "Conexion rechazada");
+				break;
 		}
 		log_debug(logger, "Se agrego a las conexiones %s" , traducirModulo(identificado));
 		return 1;
@@ -129,8 +130,6 @@ int identificarse(int emisor, char header){
 		return 0;
 	}
 }
-
-
 
 void crearSelect(int servidor){
 	Select* select = asignarMemoria(sizeof(Select));
@@ -161,10 +160,15 @@ void init(){
 int main(void) {
 	init();
 
-	direccionServidor direccionFM9 = levantarDeConfiguracion(NULL, "PUERTO", ARCHIVO_CONFIGURACION);
+	t_config* configuracion = config_create(ARCHIVO_CONFIGURACION);
+	direccionServidor direccionFM9 = levantarDeConfiguracion(NULL, "PUERTO", configuracion);
 	int servidor = crearServidor(direccionFM9.puerto, INADDR_ANY);
 	crearSelect(servidor);
+	config_destroy(configuracion);
+
 	while(1);
+
 	free(storage);
+	queue_destroy(colaOperaciones);
 	return 0;
 }

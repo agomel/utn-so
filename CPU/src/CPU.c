@@ -265,17 +265,21 @@ void escuchar(int socketSAFA){//MensajeNano: Verificar los punteros de DTB
 int main(void) {
 	logger = crearLogger(ARCHIVO_LOG, "CPU");
 
-	direccionServidor direccionSAFA = levantarDeConfiguracion("IP_SAFA", "PUERTO_SAFA", ARCHIVO_CONFIGURACION);
+	t_config* configuracion = config_create(ARCHIVO_CONFIGURACION);
+
+	direccionServidor direccionSAFA = levantarDeConfiguracion("IP_SAFA", "PUERTO_SAFA", configuracion);
 	socketSAFA = conectarConServidor(direccionSAFA.puerto, inet_addr(direccionSAFA.ip));
 	handshake(socketSAFA, CPU);
 
-	direccionServidor direccionFM9 = levantarDeConfiguracion("IP_FM9", "PUERTO_FM9", ARCHIVO_CONFIGURACION);
+	direccionServidor direccionFM9 = levantarDeConfiguracion("IP_FM9", "PUERTO_FM9", configuracion);
 	socketFM9 = conectarConServidor(direccionFM9.puerto, inet_addr(direccionFM9.ip));
 	handshake(socketFM9, CPU);
 
-	direccionServidor direccionDIEGO = levantarDeConfiguracion("IP_DIEGO", "PUERTO_DIEGO", ARCHIVO_CONFIGURACION);
+	direccionServidor direccionDIEGO = levantarDeConfiguracion("IP_DIEGO", "PUERTO_DIEGO", configuracion);
 	socketDIEGO= conectarConServidor(direccionDIEGO.puerto, inet_addr(direccionDIEGO.ip));
 	handshake(socketDIEGO, CPU);
+
+	config_destroy(configuracion);
 
 	escuchar(socketSAFA);
 	return 0;

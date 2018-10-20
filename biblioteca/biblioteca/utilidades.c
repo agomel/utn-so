@@ -8,17 +8,14 @@ void* asignarMemoria(int cantidad){
 	}
 	return buffer;
 }
-direccionServidor levantarDeConfiguracion(char* nombreIp, char* nombrePuerto, char* rutaArchivo){
-	t_config* configuracion = config_create(rutaArchivo);
+
+direccionServidor levantarDeConfiguracion(char* nombreIp, char* nombrePuerto, t_config* configuracion){
 	direccionServidor direccion;
 	if(nombreIp != NULL){
 	direccion.ip = config_get_string_value(configuracion, nombreIp);
 	}
 	direccion.puerto = config_get_int_value(configuracion, nombrePuerto);
 
-	free(configuracion->properties);
-	free(configuracion->path);
-	free(configuracion);
 	return direccion;
 }
 
