@@ -126,6 +126,7 @@ void inicializarSAFA(){
 	colaOperaciones = queue_create();
 	inicializarSem(&semOperaciones, 0);
 	inicializarSem(&semProductores, 0);
+	initGestorDTBs();
 }
 void crearSelect(int servidor){
 	Select* select = asignarMemoria(sizeof(Select));
