@@ -147,8 +147,8 @@ void crearSelect(int servidor){
 void init(){
 	inicializarMutex(&mutexOffset);
 	inicializarMutex(&mutexStorage);
-	//TODO cargar storage
-	storage = asignarMemoria(1000);
+	t_config* configuracion = config_create(ARCHIVO_CONFIGURACION);
+	storage = asignarMemoria(config_get_int_value(configuracion, "TAMANIO"));
 	//TODO el offset no va a ser siempre 0
 	offset = 0;
 	logger = crearLogger(ARCHIVO_LOG, "FM9");

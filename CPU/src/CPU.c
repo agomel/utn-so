@@ -4,11 +4,13 @@
 #include <biblioteca/utilidades.h>
 #include <biblioteca/dtb.h>
 #include <biblioteca/logger.h>
+#include <unistd.h>
 
 int socketDIEGO;
 int socketFM9;
 int socketSAFA;
 t_log* logger;
+int retardo;
 
 char entendiendoLinea(char* lineaEjecutando, DTB* dtbRecibido){
 	//Devuelve 'b' si lo llama al diego para que el safa lo bloquee
@@ -163,6 +165,10 @@ void escuchar(int socketSAFA){//MensajeNano: Verificar los punteros de DTB
 		DTB* dtbRecibido;
 		char header = deserializarChar(socketSAFA);
 		char mensajeEntendido = 's';
+		log_info(logger, "Iniciando retardo................");
+		//usleep(retardo);
+		sleep(3);
+		log_info(logger, "Finalizando retardo");
 			switch(header){
 				case ENVIAR_DTB:
 					log_info(logger, "Recibiendo un dtb");
@@ -189,8 +195,8 @@ void escuchar(int socketSAFA){//MensajeNano: Verificar los punteros de DTB
 						log_info(logger, "Recibi DTB NO Dummy");
 						char* lineaAEjecutar;
 						//No es el dummy
-						if(dtbRecibido->quantum > 0){
-							while(dtbRecibido->quantum > 0){
+						if(dtbRecibido->quantum != 0){
+							while(dtbRecibido->quantum != 0){
 
 								log_info(logger, "Tiene quantum el DTB");
 								pedirCosasDelFM9(dtbRecibido);
@@ -264,6 +270,9 @@ void escuchar(int socketSAFA){//MensajeNano: Verificar los punteros de DTB
 
 int main(void) {
 	logger = crearLogger(ARCHIVO_LOG, "CPU");
+
+	t_config* configuracion = config_create(ARCHIVO_CONFIGURACION);
+	retardo = config_get_int_value(configuracion, "RETARDO");
 
 	direccionServidor direccionSAFA = levantarDeConfiguracion("IP_SAFA", "PUERTO_SAFA", ARCHIVO_CONFIGURACION);
 	socketSAFA = conectarConServidor(direccionSAFA.puerto, inet_addr(direccionSAFA.ip));

@@ -23,7 +23,6 @@ int identificarse(int emisor, char header){
 				list_add(socketsCPUs, socketCPU);
 				signalMutex(&mutexSocketsCPus);
 				signalSem(&gradoMultiprocesamiento);
-				log_info(logger, "signal GradoMultiprocesamiento, hay una nueva cpu");
 				break;
 			case DAM:
 				socketDAM = emisor;
@@ -89,7 +88,11 @@ void entenderMensaje(int emisor, char header){
 
 		case TERMINO_QUANTUM:
 			dtb = deserializarDTB(emisor);
-			cambiarEstadoGuardandoNuevoDTB(dtb, READY);
+			if(strcmp(algoritmo, "VRR")){
+				cambiarEstadoGuardandoNuevoDTB(dtb, READY_PRIORIDAD);
+			}else{
+				cambiarEstadoGuardandoNuevoDTB(dtb, READY);
+			}
 			signalSem(&cantidadTotalREADY);
 
 			terminarOperacionDeCPU(emisor, dtb);

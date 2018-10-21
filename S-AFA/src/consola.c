@@ -1,12 +1,18 @@
 #include "consola.h"
 #include <biblioteca/dtb.h>
 
+void loguearEstadoDTB(DTB* dtb){
+	log_info(logger, "id: %d, escriptiorio: %s, programCounter: %d, status: %s, quantum: %d, flag: %d",
+			dtb->id, dtb->escriptorio, dtb->programCounter, nombreEstado(dtb->estado), dtb->quantum, dtb->flag);
+}
+
 void loguearEstadoDeLista(t_list* lista, char estado){
+	log_info(logger, "__________________________________");
 	log_info(logger, "Estado de lista: %s", nombreEstado(estado));
 	log_info(logger, "Cantidad de DTBs en lista: %d", lista->elements_count);
-	log_info(logger, "Ids de DTBs en lista:");
+	if(lista->elements_count>0) log_info(logger, "DTBs en lista:");
 	for(int i = 0; i<lista->elements_count; i++){
-		log_info(logger, "d", list_get(lista, i));
+		loguearEstadoDTB(list_get(lista, i));
 	}
 }
 void crearStatusDeMetricas(){
@@ -60,7 +66,7 @@ void consola(){
 
 			comandoCompleto cadenaArmada=rearmarCadena(mensaje);
 			int comando=obtenerComando(cadenaArmada.comando);
-
+			int idDTB;
 			switch(comando){
 				case SALIR:
 					log_info(logger, "Comando salir");
@@ -71,16 +77,17 @@ void consola(){
 					crearStatusDeMetricas();
 					break;
 				case FINALIZAR:
+					idDTB = atoi(cadenaArmada.parametro);
 					log_info(logger, "Comando finalizar");
-					DTB* dtb = obtenerDTBDeCola(cadenaArmada.parametro);
+					DTB* dtb = obtenerDTBDeCola(idDTB);
 					if(dtb->estado = EXECUTE){
 
 						waitMutex(&mutexSocketsCPus);
-						int socketCPU = dictionary_get(socketsCPUs, intToString(cadenaArmada.parametro));
+						int socketCPU = (int) dictionary_get(socketsCPUs, cadenaArmada.parametro);
 						signalMutex(&mutexSocketsCPus);
 
 						waitMutex(&mutexCpusAFinalizarDTBs);
-						dictionary_put(cpusAFinalizarDTBs, intToString(socketCPU),cadenaArmada.parametro);
+						dictionary_put(cpusAFinalizarDTBs, intToString(socketCPU), idDTB);
 						signalMutex(&mutexCpusAFinalizarDTBs);
 					}else{
 						pasarDTBAExitGuardandoNuevo(dtb);

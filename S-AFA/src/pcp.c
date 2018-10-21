@@ -3,7 +3,7 @@
 DTB* planificarPorFIFO(){
 	t_list* listaReady = filtrarListaPorEstado(READY);
 	DTB* dtb = list_get(listaReady, 0);
-	dtb->quantum = 0;
+	dtb->quantum = -1;
 	return dtb;
 }
 
@@ -25,11 +25,11 @@ DTB* planificarPorVRR(){
 }
 
 DTB* seleccionarDTB(){
-	if(strcmp(algoritmo, "FIFO")){
+	if(!strcmp(algoritmo, "FIFO")){
 		return planificarPorFIFO();
-	}else if(strcmp(algoritmo, "RR")){
+	}else if(!strcmp(algoritmo, "RR")){
 		return planificarPorRR();
-	}else if(strcmp(algoritmo, "VRR")){
+	}else if(!strcmp(algoritmo, "VRR")){
 		return planificarPorVRR();
 	}
 }
