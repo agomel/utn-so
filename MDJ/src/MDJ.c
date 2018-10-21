@@ -30,9 +30,8 @@ sem_t semProductores;
 
 void entenderMensaje(int emisor, char header){
 	char* datos;
-	log_info(logger, "aaaaaaaaaaaa");
 	usleep(RETARDO*1000);//tiempo en milisegundos
-	log_info(logger, "bbbbbbb");
+
 	switch(header){
 			case VALIDAR_ARCHIVO:
 				log_info(logger, "validando archivo de emisor %d", emisor);
