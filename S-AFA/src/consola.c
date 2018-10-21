@@ -1,6 +1,4 @@
 #include "consola.h"
-#include <biblioteca/dtb.h>
-
 
 int obtenerComando(char*ingresado){
 	int comando=6;

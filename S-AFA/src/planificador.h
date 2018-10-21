@@ -12,6 +12,7 @@
 #include <stdbool.h>
 #include "listas.h"
 #include "S-AFA.h"
+#include <biblioteca/traductor.h>
 
 t_list* listaDeTodosLosDTBs;
 pthread_mutex_t mutexListaDTBs;
@@ -25,7 +26,6 @@ sem_t semCantidadEnNew;
 DTB* dtbDummy;
 pthread_mutex_t mutexDummy;
 
-t_config* configuracion;
 int quantum;
 char* algoritmo;
 
