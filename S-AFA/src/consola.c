@@ -10,10 +10,11 @@ void loguearEstadoDeLista(t_list* lista, char estado){
 	log_info(logger, "__________________________________");
 	log_info(logger, "Estado de lista: %s", nombreEstado(estado));
 	log_info(logger, "Cantidad de DTBs en lista: %d", lista->elements_count);
-	if(lista->elements_count>0) log_info(logger, "DTBs en lista:");
+	if(lista->elements_count > 0) log_info(logger, "DTBs en lista:");
 	for(int i = 0; i<lista->elements_count; i++){
 		loguearEstadoDTB(list_get(lista, i));
 	}
+	list_destroy(lista);
 }
 void crearStatusDeMetricas(){
 	t_list* listaNews = filtrarListaPorEstado(NEW);
@@ -80,11 +81,11 @@ void consola(){
 					idDTB = atoi(cadenaArmada.parametro);
 					log_info(logger, "Comando finalizar");
 					DTB* dtb = obtenerDTBDeCola(idDTB);
-					if(dtb->estado = EXECUTE){
+					if(dtb->estado == EXECUTE){
 
-						waitMutex(&mutexSocketsCPus);
-						int socketCPU = (int) dictionary_get(socketsCPUs, cadenaArmada.parametro);
-						signalMutex(&mutexSocketsCPus);
+						waitMutex(&mutexEjecutandoCPU);
+						int socketCPU = dictionary_get(ejecutandoCPU, cadenaArmada.parametro);
+						signalMutex(&mutexEjecutandoCPU);
 
 						waitMutex(&mutexCpusAFinalizarDTBs);
 						dictionary_put(cpusAFinalizarDTBs, intToString(socketCPU), idDTB);

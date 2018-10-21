@@ -48,10 +48,9 @@ void cambiarEstadoGuardandoNuevoDTB(DTB* nuevoDTB, char nuevoEstado){
 }
 
 void logguearCambioEstado(DTB* dtb, char nuevoEstado){
-	t_list* lista = dictionary_get(dtb->direccionesArchivos, dtb->escriptorio);
 		log_info(logger,
-				"Pasado a %c dtb con id: %d, escriptorio: %s, quantum: %d, y escriptorio en: %d",
-				 nuevoEstado, dtb->id, dtb->escriptorio, dtb->quantum, list_get(lista, 0));
+				"Pasado a %c dtb con id: %d, escriptorio: %s, quantum: %d",
+				 nuevoEstado, dtb->id, dtb->escriptorio, dtb->quantum);
 }
 
 

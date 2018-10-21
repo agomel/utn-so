@@ -3,6 +3,7 @@
 DTB* planificarPorFIFO(){
 	t_list* listaReady = filtrarListaPorEstado(READY);
 	DTB* dtb = list_get(listaReady, 0);
+	list_destroy(listaReady);
 	dtb->quantum = -1;
 	return dtb;
 }
@@ -10,6 +11,7 @@ DTB* planificarPorFIFO(){
 DTB* planificarPorRR(){
 	t_list* listaReady = filtrarListaPorEstado(READY);
 	DTB* dtb = list_get(listaReady, 0);
+	list_destroy(listaReady);
 	dtb->quantum = quantum;
 	return dtb;
 }
@@ -18,7 +20,9 @@ DTB* planificarPorVRR(){
 	t_list* listaVRR = filtrarListaPorEstado(READY_PRIORIDAD);
 
 	if(listaVRR->elements_count > 0){
-		return list_get(listaVRR, 0);
+		DTB* dtb = list_get(listaVRR, 0);
+		list_destroy(listaVRR);
+		return dtb;
 	}else{
 		return planificarPorRR();
 	}
