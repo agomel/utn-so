@@ -32,7 +32,6 @@ void inicializarSemaforos(){
 	config_destroy(configuracion);
 }
 
-
 void cambiarEstado(int idDTB, char nuevoEstado){
 	DTB* dtb = obtenerDTBDeColaRemoviendolo(idDTB);
 	dtb->estado = nuevoEstado;
@@ -55,8 +54,8 @@ void cambiarEstadoGuardandoNuevoDTB(DTB* nuevoDTB, char nuevoEstado){
 
 void logguearCambioEstado(DTB* dtb, char nuevoEstado){
 		log_info(logger,
-				"Pasado a %c dtb con id: %d, escriptorio: %s, quantum: %d",
-				 nuevoEstado, dtb->id, dtb->escriptorio, dtb->quantum);
+				"Pasado a %s dtb con id: %d, escriptorio: %s, quantum: %d",
+				 traducirEstado(nuevoEstado), dtb->id, dtb->escriptorio, dtb->quantum);
 }
 
 

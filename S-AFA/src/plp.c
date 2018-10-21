@@ -39,13 +39,24 @@ void ponerEnReady(int idDTB) {
 	signalSem(&cantidadTotalREADY);
 }
 
-void pasarDTBAExit(int idDTB) {
+void pasarDTBAExit(int idDTB){
+	DTB* dtb = obtenerDTBDeCola(idDTB);
+	if(!dtb){
+		log_error(logger,"NO existe ese dtb");
+	}else if(dtb->estado == EXIT){
+		log_info(logger, "El DTB: %d ya se encontraba en EXIT", idDTB);
+	}else{
 	signalSem(&gradoMultiprogramacion);
 	cambiarEstado(idDTB, EXIT);
+	}
 }
 void pasarDTBAExitGuardandoNuevo(DTB* dtb) {
+	if(dtb->estado == EXIT){
+			log_info(logger, "El DTB: %d ya se encontraba en EXIT", dtb->id);
+	}else{
 	signalSem(&gradoMultiprogramacion);
 	cambiarEstadoGuardandoNuevoDTB(dtb, EXIT);
+	}
 }
 
 void manejarErrores(int idDTB, char* path, int error){

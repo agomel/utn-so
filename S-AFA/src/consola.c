@@ -56,17 +56,18 @@ void consola(){
 					idDTB = atoi(cadenaArmada.parametro);
 					log_info(logger, "Comando finalizar");
 					DTB* dtb = obtenerDTBDeCola(idDTB);
-					if(dtb->estado == EXECUTE){
-
+					if(!dtb){
+						log_error(logger, "No existe DTB con id %d", idDTB);
+					}else if(dtb->estado == EXECUTE){
 						waitMutex(&mutexEjecutandoCPU);
-						int socketCPU = dictionary_get(ejecutandoCPU, cadenaArmada.parametro);
+						int socketCPU = dictionary_get(ejecutandoCPU, intToString(idDTB));
 						signalMutex(&mutexEjecutandoCPU);
 
 						waitMutex(&mutexCpusAFinalizarDTBs);
-						dictionary_put(cpusAFinalizarDTBs, intToString(socketCPU), idDTB);
+						dictionary_put(cpusAFinalizarDTBs, intToString(idDTB), socketCPU);
 						signalMutex(&mutexCpusAFinalizarDTBs);
 					}else{
-						pasarDTBAExitGuardandoNuevo(dtb);
+						pasarDTBAExit(idDTB);
 					}
 					break;
 				case METRICAS:

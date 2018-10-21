@@ -2,15 +2,20 @@
 
 DTB* obtenerDTBDeCola(int idDTB){
 	DTB* dtb;
+	int loEncontro = 0;
 	int index = 0;
 	for(int index = 0; index < listaDeTodosLosDTBs->elements_count; index++){
 		waitMutex(&mutexListaDTBs);
 		dtb = list_get(listaDeTodosLosDTBs, index);
 		signalMutex(&mutexListaDTBs);
 		if(dtb->id == idDTB && dtb->flag != 0){
+			loEncontro = 1;
 			break;
 		}
 	}
+	if(!loEncontro)
+		return NULL;
+
 	return dtb;
 }
 
@@ -30,6 +35,7 @@ DTB* obtenerDTBDeColaRemoviendolo(int idDTB){
 	}
 	return dtb;
 }
+
 void removerDTBDeCola(int idDTB){
 	DTB* dtb;
 	int index = 0;

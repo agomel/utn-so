@@ -165,7 +165,7 @@ void escuchar(int socketSAFA){//MensajeNano: Verificar los punteros de DTB
 		DTB* dtbRecibido;
 		char header = deserializarChar(socketSAFA);
 		char mensajeEntendido = 's';
-		log_info(logger, "Iniciando retardo................");
+		log_info(logger, "Iniciando retardo de %d........",retardo);
 		sleep(retardo);
 		log_info(logger, "Finalizando retardo");
 			switch(header){
