@@ -19,7 +19,9 @@
 #include <biblioteca/semaforos.h>
 #include <biblioteca/nuestroSelect.h>
 #include <biblioteca/traductor.h>
+
 int socketDAM;
+int RETARDO;
 
 t_queue* colaOperaciones;
 pthread_mutex_t mutexOperaciones;
@@ -28,6 +30,9 @@ sem_t semProductores;
 
 void entenderMensaje(int emisor, char header){
 	char* datos;
+	log_info(logger, "aaaaaaaaaaaa");
+	usleep(RETARDO*1000);//tiempo en milisegundos
+	log_info(logger, "bbbbbbb");
 	switch(header){
 			case VALIDAR_ARCHIVO:
 				log_info(logger, "validando archivo de emisor %d", emisor);
@@ -82,6 +87,12 @@ void crearSelect(int servidor){
 }
 
 void init(){
+	t_config* configuracion = config_create(ARCHIVO_CONFIGURACION);
+	RETARDO = config_get_int_value(configuracion, "RETARDO");
+	free(configuracion);
+
+	logger = crearLogger(ARCHIVO_LOG, "MDJ");
+
 	inicializarMutex(&mutexOperaciones);
 	colaOperaciones = queue_create();
 	inicializarSem(&semOperaciones, 0);
@@ -89,7 +100,6 @@ void init(){
 }
 int main(void) {
 	init();
-	logger = crearLogger(ARCHIVO_LOG, "MDJ");
 
 	direccionServidor direccionMDJ = levantarDeConfiguracion(NULL, "PUERTO", ARCHIVO_CONFIGURACION);
 	int servidor = crearServidor(direccionMDJ.puerto, INADDR_ANY);
