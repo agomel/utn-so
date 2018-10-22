@@ -54,7 +54,12 @@ void crearSelect(int servidor){
 void init(){
 	t_config* configuracion = config_create(ARCHIVO_CONFIGURACION);
 	RETARDO = config_get_int_value(configuracion, "RETARDO");
-	free(configuracion);
+
+	char* punteroPuntoMontaje = config_get_string_value(configuracion, "PUNTO_MONTAJE");
+	PUNTO_MONTAJE = asignarMemoria(strlen(punteroPuntoMontaje) + 1);
+	memcpy(PUNTO_MONTAJE, punteroPuntoMontaje, strlen(punteroPuntoMontaje)+ 1);
+
+	config_destroy(configuracion);
 
 	logger = crearLogger(ARCHIVO_LOG, "MDJ");
 
@@ -62,6 +67,8 @@ void init(){
 	colaOperaciones = queue_create();
 	inicializarSem(&semOperaciones, 0);
 	inicializarSem(&semProductores, 0);
+
+	crearHiloQueMuereSolo(consolita, NULL);
 }
 int main(void) {
 	init();
