@@ -1,4 +1,5 @@
 #include "ServicioMDJ.h"
+#include "serializacion.h"
 
 int validarArchivoMDJ(char* path){
 	int tamanioMensaje = sizeof(char) + sizeof(int) + strlen(path)+1;
@@ -38,14 +39,8 @@ char* obtenerDatosDeMDJ(char* path){
 	return datosTotales;
 }
 
-int crearArchivoEnMDJ(char* path, int cantidadDeLineas){
-	void* buffer = asignarMemoria(sizeof(char) + sizeof(int) + (strlen(path)+1) + sizeof(int));
-	int desplazamiento = 0;
-	concatenarChar(buffer, &desplazamiento, CREAR_ARCHIVO);
-	concatenarString(buffer, &desplazamiento, path);
-	concatenarInt(buffer, &desplazamiento, cantidadDeLineas);
-	enviarMensaje(socketMDJ, buffer, desplazamiento);
-	free(buffer);
+int crearArchivoEnMDJ(int destino, char* path, int cantidadDeLineas){
+	enviarySerializarPathyCantidadDeLineas(destino, path, cantidadDeLineas);
 	return deserializarInt(socketMDJ);
 }
 int borrarArchivoEnMDJ(char* path){
