@@ -1,27 +1,17 @@
-/*
- ============================================================================
- Name        : FM9.c
- Author      : 
- Version     :
- Copyright   : Your copyright notice
- Description : Hello World in C, Ansi-style
- ============================================================================
- */
-
 #include "FM9.h"
 #include "segmentacionPura.h"
 #include "segmentacionPag.h"
 #include "paginasInvertidas.h"
 
 respuestaDeObtencionDeMemoria* obtenerDatosDeMemoria(t_list* posiciones){
-		if(strcmp(modo, "SEG_PURA") == 0)
-			return obtenerDatosSegPura(posiciones);
+	if(strcmp(modo, "SEG_PURA") == 0)
+		return obtenerDatosSegPura(posiciones);
 
-		if(strcmp(modo, "SEG_PAG") == 0)
-			return obtenerDatosSegPag(posiciones);
+	if(strcmp(modo, "SEG_PAG") == 0)
+		return obtenerDatosSegPag(posiciones);
 
-		if(strcmp(modo, "INV") == 0)
-			return obtenerDatosInvertida(posiciones);
+	if(strcmp(modo, "INV") == 0)
+		return obtenerDatosInvertida(posiciones);
 }
 
 respuestaDeCargaEnMemoria cargarDatosEnMemoria(char* datos){

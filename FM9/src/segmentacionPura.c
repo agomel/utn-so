@@ -11,13 +11,13 @@ respuestaDeCargaEnMemoria guardarDatosSegPura(char* datos){
 	ElementoTablaSegPura* elementoTabla = malloc(sizeof(ElementoTablaSegPura));
 
 	elementoTabla->id = idSegmento;
-	elementoTabla->limite = tamanioSegmento;
 	elementoTabla->base = offset;
+	elementoTabla->limite = tamanioSegmento;
 
 	list_add(tablaDeSegmentos, elementoTabla);
 
-	t_list* numerosSegmento = list_create();
-	list_add(numerosSegmento, idSegmento);
+	t_list* idsSegmento = list_create();
+	list_add(idsSegmento, idSegmento);
 
 	memcpy(storage, datos, tamanioSegmento);
 
@@ -25,7 +25,7 @@ respuestaDeCargaEnMemoria guardarDatosSegPura(char* datos){
 
 	idSegmento++;
 
-	respuesta.listaDeDirecciones = numerosSegmento;
+	respuesta.listaDeDirecciones = idsSegmento;
 	respuesta.pudoGuardarlo = 0;
 
 	return respuesta;
