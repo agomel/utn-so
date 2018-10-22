@@ -73,10 +73,10 @@ void consola(){
 				case METRICAS:
 					log_info(logger, "Comando metricas");
 					if(cadenaArmada.parametro == NULL){
-						//mostrarMetricas();
+						mostrarMetricas();
 					}else{
 						idDTB = atoi(cadenaArmada.parametro);
-						//mostrarMetricasConDTB(idDTB);
+						mostrarMetricasConDTB(idDTB);
 					}
 					break;
 				case EJECUTAR:
