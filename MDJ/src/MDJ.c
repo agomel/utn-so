@@ -54,7 +54,7 @@ void crearSelect(int servidor){
 void init(){
 	t_config* configuracion = config_create(ARCHIVO_CONFIGURACION);
 	RETARDO = config_get_int_value(configuracion, "RETARDO");
-	free(configuracion);
+	config_destroy(configuracion);
 
 	logger = crearLogger(ARCHIVO_LOG, "MDJ");
 

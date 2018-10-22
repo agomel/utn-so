@@ -9,65 +9,46 @@
  */
 
 #include "FM9.h"
-t_list* guardarDatos(char* datos){
-	t_list* direccionesGuardadas = list_create();
-	waitMutex(&mutexOffset);
-	list_add(direccionesGuardadas, offset);
-	signalMutex(&mutexOffset);
-
-	waitMutex(&mutexStorage);
-	memcpy(storage, datos, strlen(datos) + 1);
-	signalMutex(&mutexStorage);
-
-	waitMutex(&mutexOffset);
-	offset = offset + strlen(datos) + 1;
-	signalMutex(&mutexOffset);
-	return direccionesGuardadas;
-}
+#include "segmentacionPura.h"
 
 respuestaDeObtencionDeMemoria* obtenerDatosDeMemoria(t_list* posiciones){
-	//TODO OBTENER DATOS
-	respuestaDeObtencionDeMemoria* respuesta;
-	respuesta->cantidadDeLineas = 0;
-	t_list* lista = list_create();
-	respuesta->datos = lista;
-	respuesta->pudoGuardarlo = 0;
-	return respuesta;
+		if(strcmp(modo, "SEG_PURA") == 0)
+			return obtenerDatosSegPura(posiciones);
+
+		if(strcmp(modo, "SEG_PAG") == 0)
+			return obtenerDatosSegPag(posiciones);
+
+		if(strcmp(modo, "INV") == 0)
+			return obtenerDatosInvertida(posiciones);
+
+		return NULL;
 }
 
 respuestaDeCargaEnMemoria cargarDatosEnMemoria(char* datos){
-	respuestaDeCargaEnMemoria respuesta;
-	respuesta.listaDeDirecciones = guardarDatos(datos);// TODO
-	respuesta.pudoGuardarlo = 0;//0 significa que pudo, si no, numero de error
-	log_info(logger, "Guardados datos: %s", datos);
-	return respuesta; //pudo guardar. TODO hacer si tuvo un error return 0
+	if(strcmp(modo, "SEG_PURA") == 0)
+		return guardarDatosSegPura(datos);
+
+	if(strcmp(modo, "SEG_PAG") == 0)
+		return guardarDatosSegPag(datos);
+
+	if(strcmp(modo, "INV") == 0)
+		return guardarDatosInvertida(datos);
+
+	return NULL;
 }
 
 
 void entenderMensaje(int emisor, char header){
-	char* datos;
-	respuestaDeCargaEnMemoria respuestaDeCarga;
-	respuestaDeObtencionDeMemoria* respuestaDeObtener;
-	int id;
-	int tamanioBuffer;
-	int offset;
-	int sizeDeLaRespuesta;
-	int desplazamiento;
-	int tamanioPath;
-	void* buffer;
-	t_list* posiciones;
-	int programCounter;
-
-		switch(header){
-
-			case GUARDAR_DATOS:
-				datos = deserializarString(emisor);
-				respuestaDeCarga = cargarDatosEnMemoria(datos);
+	switch(header){
+			case GUARDAR_DATOS: {
+				log_debug(logger, "Guardando datos en memoria");
+				char* datos = deserializarString(emisor);
+				respuestaDeCargaEnMemoria respuestaDeCarga = cargarDatosEnMemoria(datos);
 
 				if(respuestaDeCarga.pudoGuardarlo == 0){
-					desplazamiento = 0;
-					tamanioBuffer = sizeof(int) + sizeof(int) + sizeof(int)*(respuestaDeCarga.listaDeDirecciones->elements_count);
-					buffer = asignarMemoria(tamanioBuffer);
+					int desplazamiento = 0;
+					int tamanioBuffer = sizeof(int) + sizeof(int) + sizeof(int)*(respuestaDeCarga.listaDeDirecciones->elements_count);
+					void* buffer = asignarMemoria(tamanioBuffer);
 					concatenarInt(buffer, &desplazamiento, respuestaDeCarga.pudoGuardarlo);
 					concatenarListaInt(buffer, &desplazamiento, respuestaDeCarga.listaDeDirecciones);
 					enviarMensaje(socketDAM, buffer, tamanioBuffer);
@@ -77,36 +58,43 @@ void entenderMensaje(int emisor, char header){
 					enviarYSerializarIntSinHeader(socketDAM, respuestaDeCarga.pudoGuardarlo);
 				}
 				break;
-			case OBTENER_DATOS:
-				posiciones = deserializarListaInt(emisor);
-				respuestaDeObtener = obtenerDatosDeMemoria(posiciones); //TODO
+			}
 
-				desplazamiento = 0;
-				tamanioBuffer = sizeof(int) + sizeof(int) + sizeof(int) + strlen("hola") + 1;
-				buffer = asignarMemoria(tamanioBuffer);
+			case OBTENER_DATOS: {
+				log_debug(logger, "Obteniendo datos de memoria");
+				t_list* posiciones = deserializarListaInt(emisor);
+				respuestaDeObtencionDeMemoria* respuestaDeObtener = obtenerDatosDeMemoria(posiciones); //TODO
+
+				int desplazamiento = 0;
+				int tamanioBuffer = sizeof(int) + sizeof(int) + sizeof(int) + strlen("hola") + 1;
+				int buffer = asignarMemoria(tamanioBuffer);
 				concatenarInt(buffer, &desplazamiento, 0);
 				concatenarInt(buffer, &desplazamiento, 1);
 				concatenarString(buffer, &desplazamiento, "hola");
 				enviarMensaje(socketDAM, buffer, tamanioBuffer);
 				break;
-			case TRAER_LINEA_ESCRIPTORIO:
-				programCounter = deserializarInt(emisor);
-				posiciones = deserializarListaInt(emisor);
+			}
+
+			case TRAER_LINEA_ESCRIPTORIO: {
+				log_debug(logger, "Trayendo linea escriptorio");
+				int programCounter = deserializarInt(emisor);
+				t_list* posiciones = deserializarListaInt(emisor);
 				char* respuesta = "Respuesta hardcodeada";
 				for(int i = 0; i < posiciones->elements_count; i ++){
-					waitMutex(&mutexStorage);
 					//TODO obtener del storage lo pedido y agregar al string realocandole memoria
-					signalMutex(&mutexStorage);
 				}
 
-				desplazamiento = 0;
-				tamanioBuffer = sizeof(int) + strlen(respuesta) + 1;
-				buffer = asignarMemoria(tamanioBuffer);
+				int desplazamiento = 0;
+				int tamanioBuffer = sizeof(int) + strlen(respuesta) + 1;
+				void* buffer = asignarMemoria(tamanioBuffer);
 				concatenarString(buffer, &desplazamiento, respuesta);
 				enviarMensaje(socketCPU, buffer, tamanioBuffer);
 				break;
+			}
+
 			default:
 				log_error(logger, "Header desconocido");
+				break;
 		}
 }
 int identificarse(int emisor, char header){
@@ -144,17 +132,22 @@ void crearSelect(int servidor){
 	realizarNuestroSelect(select);
 }
 void init(){
-	inicializarMutex(&mutexOffset);
-	inicializarMutex(&mutexStorage);
 	t_config* configuracion = config_create(ARCHIVO_CONFIGURACION);
+
 	storage = asignarMemoria(config_get_int_value(configuracion, "TAMANIO"));
-	//TODO el offset no va a ser siempre 0
+	char* punteroAModo = config_get_string_value(configuracion, "MODO");
+	modo = asignarMemoria(strlen(punteroAModo) + 1);
+	memcpy(modo, punteroAModo, strlen(punteroAModo) + 1);
+
 	offset = 0;
 	logger = crearLogger(ARCHIVO_LOG, "FM9");
-	inicializarMutex(&mutexOperaciones);
+
 	colaOperaciones = queue_create();
-	inicializarSem(&semOperaciones, 0);
-	inicializarSem(&semProductores, 0);
+	inicializarMutex(&mutexOperaciones);
+	inicializarSem(semOperaciones, 0);
+	inicializarSem(semProductores, 0);
+
+	config_destroy(configuracion);
 }
 
 int main(void) {

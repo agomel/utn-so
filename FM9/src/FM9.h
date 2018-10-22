@@ -15,19 +15,16 @@
 #include <biblioteca/nuestroSelect.h>
 #include <biblioteca/traductor.h>
 
-t_dictionary* conexiones;
 int socketCPU;
 int socketDAM;
-char* storage;
-pthread_mutex_t mutexStorage;
+void* storage;
 int offset;
-pthread_mutex_t mutexOffset;
 t_log* logger;
-
+char* modo;
 t_queue* colaOperaciones;
 pthread_mutex_t mutexOperaciones;
-sem_t semOperaciones;
 sem_t semProductores;
+sem_t semOperaciones;
 
 typedef struct{
 	t_list* listaDeDirecciones;
@@ -42,9 +39,8 @@ typedef struct{
 
 respuestaDeCargaEnMemoria cargarDatosEnMemoria(char* datos);
 respuestaDeObtencionDeMemoria* obtenerDatosDeMemoria(t_list* posiciones);
-
-void init();
 void entenderMensaje(int emisor, char header);
-int main(void);
+
+
 
 #endif /*FM9_H_*/
