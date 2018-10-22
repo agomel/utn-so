@@ -159,12 +159,11 @@ void crearSelect(int servidor){
 int main(void) {
 	inicializarSAFA();
 	t_config* configuracion = config_create(ARCHIVO_CONFIGURACION);
-	retardo = config_get_int_value(configuracion, "RETARDO");
+	retardo = config_get_int_value(configuracion, "RETARDO_PLANIF");
 
 
 	direccionServidor direccionSAFA = levantarDeConfiguracion(NULL, "PUERTO", configuracion);
 	int servidor = crearServidor(direccionSAFA.puerto, INADDR_ANY);
-	config_destroy(configuracion);
 
 	inicializarPlanificadores();
 	crearSelect(servidor);

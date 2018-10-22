@@ -31,7 +31,7 @@ void mostrarStatus(){
 	loguearEstadoDeLista(listaReadyPrioridad, READY_PRIORIDAD);
 }
 
-
+/*
 
 Historial* crearHistorial(int idDTB){
 	Historial* historial = asignarMemoria(sizeof(Historial));
@@ -39,13 +39,13 @@ Historial* crearHistorial(int idDTB){
 	//historial->sentenciasNew= 0;
 	//historial->sentenciasExit = 0;
 	return historial;
-}
+}*/
 
 void initGestorDTBs(){
-	inicializarMutex(&mutexHistorial);
-	listaHistorial = list_create();
+	//inicializarMutex(&mutexHistorial);
+	//listaHistorial = list_create();
 }
-
+/*
 void mostrarMetricasConDTB(int idDTB){
 	Historial* obtenerPorId(Historial* historial){
 		return historial->idDTB == idDTB;
@@ -71,4 +71,4 @@ void mostrarMetricas(){
 	mostrarSentenciasEnNewDeTodos();
 	//TODO hacer metricas
 
-}
+}*/
