@@ -194,7 +194,7 @@ void escuchar(int socketSAFA){//MensajeNano: Verificar los punteros de DTB
 						log_info(logger, "Recibi DTB NO Dummy");
 						char* lineaAEjecutar;
 						//No es el dummy
-						if(dtbRecibido->quantum != 0){
+						if(dtbRecibido->quantum != -1){
 							while(dtbRecibido->quantum != 0){
 
 								log_info(logger, "Tiene quantum el DTB");
