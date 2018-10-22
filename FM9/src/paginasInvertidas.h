@@ -4,6 +4,6 @@
 #include "FM9.h"
 
 respuestaDeCargaEnMemoria guardarDatosInvertida(char* datos);
-respuestaDeObtencionDeMemoria obtenerDatosInvertida(t_list* posiciones);
+respuestaDeObtencionDeMemoria* obtenerDatosInvertida(t_list* posiciones);
 
 #endif /* PAGINASINVERTIDAS_H_ */

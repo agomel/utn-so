@@ -11,6 +11,6 @@ typedef struct{
 
 t_list* tablaDeSegmentos; //Es una lista de ElementoTablaSegPura
 respuestaDeCargaEnMemoria guardarDatosSegPura(char* datos);
-respuestaDeObtencionDeMemoria obtenerDatosSegPura(t_list* posiciones);
+respuestaDeObtencionDeMemoria* obtenerDatosSegPura(t_list* posiciones);
 
 #endif /* SEGMENTACIONPURA_H_ */

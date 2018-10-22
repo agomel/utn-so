@@ -15,17 +15,6 @@
 #include <biblioteca/nuestroSelect.h>
 #include <biblioteca/traductor.h>
 
-int socketCPU;
-int socketDAM;
-void* storage;
-int offset;
-t_log* logger;
-char* modo;
-t_queue* colaOperaciones;
-pthread_mutex_t mutexOperaciones;
-sem_t semProductores;
-sem_t semOperaciones;
-
 typedef struct{
 	t_list* listaDeDirecciones;
 	int pudoGuardarlo;
@@ -36,6 +25,18 @@ typedef struct{
 	int cantidadDeLineas;
 	int pudoGuardarlo;
 }respuestaDeObtencionDeMemoria;
+
+int socketCPU;
+int socketDAM;
+int tamanioMemoria;
+void* storage;
+int offset;
+t_log* logger;
+char* modo;
+t_queue* colaOperaciones;
+pthread_mutex_t mutexOperaciones;
+sem_t semProductores;
+sem_t semOperaciones;
 
 respuestaDeCargaEnMemoria cargarDatosEnMemoria(char* datos);
 respuestaDeObtencionDeMemoria* obtenerDatosDeMemoria(t_list* posiciones);

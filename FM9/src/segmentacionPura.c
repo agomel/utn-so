@@ -9,6 +9,7 @@ respuestaDeCargaEnMemoria guardarDatosSegPura(char* datos){
 	respuestaDeCargaEnMemoria respuesta;
 	int tamanioSegmento = strlen(datos) + 1;
 	ElementoTablaSegPura* elementoTabla = malloc(sizeof(ElementoTablaSegPura));
+
 	elementoTabla->id = idSegmento;
 	elementoTabla->limite = tamanioSegmento;
 	elementoTabla->base = offset;
@@ -30,7 +31,7 @@ respuestaDeCargaEnMemoria guardarDatosSegPura(char* datos){
 	return respuesta;
 }
 
-respuestaDeObtencionDeMemoria obtenerDatosSegPura(t_list* posiciones){
+respuestaDeObtencionDeMemoria* obtenerDatosSegPura(t_list* posiciones){
 	respuestaDeObtencionDeMemoria* respuesta;
 	respuesta->cantidadDeLineas = 0;
 	t_list* lista = list_create();

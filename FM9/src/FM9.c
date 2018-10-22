@@ -10,6 +10,8 @@
 
 #include "FM9.h"
 #include "segmentacionPura.h"
+#include "segmentacionPag.h"
+#include "paginasInvertidas.h"
 
 respuestaDeObtencionDeMemoria* obtenerDatosDeMemoria(t_list* posiciones){
 		if(strcmp(modo, "SEG_PURA") == 0)
@@ -20,8 +22,6 @@ respuestaDeObtencionDeMemoria* obtenerDatosDeMemoria(t_list* posiciones){
 
 		if(strcmp(modo, "INV") == 0)
 			return obtenerDatosInvertida(posiciones);
-
-		return NULL;
 }
 
 respuestaDeCargaEnMemoria cargarDatosEnMemoria(char* datos){
@@ -33,8 +33,6 @@ respuestaDeCargaEnMemoria cargarDatosEnMemoria(char* datos){
 
 	if(strcmp(modo, "INV") == 0)
 		return guardarDatosInvertida(datos);
-
-	return NULL;
 }
 
 
@@ -134,7 +132,8 @@ void crearSelect(int servidor){
 void init(){
 	t_config* configuracion = config_create(ARCHIVO_CONFIGURACION);
 
-	storage = asignarMemoria(config_get_int_value(configuracion, "TAMANIO"));
+	tamanioMemoria = config_get_int_value(configuracion, "TAMANIO");
+	storage = asignarMemoria(tamanioMemoria);
 	char* punteroAModo = config_get_string_value(configuracion, "MODO");
 	modo = asignarMemoria(strlen(punteroAModo) + 1);
 	memcpy(modo, punteroAModo, strlen(punteroAModo) + 1);
@@ -144,8 +143,8 @@ void init(){
 
 	colaOperaciones = queue_create();
 	inicializarMutex(&mutexOperaciones);
-	inicializarSem(semOperaciones, 0);
-	inicializarSem(semProductores, 0);
+	inicializarSem(&semOperaciones, 0);
+	inicializarSem(&semProductores, 0);
 
 	config_destroy(configuracion);
 }
