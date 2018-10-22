@@ -9,7 +9,10 @@ typedef struct{
 	int base;
 }ElementoTablaSegPura;
 
+int idSegmento;
 t_list* tablaDeSegmentos; //Es una lista de ElementoTablaSegPura
+
+void inicializarSegPura();
 respuestaDeCargaEnMemoria guardarDatosSegPura(char* datos);
 respuestaDeObtencionDeMemoria* obtenerDatosSegPura(t_list* posiciones);
 

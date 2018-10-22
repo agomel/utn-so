@@ -119,6 +119,18 @@ void crearSelect(int servidor){
 	select->semProductores = &semProductores;
 	realizarNuestroSelect(select);
 }
+
+void inicializar(char* modo){
+	if(strcmp(modo, "SEG_PURA") == 0)
+		return inicializarSegPura();
+
+	if(strcmp(modo, "SEG_PAG") == 0)
+		return inicializarSegPura(); //CAMBIAAAR
+
+	if(strcmp(modo, "INV") == 0)
+		return inicializarSegPura(); //CAMBIAAAR
+}
+
 void init(){
 	t_config* configuracion = config_create(ARCHIVO_CONFIGURACION);
 
@@ -127,6 +139,8 @@ void init(){
 	char* punteroAModo = config_get_string_value(configuracion, "MODO");
 	modo = asignarMemoria(strlen(punteroAModo) + 1);
 	memcpy(modo, punteroAModo, strlen(punteroAModo) + 1);
+
+	inicializar(modo);
 
 	offset = 0;
 	logger = crearLogger(ARCHIVO_LOG, "FM9");

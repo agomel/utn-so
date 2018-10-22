@@ -42,6 +42,4 @@ respuestaDeCargaEnMemoria cargarDatosEnMemoria(char* datos);
 respuestaDeObtencionDeMemoria* obtenerDatosDeMemoria(t_list* posiciones);
 void entenderMensaje(int emisor, char header);
 
-
-
 #endif /*FM9_H_*/
