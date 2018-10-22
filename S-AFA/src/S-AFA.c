@@ -39,7 +39,7 @@ int identificarse(int emisor, char header){
 	}
 }
 void terminarOperacionDeCPU(int emisor, DTB* dtb){
-	int sentenciasEjecutadas = deserializarInt(emisor);
+	//int sentenciasEjecutadas = deserializarInt(emisor);
 	verificarSiPasarAExit(emisor, dtb);
 	liberarCPU(emisor, dtb->id);
 }
