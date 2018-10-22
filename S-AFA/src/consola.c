@@ -16,14 +16,14 @@ void consola(){
 		char* mensaje = readline("");
 
 
-	    char* comando =  strtok(mensaje, " ");
+	    char* comandoIngresado =  strtok(mensaje, " ");
 	    char* parametro =  strtok(NULL, " ");
 
 		if(estado == CORRUPTO){
 			log_error(logger, "Estado corrupto: No se reciben mensajes");
 		}else{
 
-			int comando=obtenerComando(comando);
+			int comando=obtenerComando(comandoIngresado);
 			int idDTB;
 			switch(comando){
 				case SALIR:
