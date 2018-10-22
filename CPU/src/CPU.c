@@ -19,8 +19,8 @@ char entendiendoLinea(char* lineaEjecutando, DTB* dtbRecibido){
 	//'a' si hay que abortar el G.DT
 	if(string_starts_with(lineaEjecutando, "abrir")){
 		log_info(logger, "Ejecutando instruccion abrir");
-		char* pathRecibido = asignarMemoria(strlen(lineaEjecutando)-4);
-		pathRecibido = string_substring_from(lineaEjecutando, 5);
+		char* pathRecibido = asignarMemoria(strlen(lineaEjecutando)-5);
+		pathRecibido = string_substring_from(lineaEjecutando, 6);
 		//Corrobora si ya esta abierto
 		if(dictionary_has_key(dtbRecibido->direccionesArchivos, pathRecibido)){
 			return 's';
@@ -47,13 +47,13 @@ char entendiendoLinea(char* lineaEjecutando, DTB* dtbRecibido){
 		return 's';
 
 	}else if(string_starts_with(lineaEjecutando, "asignar")){
-		//Asignar
+//Asignar
 		log_info(logger, "Ejecutando instruccion asignar");
 
 	}else if(string_starts_with(lineaEjecutando, "wait")){
 		log_info(logger, "Ejecutando instruccion wait");
-		char* recursoRecibido = asignarMemoria(strlen(lineaEjecutando)-3);
-		recursoRecibido = string_substring_from(lineaEjecutando, 4);
+		char* recursoRecibido = asignarMemoria(strlen(lineaEjecutando)-4);
+		recursoRecibido = string_substring_from(lineaEjecutando, 5);
 		enviarYSerializarString(socketSAFA, recursoRecibido, RETENCION_DE_RECURSO);
 		char seguirConEjecucion = deserializarChar(socketSAFA);
 		free(recursoRecibido);
@@ -65,8 +65,8 @@ char entendiendoLinea(char* lineaEjecutando, DTB* dtbRecibido){
 
 	}else if(string_starts_with(lineaEjecutando, "signal")){
 		log_info(logger, "Ejecutando instruccion signal");
-		char* recursoRecibido = asignarMemoria(strlen(lineaEjecutando)-5);
-		recursoRecibido = string_substring_from(lineaEjecutando, 6);
+		char* recursoRecibido = asignarMemoria(strlen(lineaEjecutando)-6);
+		recursoRecibido = string_substring_from(lineaEjecutando, 7);
 		enviarYSerializarString(socketSAFA, recursoRecibido, LIBERAR_RECURSO);
 		char seguirConEjecucion = deserializarChar(socketSAFA);
 		free(recursoRecibido);
@@ -78,8 +78,8 @@ char entendiendoLinea(char* lineaEjecutando, DTB* dtbRecibido){
 
 	}else if(string_starts_with(lineaEjecutando, "flush")){
 		log_info(logger, "Ejecutando instruccion flush");
-		char* pathRecibido = asignarMemoria(strlen(lineaEjecutando)-4);
-		pathRecibido = string_substring_from(lineaEjecutando, 5);
+		char* pathRecibido = asignarMemoria(strlen(lineaEjecutando)-5);
+		pathRecibido = string_substring_from(lineaEjecutando, 6);
 		if(dictionary_has_key(dtbRecibido->direccionesArchivos, pathRecibido)){
 			//Esta abierto
 			void* buffer;
@@ -100,26 +100,22 @@ char entendiendoLinea(char* lineaEjecutando, DTB* dtbRecibido){
 		}
 
 	}else if(string_starts_with(lineaEjecutando, "close")){
-		//Close
 		log_info(logger, "Ejecutando instruccion close");
-		char* pathRecibido = asignarMemoria(strlen(lineaEjecutando)-4);
-				pathRecibido = string_substring_from(lineaEjecutando, 5);
+		char* pathRecibido = asignarMemoria(strlen(lineaEjecutando)-5);
+				pathRecibido = string_substring_from(lineaEjecutando, 6);
 				if(dictionary_has_key(dtbRecibido->direccionesArchivos, pathRecibido)){
 					//Esta abierto
 					void* buffer;
 					int desplazamiento = 0;
-					int tamanioBuffer = sizeof(char) + (strlen(pathRecibido)+1) + sizeof(int)*2 + obtenerTamanioDiccionario(dtbRecibido->direccionesArchivos);
+					t_list* direccionesABorrar = dictionary_get(dtbRecibido->direccionesArchivos, pathRecibido);
+					int tamanioBuffer = sizeof(char) + sizeof(int) + sizeof(int)*direccionesABorrar->elements_count;
 					buffer = asignarMemoria(tamanioBuffer);
 
 					concatenarChar(buffer, &desplazamiento, LIBERAR_MEMORIA);
-					concatenarString(buffer, &desplazamiento, pathRecibido);
-					concatenarDiccionario(buffer, &desplazamiento, dtbRecibido->direccionesArchivos);
+					concatenarListaInt(buffer, &desplazamiento, direccionesABorrar);
 					enviarMensaje(socketFM9, buffer, tamanioBuffer);
 					free(buffer);
-					for (int i = 0; i < dtbRecibido->direccionesArchivos; ++i) {
-						//MensajeNano: Ver que hay que remover en el diccionario
-						//dictionary_remove_and_destroy(dtbRecibido->direccionesArchivos, dtbRecibido->escriptorio, )
-					}
+					dictionary_remove_and_destroy(dtbRecibido->direccionesArchivos, pathRecibido, list_destroy_and_destroy_elements);
 					free(pathRecibido);
 					return 'b';
 				}else{
@@ -135,8 +131,8 @@ char entendiendoLinea(char* lineaEjecutando, DTB* dtbRecibido){
 		enviarySerializarPathyCantidadDeLineas(socketDIEGO, path, cantidadDeLineas);
 	}else if(string_starts_with(lineaEjecutando, "borrar")){
 		log_info(logger, "Ejecutando instruccion borrar");
-		char* pathRecibido = asignarMemoria(strlen(lineaEjecutando)-4);
-		pathRecibido = string_substring_from(lineaEjecutando, 5);
+		char* pathRecibido = asignarMemoria(strlen(lineaEjecutando)-5);
+		pathRecibido = string_substring_from(lineaEjecutando, 6);
 		enviarYSerializarString(socketDIEGO, pathRecibido, BORRAR_DATOS);
 		free(pathRecibido);
 		return 'b';
