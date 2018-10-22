@@ -4,7 +4,7 @@
 #include "planificador.h"
 
 void planificadorACortoPlazo();
-void desbloquearDTB(DTB* dtb);
+void desbloquearDTB(int idDTB);
 
 
 #endif /*PCP_H_*/
