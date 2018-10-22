@@ -41,7 +41,7 @@ void entenderMensaje(int emisor, char header){
 			}else{
 				int cantidadDeLineas = deserializarInt(socketFM9);
 				char* datos = recibirFlushFM9(transferSize);
-				int crearArchivo = crearArchivoEnMDJ(path, cantidadDeLineas);
+				int crearArchivo = crearArchivoEnMDJ(socketMDJ, path, cantidadDeLineas);
 				if(crearArchivo != 0){
 					enviarError(idDTB, path, crearArchivo);
 				}else{
@@ -53,6 +53,21 @@ void entenderMensaje(int emisor, char header){
 					}
 				}
 				free(datos);
+			}
+			break;
+		case CREAR_ARCHIVO:
+			log_debug(logger, "creando archivo");
+			int cantidadDeLineas = deserializarInt(emisor);
+			int crearArchivo = crearArchivoEnMDJ(socketMDJ, path, cantidadDeLineas);
+			if(crearArchivo != 0){
+				enviarError(idDTB, path, crearArchivo);
+			}
+			break;
+		case BORRAR_ARCHIVO:
+			log_debug(logger, "borrar archivo");
+			int borrarArchivo = borrarArchivoEnMDJ(path);
+			if(borrarArchivo != 0){
+				enviarError(idDTB, path, borrarArchivo);
 			}
 			break;
 		default:

@@ -96,6 +96,7 @@ char entendiendoLinea(char* lineaEjecutando, DTB* dtbRecibido){
 			return 'b';
 		}else{
 			//No esta abierto ese archivo
+			free(pathRecibido);
 			return 'a';
 		}
 
@@ -120,11 +121,16 @@ char entendiendoLinea(char* lineaEjecutando, DTB* dtbRecibido){
 					return 'b';
 				}else{
 					//No esta abierto ese archivo
+					free(pathRecibido);
 					return 'a';
 				}
 	}else if(string_starts_with(lineaEjecutando, "crear")){
-//Crear
 		log_info(logger, "Ejecutando instruccion crear");
+		char* parametros = string_substring_from(lineaEjecutando, 6);
+		char** pathYCantLineas = string_n_split(parametros, 2, ' ');
+		char* path = pathYCantLineas[0];
+		int cantidadDeLineas = pathYCantLineas[1];
+		enviarySerializarPathyCantidadDeLineas(socketDIEGO, path, cantidadDeLineas);
 	}else if(string_starts_with(lineaEjecutando, "borrar")){
 		log_info(logger, "Ejecutando instruccion borrar");
 		char* pathRecibido = asignarMemoria(strlen(lineaEjecutando)-5);
