@@ -1,5 +1,4 @@
 #include "ServicioMDJ.h"
-#include "serializacion.h"
 
 int validarArchivoMDJ(char* path){
 	int tamanioMensaje = sizeof(char) + sizeof(int) + strlen(path)+1;
