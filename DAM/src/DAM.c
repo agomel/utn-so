@@ -55,6 +55,21 @@ void entenderMensaje(int emisor, char header){
 				free(datos);
 			}
 			break;
+		case CREAR_ARCHIVO:
+			log_debug(logger, "creando archivo");
+			int cantidadDeLineas = deserializarInt(emisor);
+			int crearArchivo = crearArchivoEnMDJ(path, cantidadDeLineas);
+			if(crearArchivo != 0){
+				enviarError(idDTB, path, crearArchivo);
+			}
+			break;
+		case BORRAR_ARCHIVO:
+			log_debug(logger, "borrar archivo");
+			int borrarArchivo = borrarArchivoEnMDJ(path);
+			if(borrarArchivo != 0){
+				enviarError(idDTB, path, borrarArchivo);
+			}
+			break;
 		default:
 			log_error(logger, "Header desconocido");
 	}
