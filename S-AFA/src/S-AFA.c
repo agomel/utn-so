@@ -59,13 +59,13 @@ void entenderMensaje(int emisor, char header){
 			break;
 
 		case CARGADO_CON_EXITO_EN_MEMORIA:
-			operacionDelDiego();
 			idDTB = deserializarInt(emisor);
 			path = deserializarString(emisor);
 			t_list* listaDirecciones = deserializarListaInt(emisor);
 			dtb = obtenerDTBDeCola(idDTB);
 			dictionary_put(dtb->direccionesArchivos, path, listaDirecciones);
-			ponerEnReady(dtb->id);
+			operacionDelDiego(idDTB);
+			desbloquearDTB(idDTB);
 			break;
 
 		case DESBLOQUEAR_DTB:
@@ -76,23 +76,24 @@ void entenderMensaje(int emisor, char header){
 			break;
 
 		case GUARDADO_CON_EXITO_EN_MDJ:
-			operacionDelDiego();
 			dtb = deserializarDTB(emisor);
-			desbloquearDTB(dtb);
-
+			operacionDelDiego(idDTB);
+			desbloquearDTB(dtb->id);
 			break;
 		case ERROR:
-			operacionDelDiego();
 			idDTB = deserializarInt(emisor);
 			path = deserializarString(emisor);
 			int error = deserializarInt(emisor);
+			operacionDelDiego(idDTB);
 			manejarErrores(idDTB, path, error);
 			break;
 
 		case BLOQUEAR_DTB:
 			dtb = deserializarDTB(emisor);
-			//TODO cambiar quantum
 			cambiarEstadoGuardandoNuevoDTB(dtb, BLOCKED);
+
+			Historial* historial = crearHistorial(dtb->id);
+			agregarHistorialAListaTiempoRespuesta(historial);
 
 			terminarOperacionDeCPU(emisor, dtb);
 			break;

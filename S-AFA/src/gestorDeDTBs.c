@@ -31,10 +31,12 @@ void mostrarStatus(){
 	loguearEstadoDeLista(listaReadyPrioridad, READY_PRIORIDAD);
 }
 
-void operacionDelDiego(){
+void operacionDelDiego(int idDTB){
 	waitMutex(&mutexSentenciasDeDiego);
 	sentenciasTotalesQueUsaronAlDiego++;
 	signalMutex(&mutexSentenciasDeDiego);
+
+	finalizarHistorialDeListaTiempoRespuesta(idDTB);
 }
 
 void agregarSentencias(int sentenciasEjecutadas){
@@ -54,9 +56,22 @@ void agregarHistorialAListaExit(Historial* historial){
 	signalMutex(&mutexHistorialExit);
 }
 
+void agregarHistorialAListaTiempoRespuesta(Historial* historial){
+	waitMutex(&mutexHistorialBloqueados);
+	list_add(listaHistorialBloqueados, historial);
+	signalMutex(&mutexHistorialBloqueados);
+}
+
 Historial* encontrarHistorial(t_list* lista, int idDTB){
 	bool esHistorial(Historial* historial){
 		return idDTB == historial->idDTB;
+	}
+	return list_find(lista, esHistorial);
+}
+
+Historial* encontrarHistorialBloqueado(t_list* lista, int idDTB){
+	bool esHistorial(Historial* historial){
+		return idDTB == historial->idDTB && historial->salida == -1;
 	}
 	return list_find(lista, esHistorial);
 }
@@ -74,6 +89,16 @@ void finalizarHistorialDeListaExit(int idDTB){
 	waitMutex(&mutexHistorialExit);
 	Historial* historial = encontrarHistorial(listaHistorialExit, idDTB);
 	signalMutex(&mutexHistorialExit);
+
+	waitMutex(&mutexSentenciasTotales);
+	historial->salida = sentenciasTotales;
+	signalMutex(&mutexSentenciasTotales);
+}
+
+void finalizarHistorialDeListaTiempoRespuesta(int idDTB){
+	waitMutex(&mutexHistorialBloqueados);
+	Historial* historial = encontrarHistorialBloqueado(listaHistorialBloqueados, idDTB);
+	signalMutex(&mutexHistorialBloqueados);
 
 	waitMutex(&mutexSentenciasTotales);
 	historial->salida = sentenciasTotales;
@@ -215,7 +240,27 @@ void mostrarMetricasDelDIEGO(){
 	}
 
 }
+
+void mostrarMetricasTiempoDeRespuesta(){
+	bool seDesbloqueo(Historial* historial){
+		return historial->salida != -1;
+	}
+	waitMutex(&mutexHistorialBloqueados);
+
+	t_list* listaDesbloqueados = list_filter(listaHistorialBloqueados, seDesbloqueo);
+	signalMutex(&mutexHistorialBloqueados);
+
+	int totalTiempo = 0;
+	for(int i = 0; i < listaDesbloqueados->elements_count; i++){
+
+		Historial* historial =	list_get(listaDesbloqueados, i);
+		totalTiempo += cantidadSentencias(historial);
+	}
+
+	log_info(logger, "El tiempo promedio de respuesta es: %d", totalTiempo / listaDesbloqueados->elements_count);
+}
 void mostrarMetricas(){
 	mostrarSentenciasDeTodos();
 	mostrarMetricasDelDIEGO();
+	mostrarMetricasTiempoDeRespuesta();
 }
