@@ -1,6 +1,11 @@
 #include "segmentacionPura.h"
+#include "stdbool.h"
 
 int idSegmento = 0;
+
+bool compararElementos(ElementoTablaSegPura elem1, ElementoTablaSegPura elem2){
+	return elem1.base > elem2.base;
+}
 
 respuestaDeCargaEnMemoria guardarDatosSegPura(char* datos){
 	//COMO SE SEGMENTA?? POR AHORA SE GUARDA TODO LO QUE LLEGÓ EN UN SEGMENTO
