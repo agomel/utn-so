@@ -14,6 +14,21 @@ void consolita(){
 				printf("Pusiste ls con el parametro %s \n", parametro);
 			}else{
 				printf("Pusiste ls sin ningun parametro \n");
+
+				struct dirent* pDirent;
+				DIR* pdir = opendir("/mnt/FIFA_FS/");
+				if(pdir != NULL){
+					printf("ago\n");
+					while((pDirent = readdir(pdir)) != NULL){
+						printf("Archivo %s \n", pDirent->d_name);
+					}
+					closedir(pdir);
+				}else{
+					printf("No puedo abrir el directorio %s \n", PUNTO_MONTAJE);
+				}
+
+
+
 			}
 		}else if(strcmp(comando, "cd") == 0){
 			printf("Pusiste cd con el parametro %s \n", parametro);

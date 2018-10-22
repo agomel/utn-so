@@ -7,6 +7,7 @@
 #include <malloc.h>
 #include <biblioteca/logger.h>
 #include <readline/readline.h>
+#include <dirent.h>
 
 extern char* PUNTO_MONTAJE;
 void consolita();
