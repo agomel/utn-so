@@ -1,6 +1,6 @@
 #include "consola.h"
 
-int obtenerComando(char*ingresado){
+int obtenerComando(char* ingresado){
 	int comando=6;
 	const char* comandos[] = {"salir","status","finalizar","metricas","ejecutar"};
 	for(int i = 0;i<5;i++){
@@ -9,33 +9,21 @@ int obtenerComando(char*ingresado){
 	return comando;
 }
 
-comandoCompleto rearmarCadena(char* cadenaIngresada){
-		char* cadena[2];
-	    char* token = strtok(cadenaIngresada, ",");
-	    int posicion=0;
-	    comandoCompleto comando;
-	    cadena[1] = NULL;
-	    while (token != NULL)
-	    {
-	        cadena[posicion]=token;
-	        token = strtok(NULL, ",");
-	        posicion++;
-	    }
-	    comando.comando=cadena[0];
-	    comando.parametro=cadena[1];
-	    return comando;
-}
 
 void consola(){
 	while(1){
-		char mensaje[1000];
-		scanf("%s", mensaje);
+
+		char* mensaje = readline("");
+
+
+	    char* comandoIngresado =  strtok(mensaje, " ");
+	    char* parametro =  strtok(NULL, " ");
+
 		if(estado == CORRUPTO){
 			log_error(logger, "Estado corrupto: No se reciben mensajes");
 		}else{
 
-			comandoCompleto cadenaArmada=rearmarCadena(mensaje);
-			int comando=obtenerComando(cadenaArmada.comando);
+			int comando=obtenerComando(comandoIngresado);
 			int idDTB;
 			switch(comando){
 				case SALIR:
@@ -44,16 +32,16 @@ void consola(){
 					break;
 				case STATUS:
 					log_info(logger, "Comando status");
-					if(cadenaArmada.parametro == NULL){
+					if(parametro == NULL){
 						mostrarStatus();
 					}else{
-						idDTB = atoi(cadenaArmada.parametro);
+						idDTB = atoi(parametro);
 						DTB* dtb = obtenerDTBDeCola(idDTB);
 						loguearEstadoDTB(dtb);
 					}
 					break;
 				case FINALIZAR:
-					idDTB = atoi(cadenaArmada.parametro);
+					idDTB = atoi(parametro);
 					log_info(logger, "Comando finalizar");
 					DTB* dtb = obtenerDTBDeCola(idDTB);
 					if(!dtb){
@@ -72,16 +60,16 @@ void consola(){
 					break;
 				case METRICAS:
 					log_info(logger, "Comando metricas");
-					if(cadenaArmada.parametro == NULL){
+					if(parametro == NULL){
 						mostrarMetricas();
 					}else{
-						idDTB = atoi(cadenaArmada.parametro);
+						idDTB = atoi(parametro);
 						mostrarMetricasConDTB(idDTB);
 					}
 					break;
 				case EJECUTAR:
 					log_info(logger, "Comando ejecutar");
-					ponerProcesoEnNew(cadenaArmada.parametro);
+					ponerProcesoEnNew(parametro);
 					break;
 				default:
 					log_error(logger, "Comando erroneo");

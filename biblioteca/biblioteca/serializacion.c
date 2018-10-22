@@ -26,6 +26,15 @@ void enviarYSerializarString(int destino, char* texto,char operacion){
 
 	free(mensaje);
 }
+void enviarySerializarPathyCantidadDeLineas(int destino ,char* path, int cantidadDeLineas){
+	void* buffer = asignarMemoria(sizeof(char) + sizeof(int) + (strlen(path)+1) + sizeof(int));
+	int desplazamiento = 0;
+	concatenarChar(buffer, &desplazamiento, CREAR_ARCHIVO);
+	concatenarString(buffer, &desplazamiento, path);
+	concatenarInt(buffer, &desplazamiento, cantidadDeLineas);
+	enviarMensaje(destino, buffer, desplazamiento);
+	free(buffer);
+}
 
 void enviarYSerializarStringSinHeader(int destino, char* texto){
 	int tamanioTexto = strlen(texto) + 1;

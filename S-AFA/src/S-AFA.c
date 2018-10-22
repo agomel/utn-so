@@ -40,6 +40,7 @@ int identificarse(int emisor, char header){
 }
 void terminarOperacionDeCPU(int emisor, DTB* dtb){
 	int sentenciasEjecutadas = deserializarInt(emisor);
+	agregarSentencias(sentenciasEjecutadas);
 	verificarSiPasarAExit(emisor, dtb);
 	liberarCPU(emisor, dtb->id);
 }
@@ -58,7 +59,7 @@ void entenderMensaje(int emisor, char header){
 			break;
 
 		case CARGADO_CON_EXITO_EN_MEMORIA:
-			//DAM
+			operacionDelDiego();
 			idDTB = deserializarInt(emisor);
 			path = deserializarString(emisor);
 			t_list* listaDirecciones = deserializarListaInt(emisor);
@@ -75,13 +76,13 @@ void entenderMensaje(int emisor, char header){
 			break;
 
 		case GUARDADO_CON_EXITO_EN_MDJ:
-			//DAM
+			operacionDelDiego();
 			dtb = deserializarDTB(emisor);
 			desbloquearDTB(dtb);
 
 			break;
 		case ERROR:
-			//DAM
+			operacionDelDiego();
 			idDTB = deserializarInt(emisor);
 			path = deserializarString(emisor);
 			int error = deserializarInt(emisor);
@@ -159,12 +160,11 @@ void crearSelect(int servidor){
 int main(void) {
 	inicializarSAFA();
 	t_config* configuracion = config_create(ARCHIVO_CONFIGURACION);
-	retardo = config_get_int_value(configuracion, "RETARDO");
+	retardo = config_get_int_value(configuracion, "RETARDO_PLANIF");
 
 
 	direccionServidor direccionSAFA = levantarDeConfiguracion(NULL, "PUERTO", configuracion);
 	int servidor = crearServidor(direccionSAFA.puerto, INADDR_ANY);
-	config_destroy(configuracion);
 
 	inicializarPlanificadores();
 	crearSelect(servidor);

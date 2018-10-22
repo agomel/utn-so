@@ -31,44 +31,175 @@ void mostrarStatus(){
 	loguearEstadoDeLista(listaReadyPrioridad, READY_PRIORIDAD);
 }
 
+void operacionDelDiego(){
+	waitMutex(&mutexSentenciasDeDiego);
+	sentenciasTotalesQueUsaronAlDiego++;
+	signalMutex(&mutexSentenciasDeDiego);
+}
 
+void agregarSentencias(int sentenciasEjecutadas){
+	waitMutex(&mutexSentenciasTotales);
+	sentenciasTotales += sentenciasEjecutadas;
+	signalMutex(&mutexSentenciasTotales);
+}
+
+void agregarHistorialAListaNew(Historial* historial){
+	waitMutex(&mutexHistorialNew);
+	list_add(listaHistorialNew, historial);
+	signalMutex(&mutexHistorialNew);
+}
+void agregarHistorialAListaExit(Historial* historial){
+	waitMutex(&mutexHistorialExit);
+	list_add(listaHistorialExit, historial);
+	signalMutex(&mutexHistorialExit);
+}
+
+Historial* encontrarHistorial(t_list* lista, int idDTB){
+	bool esHistorial(Historial* historial){
+		return idDTB == historial->idDTB;
+	}
+	list_find(lista, esHistorial);
+}
+void finalizarHistorialDeListaNew(int idDTB){
+	waitMutex(&mutexHistorialNew);
+	Historial* historial = encontrarHistorial(listaHistorialNew, idDTB);
+	signalMutex(&mutexHistorialNew);
+
+	waitMutex(&mutexSentenciasTotales);
+	historial->salida = sentenciasTotales;
+	signalMutex(&mutexSentenciasTotales);
+}
+
+void finalizarHistorialDeListaExit(int idDTB){
+	waitMutex(&mutexHistorialExit);
+	Historial* historial = encontrarHistorial(listaHistorialExit, idDTB);
+	signalMutex(&mutexHistorialExit);
+
+	waitMutex(&mutexSentenciasTotales);
+	historial->salida = sentenciasTotales;
+	signalMutex(&mutexSentenciasTotales);
+}
 
 Historial* crearHistorial(int idDTB){
 	Historial* historial = asignarMemoria(sizeof(Historial));
 	historial->idDTB = idDTB;
-	//historial->sentenciasNew= 0;
-	//historial->sentenciasExit = 0;
+	waitMutex(&mutexSentenciasTotales);
+	historial->llegada = sentenciasTotales;
+	signalMutex(&mutexSentenciasTotales);
+	historial->salida = -1;
 	return historial;
 }
 
 void initGestorDTBs(){
-	inicializarMutex(&mutexHistorial);
-	listaHistorial = list_create();
+	inicializarMutex(&mutexHistorialBloqueados);
+	listaHistorialBloqueados = list_create();
+
+
+	inicializarMutex(&mutexHistorialExit);
+	listaHistorialExit = list_create();
+
+
+	inicializarMutex(&mutexHistorialNew);
+	listaHistorialNew = list_create();
+
+
+	inicializarMutex(&mutexSentenciasDeDiego);
+	sentenciasTotalesQueUsaronAlDiego = 0;
+
+
+	inicializarMutex(&mutexSentenciasTotales);
+	sentenciasTotales = 0;
 }
 
-void mostrarMetricasConDTB(int idDTB){
+int cantidadSentencias(Historial* historial){
+	if(historial->salida != -1){
+		return historial->salida - historial->llegada;
+	}else{
+		waitMutex(&mutexSentenciasTotales);
+		int salida = sentenciasTotales;
+		signalMutex(&mutexSentenciasTotales);
+		return salida - historial->llegada;
+	}
+}
+
+
+void mostrarMetricasConDTBNEW(int idDTB){
 	Historial* obtenerPorId(Historial* historial){
 		return historial->idDTB == idDTB;
 	}
-	waitMutex(&mutexHistorial);
-	Historial* historial = list_find(listaHistorial, obtenerPorId);
-	signalMutex(&mutexHistorial);
+	waitMutex(&mutexHistorialNew);
+	Historial* historial = list_find(listaHistorialNew, obtenerPorId);
+	signalMutex(&mutexHistorialNew);
 
-	//log_info("Cantidad de sentencias ejecutadas que espero el DTB con id %d en NEW : %d sentencias", idDTB, historial->sentenciasNew);
+	log_info("Cantidad de sentencias ejecutadas que espero el DTB con id %d en NEW : %d sentencias", idDTB, cantidadSentencias(historial));
 }
-void mostrarSentenciasEnNewDeTodos(){
-	waitMutex(&mutexHistorial);
-	int cantidadHistorial = listaHistorial->elements_count;
-	signalMutex(&mutexHistorial);
-	for(int i = 0; i < cantidadHistorial; i++){
-		waitMutex(&mutexHistorial);
-		Historial* historial = list_get(listaHistorial, i);
-		signalMutex(&mutexHistorial);
-		mostrarMetricasConDTB(historial->idDTB);
+
+int mostrarMetricasConDTBEXIT(int idDTB){
+	Historial* obtenerPorId(Historial* historial){
+		return historial->idDTB == idDTB;
 	}
+	waitMutex(&mutexHistorialExit);
+	Historial* historial = list_find(listaHistorialExit, obtenerPorId);
+	signalMutex(&mutexHistorialExit);
+
+	log_info("Cantidad de sentencias ejecutadas que espero el DTB con id %d en EXIT : %d sentencias", idDTB, cantidadSentencias(historial));
+
+	return cantidadSentencias(historial);
+}
+
+void mostrarSentenciasDeTodos(){
+	//Muestro en new
+	waitMutex(&mutexHistorialNew);
+	int cantidadHistorialNew = listaHistorialNew->elements_count;
+	signalMutex(&mutexHistorialNew);
+	for(int i = 0; i < cantidadHistorialNew; i++){
+		waitMutex(&mutexHistorialNew);
+		Historial* historial = list_get(listaHistorialNew, i);
+		signalMutex(&mutexHistorialNew);
+		mostrarMetricasConDTBNEW(historial->idDTB);
+	}
+
+	//Muestro en exit
+	waitMutex(&mutexHistorialNew);
+	int cantidadHistorialExit = listaHistorialExit->elements_count;
+	signalMutex(&mutexHistorialExit);
+	int sentenciasTotalesExit = 0;
+	for(int i = 0; i < cantidadHistorialExit; i++){
+		waitMutex(&mutexHistorialExit);
+		Historial* historial = list_get(listaHistorialExit, i);
+		signalMutex(&mutexHistorialExit);
+		sentenciasTotalesExit += mostrarMetricasConDTBEXIT(historial->idDTB);
+	}
+
+
+	waitMutex(&mutexSentenciasTotales);
+	int totales = sentenciasTotales;
+	signalMutex(&mutexSentenciasTotales);
+
+	log_info(logger, "La cantidad de sentencias ejecutadas prom. para que un DTB termine en la cola EXIT es %d", totales / sentenciasTotalesExit);
+}
+void mostrarMetricasConDTB(int idDTB){
+	mostrarMetricasConDTBNEW(idDTB);
+	mostrarMetricasConDTBEXIT(idDTB);
+}
+
+void mostrarMetricasDelDIEGO(){
+	waitMutex(&mutexSentenciasTotales);
+	int totales = sentenciasTotales;
+	signalMutex(&mutexSentenciasTotales);
+
+
+	waitMutex(&mutexSentenciasDeDiego);
+	int diego = sentenciasTotalesQueUsaronAlDiego;
+	signalMutex(&mutexSentenciasDeDiego);
+
+	log_info(logger, "La cantidad de sentencias ejecutadas prom. que usaron al diego son %d", totales / diego);
+
+	log_info(logger, "El porcentaje de sentencias ejecutadas prom. que usaron al diego son el %d", diego * 100 / totales);
+
 }
 void mostrarMetricas(){
-	mostrarSentenciasEnNewDeTodos();
-	//TODO hacer metricas
+	mostrarSentenciasDeTodos();
+	mostrarMetricasDelDIEGO();
 
 }

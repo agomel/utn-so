@@ -38,17 +38,19 @@ char* obtenerDatosDeMDJ(char* path){
 	return datosTotales;
 }
 
-int crearArchivoEnMDJ(char* path, int cantidadDeLineas){
-	void* buffer = asignarMemoria(sizeof(char) + sizeof(int) + (strlen(path)+1) + sizeof(int));
+int crearArchivoEnMDJ(int destino, char* path, int cantidadDeLineas){
+	enviarySerializarPathyCantidadDeLineas(destino, path, cantidadDeLineas);
+	return deserializarInt(socketMDJ);
+}
+int borrarArchivoEnMDJ(char* path){
+	void* buffer = asignarMemoria(sizeof(char) + sizeof(int));
 	int desplazamiento = 0;
-	concatenarChar(buffer, &desplazamiento, CREAR_ARCHIVO);
+	concatenarChar(buffer, &desplazamiento, BORRAR_ARCHIVO);
 	concatenarString(buffer, &desplazamiento, path);
-	concatenarInt(buffer, &desplazamiento, cantidadDeLineas);
 	enviarMensaje(socketMDJ, buffer, desplazamiento);
 	free(buffer);
 	return deserializarInt(socketMDJ);
 }
-
 int guardarDatosEnMDJ(void* datosTotales){
 	int cantidadTotal = sizeof(datosTotales);
 	enviarYSerializarInt(socketMDJ, cantidadTotal, GUARDAR_DATOS);
