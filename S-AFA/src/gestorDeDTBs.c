@@ -134,7 +134,7 @@ void mostrarMetricasConDTBNEW(int idDTB){
 	log_info("Cantidad de sentencias ejecutadas que espero el DTB con id %d en NEW : %d sentencias", idDTB, cantidadSentencias(historial));
 }
 
-void mostrarMetricasConDTBEXIT(int idDTB){
+int mostrarMetricasConDTBEXIT(int idDTB){
 	Historial* obtenerPorId(Historial* historial){
 		return historial->idDTB == idDTB;
 	}
@@ -143,6 +143,8 @@ void mostrarMetricasConDTBEXIT(int idDTB){
 	signalMutex(&mutexHistorialExit);
 
 	log_info("Cantidad de sentencias ejecutadas que espero el DTB con id %d en EXIT : %d sentencias", idDTB, cantidadSentencias(historial));
+
+	return cantidadSentencias(historial);
 }
 
 void mostrarSentenciasDeTodos(){
@@ -161,12 +163,20 @@ void mostrarSentenciasDeTodos(){
 	waitMutex(&mutexHistorialNew);
 	int cantidadHistorialExit = listaHistorialExit->elements_count;
 	signalMutex(&mutexHistorialExit);
+	int sentenciasTotalesExit = 0;
 	for(int i = 0; i < cantidadHistorialExit; i++){
 		waitMutex(&mutexHistorialExit);
 		Historial* historial = list_get(listaHistorialExit, i);
 		signalMutex(&mutexHistorialExit);
-		mostrarMetricasConDTBEXIT(historial->idDTB);
+		sentenciasTotalesExit += mostrarMetricasConDTBEXIT(historial->idDTB);
 	}
+
+
+	waitMutex(&mutexSentenciasTotales);
+	int totales = sentenciasTotales;
+	signalMutex(&mutexSentenciasTotales);
+
+	log_info(logger, "La cantidad de sentencias ejecutadas prom. para que un DTB termine en la cola EXIT es %d", totales / sentenciasTotalesExit);
 }
 void mostrarMetricasConDTB(int idDTB){
 	mostrarMetricasConDTBNEW(idDTB);
@@ -183,7 +193,9 @@ void mostrarMetricasDelDIEGO(){
 	int diego = sentenciasTotalesQueUsaronAlDiego;
 	signalMutex(&mutexSentenciasDeDiego);
 
-	log_info(logger, "La cantidad de sentencias ejecutadas prom. que usaron al diego son el %d %", diego * 100 / totales);
+	log_info(logger, "La cantidad de sentencias ejecutadas prom. que usaron al diego son %d", totales / diego);
+
+	log_info(logger, "El porcentaje de sentencias ejecutadas prom. que usaron al diego son el %d", diego * 100 / totales);
 
 }
 void mostrarMetricas(){
