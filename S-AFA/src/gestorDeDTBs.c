@@ -161,7 +161,7 @@ void mostrarSentenciasDeTodos(){
 	}
 
 	//Muestro en exit
-	waitMutex(&mutexHistorialNew);
+	waitMutex(&mutexHistorialExit);
 	int cantidadHistorialExit = listaHistorialExit->elements_count;
 	signalMutex(&mutexHistorialExit);
 	int sentenciasTotalesExit = 0;
