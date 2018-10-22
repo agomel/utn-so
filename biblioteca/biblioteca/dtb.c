@@ -63,6 +63,7 @@ void freeDTB(DTB* dtb){
 	}
 	free(dtb->escriptorio);
 	dictionary_destroy_and_destroy_elements(dtb->direccionesArchivos, destruirLista);
+	free(dtb);
 }
 void freeDTBSAFA(DTB* dtb){
 	void destruirLista(t_list* lista){
@@ -70,5 +71,6 @@ void freeDTBSAFA(DTB* dtb){
 		list_destroy(lista);
 	}
 	dictionary_destroy_and_destroy_elements(dtb->direccionesArchivos, destruirLista);
+	free(dtb);
 }
 
