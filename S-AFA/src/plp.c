@@ -31,10 +31,21 @@ void ponerProcesoEnNew(char* escriptorio) {
 	DTB* dtb = asignarMemoria(sizeof(DTB));
 	*dtb = crearDTB(escriptorio);
 	agregarDTBALista(dtb);
+
+	Historial* historialNEW = crearHistorial(dtb->id);
+	agregarHistorialAListaNew(historialNEW);
+
+	Historial* historialEXIT = crearHistorial(dtb->id);
+	agregarHistorialAListaExit(historialEXIT);
+
 	signalSem(&semCantidadEnNew);
 }
 
 void ponerEnReady(int idDTB) {
+	DTB* dtb = obtenerDTBDeCola(idDTB);
+	if(dtb->estado == NEW){
+		finalizarHistorialDeListaNew(idDTB);
+	}
 	cambiarEstado(idDTB, READY);
 	signalSem(&cantidadTotalREADY);
 }
@@ -46,16 +57,18 @@ void pasarDTBAExit(int idDTB){
 	}else if(dtb->estado == EXIT){
 		log_info(logger, "El DTB: %d ya se encontraba en EXIT", idDTB);
 	}else{
-	signalSem(&gradoMultiprogramacion);
-	cambiarEstado(idDTB, EXIT);
+		cambiarEstado(idDTB, EXIT);
+		finalizarHistorialDeListaExit(idDTB);
+		signalSem(&gradoMultiprogramacion);
 	}
 }
 void pasarDTBAExitGuardandoNuevo(DTB* dtb) {
 	if(dtb->estado == EXIT){
 			log_info(logger, "El DTB: %d ya se encontraba en EXIT", dtb->id);
 	}else{
-	signalSem(&gradoMultiprogramacion);
-	cambiarEstadoGuardandoNuevoDTB(dtb, EXIT);
+		cambiarEstadoGuardandoNuevoDTB(dtb, EXIT);
+		finalizarHistorialDeListaExit(dtb->id);
+		signalSem(&gradoMultiprogramacion);
 	}
 }
 
