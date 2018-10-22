@@ -39,6 +39,7 @@ int identificarse(int emisor, char header){
 	}
 }
 void terminarOperacionDeCPU(int emisor, DTB* dtb){
+	int sentenciasEjecutadas = deserializarInt(emisor);
 	verificarSiPasarAExit(emisor, dtb);
 	liberarCPU(emisor, dtb->id);
 }
@@ -49,6 +50,7 @@ void entenderMensaje(int emisor, char header){
 	t_dictionary* direccionesYArchivos;
 	t_list* lista;
 	char* path;
+	//usleep()
 	switch(header){
 		case MANDAR_TEXTO:
 			//TODO esta operacion es basura, es para probar a serializacion y deserializacion
@@ -56,6 +58,7 @@ void entenderMensaje(int emisor, char header){
 			break;
 
 		case CARGADO_CON_EXITO_EN_MEMORIA:
+			//DAM
 			idDTB = deserializarInt(emisor);
 			path = deserializarString(emisor);
 			t_list* listaDirecciones = deserializarListaInt(emisor);
@@ -66,9 +69,23 @@ void entenderMensaje(int emisor, char header){
 
 		case DESBLOQUEAR_DTB:
 			dtb = deserializarDTB(emisor);
-			desbloquearDTB(dtb);
+			desbloquearDummy(dtb);
 
 			terminarOperacionDeCPU(emisor, dtb);
+			break;
+
+		case GUARDADO_CON_EXITO_EN_MDJ:
+			//DAM
+			dtb = deserializarDTB(emisor);
+			desbloquearDTB(dtb);
+
+			break;
+		case ERROR:
+			//DAM
+			idDTB = deserializarInt(emisor);
+			path = deserializarString(emisor);
+			int error = deserializarInt(emisor);
+			manejarErrores(idDTB, path, error);
 			break;
 
 		case BLOQUEAR_DTB:
@@ -97,12 +114,11 @@ void entenderMensaje(int emisor, char header){
 
 			terminarOperacionDeCPU(emisor, dtb);
 			break;
-
-		case ERROR:
-			idDTB = deserializarInt(emisor);
-			path = deserializarString(emisor);
-			int error = deserializarInt(emisor);
-			manejarErrores(idDTB, path, error);
+		case LIBERAR_RECURSO:
+			//Es de CPU pero no termina
+			break;
+		case RETENCION_DE_RECURSO:
+			//Es de CPU pero no termina
 			break;
 
 		default:

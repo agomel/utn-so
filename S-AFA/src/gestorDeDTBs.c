@@ -36,8 +36,8 @@ void mostrarStatus(){
 Historial* crearHistorial(int idDTB){
 	Historial* historial = asignarMemoria(sizeof(Historial));
 	historial->idDTB = idDTB;
-	historial->sentenciasNew= 0;
-	historial->sentenciasExit = 0;
+	//historial->sentenciasNew= 0;
+	//historial->sentenciasExit = 0;
 	return historial;
 }
 
@@ -54,7 +54,7 @@ void mostrarMetricasConDTB(int idDTB){
 	Historial* historial = list_find(listaHistorial, obtenerPorId);
 	signalMutex(&mutexHistorial);
 
-	log_info("Cantidad de sentencias ejecutadas que espero el DTB con id %d en NEW : %d sentencias", idDTB, historial->sentenciasNew);
+	//log_info("Cantidad de sentencias ejecutadas que espero el DTB con id %d en NEW : %d sentencias", idDTB, historial->sentenciasNew);
 }
 void mostrarSentenciasEnNewDeTodos(){
 	waitMutex(&mutexHistorial);
