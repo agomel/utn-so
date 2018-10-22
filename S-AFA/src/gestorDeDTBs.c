@@ -58,7 +58,7 @@ Historial* encontrarHistorial(t_list* lista, int idDTB){
 	bool esHistorial(Historial* historial){
 		return idDTB == historial->idDTB;
 	}
-	list_find(lista, esHistorial);
+	return list_find(lista, esHistorial);
 }
 void finalizarHistorialDeListaNew(int idDTB){
 	waitMutex(&mutexHistorialNew);
@@ -131,7 +131,7 @@ void mostrarMetricasConDTBNEW(int idDTB){
 	Historial* historial = list_find(listaHistorialNew, obtenerPorId);
 	signalMutex(&mutexHistorialNew);
 
-	log_info("Cantidad de sentencias ejecutadas que espero el DTB con id %d en NEW : %d sentencias", idDTB, cantidadSentencias(historial));
+	log_info(logger, "Cantidad de sentencias ejecutadas que espero el DTB con id %d en NEW : %d sentencias", idDTB, cantidadSentencias(historial));
 }
 
 int mostrarMetricasConDTBEXIT(int idDTB){
@@ -142,7 +142,7 @@ int mostrarMetricasConDTBEXIT(int idDTB){
 	Historial* historial = list_find(listaHistorialExit, obtenerPorId);
 	signalMutex(&mutexHistorialExit);
 
-	log_info("Cantidad de sentencias ejecutadas que espero el DTB con id %d en EXIT : %d sentencias", idDTB, cantidadSentencias(historial));
+	log_info(logger, "Cantidad de sentencias ejecutadas que espero el DTB con id %d en EXIT : %d sentencias", idDTB, cantidadSentencias(historial));
 
 	return cantidadSentencias(historial);
 }
