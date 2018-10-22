@@ -207,6 +207,8 @@ void escuchar(int socketSAFA){//MensajeNano: Verificar los punteros de DTB
 									//Fin de archivo
 									log_info(logger, "Pasar DTB a EXIT");
 									serializarYEnviarDTB(socketSAFA, *dtbRecibido, logger, PASAR_A_EXIT);
+									enviarYSerializarIntSinHeader(socketSAFA, sentencias);
+									freeDTB(dtbRecibido);
 									break;
 								}else if(lineaAEjecutar[0] == 'ERROR_O_ACCESO_INVALIDO'){
 									//Hubo error en FM9
@@ -215,6 +217,7 @@ void escuchar(int socketSAFA){//MensajeNano: Verificar los punteros de DTB
 									log_info(logger, "Pasar DTB a EXIT");
 									serializarYEnviarDTB(socketSAFA, *dtbRecibido, logger, PASAR_A_EXIT);
 									enviarYSerializarIntSinHeader(socketSAFA, sentencias);
+									freeDTB(dtbRecibido);
 									break;
 								}else if(lineaAEjecutar[0] != '#'){
 									mensajeEntendido = entendiendoLinea(lineaAEjecutar, dtbRecibido);
@@ -243,6 +246,7 @@ void escuchar(int socketSAFA){//MensajeNano: Verificar los punteros de DTB
 								log_info(logger, "Termino quantum");
 								serializarYEnviarDTB(socketSAFA, *dtbRecibido, logger, TERMINO_QUANTUM);
 								enviarYSerializarIntSinHeader(socketSAFA, sentencias);
+								freeDTB(dtbRecibido);
 							}
 						}else{
 							pedirCosasDelFM9(dtbRecibido);
@@ -253,6 +257,7 @@ void escuchar(int socketSAFA){//MensajeNano: Verificar los punteros de DTB
 									sentencias++;
 									serializarYEnviarDTB(socketSAFA, *dtbRecibido, logger, PASAR_A_EXIT);
 									enviarYSerializarIntSinHeader(socketSAFA, sentencias);
+									freeDTB(dtbRecibido);
 									break;
 								}else if(lineaAEjecutar[0] != '#'){
 									mensajeEntendido = entendiendoLinea(lineaAEjecutar, dtbRecibido);
@@ -262,6 +267,7 @@ void escuchar(int socketSAFA){//MensajeNano: Verificar los punteros de DTB
 										log_info(logger, "Bloquear DTB");
 										serializarYEnviarDTB(socketSAFA, *dtbRecibido, logger, BLOQUEAR_DTB);
 										enviarYSerializarIntSinHeader(socketSAFA, sentencias);
+										freeDTB(dtbRecibido);
 									}else if(mensajeEntendido == 'a'){
 										log_info(logger, "Pasar DTB a EXIT");
 										serializarYEnviarDTB(socketSAFA, *dtbRecibido, logger, PASAR_A_EXIT);
