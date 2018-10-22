@@ -96,6 +96,7 @@ char entendiendoLinea(char* lineaEjecutando, DTB* dtbRecibido){
 			return 'b';
 		}else{
 			//No esta abierto ese archivo
+			free(pathRecibido);
 			return 'a';
 		}
 
@@ -120,6 +121,7 @@ char entendiendoLinea(char* lineaEjecutando, DTB* dtbRecibido){
 					return 'b';
 				}else{
 					//No esta abierto ese archivo
+					free(pathRecibido);
 					return 'a';
 				}
 	}else if(string_starts_with(lineaEjecutando, "crear")){
