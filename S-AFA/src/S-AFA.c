@@ -50,7 +50,7 @@ void entenderMensaje(int emisor, char header){
 	t_dictionary* direccionesYArchivos;
 	t_list* lista;
 	char* path;
-	//usleep()
+	usleep(retardo*100);//milisegundos
 	switch(header){
 		case MANDAR_TEXTO:
 			//TODO esta operacion es basura, es para probar a serializacion y deserializacion
@@ -159,6 +159,8 @@ void crearSelect(int servidor){
 int main(void) {
 	inicializarSAFA();
 	t_config* configuracion = config_create(ARCHIVO_CONFIGURACION);
+	retardo = config_get_int_value(configuracion, "RETARDO");
+
 
 	direccionServidor direccionSAFA = levantarDeConfiguracion(NULL, "PUERTO", configuracion);
 	int servidor = crearServidor(direccionSAFA.puerto, INADDR_ANY);
@@ -177,5 +179,7 @@ int main(void) {
 	esperarHilo(hiloConsola);
 	esperarHilo(hiloPlanificadorALargoPlazo);
 	esperarHilo(hiloPlanificadorACortoPlazo);
+
+	config_destroy(configuracion);
 	return 0;
 }

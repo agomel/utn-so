@@ -44,6 +44,7 @@ pthread_mutex_t mutexOperaciones;
 sem_t semOperaciones;
 sem_t semProductores;
 
+int retardo;
 void entenderMensaje(int emisor, char header);
 
 int main(void);
