@@ -14,6 +14,7 @@ typedef struct{
 	int sentenciasExit;
 }Historial;
 
+//lista id llegada salida
 
 Historial* crearHistorial(int idDTB);
 t_list* listaHistorial;
@@ -22,3 +23,4 @@ pthread_mutex_t mutexHistorial;
 void initGestorDTBs();
 
 #endif /*GESTORDEDTBS_H_*/
+
