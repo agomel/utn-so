@@ -1,32 +1,5 @@
-/*
- ============================================================================
- Name        : MDJ.c
- Author      : 
- Version     :
- Copyright   : Your copyright notice
- Description : Hello World in C, Ansi-style
- ============================================================================
- */
+#include "MDJ.h"
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <biblioteca/utilidades.h>
-#include <biblioteca/socket.h>
-#include <biblioteca/select.h>
-#include <biblioteca/hilos.h>
-#include "operaciones.h"
-#include <commons/collections/queue.h>
-#include <biblioteca/semaforos.h>
-#include <biblioteca/nuestroSelect.h>
-#include <biblioteca/traductor.h>
-
-int socketDAM;
-int RETARDO;
-
-t_queue* colaOperaciones;
-pthread_mutex_t mutexOperaciones;
-sem_t semOperaciones;
-sem_t semProductores;
 
 void entenderMensaje(int emisor, char header){
 	char* datos;
@@ -52,24 +25,17 @@ void entenderMensaje(int emisor, char header){
 			log_error(logger, "Header desconocido");
 	}
 }
+
 int identificarse(int emisor, char header){
 	if(header == IDENTIFICARSE){
 		char identificado = deserializarChar(emisor);
 		log_debug(logger, "Handshake de: %s", traducirModulo(identificado));
-		switch(identificado){
-			case DAM:
-				socketDAM = emisor;
-				break;
-			default:
-				log_error(logger, "Conexion rechazada");
-		}
-		log_debug(logger, "Se agrego a las conexiones %s" , traducirModulo(identificado));
-		return 1;
-	}else{
-		return 0;
+		if(identificado == DAM)
+			return 1;
 	}
+	log_error(logger, "Conexion rechazada");
+	return 0;
 }
-
 
 
 void crearSelect(int servidor){
