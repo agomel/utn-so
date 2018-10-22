@@ -172,8 +172,22 @@ void mostrarMetricasConDTB(int idDTB){
 	mostrarMetricasConDTBNEW(idDTB);
 	mostrarMetricasConDTBEXIT(idDTB);
 }
+
+void mostrarMetricasDelDIEGO(){
+	waitMutex(&mutexSentenciasTotales);
+	int totales = sentenciasTotales;
+	signalMutex(&mutexSentenciasTotales);
+
+
+	waitMutex(&mutexSentenciasDeDiego);
+	int diego = sentenciasTotalesQueUsaronAlDiego;
+	signalMutex(&mutexSentenciasDeDiego);
+
+	log_info(logger, "La cantidad de sentencias ejecutadas prom. que usaron al diego son el %d %", diego * 100 / totales);
+
+}
 void mostrarMetricas(){
 	mostrarSentenciasDeTodos();
-	//TODO hacer metricas
+	mostrarMetricasDelDIEGO();
 
 }
