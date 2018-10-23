@@ -48,27 +48,36 @@ respuestaDeCargaEnMemoria guardarDatosSegPura(char* datos){
 	//COMO SE SEGMENTA?? POR AHORA SE GUARDA TODO LO QUE LLEGÓ EN UN SEGMENTO
 	log_debug(logger, "Guardando en paginacion pura");
 	respuestaDeCargaEnMemoria respuesta;
-	int tamanioSegmento = strlen(datos) + 1;
+	t_list* idsSegmentos = list_create();
+	bool rompio = false;
 
-	int posicionDondeGuardar = dondeEntro(tamanioSegmento);
+	char** lineas = string_split(datos, "\n");
+	int cantidadLineas = sizeof(lineas)/sizeof(lineas[0]);
 
-	if(posicionDondeGuardar != -1){
-		ElementoTablaSegPura* elementoTabla = malloc(sizeof(ElementoTablaSegPura));
-		elementoTabla->id = idSegmento;
-		elementoTabla->base = posicionDondeGuardar;
-		elementoTabla->limite = tamanioSegmento;
-		list_add(tablaDeSegmentos, elementoTabla);
+	for(int i = 0; i < cantidadLineas; i++){
+		int tamanioSegmento = strlen(lineas[i]) + 1;
+		int posicionDondeGuardar = dondeEntro(tamanioSegmento);
+		if(posicionDondeGuardar != -1){
+			ElementoTablaSegPura* elementoTabla = malloc(sizeof(ElementoTablaSegPura));
+			elementoTabla->id = idSegmento;
+			elementoTabla->base = posicionDondeGuardar;
+			elementoTabla->limite = tamanioSegmento;
+			list_add(tablaDeSegmentos, elementoTabla);
 
-		t_list* idsSegmento = list_create();
-		list_add(idsSegmento, idSegmento);
+			list_add(idsSegmentos, idSegmento);
 
-		memcpy(storage+posicionDondeGuardar, datos, tamanioSegmento);
+			memcpy(storage + posicionDondeGuardar, lineas[i], tamanioSegmento);
+			idSegmento++;
+		}else{
+			rompio = true;
+			break;
+		}
+	}
 
-		respuesta.listaDeDirecciones = idsSegmento;
-		respuesta.pudoGuardarlo = 0;
-		idSegmento++;
-
-		log_debug(logger, "Datos guardados");
+	if(!rompio){
+	respuesta.listaDeDirecciones = idsSegmentos;
+	respuesta.pudoGuardarlo = 0;
+	log_debug(logger, "Datos guardados");
 	}else{
 		respuesta.pudoGuardarlo = 1;
 	}
@@ -76,11 +85,55 @@ respuestaDeCargaEnMemoria guardarDatosSegPura(char* datos){
 	return respuesta;
 }
 
-respuestaDeObtencionDeMemoria* obtenerDatosSegPura(t_list* posiciones){
-	respuestaDeObtencionDeMemoria* respuesta;
-	respuesta->cantidadDeLineas = 0;
-	t_list* lista = list_create();
-	respuesta->datos = lista;
-	respuesta->pudoGuardarlo = 0;
+ElementoTablaSegPura* obtenerPorId(int idSegmento){
+	bool coincideId(ElementoTablaSegPura* elemento){
+		return elemento->id == idSegmento;
+	}
+
+	return list_find(tablaDeSegmentos, coincideId);
+}
+
+respuestaDeObtencionDeMemoria* obtenerDatosSegPura(t_list* idsSegmentos){
+	respuestaDeObtencionDeMemoria* respuesta = malloc(sizeof(respuestaDeObtencionDeMemoria));
+	int tamanioTotal = 1;
+	char* datos = malloc(tamanioTotal);
+	bool rompio = false;
+
+	for(int i=0; i<idsSegmentos->elements_count; i++){
+		int id = list_get(idsSegmentos, i);
+		ElementoTablaSegPura* segmento = obtenerPorId(id);
+		if(segmento != NULL){
+			tamanioTotal += segmento->limite;
+			datos = realloc(datos, tamanioTotal);
+			memcpy(datos, storage + segmento->base, segmento->limite);
+		}else{
+			rompio = true;
+		}
+	}
+
+	if(!rompio){
+		respuesta->datos = malloc(strlen(datos) + 1);
+		memcpy(respuesta->datos, datos, tamanioTotal);
+		respuesta->cantidadDeLineas = idsSegmentos->elements_count; //Asumiendo que se guarda una linea por segmento
+		respuesta->pudoObtener = 0;
+	}else{
+		respuesta->pudoObtener = 1;
+	}
+	return respuesta;
+}
+
+respuestaDeObtencionDeMemoria* obtenerLineaSegPura(t_list* idsSegmentos, int numeroLinea){
+	respuestaDeObtencionDeMemoria* respuesta = malloc(sizeof(respuestaDeObtencionDeMemoria));
+	if(numeroLinea < idsSegmentos->elements_count){
+		int id = list_get(idsSegmentos, numeroLinea);
+		ElementoTablaSegPura* elemento = obtenerPorId(id);
+		respuesta->cantidadDeLineas = 1;
+		respuesta->datos = malloc(elemento->limite);
+		memcpy(respuesta->datos, storage + elemento->base, elemento->limite);
+	}else{
+		log_error(logger, "El DTB no posee la linea %d", numeroLinea);
+		respuesta->pudoObtener = 1;
+	}
+
 	return respuesta;
 }

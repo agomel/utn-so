@@ -25,6 +25,21 @@ respuestaDeCargaEnMemoria cargarDatosEnMemoria(char* datos){
 		return guardarDatosInvertida(datos);
 }
 
+respuestaDeObtencionDeMemoria* obtenerLinea(t_list* ids, int numeroLinea){
+	if(strcmp(modo, "SEG_PURA") == 0)
+		return obtenerLineaSegPura(ids, numeroLinea);
+
+	if(strcmp(modo, "SEG_PAG") == 0)
+		return obtenerLineaSegPura(ids, numeroLinea); //CAMBIAAAAAAAR
+
+	if(strcmp(modo, "INV") == 0)
+		return obtenerLineaSegPura(ids, numeroLinea); //CAMBIAAAAAAAAR
+}
+
+void freeRespuestaObtencion(respuestaDeObtencionDeMemoria* respuesta){
+	free(respuesta->datos);
+	free(respuesta);
+}
 
 void entenderMensaje(int emisor, char header){
 	switch(header){
@@ -50,33 +65,41 @@ void entenderMensaje(int emisor, char header){
 
 			case OBTENER_DATOS: {
 				log_debug(logger, "Obteniendo datos de memoria");
-				t_list* posiciones = deserializarListaInt(emisor);
-				respuestaDeObtencionDeMemoria* respuestaDeObtener = obtenerDatosDeMemoria(posiciones); //TODO
+				t_list* ids = deserializarListaInt(emisor);
+				respuestaDeObtencionDeMemoria* respuestaDeObtener = obtenerDatosDeMemoria(ids); //TODO
 
 				int desplazamiento = 0;
-				int tamanioBuffer = sizeof(int) + sizeof(int) + sizeof(int) + strlen("hola") + 1;
+				int tamanioBuffer = sizeof(int) + sizeof(int) + sizeof(int) + strlen(respuestaDeObtener->datos) + 1;
 				int buffer = asignarMemoria(tamanioBuffer);
-				concatenarInt(buffer, &desplazamiento, 0);
-				concatenarInt(buffer, &desplazamiento, 1);
-				concatenarString(buffer, &desplazamiento, "hola");
+				concatenarInt(buffer, &desplazamiento, respuestaDeObtener->pudoObtener);
+				concatenarInt(buffer, &desplazamiento, respuestaDeObtener->cantidadDeLineas);
+				concatenarString(buffer, &desplazamiento, respuestaDeObtener->datos);
 				enviarMensaje(socketDAM, buffer, tamanioBuffer);
+				freeRespuestaObtencion(respuestaDeObtener);
 				break;
 			}
 
 			case TRAER_LINEA_ESCRIPTORIO: {
 				log_debug(logger, "Trayendo linea escriptorio");
-				int programCounter = deserializarInt(emisor);
-				t_list* posiciones = deserializarListaInt(emisor);
-				char* respuesta = "Respuesta hardcodeada";
-				for(int i = 0; i < posiciones->elements_count; i ++){
-					//TODO obtener del storage lo pedido y agregar al string realocandole memoria
-				}
-
+				int numeroLinea = deserializarInt(emisor);
+				t_list* ids = deserializarListaInt(emisor);
+				respuestaDeObtencionDeMemoria* respuesta = obtenerLinea(ids, numeroLinea);
 				int desplazamiento = 0;
-				int tamanioBuffer = sizeof(int) + strlen(respuesta) + 1;
+
+				if(respuesta->pudoObtener){
+				int tamanioBuffer = sizeof(int) + strlen(respuesta->datos) + 1;
 				void* buffer = asignarMemoria(tamanioBuffer);
-				concatenarString(buffer, &desplazamiento, respuesta);
+				concatenarString(buffer, &desplazamiento, respuesta->datos);
 				enviarMensaje(socketCPU, buffer, tamanioBuffer);
+				}else{
+					enviarMensaje(socketCPU, respuesta->pudoObtener, sizeof(int));
+				}
+				freeRespuestaObtencion(respuesta);
+				break;
+			}
+
+			case LIBERAR_MEMORIA: {
+				log_debug(logger, "Liberando memoria");
 				break;
 			}
 

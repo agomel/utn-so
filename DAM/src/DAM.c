@@ -40,7 +40,7 @@ void entenderMensaje(int emisor, char header){
 				enviarError(idDTB, path, estadoDeOperacion);
 			}else{
 				int cantidadDeLineas = deserializarInt(socketFM9);
-				char* datos = recibirFlushFM9(transferSize);
+				char* datos = recibirFlushFM9();
 				int crearArchivo = crearArchivoEnMDJ(path, cantidadDeLineas);
 				if(crearArchivo != 0){
 					enviarError(idDTB, path, crearArchivo);

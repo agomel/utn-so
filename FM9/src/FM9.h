@@ -23,7 +23,7 @@ typedef struct{
 typedef struct{
 	char* datos;
 	int cantidadDeLineas;
-	int pudoGuardarlo;
+	int pudoObtener;
 }respuestaDeObtencionDeMemoria;
 
 int socketCPU;

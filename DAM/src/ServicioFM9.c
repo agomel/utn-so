@@ -16,12 +16,13 @@ int enviarDatosAFM9(char* datos){
 }
 
 int pedirDatosAFM9(t_list* direcciones){
-	void* buffer = asignarMemoria(sizeof(char) + sizeof(int) + (sizeof(int) * direcciones->elements_count));
+	int tamanioBuffer = sizeof(char) + sizeof(int) + (sizeof(int) * direcciones->elements_count);
+	void* buffer = asignarMemoria(tamanioBuffer);
 	int desplazamiento = 0;
 
 	concatenarChar(buffer, &desplazamiento, OBTENER_DATOS);
 	concatenarListaInt(buffer, &desplazamiento, direcciones);
-	enviarMensaje(socketFM9, buffer, desplazamiento);
+	enviarMensaje(socketFM9, buffer, tamanioBuffer);
 
 	return deserializarInt(socketFM9);
 }
