@@ -84,15 +84,15 @@ void entenderMensaje(int emisor, char header){
 				int numeroLinea = deserializarInt(emisor);
 				t_list* ids = deserializarListaInt(emisor);
 				respuestaDeObtencionDeMemoria* respuesta = obtenerLinea(ids, numeroLinea);
-				int desplazamiento = 0;
 
-				if(respuesta->pudoObtener){
+				if(respuesta->pudoObtener == 0){
+				int desplazamiento = 0;
 				int tamanioBuffer = sizeof(int) + strlen(respuesta->datos) + 1;
 				void* buffer = asignarMemoria(tamanioBuffer);
 				concatenarString(buffer, &desplazamiento, respuesta->datos);
 				enviarMensaje(socketCPU, buffer, tamanioBuffer);
 				}else{
-					enviarMensaje(socketCPU, respuesta->pudoObtener, sizeof(int));
+					enviarMensaje(socketCPU, FIN_ARCHIVO, sizeof(char));
 				}
 				freeRespuestaObtencion(respuesta);
 				break;

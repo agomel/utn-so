@@ -200,12 +200,12 @@ void escuchar(int socketSAFA){//MensajeNano: Verificar los punteros de DTB
 								log_info(logger, "Tiene quantum el DTB");
 								pedirCosasDelFM9(dtbRecibido);
 								lineaAEjecutar = deserializarString(socketFM9);
-								if(lineaAEjecutar[0] == 'FIN_ARCHIVO'){
+								if(lineaAEjecutar[0] == FIN_ARCHIVO){
 									//Fin de archivo
 									log_info(logger, "Pasar DTB a EXIT");
 									serializarYEnviarDTB(socketSAFA, *dtbRecibido, logger, PASAR_A_EXIT);
 									break;
-								}else if(lineaAEjecutar[0] == 'ERROR_O_ACCESO_INVALIDO'){
+								}else if(lineaAEjecutar[0] == ERROR_O_ACCESO_INVALIDO){
 									//Hubo error en FM9
 									dtbRecibido->quantum--;
 									log_info(logger, "Pasar DTB a EXIT");

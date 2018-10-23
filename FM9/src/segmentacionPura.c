@@ -129,11 +129,11 @@ respuestaDeObtencionDeMemoria* obtenerLineaSegPura(t_list* idsSegmentos, int num
 		ElementoTablaSegPura* elemento = obtenerPorId(id);
 		respuesta->cantidadDeLineas = 1;
 		respuesta->datos = malloc(elemento->limite);
+		respuesta->pudoObtener = 0;
 		memcpy(respuesta->datos, storage + elemento->base, elemento->limite);
 	}else{
 		log_error(logger, "El DTB no posee la linea %d", numeroLinea);
 		respuesta->pudoObtener = 1;
 	}
-
 	return respuesta;
 }
