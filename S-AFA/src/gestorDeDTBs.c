@@ -31,12 +31,12 @@ void mostrarStatus(){
 	loguearEstadoDeLista(listaReadyPrioridad, READY_PRIORIDAD);
 }
 
-void operacionDelDiego(int idDTB){
+void operacionDelDiego(){
 	waitMutex(&mutexSentenciasDeDiego);
 	sentenciasTotalesQueUsaronAlDiego++;
 	signalMutex(&mutexSentenciasDeDiego);
-
 	finalizarHistorialDeListaTiempoRespuesta(idDTB);
+
 }
 
 void agregarSentencias(int sentenciasEjecutadas){
@@ -56,22 +56,9 @@ void agregarHistorialAListaExit(Historial* historial){
 	signalMutex(&mutexHistorialExit);
 }
 
-void agregarHistorialAListaTiempoRespuesta(Historial* historial){
-	waitMutex(&mutexHistorialBloqueados);
-	list_add(listaHistorialBloqueados, historial);
-	signalMutex(&mutexHistorialBloqueados);
-}
-
 Historial* encontrarHistorial(t_list* lista, int idDTB){
 	bool esHistorial(Historial* historial){
 		return idDTB == historial->idDTB;
-	}
-	return list_find(lista, esHistorial);
-}
-
-Historial* encontrarHistorialBloqueado(t_list* lista, int idDTB){
-	bool esHistorial(Historial* historial){
-		return idDTB == historial->idDTB && historial->salida == -1;
 	}
 	return list_find(lista, esHistorial);
 }
@@ -89,16 +76,6 @@ void finalizarHistorialDeListaExit(int idDTB){
 	waitMutex(&mutexHistorialExit);
 	Historial* historial = encontrarHistorial(listaHistorialExit, idDTB);
 	signalMutex(&mutexHistorialExit);
-
-	waitMutex(&mutexSentenciasTotales);
-	historial->salida = sentenciasTotales;
-	signalMutex(&mutexSentenciasTotales);
-}
-
-void finalizarHistorialDeListaTiempoRespuesta(int idDTB){
-	waitMutex(&mutexHistorialBloqueados);
-	Historial* historial = encontrarHistorialBloqueado(listaHistorialBloqueados, idDTB);
-	signalMutex(&mutexHistorialBloqueados);
 
 	waitMutex(&mutexSentenciasTotales);
 	historial->salida = sentenciasTotales;
@@ -241,26 +218,114 @@ void mostrarMetricasDelDIEGO(){
 
 }
 
-void mostrarMetricasTiempoDeRespuesta(){
-	bool seDesbloqueo(Historial* historial){
-		return historial->salida != -1;
-	}
-	waitMutex(&mutexHistorialBloqueados);
-
-	t_list* listaDesbloqueados = list_filter(listaHistorialBloqueados, seDesbloqueo);
-	signalMutex(&mutexHistorialBloqueados);
-
-	int totalTiempo = 0;
-	for(int i = 0; i < listaDesbloqueados->elements_count; i++){
-
-		Historial* historial =	list_get(listaDesbloqueados, i);
-		totalTiempo += cantidadSentencias(historial);
-	}
-
-	log_info(logger, "El tiempo promedio de respuesta es: %d", totalTiempo / listaDesbloqueados->elements_count);
+Historial* encontrarHistorialBloqueado(t_list* lista, int idDTB){
+       bool esHistorial(Historial* historial){
+               return idDTB == historial->idDTB && historial->salida == -1;
+       }
+       return list_find(lista, esHistorial);
 }
+
+void agregarHistorialAListaTiempoRespuesta(Historial* historial){
+       waitMutex(&mutexHistorialBloqueados);
+       list_add(listaHistorialBloqueados, historial);
+       signalMutex(&mutexHistorialBloqueados);
+}
+
+void finalizarHistorialDeListaTiempoRespuesta(int idDTB){
+       waitMutex(&mutexHistorialBloqueados);
+       Historial* historial = encontrarHistorialBloqueado(listaHistorialBloqueados, idDTB);
+       signalMutex(&mutexHistorialBloqueados);
+
+       waitMutex(&mutexSentenciasTotales);
+       historial->salida = sentenciasTotales;
+       signalMutex(&mutexSentenciasTotales);
+}
+
+void mostrarMetricasTiempoDeRespuesta(){
+       bool seDesbloqueo(Historial* historial){
+               return historial->salida != -1;
+       }
+       waitMutex(&mutexHistorialBloqueados);
+
+             t_list* listaDesbloqueados = list_filter(listaHistorialBloqueados, seDesbloqueo);
+             signalMutex(&mutexHistorialBloqueados);
+
+             int totalTiempo = 0;
+       for(int i = 0; i < listaDesbloqueados->elements_count; i++){
+    	   Historial* historial =  list_get(listaDesbloqueados, i);
+    	  -               totalTiempo += cantidadSentencias(historial);
+       }
+       log_info(logger, "El tiempo promedio de respuesta es: %d", totalTiempo / listaDesbloqueados->elements_count);
+}
+
+
 void mostrarMetricas(){
 	mostrarSentenciasDeTodos();
 	mostrarMetricasDelDIEGO();
 	mostrarMetricasTiempoDeRespuesta();
+
+}
+
+int verificarSiExisteRecurso(char* recurso){
+	waitMutex(&mutexRecursos);
+	int tieneLaClave = dictionary_has_key(recursos, recurso);
+	signalMutex(&mutexRecursos);
+	if(!tieneLaClave){
+		int cantidadRecurso = 1;
+		waitMutex(&mutexRecursos);
+		dictionary_put(recursos, recurso, cantidadRecurso);
+		signalMutex(&mutexRecursos);
+	}
+	return tieneLaClave;
+}
+char asignarRecurso(int idDTB, char* recurso){
+	verificarSiExisteRecurso(recurso);
+	waitMutex(&mutexRecursos);
+	int cant = dictionary_get(recursos, recurso);
+	signalMutex(&mutexRecursos);
+	if(cant > 0){
+		cant--;
+		//Borrara el anterios? como le cambio el valor si no es un puntero?
+		waitMutex(&mutexRecursos);
+		dictionary_put(recursos, recurso, cant);
+		signalMutex(&mutexRecursos);
+		return CONTINUAR_CON_EJECUCION;
+	}else{
+		waitMutex(&mutexEsperandoRecursos);
+		DTBEsperandoRecurso* der = asignarMemoria(sizeof(DTBEsperandoRecurso));
+		der->idDTB = idDTB;
+		der->recurso = recurso;
+		list_add(esperandoRecursos, der);
+		signalMutex(&mutexEsperandoRecursos);
+		return LIBERAR_DTB_DE_EJECUCION;
+	}
+}
+char liberarRecurso(char* recurso){
+
+	bool esQuienEspera(DTBEsperandoRecurso* esperando){
+		return esperando->recurso == recurso;
+	}
+	verificarSiExisteRecurso(recurso);
+
+	if(esperandoRecursos->elements_count > 0){
+		waitMutex(&mutexEsperandoRecursos);
+		DTBEsperandoRecurso* espera = list_remove_by_condition(esperandoRecursos, esQuienEspera);
+		signalMutex(&mutexEsperandoRecursos);
+
+		Historial* historial = crearHistorial(espera->idDTB);
+		agregarHistorialAListaTiempoRespuesta(historial);
+		ponerEnReady(espera->idDTB);
+	}else{
+		//Le sumo uno a los recursos
+		waitMutex(&mutexRecursos);
+		int cant = dictionary_get(recursos, recurso);
+		signalMutex(&mutexRecursos);
+		cant++;
+		waitMutex(&mutexRecursos);
+		dictionary_put(recursos, recurso, cant);
+		signalMutex(&mutexRecursos);
+	}
+	return CONTINUAR_CON_EJECUCION;
+
+
 }

@@ -17,6 +17,7 @@ typedef struct{
 	t_dictionary* direccionesArchivos;
 	int quantum;
 	char estado;
+	t_list* recursos;
 }DTB;
 
 DTB crearDTB (char* parametro);

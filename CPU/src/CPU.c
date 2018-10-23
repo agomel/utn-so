@@ -81,6 +81,7 @@ char entendiendoLinea(char* lineaEjecutando, DTB* dtbRecibido){
 		char* recursoRecibido = asignarMemoria(strlen(lineaEjecutando)-4);
 		recursoRecibido = string_substring_from(lineaEjecutando, 5);
 		enviarYSerializarString(socketSAFA, recursoRecibido, RETENCION_DE_RECURSO);
+		enviarYSerializarIntSinHeader(socketSAFA, dtbRecibido->id);
 		char seguirConEjecucion = deserializarChar(socketSAFA);
 		free(recursoRecibido);
 		if(seguirConEjecucion == 'LIBERAR_DTB_DE_EJECUCION'){

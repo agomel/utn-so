@@ -26,6 +26,12 @@ t_dictionary* ejecutandoCPU;
 pthread_mutex_t mutexCpusAFinalizarDTBs;
 //Clave sockets CPU valores idDTB
 t_dictionary* cpusAFinalizarDTBs;
+t_dictionary* recursos;
+pthread_mutex_t mutexRecursos;
+
+
+t_list* esperandoRecursos;
+pthread_mutex_t mutexEsperandoRecursos;
 
 enum ESTADOSAFA{
 	CORRUPTO = 'c', OPERATIVO = 'a'
@@ -35,6 +41,11 @@ typedef struct{
 	int socket;
 	int ocupado;
 }SocketCPU;
+
+typedef struct{
+	int idDTB;
+	char* recurso;
+}DTBEsperandoRecurso;
 
 
 char estado;
