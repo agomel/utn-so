@@ -58,7 +58,7 @@ Historial* encontrarHistorial(t_list* lista, int idDTB){
 	bool esHistorial(Historial* historial){
 		return idDTB == historial->idDTB;
 	}
-	list_find(lista, esHistorial);
+	return list_find(lista, esHistorial);
 }
 void finalizarHistorialDeListaNew(int idDTB){
 	waitMutex(&mutexHistorialNew);
@@ -131,7 +131,7 @@ void mostrarMetricasConDTBNEW(int idDTB){
 	Historial* historial = list_find(listaHistorialNew, obtenerPorId);
 	signalMutex(&mutexHistorialNew);
 
-	log_info("Cantidad de sentencias ejecutadas que espero el DTB con id %d en NEW : %d sentencias", idDTB, cantidadSentencias(historial));
+	log_info(logger, "Cantidad de sentencias ejecutadas que espero el DTB con id %d en NEW : %d sentencias", idDTB, cantidadSentencias(historial));
 }
 
 int mostrarMetricasConDTBEXIT(int idDTB){
@@ -142,7 +142,7 @@ int mostrarMetricasConDTBEXIT(int idDTB){
 	Historial* historial = list_find(listaHistorialExit, obtenerPorId);
 	signalMutex(&mutexHistorialExit);
 
-	log_info("Cantidad de sentencias ejecutadas que espero el DTB con id %d en EXIT : %d sentencias", idDTB, cantidadSentencias(historial));
+	log_info(logger, "Cantidad de sentencias ejecutadas que espero el DTB con id %d en EXIT : %d sentencias", idDTB, cantidadSentencias(historial));
 
 	return cantidadSentencias(historial);
 }
@@ -152,6 +152,7 @@ void mostrarSentenciasDeTodos(){
 	waitMutex(&mutexHistorialNew);
 	int cantidadHistorialNew = listaHistorialNew->elements_count;
 	signalMutex(&mutexHistorialNew);
+
 	for(int i = 0; i < cantidadHistorialNew; i++){
 		waitMutex(&mutexHistorialNew);
 		Historial* historial = list_get(listaHistorialNew, i);
@@ -160,7 +161,7 @@ void mostrarSentenciasDeTodos(){
 	}
 
 	//Muestro en exit
-	waitMutex(&mutexHistorialNew);
+	waitMutex(&mutexHistorialExit);
 	int cantidadHistorialExit = listaHistorialExit->elements_count;
 	signalMutex(&mutexHistorialExit);
 	int sentenciasTotalesExit = 0;
@@ -176,7 +177,14 @@ void mostrarSentenciasDeTodos(){
 	int totales = sentenciasTotales;
 	signalMutex(&mutexSentenciasTotales);
 
-	log_info(logger, "La cantidad de sentencias ejecutadas prom. para que un DTB termine en la cola EXIT es %d", totales / sentenciasTotalesExit);
+	waitMutex(&mutexListaDTBs);
+	int hayDTBs = listaDeTodosLosDTBs->elements_count;
+	signalMutex(&mutexListaDTBs);
+	if(hayDTBs){
+		log_info(logger, "La cantidad de sentencias ejecutadas prom. para que un DTB termine en la cola EXIT es %d", totales / sentenciasTotalesExit);
+	}else{
+		log_info(logger, "No hay metricas para mostrar");
+	}
 }
 void mostrarMetricasConDTB(int idDTB){
 	mostrarMetricasConDTBNEW(idDTB);
@@ -193,13 +201,21 @@ void mostrarMetricasDelDIEGO(){
 	int diego = sentenciasTotalesQueUsaronAlDiego;
 	signalMutex(&mutexSentenciasDeDiego);
 
-	log_info(logger, "La cantidad de sentencias ejecutadas prom. que usaron al diego son %d", totales / diego);
+	waitMutex(&mutexListaDTBs);
+	int hayDTBs = listaDeTodosLosDTBs->elements_count;
+	signalMutex(&mutexListaDTBs);
 
-	log_info(logger, "El porcentaje de sentencias ejecutadas prom. que usaron al diego son el %d", diego * 100 / totales);
+	if(hayDTBs){
+		log_info(logger, "La cantidad de sentencias ejecutadas prom. que usaron al diego son %d", totales / diego);
+
+		log_info(logger, "El porcentaje de sentencias ejecutadas prom. que usaron al diego son el %d", diego * 100 / totales);
+
+	}else{
+		log_info(logger, "No hay metricas para mostrar");
+	}
 
 }
 void mostrarMetricas(){
 	mostrarSentenciasDeTodos();
 	mostrarMetricasDelDIEGO();
-
 }
