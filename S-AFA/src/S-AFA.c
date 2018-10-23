@@ -64,7 +64,6 @@ void entenderMensaje(int emisor, char header){
 		case CARGADO_CON_EXITO_EN_MEMORIA:
 			idDTB = deserializarInt(emisor);
 			path = deserializarString(emisor);
-			operacionDelDiego(idDTB);
 			t_list* listaDirecciones = deserializarListaInt(emisor);
 			dtb = obtenerDTBDeCola(idDTB);
 			dictionary_put(dtb->direccionesArchivos, path, listaDirecciones);
@@ -119,7 +118,7 @@ void entenderMensaje(int emisor, char header){
 
 		case TERMINO_QUANTUM:
 			dtb = deserializarDTB(emisor);
-			if(strcmp(algoritmo, "VRR")){
+			if(!strcmp(algoritmo, "VRR")){
 				cambiarEstadoGuardandoNuevoDTB(dtb, READY_PRIORIDAD);
 			}else{
 				cambiarEstadoGuardandoNuevoDTB(dtb, READY);

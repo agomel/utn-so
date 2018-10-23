@@ -57,7 +57,7 @@ void planificadorACortoPlazo(){
 }
 
 void desbloquearDTB(int idDTB){
-	if(strcmp(algoritmo, "VRR")){
+	if(!strcmp(algoritmo, "VRR")){
 		cambiarEstado(idDTB, READY_PRIORIDAD);
 		signalSem(&cantidadTotalREADY);
 	}else{

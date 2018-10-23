@@ -8,7 +8,7 @@ void notificarASafaExitoDeCarga(int idDTB, char* path, t_list* direcciones){
 	concatenarInt(buffer, &desplazamiento, idDTB);
 	concatenarString(buffer, &desplazamiento, path);
 	concatenarListaInt(buffer, &desplazamiento, direcciones);
-	log_info(logger,"enviando mensaje a safa");
+	log_info(logger,"enviando mensaje a safa con id de dtb %d y path %s", idDTB, path);
 	enviarMensaje(socketSAFA, buffer, desplazamiento);
 	free(buffer);
 }

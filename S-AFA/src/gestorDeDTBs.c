@@ -247,10 +247,10 @@ void mostrarMetricasTiempoDeRespuesta(){
        }
        waitMutex(&mutexHistorialBloqueados);
 
-             t_list* listaDesbloqueados = list_filter(listaHistorialBloqueados, seDesbloqueo);
-             signalMutex(&mutexHistorialBloqueados);
+       t_list* listaDesbloqueados = list_filter(listaHistorialBloqueados, seDesbloqueo);
+       signalMutex(&mutexHistorialBloqueados);
 
-             int totalTiempo = 0;
+       int totalTiempo = 0;
        for(int i = 0; i < listaDesbloqueados->elements_count; i++){
     	   Historial* historial =  list_get(listaDesbloqueados, i);
     	   totalTiempo += cantidadSentencias(historial);
