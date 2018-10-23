@@ -9,7 +9,7 @@
 #include <unistd.h>
 #include <openssl/md5.h>
 
-extern char* PUNTO_MONTAJE;
+extern char* MONTAJE_ACTUAL;
 
 void ls(char* parametro);
 void cd(char* parametro);

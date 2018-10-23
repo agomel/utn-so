@@ -98,15 +98,34 @@ void crearSelect(int servidor){
 	select->semProductores = &semProductores;
 	realizarNuestroSelect(select);
 }
+void levantarMetadata(){
+	char* ubicacionMetadata = concatenar(PUNTO_MONTAJE, "Metadata/Metadata.txt");
+	t_config* configuracion = config_create(ubicacionMetadata);
+	free(ubicacionMetadata);
+
+	TAMANIO_BLOQUES = config_get_int_value(configuracion, "TAMANIO_BLOQUES");
+	CANTIDAD_BLOQUES = config_get_int_value(configuracion, "CANTIDAD_BLOQUES");
+	char* magicNumber = config_get_string_value(configuracion, "MAGIC_NUMBER");
+	MAGIC_NUMBER = asignarMemoria(strlen(magicNumber) + 1);
+	memcpy(MAGIC_NUMBER, magicNumber, strlen(magicNumber)+ 1);
+	free(magicNumber);
+
+	//config_destroy(configuracion);
+
+}
 
 void init(){
 	t_config* configuracion = config_create(ARCHIVO_CONFIGURACION);
 	RETARDO = config_get_int_value(configuracion, "RETARDO");
 	char* punteroPuntoMontaje = config_get_string_value(configuracion, "PUNTO_MONTAJE");
-	PUNTO_MONTAJE = malloc(250);//asignarMemoria(strlen(punteroPuntoMontaje) + 1);
+	PUNTO_MONTAJE = asignarMemoria(strlen(punteroPuntoMontaje) + 1);//asignarMemoria(strlen(punteroPuntoMontaje) + 1);
+	MONTAJE_ACTUAL = asignarMemoria(250);
 	memcpy(PUNTO_MONTAJE, punteroPuntoMontaje, strlen(punteroPuntoMontaje)+ 1);
+	memcpy(MONTAJE_ACTUAL, punteroPuntoMontaje, strlen(punteroPuntoMontaje)+ 1);
 	free(punteroPuntoMontaje);
 	//config_destroy(configuracion);
+
+	levantarMetadata();
 
 	logger = crearLogger(ARCHIVO_LOG, "MDJ");
 

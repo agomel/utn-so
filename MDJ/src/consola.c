@@ -4,13 +4,13 @@
 void consolita(){
 
 	//ir al punto de montaje
-	char* puntoDeMontaje = concatenar(".", PUNTO_MONTAJE);
-	cd(puntoDeMontaje);
-	free(puntoDeMontaje);
+	char* montajeActual = concatenar(".", MONTAJE_ACTUAL);
+	cd(montajeActual);
+	free(montajeActual);
 
 	//escuchar la consola
 	while(1){
-		char* mensajeReadLine = concatenar(PUNTO_MONTAJE, "$ ");
+		char* mensajeReadLine = concatenar(MONTAJE_ACTUAL, "$ ");
 		char* texto = readline(mensajeReadLine);
 		free(mensajeReadLine);
 

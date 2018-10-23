@@ -16,6 +16,11 @@
 
 int RETARDO;
 char* PUNTO_MONTAJE;
+char* MONTAJE_ACTUAL;
+
+int TAMANIO_BLOQUES;
+int CANTIDAD_BLOQUES;
+char* MAGIC_NUMBER;
 
 t_queue* colaOperaciones;
 pthread_mutex_t mutexOperaciones;

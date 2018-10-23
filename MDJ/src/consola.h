@@ -10,7 +10,7 @@
 #include <unistd.h>
 #include "comandos.h"
 
-extern char* PUNTO_MONTAJE;
+extern char* MONTAJE_ACTUAL;
 void consolita();
 
 #endif /*CONSOLA_H_*/

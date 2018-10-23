@@ -20,7 +20,7 @@ void cd(char* directorio){
 	if(chdir(directorio) == 0){
 		char* path = malloc(250);
 			getcwd(path, 250);
-			memcpy(PUNTO_MONTAJE, path, strlen(path)+1);
+			memcpy(MONTAJE_ACTUAL, path, strlen(path)+1);
 			free(path);
 	}else{
 		printf("Error, no pude entrar a ese path\n");
