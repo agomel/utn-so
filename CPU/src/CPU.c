@@ -58,7 +58,7 @@ char entendiendoLinea(char* lineaEjecutando, DTB* dtbRecibido){
 			//Esta abierto
 			log_info(logger, "Ejecutando instruccion asignar");
 
-			void* buffer = asignarMemoria(sizeof(char) + sizeof(int) + (strlen(path)+1) + sizeof(int));
+			void* buffer = asignarMemoria(sizeof(char) + sizeof(int)*3 + (strlen(path)+1) + strlen(datos) + 1);
 			int desplazamiento = 0;
 
 			concatenarChar(buffer, &desplazamiento, ASIGNAR_DATOS);
