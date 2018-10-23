@@ -67,6 +67,8 @@ void desbloquearDTB(int idDTB){
 
 void desbloquearDummy(DTB* dummy){
 	cambiarEstadoDummy(BLOCKED);
+	Historial* historial = crearHistorial(dummy->id);
+	agregarHistorialAListaTiempoRespuesta(historial);
 	signalMutex(&mutexDummy);
 }
 
