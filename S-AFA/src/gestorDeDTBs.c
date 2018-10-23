@@ -31,7 +31,7 @@ void mostrarStatus(){
 	loguearEstadoDeLista(listaReadyPrioridad, READY_PRIORIDAD);
 }
 
-void operacionDelDiego(){
+void operacionDelDiego(int idDTB){
 	waitMutex(&mutexSentenciasDeDiego);
 	sentenciasTotalesQueUsaronAlDiego++;
 	signalMutex(&mutexSentenciasDeDiego);
@@ -253,7 +253,7 @@ void mostrarMetricasTiempoDeRespuesta(){
              int totalTiempo = 0;
        for(int i = 0; i < listaDesbloqueados->elements_count; i++){
     	   Historial* historial =  list_get(listaDesbloqueados, i);
-    	  -               totalTiempo += cantidadSentencias(historial);
+    	   totalTiempo += cantidadSentencias(historial);
        }
        log_info(logger, "El tiempo promedio de respuesta es: %d", totalTiempo / listaDesbloqueados->elements_count);
 }
