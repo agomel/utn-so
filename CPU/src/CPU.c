@@ -293,6 +293,7 @@ void escuchar(int socketSAFA){//MensajeNano: Verificar los punteros de DTB
 							lineaAEjecutar = deserializarString(socketFM9);
 							while(1){
 								if(lineaAEjecutar[0] == ERROR_O_ACCESO_INVALIDO || lineaAEjecutar[0] == FIN_ARCHIVO){
+									log_info(logger, "finalizando archivo");
 									//Fin de archivo o hubo un error
 									sentencias++;
 									serializarYEnviarDTB(socketSAFA, *dtbRecibido, logger, PASAR_A_EXIT);
