@@ -53,6 +53,7 @@ void entenderMensaje(int emisor, char header){
 	char* path;
 	char* recurso;
 	char asignado;
+	Historial* historial;
 	usleep(retardo*100);//milisegundos
 	switch(header){
 		case MANDAR_TEXTO:
@@ -72,6 +73,12 @@ void entenderMensaje(int emisor, char header){
 
 			break;
 
+		case DUMMY:
+			dtb = deserializarDTB(emisor);
+			historial = crearHistorial(dtb->id);
+			agregarHistorialAListaTiempoRespuesta(historial);
+			enviarYSerializarCharSinHeader(emisor, CONTINUAR_CON_EJECUCION);
+			break;
 		case DESBLOQUEAR_DTB:
 			dtb = deserializarDTB(emisor);
 			desbloquearDummy(dtb);
@@ -97,7 +104,7 @@ void entenderMensaje(int emisor, char header){
 			dtb = deserializarDTB(emisor);
 			cambiarEstadoGuardandoNuevoDTB(dtb, BLOCKED);
 
-			 Historial* historial = crearHistorial(dtb->id);
+			 historial = crearHistorial(dtb->id);
 			 agregarHistorialAListaTiempoRespuesta(historial);
 
 			terminarOperacionDeCPU(emisor, dtb);

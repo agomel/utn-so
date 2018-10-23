@@ -207,6 +207,9 @@ void escuchar(int socketSAFA){//MensajeNano: Verificar los punteros de DTB
 					if(dtbRecibido->flag == 0){
 						log_info(logger, "Recibi DTB Dummy");
 						//Es el dummy
+						serializarYEnviarDTB(socketSAFA, *dtbRecibido, logger, DUMMY);
+						char recibioOk = deserializarChar(socketSAFA);
+
 						int tamanioPathEscriptorio = strlen(dtbRecibido->escriptorio) + 1;
 						int tamanioBuffer = sizeof(char) + tamanioPathEscriptorio + sizeof(int)*2;
 						void* buffer = asignarMemoria(tamanioBuffer);
