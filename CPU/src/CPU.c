@@ -49,7 +49,33 @@ char entendiendoLinea(char* lineaEjecutando, DTB* dtbRecibido){
 	}else if(string_starts_with(lineaEjecutando, "asignar")){
 //Asignar
 		log_info(logger, "Ejecutando instruccion asignar");
+		char* parametros = string_substring_from(lineaEjecutando, 8);
+		char** pathYCantLineas = string_n_split(parametros, 3, ' ');
+		char* path = pathYCantLineas[0];
+		int cantidadDeLineas = pathYCantLineas[1];
+		char* datos = pathYCantLineas[2];
+		if(dictionary_has_key(dtbRecibido->direccionesArchivos, path)){
+			//Esta abierto
+			log_info(logger, "Ejecutando instruccion asignar");
 
+			void* buffer = asignarMemoria(sizeof(char) + sizeof(int) + (strlen(path)+1) + sizeof(int));
+			int desplazamiento = 0;
+
+			concatenarChar(buffer, &desplazamiento, ASIGNAR_DATOS);
+			concatenarString(buffer, &desplazamiento, path);
+			concatenarInt(buffer, &desplazamiento, cantidadDeLineas);
+			concatenarString(buffer, &desplazamiento, datos);
+
+			enviarMensaje(socketFM9, buffer, desplazamiento);
+
+			free(buffer);
+
+			return 'b';
+
+		}else{
+			//No esta abierto ese archivo
+			return 'a';
+		}
 	}else if(string_starts_with(lineaEjecutando, "wait")){
 		log_info(logger, "Ejecutando instruccion wait");
 		char* recursoRecibido = asignarMemoria(strlen(lineaEjecutando)-4);
@@ -131,6 +157,7 @@ char entendiendoLinea(char* lineaEjecutando, DTB* dtbRecibido){
 		char* path = pathYCantLineas[0];
 		int cantidadDeLineas = pathYCantLineas[1];
 		enviarySerializarPathyCantidadDeLineas(socketDIEGO, path, cantidadDeLineas);
+		return 'b';
 	}else if(string_starts_with(lineaEjecutando, "borrar")){
 		log_info(logger, "Ejecutando instruccion borrar");
 		char* pathRecibido = asignarMemoria(strlen(lineaEjecutando)-5);
