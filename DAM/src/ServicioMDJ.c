@@ -39,7 +39,7 @@ char* obtenerDatosDeMDJ(char* path){
 }
 
 int crearArchivoEnMDJ(int destino, char* path, int cantidadDeLineas){
-	enviarySerializarPathyCantidadDeLineas(destino, path, cantidadDeLineas);
+	enviarySerializarPathyTamanioArchivo(destino, path, cantidadDeLineas * tamanioLinea);
 	return deserializarInt(socketMDJ);
 }
 int borrarArchivoEnMDJ(char* path){

@@ -27,12 +27,12 @@ void enviarYSerializarString(int destino, char* texto,char operacion){
 	free(mensaje);
 }
 
-void enviarySerializarPathyCantidadDeLineas(int destino ,char* path, int cantidadDeLineas){
+void enviarySerializarPathyTamanioArchivo(int destino ,char* path, int tamanioArchivo){
 	void* buffer = asignarMemoria(sizeof(char) + sizeof(int) + (strlen(path)+1) + sizeof(int));
 	int desplazamiento = 0;
 	concatenarChar(buffer, &desplazamiento, CREAR_ARCHIVO);
 	concatenarString(buffer, &desplazamiento, path);
-	concatenarInt(buffer, &desplazamiento, cantidadDeLineas);
+	concatenarInt(buffer, &desplazamiento, tamanioArchivo);
 	enviarMensaje(destino, buffer, desplazamiento);
 	free(buffer);
 }
