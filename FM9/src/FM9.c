@@ -88,18 +88,21 @@ void entenderMensaje(int emisor, char header){
 				char* nombreArchivo = deserializarString(emisor);
 				int numeroLinea = deserializarInt(emisor);
 				respuestaDeObtencionDeMemoria* respuesta = obtenerLinea(nombreArchivo, numeroLinea);
-
+				char* mensajeAEnviar;
 				if(respuesta->pudoObtener == 0){
-					int desplazamiento = 0;
-					int tamanioBuffer = sizeof(int) + strlen(respuesta->datos) + 1;
-					void* buffer = asignarMemoria(tamanioBuffer);
-					concatenarString(buffer, &desplazamiento, respuesta->datos);
-					enviarMensaje(socketCPU, buffer, tamanioBuffer);
-					freeRespuestaObtencion(respuesta);
+					mensajeAEnviar = asignarMemoria(strlen(respuesta->datos) + 1);
+					mensajeAEnviar = respuesta->datos;
 				}else{
-					enviarYSerializarCharSinHeader(socketCPU, FIN_ARCHIVO);
-					free(respuesta); //Porque no hay que hacer el free de respuesta->datos
+					mensajeAEnviar = asignarMemoria(sizeof(char) + 1);
+					mensajeAEnviar = FIN_ARCHIVO + "\0";
 				}
+				int desplazamiento = 0;
+				int tamanioBuffer = sizeof(int) + strlen(mensajeAEnviar) + 1;
+				void* buffer = asignarMemoria(tamanioBuffer);
+				concatenarString(buffer, &desplazamiento, mensajeAEnviar);
+				enviarMensaje(socketCPU, buffer, tamanioBuffer);
+				freeRespuestaObtencion(respuesta);
+				free(respuesta); //Porque no hay que hacer el free de respuesta->datos
 				break;
 			}
 

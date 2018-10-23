@@ -158,7 +158,7 @@ void entenderMensaje(int emisor, char header){
 			log_info(logger, "Recibi liberar recurso");
 			recurso = deserializarString(emisor);
 			asignado = liberarRecurso(idDTB, recurso);
-			enviarYSerializarCharSinHeader(asignado);
+			enviarYSerializarCharSinHeader(emisor, asignado);
 			log_info(logger, "Enviando a CPU que continue");
 			break;
 		case RETENCION_DE_RECURSO:
@@ -166,7 +166,7 @@ void entenderMensaje(int emisor, char header){
 			recurso = deserializarString(emisor);
 			idDTB = deserializarInt(emisor);
 			asignado = asignarRecurso(idDTB, recurso);
-			enviarYSerializarCharSinHeader(asignado);
+			enviarYSerializarCharSinHeader(emisor, asignado);
 			log_info(logger, "Enviando a CPU que continue");
 			break;
 
