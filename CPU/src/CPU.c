@@ -261,6 +261,7 @@ void escuchar(int socketSAFA){//MensajeNano: Verificar los punteros de DTB
 										serializarYEnviarDTB(socketSAFA, *dtbRecibido, logger, BLOQUEAR_DTB);
 										freeDTB(dtbRecibido);
 										enviarYSerializarIntSinHeader(socketSAFA, sentencias);
+										char continuar = deserializarChar(socketSAFA);
 										break;
 									}else if(mensajeEntendido == 'a'){
 										sentencias++;
@@ -300,6 +301,7 @@ void escuchar(int socketSAFA){//MensajeNano: Verificar los punteros de DTB
 										log_info(logger, "Bloquear DTB");
 										serializarYEnviarDTB(socketSAFA, *dtbRecibido, logger, BLOQUEAR_DTB);
 										enviarYSerializarIntSinHeader(socketSAFA, sentencias);
+										char continuar = deserializarChar(socketSAFA);
 										freeDTB(dtbRecibido);
 									}else if(mensajeEntendido == 'a'){
 										log_info(logger, "Pasar DTB a EXIT");

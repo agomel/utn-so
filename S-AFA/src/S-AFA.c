@@ -107,6 +107,7 @@ void entenderMensaje(int emisor, char header){
 			 agregarHistorialAListaTiempoRespuesta(historial);
 
 			terminarOperacionDeCPU(emisor, dtb);
+			enviarYSerializarCharSinHeader(emisor, CONTINUAR_CON_EJECUCION);
 			break;
 
 		case PASAR_A_EXIT:
