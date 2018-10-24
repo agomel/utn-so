@@ -133,6 +133,7 @@ void mostrarMetricasConDTBNEW(int idDTB){
 	Historial* historial = list_find(listaHistorialNew, obtenerPorId);
 	signalMutex(&mutexHistorialNew);
 
+	log_info(logger, "-------------------------------------------");
 	log_info(logger, "Cantidad de sentencias ejecutadas que espero el DTB con id %d en NEW : %d sentencias", idDTB, cantidadSentencias(historial));
 }
 
@@ -143,7 +144,7 @@ int mostrarMetricasConDTBEXIT(int idDTB){
 	waitMutex(&mutexHistorialExit);
 	Historial* historial = list_find(listaHistorialExit, obtenerPorId);
 	signalMutex(&mutexHistorialExit);
-
+	log_info(logger, "-------------------------------------------");
 	log_info(logger, "Cantidad de sentencias ejecutadas que espero el DTB con id %d en EXIT : %d sentencias", idDTB, cantidadSentencias(historial));
 
 	return cantidadSentencias(historial);
@@ -183,6 +184,7 @@ void mostrarSentenciasDeTodos(){
 	int hayDTBs = listaDeTodosLosDTBs->elements_count;
 	signalMutex(&mutexListaDTBs);
 	if(hayDTBs){
+		log_info(logger, "-------------------------------------------");
 		log_info(logger, "La cantidad de sentencias ejecutadas prom. para que un DTB termine en la cola EXIT es %d", totales / sentenciasTotalesExit);
 	}else{
 		log_info(logger, "No hay metricas para mostrar");
@@ -208,11 +210,14 @@ void mostrarMetricasDelDIEGO(){
 	signalMutex(&mutexListaDTBs);
 
 	if(hayDTBs){
+		log_info(logger, "-------------------------------------------");
 		log_info(logger, "La cantidad de sentencias ejecutadas prom. que usaron al diego son %d", totales / diego);
 
+		log_info(logger, "-------------------------------------------");
 		log_info(logger, "El porcentaje de sentencias ejecutadas prom. que usaron al diego son el %d", diego * 100 / totales);
 
 	}else{
+		log_info(logger, "-------------------------------------------");
 		log_info(logger, "No hay metricas para mostrar");
 	}
 
@@ -255,6 +260,7 @@ void mostrarMetricasTiempoDeRespuesta(){
     	   Historial* historial =  list_get(listaDesbloqueados, i);
     	   totalTiempo += cantidadSentencias(historial);
        }
+       log_info(logger, "-------------------------------------------");
        log_info(logger, "El tiempo promedio de respuesta es: %d", totalTiempo / listaDesbloqueados->elements_count);
 }
 
