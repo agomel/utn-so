@@ -8,6 +8,7 @@
 #include <biblioteca/logger.h>
 #include <readline/readline.h>
 #include <dirent.h>
+#include <unistd.h>
 
 extern char* PUNTO_MONTAJE;
 void consolita();
