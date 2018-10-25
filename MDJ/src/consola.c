@@ -8,26 +8,6 @@ char* concatenar(char* str1, char* str2){
 	return resultado;
 }
 
-void ls(char* directorio){
-	struct dirent* pDirent;
-	DIR* pdir = opendir(directorio);
-	if(pdir == NULL){
-		printf("No puedo abrir el directorio %s \n", directorio);
-	}else{
-		while((pDirent = readdir(pdir)) != NULL){
-			printf("%s \n", pDirent->d_name);
-		}
-		closedir(pdir);
-	}
-}
-void cd(char* directorio){
-	chdir(directorio);
-	char* path = malloc(250);
-	getcwd(path, 250);
-	memcpy(PUNTO_MONTAJE, path, strlen(path)+1);
-	free(path);
-}
-
 void consolita(){
 
 	//ir al punto de montaje
@@ -59,13 +39,7 @@ void consolita(){
 			printf("Pusiste md5 con el parametro %s \n", parametro);
 		}
 		else if(strcmp(comando, "cat") == 0){
-			FILE* archivo = fopen(parametro, "r");
-			char* linea = asignarMemoria(250);
-			while(fscanf(archivo, "%s", linea) != EOF){
-				printf("%s\n", linea);
-			}
-			fclose(archivo);
-
+			cat(parametro);
 		}else{
 			printf("No te entiendo man \n");
 		}
