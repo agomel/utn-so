@@ -1,7 +1,7 @@
 #include "segmentacionPag.h"
 
-respuestaDeCargaEnMemoria guardarDatosSegPag(char* datos){
-	respuestaDeCargaEnMemoria respuesta;
+int guardarDatosSegPag(char* datos){
+	int respuesta;
 	return respuesta;
 }
 

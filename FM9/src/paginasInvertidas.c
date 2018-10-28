@@ -1,6 +1,6 @@
 #include "paginasInvertidas.h"
 
-respuestaDeCargaEnMemoria guardarDatosInvertida(char* datos){
+int guardarDatosInvertida(char* datos){
 	respuestaDeCargaEnMemoria respuesta;
 
 	return respuesta;

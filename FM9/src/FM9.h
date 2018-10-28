@@ -16,7 +16,7 @@
 #include <biblioteca/traductor.h>
 
 typedef struct{
-	t_list* listaDeDirecciones;
+	int idSegmento;
 	int pudoGuardarlo;
 }respuestaDeCargaEnMemoria;
 
@@ -29,6 +29,7 @@ typedef struct{
 int socketCPU;
 int socketDAM;
 int tamanioMemoria;
+int tamanioLinea;
 void* storage;
 int offset;
 t_log* logger;

@@ -3,7 +3,7 @@
 
 #include "FM9.h"
 
-respuestaDeCargaEnMemoria guardarDatosSegPag(char* datos);
+int guardarDatosSegPag(char* datos);
 respuestaDeObtencionDeMemoria* obtenerDatosSegPag(t_list* posiciones);
 
 #endif /* SEGMENTACIONPAG_H_ */

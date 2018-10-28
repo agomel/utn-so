@@ -14,9 +14,9 @@ respuestaDeObtencionDeMemoria* obtenerDatosDeMemoria(t_list* posiciones){
 		return obtenerDatosInvertida(posiciones);
 }
 
-respuestaDeCargaEnMemoria cargarDatosEnMemoria(char* datos){
+int cargarDatosEnMemoria(char* datos, char* nombreArchivo){
 	if(strcmp(modo, "SEG_PURA") == 0)
-		return guardarDatosSegPura(datos);
+		return guardarDatosSegPura(datos, nombreArchivo);
 
 	if(strcmp(modo, "SEG_PAG") == 0)
 		return guardarDatosSegPag(datos);
@@ -36,6 +36,22 @@ respuestaDeObtencionDeMemoria* obtenerLinea(t_list* ids, int numeroLinea){
 		return obtenerLineaSegPura(ids, numeroLinea); //CAMBIAAAAAAAAR
 }
 
+char* recibirDatosAGuardar(int emisor){
+	//TODO DECIRLE A DIEGO QUE PRIMERO ME MANDE EL TAMAÑO TOTAL
+	int tamanioArchivo = deserializarInt(emisor);
+	char* archivo = malloc(tamanioArchivo);
+	int desplazamiento = 0;
+
+	while(desplazamiento < tamanioArchivo){
+		char* fragmentoArchivo = deserializarString(emisor);
+		int tamanioFragmento = strlen(fragmentoArchivo)+1;
+		memcpy(archivo + desplazamiento, fragmentoArchivo, tamanioFragmento);
+		desplazamiento += tamanioFragmento;
+		free(fragmentoArchivo);
+	}
+	return archivo;
+}
+
 void freeRespuestaObtencion(respuestaDeObtencionDeMemoria* respuesta){
 	free(respuesta->datos);
 	free(respuesta);
@@ -45,21 +61,13 @@ void entenderMensaje(int emisor, char header){
 	switch(header){
 			case GUARDAR_DATOS: {
 				log_debug(logger, "Guardando datos en memoria");
-				char* datos = deserializarString(emisor);
-				respuestaDeCargaEnMemoria respuestaDeCarga = cargarDatosEnMemoria(datos);
+				char* nombreArchivo = deserializarString(emisor);
+				char* datos = recibirDatosAGuardar(emisor);
+				int respuestaDeCarga = cargarDatosEnMemoria(datos, nombreArchivo);
+				free(datos);
+				free(nombreArchivo);
 
-				if(respuestaDeCarga.pudoGuardarlo == 0){
-					int desplazamiento = 0;
-					int tamanioBuffer = sizeof(int) + sizeof(int) + sizeof(int)*(respuestaDeCarga.listaDeDirecciones->elements_count);
-					void* buffer = asignarMemoria(tamanioBuffer);
-					concatenarInt(buffer, &desplazamiento, respuestaDeCarga.pudoGuardarlo);
-					concatenarListaInt(buffer, &desplazamiento, respuestaDeCarga.listaDeDirecciones);
-					enviarMensaje(socketDAM, buffer, tamanioBuffer);
-					free(buffer);
-
-				}else{
-					enviarYSerializarIntSinHeader(socketDAM, respuestaDeCarga.pudoGuardarlo);
-				}
+				enviarMensaje(socketDAM, respuestaDeCarga, sizeof(int));
 				break;
 			}
 
@@ -157,6 +165,7 @@ void inicializar(char* modo){
 void init(){
 	t_config* configuracion = config_create(ARCHIVO_CONFIGURACION);
 
+	tamanioLinea = config_get_int_value(configuracion, "MAX_LINEA");
 	tamanioMemoria = config_get_int_value(configuracion, "TAMANIO");
 	storage = asignarMemoria(tamanioMemoria);
 	char* punteroAModo = config_get_string_value(configuracion, "MODO");

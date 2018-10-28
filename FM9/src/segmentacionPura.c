@@ -44,42 +44,31 @@ int dondeEntro(int tamanioAGuardar){
 	return 0;
 }
 
-respuestaDeCargaEnMemoria guardarDatosSegPura(char* datos){
-	//COMO SE SEGMENTA?? POR AHORA SE GUARDA TODO LO QUE LLEGÓ EN UN SEGMENTO
+int guardarDatosSegPura(char* datos, char* nombreArchivo){
 	log_debug(logger, "Guardando en paginacion pura");
-	respuestaDeCargaEnMemoria respuesta;
-	t_list* idsSegmentos = list_create();
+	int respuesta = 1;
 	bool rompio = false;
 
-	char** lineas = string_split(datos, "\n");
-	int cantidadLineas = sizeof(lineas)/sizeof(lineas[0]);
-
-	for(int i = 0; i < cantidadLineas; i++){
-		int tamanioSegmento = strlen(lineas[i]) + 1;
-		int posicionDondeGuardar = dondeEntro(tamanioSegmento);
-		if(posicionDondeGuardar != -1){
+	int tamanioSegmento = strlen(datos) + 1;
+	int posicionDondeGuardar = dondeEntro(tamanioSegmento);
+	if(posicionDondeGuardar != -1){
 			ElementoTablaSegPura* elementoTabla = malloc(sizeof(ElementoTablaSegPura));
 			elementoTabla->id = idSegmento;
 			elementoTabla->base = posicionDondeGuardar;
 			elementoTabla->limite = tamanioSegmento;
+			elementoTabla->nombreArchivo = malloc(strlen(nombreArchivo)+1);
+			memcpy(elementoTabla->nombreArchivo, nombreArchivo, strlen(nombreArchivo)+1);
 			list_add(tablaDeSegmentos, elementoTabla);
-
-			list_add(idsSegmentos, idSegmento);
-
-			memcpy(storage + posicionDondeGuardar, lineas[i], tamanioSegmento);
+			memcpy(storage + posicionDondeGuardar, datos, tamanioSegmento);
 			idSegmento++;
 		}else{
 			rompio = true;
 			break;
 		}
-	}
 
 	if(!rompio){
-	respuesta.listaDeDirecciones = idsSegmentos;
-	respuesta.pudoGuardarlo = 0;
+	respuesta = 0;
 	log_debug(logger, "Datos guardados");
-	}else{
-		respuesta.pudoGuardarlo = 1;
 	}
 
 	return respuesta;

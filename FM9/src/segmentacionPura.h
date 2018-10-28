@@ -7,13 +7,14 @@ typedef struct{
 	int id;
 	int limite;
 	int base;
+	int nombreArchivo;
 }ElementoTablaSegPura;
 
 int idSegmento;
 t_list* tablaDeSegmentos; //Es una lista de ElementoTablaSegPura
 
 void inicializarSegPura();
-respuestaDeCargaEnMemoria guardarDatosSegPura(char* datos);
+int guardarDatosSegPura(char* datos, char* nombreArchivo);
 respuestaDeObtencionDeMemoria* obtenerDatosSegPura(t_list* idsSegmentos);
 respuestaDeObtencionDeMemoria* obtenerLineaSegPura(t_list* ids, int numeroLinea);
 #endif /* SEGMENTACIONPURA_H_ */
