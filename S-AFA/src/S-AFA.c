@@ -61,16 +61,32 @@ void entenderMensaje(int emisor, char header){
 			deserializarString(emisor);
 			break;
 
-		case CARGADO_CON_EXITO_EN_MEMORIA:
+		case CARGADO_CON_EXITO_EN_MEMORIA:{
 			idDTB = deserializarInt(emisor);
 			path = deserializarString(emisor);
-			t_list* listaDirecciones = deserializarListaInt(emisor);
 			dtb = obtenerDTBDeCola(idDTB);
-			dictionary_put(dtb->direccionesArchivos, path, listaDirecciones);
+
+			bool compararPath(char* pathDeLista){
+				if(strcmp(pathDeLista, path) == 0){
+					return true;
+				}else{
+					return false;
+				}
+			}
+
+			if(!list_any_satisfy(dtb->listaDeArchivos, compararPath)){
+				list_add(dtb->listaDeArchivos, path);
+			}
+
 			operacionDelDiego(idDTB);
 			desbloquearDTB(idDTB);
 
 			break;
+
+		}
+
+
+
 
 		case DUMMY:
 			dtb = deserializarDTB(emisor);

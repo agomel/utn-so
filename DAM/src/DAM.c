@@ -39,7 +39,7 @@ void entenderMensaje(int emisor, char header){
 			if(guardarDatos != 0){
 				enviarError(idDTB, path, guardarDatos);
 			}else{
-				notificarASafaExitoDeGuardado(idDTB, path);
+				notificarASafaExitoDeGuardado(idDTB);
 			}
 			free(datos);
 			break;
