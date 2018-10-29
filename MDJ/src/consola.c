@@ -36,7 +36,7 @@ void consolita(){
 			cd(parametro);
 		}
 		else if(strcmp(comando, "md5") == 0){
-			printf("Pusiste md5 con el parametro %s \n", parametro);
+			md5(parametro);
 		}
 		else if(strcmp(comando, "cat") == 0){
 			cat(parametro);

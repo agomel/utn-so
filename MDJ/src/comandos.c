@@ -36,3 +36,25 @@ void cat(char* parametro){
 	free(linea);
 	fclose(archivo);
 }
+
+void md5(char* parametro){
+	FILE* archivo = fopen(parametro, "r");
+	char* linea = asignarMemoria(250);
+	while(fscanf(archivo, "%s", linea) != EOF){
+		unsigned char digest[16];
+		MD5_CTX context;
+		MD5_Init(&context);
+		MD5_Update(&context, linea, strlen(linea) + 1);
+		MD5_Final(digest, &context);
+
+		char out[33];
+		for(int i = 0; i < 16; ++i){
+			sprintf(&out[i*2], "%02x", (unsigned int)digest[i]);
+		}
+		printf("%s\n", out);
+	}
+	free(linea);
+	fclose(archivo);
+}
+
+
