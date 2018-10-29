@@ -14,6 +14,6 @@ extern t_log* logger;
 int validarArchivoMDJ(char* path);
 char* obtenerDatosDeMDJ(char* path);
 int crearArchivoEnMDJ(int destino, char* path, int cantidadDeLineas);
-int guardarDatosEnMDJ(void* datosTotales);
+int guardarDatosEnMDJ(char* datos, char* path, int cantidadDeLineas);
 
 #endif /*SERVICIOMDJ_H_*/

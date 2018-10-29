@@ -13,7 +13,7 @@ void inicializarDAM(){
 void entenderMensaje(int emisor, char header){
 	int idDTB = deserializarInt(emisor);
 	char* path = deserializarString(emisor);
-
+	int cantidadDeLineas;
 	switch(header){
 		case CARGAR_ESCRIPTORIO_EN_MEMORIA:
 			log_info(logger, "Ehhh, voy a buscar %s para %d", path, idDTB);
@@ -22,43 +22,30 @@ void entenderMensaje(int emisor, char header){
 				enviarError(idDTB, path, validarArchivo);
 			}else {
 				char* datos = obtenerDatosDeMDJ(path);
-				int estadoDeCarga = enviarDatosAFM9(datos);
+				int estadoDeCarga = enviarDatosAFM9(path, datos);
 				if(estadoDeCarga != 0){
 					enviarError(idDTB, path, estadoDeCarga);
 				}else{
-					t_list* direcciones = recibirListaDeDireccionesDeFM9();
-					log_info(logger,"Recibio la lista de direcciones");
-					notificarASafaExitoDeCarga(idDTB, path, direcciones);
+					notificarASafaExitoDeCarga(idDTB, path);
 				}
 			}
 			break;
 		case GUARDAR_ESCRIPTORIO:
 			log_debug(logger, "Guardando escriptorio");
-			t_list* direcciones = deserializarListaInt(emisor);
-			int estadoDeOperacion = pedirDatosAFM9(direcciones);
-			if(estadoDeOperacion != 0){
-				enviarError(idDTB, path, estadoDeOperacion);
+			pedirDatosAFM9(path);
+			cantidadDeLineas = deserializarInt(socketFM9);
+			char* datos = recibirFlushFM9(cantidadDeLineas);
+			int guardarDatos = guardarDatosEnMDJ(datos, path, cantidadDeLineas);
+			if(guardarDatos != 0){
+				enviarError(idDTB, path, guardarDatos);
 			}else{
-				int cantidadDeLineas = deserializarInt(socketFM9);
-				char* datos = recibirFlushFM9(transferSize);
-				int crearArchivo = crearArchivoEnMDJ(socketMDJ, path, cantidadDeLineas);
-
-				if(crearArchivo != 0){
-					enviarError(idDTB, path, crearArchivo);
-				}else{
-					int guardarDatos = guardarDatosEnMDJ(datos);
-					if(guardarDatos != 0){
-						enviarError(idDTB, path, guardarDatos);
-					}else{
-						notificarASafaExitoDeGuardado(idDTB, path);
-					}
-				}
-				free(datos);
+				notificarASafaExitoDeGuardado(idDTB, path);
 			}
+			free(datos);
 			break;
 		case CREAR_ARCHIVO:
 			log_debug(logger, "creando archivo");
-			int cantidadDeLineas = deserializarInt(emisor);
+			cantidadDeLineas = deserializarInt(emisor);
 			int crearArchivo = crearArchivoEnMDJ(socketMDJ, path, cantidadDeLineas);
 			if(crearArchivo != 0){
 				enviarError(idDTB, path, crearArchivo);

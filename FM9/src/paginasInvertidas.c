@@ -1,9 +1,7 @@
 #include "paginasInvertidas.h"
 
 int guardarDatosInvertida(char* datos){
-	respuestaDeCargaEnMemoria respuesta;
-
-	return respuesta;
+	return 0;
 }
 
 respuestaDeObtencionDeMemoria* obtenerDatosInvertida(char* ids){

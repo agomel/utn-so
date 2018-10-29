@@ -40,8 +40,6 @@ pthread_mutex_t mutexOperaciones;
 sem_t semProductores;
 sem_t semOperaciones;
 
-respuestaDeCargaEnMemoria cargarDatosEnMemoria(char* datos);
-respuestaDeObtencionDeMemoria* obtenerDatosDeMemoria(t_list* posiciones);
 void entenderMensaje(int emisor, char header);
 
 #endif /*FM9_H_*/
