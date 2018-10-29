@@ -13,7 +13,7 @@ void inicializarDAM(){
 void entenderMensaje(int emisor, char header){
 	int idDTB = deserializarInt(emisor);
 	char* path = deserializarString(emisor);
-
+	int cantidadDeLineas;
 	switch(header){
 		case CARGAR_ESCRIPTORIO_EN_MEMORIA:
 			log_info(logger, "Ehhh, voy a buscar %s para %d", path, idDTB);
@@ -32,30 +32,20 @@ void entenderMensaje(int emisor, char header){
 			break;
 		case GUARDAR_ESCRIPTORIO:
 			log_debug(logger, "Guardando escriptorio");
-			t_list* direcciones = deserializarListaInt(emisor);
-			int estadoDeOperacion = pedirDatosAFM9(path);
-			if(estadoDeOperacion != 0){
-				enviarError(idDTB, path, estadoDeOperacion);
+			pedirDatosAFM9(path);
+			cantidadDeLineas = deserializarInt(socketFM9);
+			char* datos = recibirFlushFM9(cantidadDeLineas);
+			int guardarDatos = guardarDatosEnMDJ(datos, path, cantidadDeLineas);
+			if(guardarDatos != 0){
+				enviarError(idDTB, path, guardarDatos);
 			}else{
-				int cantidadDeLineas = deserializarInt(socketFM9);
-				char* datos = recibirFlushFM9();
-				int crearArchivo = crearArchivoEnMDJ(socketMDJ, path, cantidadDeLineas);
-				if(crearArchivo != 0){
-					enviarError(idDTB, path, crearArchivo);
-				}else{
-					int guardarDatos = guardarDatosEnMDJ(datos);
-					if(guardarDatos != 0){
-						enviarError(idDTB, path, guardarDatos);
-					}else{
-						notificarASafaExitoDeGuardado(idDTB, path);
-					}
-				}
-				free(datos);
+				notificarASafaExitoDeGuardado(idDTB, path);
 			}
+			free(datos);
 			break;
 		case CREAR_ARCHIVO:
 			log_debug(logger, "creando archivo");
-			int cantidadDeLineas = deserializarInt(emisor);
+			cantidadDeLineas = deserializarInt(emisor);
 			int crearArchivo = crearArchivoEnMDJ(socketMDJ, path, cantidadDeLineas);
 			if(crearArchivo != 0){
 				enviarError(idDTB, path, crearArchivo);

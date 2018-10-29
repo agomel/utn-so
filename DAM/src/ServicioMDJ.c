@@ -51,8 +51,8 @@ int borrarArchivoEnMDJ(char* path){
 	free(buffer);
 	return deserializarInt(socketMDJ);
 }
-int guardarDatosEnMDJ(void* datosTotales){
-	int cantidadTotal = sizeof(datosTotales);
+int guardarDatosEnMDJ(char* datos, char* path, int cantidadDeLineas){
+	int cantidadTotal = (sizeof(datos)+1) ;
 	enviarYSerializarInt(socketMDJ, cantidadTotal, GUARDAR_DATOS);
 	int desplazamiento = 0;
 	while(cantidadTotal > 0){
@@ -62,10 +62,12 @@ int guardarDatosEnMDJ(void* datosTotales){
 		}else{
 			cantidadAEnviar = cantidadTotal;
 		}
-		enviarMensaje(socketMDJ, datosTotales + desplazamiento, cantidadAEnviar);
+		enviarMensaje(socketMDJ, datos + desplazamiento, cantidadAEnviar);
 		desplazamiento = desplazamiento + cantidadAEnviar;
 		cantidadTotal = cantidadTotal - cantidadAEnviar;
 	}
+
+	enviarySerializarPathyCantidadDeLineas(socketMDJ, path, cantidadDeLineas);
 	return deserializarInt(socketMDJ);
 }
 
