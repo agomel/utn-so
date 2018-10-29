@@ -13,6 +13,6 @@ void crearArchivo(int emisor);
 void guardarDatos(int emisor);
 char* obtenerDatos(int emisor);
 
-t_log* logger;
+extern t_log* logger;
 
 #endif /*OPERACIONES_H_*/

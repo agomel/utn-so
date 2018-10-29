@@ -51,6 +51,9 @@ void entenderMensaje(int emisor, char header){
 	t_dictionary* direccionesYArchivos;
 	t_list* lista;
 	char* path;
+	char* recurso;
+	char asignado;
+	Historial* historial;
 	usleep(retardo*100);//milisegundos
 	switch(header){
 		case MANDAR_TEXTO:
@@ -59,15 +62,22 @@ void entenderMensaje(int emisor, char header){
 			break;
 
 		case CARGADO_CON_EXITO_EN_MEMORIA:
-			operacionDelDiego();
 			idDTB = deserializarInt(emisor);
 			path = deserializarString(emisor);
 			t_list* listaDirecciones = deserializarListaInt(emisor);
 			dtb = obtenerDTBDeCola(idDTB);
 			dictionary_put(dtb->direccionesArchivos, path, listaDirecciones);
-			ponerEnReady(dtb->id);
+			operacionDelDiego(idDTB);
+			desbloquearDTB(idDTB);
+
 			break;
 
+		case DUMMY:
+			dtb = deserializarDTB(emisor);
+			historial = crearHistorial(dtb->id);
+			agregarHistorialAListaTiempoRespuesta(historial);
+			enviarYSerializarCharSinHeader(emisor, CONTINUAR_CON_EJECUCION);
+			break;
 		case DESBLOQUEAR_DTB:
 			dtb = deserializarDTB(emisor);
 			desbloquearDummy(dtb);
@@ -76,25 +86,28 @@ void entenderMensaje(int emisor, char header){
 			break;
 
 		case GUARDADO_CON_EXITO_EN_MDJ:
-			operacionDelDiego();
 			dtb = deserializarDTB(emisor);
-			desbloquearDTB(dtb);
+			operacionDelDiego(idDTB);
+			desbloquearDTB(dtb->id);
 
 			break;
 		case ERROR:
-			operacionDelDiego();
 			idDTB = deserializarInt(emisor);
 			path = deserializarString(emisor);
+			operacionDelDiego(idDTB);
 			int error = deserializarInt(emisor);
 			manejarErrores(idDTB, path, error);
 			break;
 
 		case BLOQUEAR_DTB:
 			dtb = deserializarDTB(emisor);
-			//TODO cambiar quantum
 			cambiarEstadoGuardandoNuevoDTB(dtb, BLOCKED);
 
+			 historial = crearHistorial(dtb->id);
+			 agregarHistorialAListaTiempoRespuesta(historial);
+
 			terminarOperacionDeCPU(emisor, dtb);
+			enviarYSerializarCharSinHeader(emisor, CONTINUAR_CON_EJECUCION);
 			break;
 
 		case PASAR_A_EXIT:
@@ -106,7 +119,7 @@ void entenderMensaje(int emisor, char header){
 
 		case TERMINO_QUANTUM:
 			dtb = deserializarDTB(emisor);
-			if(strcmp(algoritmo, "VRR")){
+			if(!strcmp(algoritmo, "VRR")){
 				cambiarEstadoGuardandoNuevoDTB(dtb, READY_PRIORIDAD);
 			}else{
 				cambiarEstadoGuardandoNuevoDTB(dtb, READY);
@@ -116,11 +129,17 @@ void entenderMensaje(int emisor, char header){
 			terminarOperacionDeCPU(emisor, dtb);
 			break;
 		case LIBERAR_RECURSO:
-			//Es de CPU pero no termina
+			recurso = deserializarString(emisor);
+			asignado = liberarRecurso(idDTB, recurso);
+			enviarYSerializarCharSinHeader(asignado);
 			break;
 		case RETENCION_DE_RECURSO:
-			//Es de CPU pero no termina
+			recurso = deserializarString(emisor);
+			idDTB = deserializarInt(emisor);
+			asignado = asignarRecurso(idDTB, recurso);
+			enviarYSerializarCharSinHeader(asignado);
 			break;
+
 
 		default:
 			log_error(logger, "Header desconocido");
@@ -144,6 +163,10 @@ void inicializarSAFA(){
 	inicializarSem(&semOperaciones, 0);
 	inicializarSem(&semProductores, 0);
 	initGestorDTBs();
+	inicializarMutex(&mutexRecursos);
+	recursos = dictionary_create();
+	inicializarMutex(&mutexEsperandoRecursos);
+	esperandoRecursos = list_create();
 }
 void crearSelect(int servidor){
 	Select* select = asignarMemoria(sizeof(Select));

@@ -26,6 +26,7 @@ void enviarYSerializarString(int destino, char* texto,char operacion){
 
 	free(mensaje);
 }
+
 void enviarySerializarPathyCantidadDeLineas(int destino ,char* path, int cantidadDeLineas){
 	void* buffer = asignarMemoria(sizeof(char) + sizeof(int) + (strlen(path)+1) + sizeof(int));
 	int desplazamiento = 0;
@@ -77,6 +78,19 @@ void enviarYSerializarIntSinHeader(int destino, int numero){
 	free(mensaje);
 }
 
+void enviarYSerializarCharSinHeader(int destino, char caracter){
+	int tamanioMensaje = sizeof(char);
+	void* mensaje = asignarMemoria(tamanioMensaje);
+
+	int desplazamiento = 0;
+
+	concatenarChar(mensaje, &desplazamiento, caracter);
+
+	enviarMensaje(destino, mensaje, tamanioMensaje);
+
+	free(mensaje);
+}
+
 void concatenarChar(void* buffer, int* desplazamiento, char mensaje){
 	memcpy(buffer + *desplazamiento, &mensaje, sizeof(char));
 	*desplazamiento = *desplazamiento + sizeof(char);
@@ -97,6 +111,13 @@ void concatenarListaInt(void* buffer, int* desplazamiento, t_list* listaArchivos
 	concatenarInt(buffer, desplazamiento, listaArchivos->elements_count);
 	for(int i = 0; i < (listaArchivos->elements_count); i++){
 		concatenarInt(buffer, desplazamiento, list_get(listaArchivos, i));
+	}
+}
+
+void concatenarListaString(void* buffer, int* desplazamiento, t_list* listaArchivos){
+	concatenarInt(buffer, desplazamiento, listaArchivos->elements_count);
+	for(int i = 0; i < (listaArchivos->elements_count); i++){
+		concatenarString(buffer, desplazamiento, list_get(listaArchivos, i));
 	}
 }
 
@@ -146,6 +167,15 @@ t_list* deserializarListaInt(int emisor){
 	return respuesta;
 }
 
+t_list* deserializarListaString(int emisor){
+	int elementosDeLalista = deserializarInt(emisor);
+	t_list* respuesta = list_create();
+	for(int i = 0; i < elementosDeLalista; i++){
+		list_add(respuesta, deserializarString(emisor));
+	}
+	return respuesta;
+}
+
 t_dictionary* deserializarDiccionario(int emisor){
 	int cantidadElementos = deserializarInt(emisor);
 	t_dictionary* respuesta = dictionary_create();
@@ -175,4 +205,12 @@ voidDeserealizado deserializarVoid(int emisor){
 	mensajeADeserealizar.mensaje = *mensaje;
 	free(mensaje);
 	return mensajeADeserealizar;
+}
+
+int obtenerTamanioListaStrings(t_list* lista){
+	int respuesta = sizeof(int);
+	for(int i = 0; i < lista->elements_count; i++){
+		respuesta += sizeof(int) + strlen(list_get(lista,i)) + 1;
+	}
+	return respuesta;
 }

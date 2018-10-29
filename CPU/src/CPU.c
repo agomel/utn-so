@@ -49,12 +49,39 @@ char entendiendoLinea(char* lineaEjecutando, DTB* dtbRecibido){
 	}else if(string_starts_with(lineaEjecutando, "asignar")){
 //Asignar
 		log_info(logger, "Ejecutando instruccion asignar");
+		char* parametros = string_substring_from(lineaEjecutando, 8);
+		char** pathYCantLineas = string_n_split(parametros, 3, ' ');
+		char* path = pathYCantLineas[0];
+		int cantidadDeLineas = pathYCantLineas[1];
+		char* datos = pathYCantLineas[2];
+		if(dictionary_has_key(dtbRecibido->direccionesArchivos, path)){
+			//Esta abierto
+			log_info(logger, "Ejecutando instruccion asignar");
 
+			void* buffer = asignarMemoria(sizeof(char) + sizeof(int) + (strlen(path)+1) + sizeof(int));
+			int desplazamiento = 0;
+
+			concatenarChar(buffer, &desplazamiento, ASIGNAR_DATOS);
+			concatenarString(buffer, &desplazamiento, path);
+			concatenarInt(buffer, &desplazamiento, cantidadDeLineas);
+			concatenarString(buffer, &desplazamiento, datos);
+
+			enviarMensaje(socketFM9, buffer, desplazamiento);
+
+			free(buffer);
+
+			return 'b';
+
+		}else{
+			//No esta abierto ese archivo
+			return 'a';
+		}
 	}else if(string_starts_with(lineaEjecutando, "wait")){
 		log_info(logger, "Ejecutando instruccion wait");
 		char* recursoRecibido = asignarMemoria(strlen(lineaEjecutando)-4);
 		recursoRecibido = string_substring_from(lineaEjecutando, 5);
 		enviarYSerializarString(socketSAFA, recursoRecibido, RETENCION_DE_RECURSO);
+		enviarYSerializarIntSinHeader(socketSAFA, dtbRecibido->id);
 		char seguirConEjecucion = deserializarChar(socketSAFA);
 		free(recursoRecibido);
 		if(seguirConEjecucion == 'LIBERAR_DTB_DE_EJECUCION'){
@@ -131,6 +158,7 @@ char entendiendoLinea(char* lineaEjecutando, DTB* dtbRecibido){
 		char* path = pathYCantLineas[0];
 		int cantidadDeLineas = pathYCantLineas[1];
 		enviarySerializarPathyCantidadDeLineas(socketDIEGO, path, cantidadDeLineas);
+		return 'b';
 	}else if(string_starts_with(lineaEjecutando, "borrar")){
 		log_info(logger, "Ejecutando instruccion borrar");
 		char* pathRecibido = asignarMemoria(strlen(lineaEjecutando)-5);
@@ -179,6 +207,9 @@ void escuchar(int socketSAFA){//MensajeNano: Verificar los punteros de DTB
 					if(dtbRecibido->flag == 0){
 						log_info(logger, "Recibi DTB Dummy");
 						//Es el dummy
+						serializarYEnviarDTB(socketSAFA, *dtbRecibido, logger, DUMMY);
+						char recibioOk = deserializarChar(socketSAFA);
+
 						int tamanioPathEscriptorio = strlen(dtbRecibido->escriptorio) + 1;
 						int tamanioBuffer = sizeof(char) + tamanioPathEscriptorio + sizeof(int)*2;
 						void* buffer = asignarMemoria(tamanioBuffer);
@@ -230,6 +261,7 @@ void escuchar(int socketSAFA){//MensajeNano: Verificar los punteros de DTB
 										serializarYEnviarDTB(socketSAFA, *dtbRecibido, logger, BLOQUEAR_DTB);
 										freeDTB(dtbRecibido);
 										enviarYSerializarIntSinHeader(socketSAFA, sentencias);
+										char continuar = deserializarChar(socketSAFA);
 										break;
 									}else if(mensajeEntendido == 'a'){
 										sentencias++;
@@ -269,6 +301,7 @@ void escuchar(int socketSAFA){//MensajeNano: Verificar los punteros de DTB
 										log_info(logger, "Bloquear DTB");
 										serializarYEnviarDTB(socketSAFA, *dtbRecibido, logger, BLOQUEAR_DTB);
 										enviarYSerializarIntSinHeader(socketSAFA, sentencias);
+										char continuar = deserializarChar(socketSAFA);
 										freeDTB(dtbRecibido);
 									}else if(mensajeEntendido == 'a'){
 										log_info(logger, "Pasar DTB a EXIT");

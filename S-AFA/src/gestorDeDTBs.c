@@ -31,10 +31,12 @@ void mostrarStatus(){
 	loguearEstadoDeLista(listaReadyPrioridad, READY_PRIORIDAD);
 }
 
-void operacionDelDiego(){
+void operacionDelDiego(int idDTB){
 	waitMutex(&mutexSentenciasDeDiego);
 	sentenciasTotalesQueUsaronAlDiego++;
 	signalMutex(&mutexSentenciasDeDiego);
+	finalizarHistorialDeListaTiempoRespuesta(idDTB);
+
 }
 
 void agregarSentencias(int sentenciasEjecutadas){
@@ -58,7 +60,7 @@ Historial* encontrarHistorial(t_list* lista, int idDTB){
 	bool esHistorial(Historial* historial){
 		return idDTB == historial->idDTB;
 	}
-	list_find(lista, esHistorial);
+	return list_find(lista, esHistorial);
 }
 void finalizarHistorialDeListaNew(int idDTB){
 	waitMutex(&mutexHistorialNew);
@@ -131,18 +133,21 @@ void mostrarMetricasConDTBNEW(int idDTB){
 	Historial* historial = list_find(listaHistorialNew, obtenerPorId);
 	signalMutex(&mutexHistorialNew);
 
-	log_info("Cantidad de sentencias ejecutadas que espero el DTB con id %d en NEW : %d sentencias", idDTB, cantidadSentencias(historial));
+	log_info(logger, "-------------------------------------------");
+	log_info(logger, "Cantidad de sentencias ejecutadas que espero el DTB con id %d en NEW : %d sentencias", idDTB, cantidadSentencias(historial));
 }
 
-void mostrarMetricasConDTBEXIT(int idDTB){
+int mostrarMetricasConDTBEXIT(int idDTB){
 	Historial* obtenerPorId(Historial* historial){
 		return historial->idDTB == idDTB;
 	}
 	waitMutex(&mutexHistorialExit);
 	Historial* historial = list_find(listaHistorialExit, obtenerPorId);
 	signalMutex(&mutexHistorialExit);
+	log_info(logger, "-------------------------------------------");
+	log_info(logger, "Cantidad de sentencias ejecutadas que espero el DTB con id %d en EXIT : %d sentencias", idDTB, cantidadSentencias(historial));
 
-	log_info("Cantidad de sentencias ejecutadas que espero el DTB con id %d en EXIT : %d sentencias", idDTB, cantidadSentencias(historial));
+	return cantidadSentencias(historial);
 }
 
 void mostrarSentenciasDeTodos(){
@@ -150,6 +155,7 @@ void mostrarSentenciasDeTodos(){
 	waitMutex(&mutexHistorialNew);
 	int cantidadHistorialNew = listaHistorialNew->elements_count;
 	signalMutex(&mutexHistorialNew);
+
 	for(int i = 0; i < cantidadHistorialNew; i++){
 		waitMutex(&mutexHistorialNew);
 		Historial* historial = list_get(listaHistorialNew, i);
@@ -158,22 +164,174 @@ void mostrarSentenciasDeTodos(){
 	}
 
 	//Muestro en exit
-	waitMutex(&mutexHistorialNew);
+	waitMutex(&mutexHistorialExit);
 	int cantidadHistorialExit = listaHistorialExit->elements_count;
 	signalMutex(&mutexHistorialExit);
+	int sentenciasTotalesExit = 0;
 	for(int i = 0; i < cantidadHistorialExit; i++){
 		waitMutex(&mutexHistorialExit);
 		Historial* historial = list_get(listaHistorialExit, i);
 		signalMutex(&mutexHistorialExit);
-		mostrarMetricasConDTBEXIT(historial->idDTB);
+		sentenciasTotalesExit += mostrarMetricasConDTBEXIT(historial->idDTB);
+	}
+
+
+	waitMutex(&mutexSentenciasTotales);
+	int totales = sentenciasTotales;
+	signalMutex(&mutexSentenciasTotales);
+
+	waitMutex(&mutexListaDTBs);
+	int hayDTBs = listaDeTodosLosDTBs->elements_count;
+	signalMutex(&mutexListaDTBs);
+	if(hayDTBs){
+		log_info(logger, "-------------------------------------------");
+		log_info(logger, "La cantidad de sentencias ejecutadas prom. para que un DTB termine en la cola EXIT es %d", totales / sentenciasTotalesExit);
+	}else{
+		log_info(logger, "No hay metricas para mostrar");
 	}
 }
 void mostrarMetricasConDTB(int idDTB){
 	mostrarMetricasConDTBNEW(idDTB);
 	mostrarMetricasConDTBEXIT(idDTB);
 }
+
+void mostrarMetricasDelDIEGO(){
+	waitMutex(&mutexSentenciasTotales);
+	int totales = sentenciasTotales;
+	signalMutex(&mutexSentenciasTotales);
+
+
+	waitMutex(&mutexSentenciasDeDiego);
+	int diego = sentenciasTotalesQueUsaronAlDiego;
+	signalMutex(&mutexSentenciasDeDiego);
+
+	waitMutex(&mutexListaDTBs);
+	int hayDTBs = listaDeTodosLosDTBs->elements_count;
+	signalMutex(&mutexListaDTBs);
+
+	if(hayDTBs){
+		log_info(logger, "-------------------------------------------");
+		log_info(logger, "La cantidad de sentencias ejecutadas prom. que usaron al diego son %d", totales / diego);
+
+		log_info(logger, "-------------------------------------------");
+		log_info(logger, "El porcentaje de sentencias ejecutadas prom. que usaron al diego son el %d", diego * 100 / totales);
+
+	}else{
+		log_info(logger, "-------------------------------------------");
+		log_info(logger, "No hay metricas para mostrar");
+	}
+
+}
+
+Historial* encontrarHistorialBloqueado(t_list* lista, int idDTB){
+       bool esHistorial(Historial* historial){
+               return idDTB == historial->idDTB && historial->salida == -1;
+       }
+       return list_find(lista, esHistorial);
+}
+
+void agregarHistorialAListaTiempoRespuesta(Historial* historial){
+       waitMutex(&mutexHistorialBloqueados);
+       list_add(listaHistorialBloqueados, historial);
+       signalMutex(&mutexHistorialBloqueados);
+}
+
+void finalizarHistorialDeListaTiempoRespuesta(int idDTB){
+       waitMutex(&mutexHistorialBloqueados);
+       Historial* historial = encontrarHistorialBloqueado(listaHistorialBloqueados, idDTB);
+       signalMutex(&mutexHistorialBloqueados);
+
+       waitMutex(&mutexSentenciasTotales);
+       historial->salida = sentenciasTotales;
+       signalMutex(&mutexSentenciasTotales);
+}
+
+void mostrarMetricasTiempoDeRespuesta(){
+       bool seDesbloqueo(Historial* historial){
+               return historial->salida != -1;
+       }
+       waitMutex(&mutexHistorialBloqueados);
+
+       t_list* listaDesbloqueados = list_filter(listaHistorialBloqueados, seDesbloqueo);
+       signalMutex(&mutexHistorialBloqueados);
+
+       int totalTiempo = 0;
+       for(int i = 0; i < listaDesbloqueados->elements_count; i++){
+    	   Historial* historial =  list_get(listaDesbloqueados, i);
+    	   totalTiempo += cantidadSentencias(historial);
+       }
+       log_info(logger, "-------------------------------------------");
+       log_info(logger, "El tiempo promedio de respuesta es: %d", totalTiempo / listaDesbloqueados->elements_count);
+}
+
+
 void mostrarMetricas(){
 	mostrarSentenciasDeTodos();
-	//TODO hacer metricas
+	mostrarMetricasDelDIEGO();
+	mostrarMetricasTiempoDeRespuesta();
+
+}
+
+int verificarSiExisteRecurso(char* recurso){
+	waitMutex(&mutexRecursos);
+	int tieneLaClave = dictionary_has_key(recursos, recurso);
+	signalMutex(&mutexRecursos);
+	if(!tieneLaClave){
+		int cantidadRecurso = 1;
+		waitMutex(&mutexRecursos);
+		dictionary_put(recursos, recurso, cantidadRecurso);
+		signalMutex(&mutexRecursos);
+	}
+	return tieneLaClave;
+}
+char asignarRecurso(int idDTB, char* recurso){
+	verificarSiExisteRecurso(recurso);
+	waitMutex(&mutexRecursos);
+	int cant = dictionary_get(recursos, recurso);
+	signalMutex(&mutexRecursos);
+	if(cant > 0){
+		cant--;
+		//Borrara el anterios? como le cambio el valor si no es un puntero?
+		waitMutex(&mutexRecursos);
+		dictionary_put(recursos, recurso, cant);
+		signalMutex(&mutexRecursos);
+		return CONTINUAR_CON_EJECUCION;
+	}else{
+		waitMutex(&mutexEsperandoRecursos);
+		DTBEsperandoRecurso* der = asignarMemoria(sizeof(DTBEsperandoRecurso));
+		der->idDTB = idDTB;
+		der->recurso = recurso;
+		list_add(esperandoRecursos, der);
+		signalMutex(&mutexEsperandoRecursos);
+		return LIBERAR_DTB_DE_EJECUCION;
+	}
+}
+char liberarRecurso(char* recurso){
+
+	bool esQuienEspera(DTBEsperandoRecurso* esperando){
+		return esperando->recurso == recurso;
+	}
+	verificarSiExisteRecurso(recurso);
+
+	if(esperandoRecursos->elements_count > 0){
+		waitMutex(&mutexEsperandoRecursos);
+		DTBEsperandoRecurso* espera = list_remove_by_condition(esperandoRecursos, esQuienEspera);
+		signalMutex(&mutexEsperandoRecursos);
+
+		Historial* historial = crearHistorial(espera->idDTB);
+		agregarHistorialAListaTiempoRespuesta(historial);
+		ponerEnReady(espera->idDTB);
+	}else{
+		//Le sumo uno a los recursos
+		waitMutex(&mutexRecursos);
+		int cant = dictionary_get(recursos, recurso);
+		signalMutex(&mutexRecursos);
+		cant++;
+		waitMutex(&mutexRecursos);
+		dictionary_put(recursos, recurso, cant);
+		signalMutex(&mutexRecursos);
+	}
+	return CONTINUAR_CON_EJECUCION;
+
 
 }
