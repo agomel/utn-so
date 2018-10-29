@@ -1,12 +1,13 @@
 #include "ServicioFM9.h"
 
 
-int enviarDatosAFM9(char* datos){
-	int tamanioBuffer = sizeof(char) + sizeof(int) + strlen(datos)+1;
+int enviarDatosAFM9(char* path, char* datos){
+	int tamanioBuffer = sizeof(char) + sizeof(int) + strlen(path)+1 + sizeof(int) + strlen(datos)+1;
 	void* buffer = asignarMemoria(tamanioBuffer);
 	int desplazamiento = 0;
 
 	concatenarChar(buffer, &desplazamiento, GUARDAR_DATOS);
+	concatenarString(buffer, &desplazamiento, path);
 	concatenarString(buffer, &desplazamiento, datos);
 
 	enviarMensaje(socketFM9, buffer, tamanioBuffer);
@@ -15,13 +16,14 @@ int enviarDatosAFM9(char* datos){
 	return deserializarInt(socketFM9);
 }
 
-int pedirDatosAFM9(t_list* direcciones){
-	void* buffer = asignarMemoria(sizeof(char) + sizeof(int) + (sizeof(int) * direcciones->elements_count));
+int pedirDatosAFM9(char* path){
+	void* buffer = asignarMemoria(sizeof(char) + sizeof(int) + strlen(path)+1);
 	int desplazamiento = 0;
 
 	concatenarChar(buffer, &desplazamiento, OBTENER_DATOS);
-	concatenarListaInt(buffer, &desplazamiento, direcciones);
+	concatenarListaInt(buffer, &desplazamiento, path);
 	enviarMensaje(socketFM9, buffer, desplazamiento);
+	free(buffer);
 
 	return deserializarInt(socketFM9);
 }
