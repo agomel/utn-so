@@ -28,7 +28,6 @@ void inicializarSemaforos(){
 	inicializarSem(&gradoMultiprocesamiento, 0);
 	inicializarSem(&cantidadTotalREADY, 0);
 	inicializarSem(&semCantidadEnNew, 0);
-
 	config_destroy(configuracion);
 }
 

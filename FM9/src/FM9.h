@@ -14,6 +14,7 @@
 #include <biblioteca/semaforos.h>
 #include <biblioteca/nuestroSelect.h>
 #include <biblioteca/traductor.h>
+#include <commons/string.h>
 
 typedef struct{
 	int idSegmento;

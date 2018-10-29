@@ -10,15 +10,29 @@
 
 typedef struct{
 	int idDTB;
-	int sentenciasNew;
-	int sentenciasExit;
+	int llegada;
+	int salida;
 }Historial;
 
+int sentenciasTotalesQueUsaronAlDiego;
+pthread_mutex_t mutexSentenciasDeDiego;
+
+int sentenciasTotales;
+pthread_mutex_t mutexSentenciasTotales;
+
+t_list* listaHistorialBloqueados;
+pthread_mutex_t mutexHistorialBloqueados;
+
+t_list* listaHistorialNew;
+pthread_mutex_t mutexHistorialNew;
+
+t_list* listaHistorialExit;
+pthread_mutex_t mutexHistorialExit;
 
 Historial* crearHistorial(int idDTB);
-t_list* listaHistorial;
-pthread_mutex_t mutexHistorial;
 
 void initGestorDTBs();
 
+
 #endif /*GESTORDEDTBS_H_*/
+

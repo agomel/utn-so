@@ -39,6 +39,8 @@ int identificarse(int emisor, char header){
 	}
 }
 void terminarOperacionDeCPU(int emisor, DTB* dtb){
+	int sentenciasEjecutadas = deserializarInt(emisor);
+	agregarSentencias(sentenciasEjecutadas);
 	verificarSiPasarAExit(emisor, dtb);
 	liberarCPU(emisor, dtb->id);
 }
@@ -49,6 +51,10 @@ void entenderMensaje(int emisor, char header){
 	t_dictionary* direccionesYArchivos;
 	t_list* lista;
 	char* path;
+	char* recurso;
+	char asignado;
+	Historial* historial;
+	usleep(retardo*100);//milisegundos
 	switch(header){
 		case MANDAR_TEXTO:
 			//TODO esta operacion es basura, es para probar a serializacion y deserializacion
@@ -61,22 +67,47 @@ void entenderMensaje(int emisor, char header){
 			t_list* listaDirecciones = deserializarListaInt(emisor);
 			dtb = obtenerDTBDeCola(idDTB);
 			dictionary_put(dtb->direccionesArchivos, path, listaDirecciones);
-			ponerEnReady(dtb->id);
+			operacionDelDiego(idDTB);
+			desbloquearDTB(idDTB);
+
 			break;
 
+		case DUMMY:
+			dtb = deserializarDTB(emisor);
+			historial = crearHistorial(dtb->id);
+			agregarHistorialAListaTiempoRespuesta(historial);
+			enviarYSerializarCharSinHeader(emisor, CONTINUAR_CON_EJECUCION);
+			break;
 		case DESBLOQUEAR_DTB:
 			dtb = deserializarDTB(emisor);
-			desbloquearDTB(dtb);
+			desbloquearDummy(dtb);
 
 			terminarOperacionDeCPU(emisor, dtb);
+			break;
+
+		case GUARDADO_CON_EXITO_EN_MDJ:
+			dtb = deserializarDTB(emisor);
+			operacionDelDiego(idDTB);
+			desbloquearDTB(dtb->id);
+
+			break;
+		case ERROR:
+			idDTB = deserializarInt(emisor);
+			path = deserializarString(emisor);
+			operacionDelDiego(idDTB);
+			int error = deserializarInt(emisor);
+			manejarErrores(idDTB, path, error);
 			break;
 
 		case BLOQUEAR_DTB:
 			dtb = deserializarDTB(emisor);
-			//TODO cambiar quantum
 			cambiarEstadoGuardandoNuevoDTB(dtb, BLOCKED);
 
+			 historial = crearHistorial(dtb->id);
+			 agregarHistorialAListaTiempoRespuesta(historial);
+
 			terminarOperacionDeCPU(emisor, dtb);
+			enviarYSerializarCharSinHeader(emisor, CONTINUAR_CON_EJECUCION);
 			break;
 
 		case PASAR_A_EXIT:
@@ -88,7 +119,7 @@ void entenderMensaje(int emisor, char header){
 
 		case TERMINO_QUANTUM:
 			dtb = deserializarDTB(emisor);
-			if(strcmp(algoritmo, "VRR")){
+			if(!strcmp(algoritmo, "VRR")){
 				cambiarEstadoGuardandoNuevoDTB(dtb, READY_PRIORIDAD);
 			}else{
 				cambiarEstadoGuardandoNuevoDTB(dtb, READY);
@@ -97,13 +128,18 @@ void entenderMensaje(int emisor, char header){
 
 			terminarOperacionDeCPU(emisor, dtb);
 			break;
-
-		case ERROR:
-			idDTB = deserializarInt(emisor);
-			path = deserializarString(emisor);
-			int error = deserializarInt(emisor);
-			manejarErrores(idDTB, path, error);
+		case LIBERAR_RECURSO:
+			recurso = deserializarString(emisor);
+			asignado = liberarRecurso(idDTB, recurso);
+			enviarYSerializarCharSinHeader(asignado);
 			break;
+		case RETENCION_DE_RECURSO:
+			recurso = deserializarString(emisor);
+			idDTB = deserializarInt(emisor);
+			asignado = asignarRecurso(idDTB, recurso);
+			enviarYSerializarCharSinHeader(asignado);
+			break;
+
 
 		default:
 			log_error(logger, "Header desconocido");
@@ -127,6 +163,10 @@ void inicializarSAFA(){
 	inicializarSem(&semOperaciones, 0);
 	inicializarSem(&semProductores, 0);
 	initGestorDTBs();
+	inicializarMutex(&mutexRecursos);
+	recursos = dictionary_create();
+	inicializarMutex(&mutexEsperandoRecursos);
+	esperandoRecursos = list_create();
 }
 void crearSelect(int servidor){
 	Select* select = asignarMemoria(sizeof(Select));
@@ -143,10 +183,11 @@ void crearSelect(int servidor){
 int main(void) {
 	inicializarSAFA();
 	t_config* configuracion = config_create(ARCHIVO_CONFIGURACION);
+	retardo = config_get_int_value(configuracion, "RETARDO_PLANIF");
+
 
 	direccionServidor direccionSAFA = levantarDeConfiguracion(NULL, "PUERTO", configuracion);
 	int servidor = crearServidor(direccionSAFA.puerto, INADDR_ANY);
-	config_destroy(configuracion);
 
 	inicializarPlanificadores();
 	crearSelect(servidor);
@@ -161,5 +202,7 @@ int main(void) {
 	esperarHilo(hiloConsola);
 	esperarHilo(hiloPlanificadorALargoPlazo);
 	esperarHilo(hiloPlanificadorACortoPlazo);
+
+	config_destroy(configuracion);
 	return 0;
 }

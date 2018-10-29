@@ -25,15 +25,15 @@ int cargarDatosEnMemoria(char* datos, char* nombreArchivo){
 		return guardarDatosInvertida(datos);
 }
 
-respuestaDeObtencionDeMemoria* obtenerLinea(t_list* ids, int numeroLinea){
+respuestaDeObtencionDeMemoria* obtenerLinea(char* nombreArchivo, int numeroLinea){
 	if(strcmp(modo, "SEG_PURA") == 0)
-		return obtenerLineaSegPura(ids, numeroLinea);
+		return obtenerLineaSegPura(nombreArchivo, numeroLinea);
 
 	if(strcmp(modo, "SEG_PAG") == 0)
-		return obtenerLineaSegPura(ids, numeroLinea); //CAMBIAAAAAAAR
+		return obtenerLineaSegPura(nombreArchivo, numeroLinea); //CAMBIAAAAAAAR
 
 	if(strcmp(modo, "INV") == 0)
-		return obtenerLineaSegPura(ids, numeroLinea); //CAMBIAAAAAAAAR
+		return obtenerLineaSegPura(nombreArchivo, numeroLinea); //CAMBIAAAAAAAAR
 }
 
 char* recibirDatosAGuardar(int emisor){
@@ -89,16 +89,16 @@ void entenderMensaje(int emisor, char header){
 
 			case TRAER_LINEA_ESCRIPTORIO: {
 				log_debug(logger, "Trayendo linea escriptorio");
+				char* nombreArchivo = deserializarString(emisor);
 				int numeroLinea = deserializarInt(emisor);
-				t_list* ids = deserializarListaInt(emisor);
-				respuestaDeObtencionDeMemoria* respuesta = obtenerLinea(ids, numeroLinea);
+				respuestaDeObtencionDeMemoria* respuesta = obtenerLinea(nombreArchivo, numeroLinea);
 
 				if(respuesta->pudoObtener == 0){
-				int desplazamiento = 0;
-				int tamanioBuffer = sizeof(int) + strlen(respuesta->datos) + 1;
-				void* buffer = asignarMemoria(tamanioBuffer);
-				concatenarString(buffer, &desplazamiento, respuesta->datos);
-				enviarMensaje(socketCPU, buffer, tamanioBuffer);
+					int desplazamiento = 0;
+					int tamanioBuffer = sizeof(int) + strlen(respuesta->datos) + 1;
+					void* buffer = asignarMemoria(tamanioBuffer);
+					concatenarString(buffer, &desplazamiento, respuesta->datos);
+					enviarMensaje(socketCPU, buffer, tamanioBuffer);
 				}else{
 					enviarMensaje(socketCPU, FIN_ARCHIVO, sizeof(char));
 				}

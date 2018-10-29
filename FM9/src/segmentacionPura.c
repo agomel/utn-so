@@ -74,12 +74,15 @@ int guardarDatosSegPura(char* datos, char* nombreArchivo){
 	return respuesta;
 }
 
-ElementoTablaSegPura* obtenerPorId(int idSegmento){
-	bool coincideId(ElementoTablaSegPura* elemento){
-		return elemento->id == idSegmento;
+ElementoTablaSegPura* obtenerPorNombreArchivo(char* nombreArchivo){
+	bool coincideNombre(ElementoTablaSegPura* elemento){
+		if(strcmp(elemento->nombreArchivo, nombreArchivo) == 0){
+			return true;
+		}
+		return false;
 	}
 
-	return list_find(tablaDeSegmentos, coincideId);
+	return list_find(tablaDeSegmentos, coincideNombre);
 }
 
 respuestaDeObtencionDeMemoria* obtenerDatosSegPura(t_list* idsSegmentos){
@@ -111,18 +114,24 @@ respuestaDeObtencionDeMemoria* obtenerDatosSegPura(t_list* idsSegmentos){
 	return respuesta;
 }
 
-respuestaDeObtencionDeMemoria* obtenerLineaSegPura(t_list* idsSegmentos, int numeroLinea){
+respuestaDeObtencionDeMemoria* obtenerLineaSegPura(char* nombreArchivo, int numeroLinea){
 	respuestaDeObtencionDeMemoria* respuesta = malloc(sizeof(respuestaDeObtencionDeMemoria));
-	if(numeroLinea < idsSegmentos->elements_count){
-		int id = list_get(idsSegmentos, numeroLinea);
-		ElementoTablaSegPura* elemento = obtenerPorId(id);
+	ElementoTablaSegPura* elemento = obtenerPorNombreArchivo(nombreArchivo);
+	int cantidadLineasDeArchivo = elemento->limite / tamanioLinea;
+
+	if(numeroLinea < cantidadLineasDeArchivo){
+		int desplazamiento = numeroLinea * tamanioLinea;
+		char* lineaConBasura = malloc(tamanioLinea);
+		memcpy(lineaConBasura, storage + desplazamiento, tamanioLinea);
+		char** lineaSinBasura = string_split(lineaConBasura, "\n");
 		respuesta->cantidadDeLineas = 1;
-		respuesta->datos = malloc(elemento->limite);
+		respuesta->datos = malloc(strlen(lineaSinBasura[0])+1);
 		respuesta->pudoObtener = 0;
-		memcpy(respuesta->datos, storage + elemento->base, elemento->limite);
+		memcpy(respuesta->datos, lineaSinBasura[0], strlen(lineaSinBasura[0])+1);
 	}else{
 		log_error(logger, "El DTB no posee la linea %d", numeroLinea);
 		respuesta->pudoObtener = 1;
 	}
+
 	return respuesta;
 }

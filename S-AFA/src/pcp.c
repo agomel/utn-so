@@ -56,16 +56,17 @@ void planificadorACortoPlazo(){
 	}
 }
 
-void desbloquearDTB(DTB* dtb){
-	if(dtb->flag == 0){
-		cambiarEstadoDummy(BLOCKED);
-		signalMutex(&mutexDummy);
+void desbloquearDTB(int idDTB){
+	if(!strcmp(algoritmo, "VRR")){
+		cambiarEstado(idDTB, READY_PRIORIDAD);
+		signalSem(&cantidadTotalREADY);
 	}else{
-		if(strcmp(algoritmo, "VRR")){
-			cambiarEstadoGuardandoNuevoDTB(dtb, READY_PRIORIDAD);
-		}else{
-			cambiarEstadoGuardandoNuevoDTB(dtb, READY);
-		}
+		ponerEnReady(idDTB);
 	}
+}
+
+void desbloquearDummy(DTB* dummy){
+	cambiarEstadoDummy(BLOCKED);
+	signalMutex(&mutexDummy);
 }
 
