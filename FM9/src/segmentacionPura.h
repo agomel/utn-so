@@ -15,6 +15,8 @@ t_list* tablaDeSegmentos; //Es una lista de ElementoTablaSegPura
 
 void inicializarSegPura();
 int guardarDatosSegPura(char* datos, char* nombreArchivo);
-respuestaDeObtencionDeMemoria* obtenerDatosSegPura(t_list* idsSegmentos);
+respuestaDeObtencionDeMemoria* obtenerDatosSegPura(char* idsSegmentos);
 respuestaDeObtencionDeMemoria* obtenerLineaSegPura(char* nombreArchivo, int numeroLinea);
+void liberarMemoriaSegPura(char* nombreArchivo);
+
 #endif /* SEGMENTACIONPURA_H_ */

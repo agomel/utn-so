@@ -5,7 +5,7 @@ int guardarDatosSegPag(char* datos){
 	return respuesta;
 }
 
-respuestaDeObtencionDeMemoria* obtenerDatosSegPag(t_list* posiciones){
+respuestaDeObtencionDeMemoria* obtenerDatosSegPag(char* posiciones){
 	respuestaDeObtencionDeMemoria* respuesta;
 	return respuesta;
 }

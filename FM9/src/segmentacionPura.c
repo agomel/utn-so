@@ -61,15 +61,9 @@ int guardarDatosSegPura(char* datos, char* nombreArchivo){
 			list_add(tablaDeSegmentos, elementoTabla);
 			memcpy(storage + posicionDondeGuardar, datos, tamanioSegmento);
 			idSegmento++;
-		}else{
-			rompio = true;
-			break;
+			respuesta = 0;
+			log_debug(logger, "Datos guardados");
 		}
-
-	if(!rompio){
-	respuesta = 0;
-	log_debug(logger, "Datos guardados");
-	}
 
 	return respuesta;
 }
@@ -85,32 +79,13 @@ ElementoTablaSegPura* obtenerPorNombreArchivo(char* nombreArchivo){
 	return list_find(tablaDeSegmentos, coincideNombre);
 }
 
-respuestaDeObtencionDeMemoria* obtenerDatosSegPura(t_list* idsSegmentos){
+respuestaDeObtencionDeMemoria* obtenerDatosSegPura(char* nombreArchivo){
 	respuestaDeObtencionDeMemoria* respuesta = malloc(sizeof(respuestaDeObtencionDeMemoria));
-	int tamanioTotal = 1;
-	char* datos = malloc(tamanioTotal);
-	bool rompio = false;
+	ElementoTablaSegPura* elemento = obtenerPorNombreArchivo(nombreArchivo);
+	respuesta->datos = malloc(elemento->limite);
+	memcpy(respuesta->datos, storage + elemento->base, elemento->limite);
+	respuesta->cantidadDeLineas = elemento->limite / tamanioLinea;
 
-	for(int i=0; i<idsSegmentos->elements_count; i++){
-		int id = list_get(idsSegmentos, i);
-		ElementoTablaSegPura* segmento = obtenerPorId(id);
-		if(segmento != NULL){
-			tamanioTotal += segmento->limite;
-			datos = realloc(datos, tamanioTotal);
-			memcpy(datos, storage + segmento->base, segmento->limite);
-		}else{
-			rompio = true;
-		}
-	}
-
-	if(!rompio){
-		respuesta->datos = malloc(strlen(datos) + 1);
-		memcpy(respuesta->datos, datos, tamanioTotal);
-		respuesta->cantidadDeLineas = idsSegmentos->elements_count; //Asumiendo que se guarda una linea por segmento
-		respuesta->pudoObtener = 0;
-	}else{
-		respuesta->pudoObtener = 1;
-	}
 	return respuesta;
 }
 
@@ -135,3 +110,20 @@ respuestaDeObtencionDeMemoria* obtenerLineaSegPura(char* nombreArchivo, int nume
 
 	return respuesta;
 }
+
+void liberarMemoriaSegPura(char* nombreArchivo){
+	bool coincideNombre(ElementoTablaSegPura* elemento){
+		if(strcmp(elemento->nombreArchivo, nombreArchivo) == 0){
+			return true;
+		}
+		return false;
+	}
+
+	void destruirElemento(ElementoTablaSegPura* elemento){
+		free(elemento->nombreArchivo);
+		free(elemento);
+	}
+
+	list_remove_and_destroy_by_condition(tablaDeSegmentos, coincideNombre, destruirElemento);
+}
+

@@ -84,7 +84,7 @@ char entendiendoLinea(char* lineaEjecutando, DTB* dtbRecibido){
 		enviarYSerializarIntSinHeader(socketSAFA, dtbRecibido->id);
 		char seguirConEjecucion = deserializarChar(socketSAFA);
 		free(recursoRecibido);
-		if(seguirConEjecucion == 'LIBERAR_DTB_DE_EJECUCION'){
+		if(seguirConEjecucion == LIBERAR_DTB_DE_EJECUCION){
 			return 'b';
 		}else{
 			return 's';
@@ -163,7 +163,7 @@ char entendiendoLinea(char* lineaEjecutando, DTB* dtbRecibido){
 		log_info(logger, "Ejecutando instruccion borrar");
 		char* pathRecibido = asignarMemoria(strlen(lineaEjecutando)-5);
 		pathRecibido = string_substring_from(lineaEjecutando, 6);
-		enviarYSerializarString(socketDIEGO, pathRecibido, BORRAR_DATOS);
+		enviarYSerializarString(socketDIEGO, pathRecibido, BORRAR_ARCHIVO);
 		free(pathRecibido);
 		return 'b';
 	}else{

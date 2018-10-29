@@ -6,7 +6,7 @@ int guardarDatosInvertida(char* datos){
 	return respuesta;
 }
 
-respuestaDeObtencionDeMemoria* obtenerDatosInvertida(t_list* ids){
+respuestaDeObtencionDeMemoria* obtenerDatosInvertida(char* ids){
 	respuestaDeObtencionDeMemoria* respuesta;
 	return respuesta;
 }

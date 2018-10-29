@@ -3,15 +3,15 @@
 #include "segmentacionPag.h"
 #include "paginasInvertidas.h"
 
-respuestaDeObtencionDeMemoria* obtenerDatosDeMemoria(t_list* posiciones){
+respuestaDeObtencionDeMemoria* obtenerDatosDeMemoria(char* nombreArchivo){
 	if(strcmp(modo, "SEG_PURA") == 0)
-		return obtenerDatosSegPura(posiciones);
+		return obtenerDatosSegPura(nombreArchivo);
 
 	if(strcmp(modo, "SEG_PAG") == 0)
-		return obtenerDatosSegPag(posiciones);
+		return obtenerDatosSegPag(nombreArchivo);
 
 	if(strcmp(modo, "INV") == 0)
-		return obtenerDatosInvertida(posiciones);
+		return obtenerDatosInvertida(nombreArchivo);
 }
 
 int cargarDatosEnMemoria(char* datos, char* nombreArchivo){
@@ -36,20 +36,15 @@ respuestaDeObtencionDeMemoria* obtenerLinea(char* nombreArchivo, int numeroLinea
 		return obtenerLineaSegPura(nombreArchivo, numeroLinea); //CAMBIAAAAAAAAR
 }
 
-char* recibirDatosAGuardar(int emisor){
-	//TODO DECIRLE A DIEGO QUE PRIMERO ME MANDE EL TAMAÑO TOTAL
-	int tamanioArchivo = deserializarInt(emisor);
-	char* archivo = malloc(tamanioArchivo);
-	int desplazamiento = 0;
+void liberarMemoria(char* nombreArchivo){
+	if(strcmp(modo, "SEG_PURA") == 0)
+		liberarMemoriaSegPura(nombreArchivo);
 
-	while(desplazamiento < tamanioArchivo){
-		char* fragmentoArchivo = deserializarString(emisor);
-		int tamanioFragmento = strlen(fragmentoArchivo)+1;
-		memcpy(archivo + desplazamiento, fragmentoArchivo, tamanioFragmento);
-		desplazamiento += tamanioFragmento;
-		free(fragmentoArchivo);
-	}
-	return archivo;
+	if(strcmp(modo, "SEG_PAG") == 0)
+		liberarMemoriaSegPura(nombreArchivo); //CAMBIAAAAAAAR
+
+	if(strcmp(modo, "INV") == 0)
+		liberarMemoriaSegPura(nombreArchivo); //CAMBIAAAAAAAAR
 }
 
 void freeRespuestaObtencion(respuestaDeObtencionDeMemoria* respuesta){
@@ -62,7 +57,7 @@ void entenderMensaje(int emisor, char header){
 			case GUARDAR_DATOS: {
 				log_debug(logger, "Guardando datos en memoria");
 				char* nombreArchivo = deserializarString(emisor);
-				char* datos = recibirDatosAGuardar(emisor);
+				char* datos = deserializarString(emisor);
 				int respuestaDeCarga = cargarDatosEnMemoria(datos, nombreArchivo);
 				free(datos);
 				free(nombreArchivo);
@@ -73,13 +68,12 @@ void entenderMensaje(int emisor, char header){
 
 			case OBTENER_DATOS: {
 				log_debug(logger, "Obteniendo datos de memoria");
-				t_list* ids = deserializarListaInt(emisor);
-				respuestaDeObtencionDeMemoria* respuestaDeObtener = obtenerDatosDeMemoria(ids); //TODO
+				char* nombreArchivo = deserializarString(emisor);
+				respuestaDeObtencionDeMemoria* respuestaDeObtener = obtenerDatosDeMemoria(nombreArchivo); //TODO
 
 				int desplazamiento = 0;
-				int tamanioBuffer = sizeof(int) + sizeof(int) + sizeof(int) + strlen(respuestaDeObtener->datos) + 1;
+				int tamanioBuffer = sizeof(int) + sizeof(int) + strlen(respuestaDeObtener->datos) + 1;
 				int buffer = asignarMemoria(tamanioBuffer);
-				concatenarInt(buffer, &desplazamiento, respuestaDeObtener->pudoObtener);
 				concatenarInt(buffer, &desplazamiento, respuestaDeObtener->cantidadDeLineas);
 				concatenarString(buffer, &desplazamiento, respuestaDeObtener->datos);
 				enviarMensaje(socketDAM, buffer, tamanioBuffer);
@@ -107,7 +101,10 @@ void entenderMensaje(int emisor, char header){
 			}
 
 			case LIBERAR_MEMORIA: {
-				log_debug(logger, "Liberando memoria");
+				char* nombreArchivo = deserializarString(emisor);
+				log_debug(logger, "Liberando memoria para archivo %s", nombreArchivo);
+				liberarMemoria(nombreArchivo);
+
 				break;
 			}
 
