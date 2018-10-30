@@ -1,6 +1,6 @@
 #include "paginasInvertidas.h"
 
-int guardarDatosInvertida(char* datos){
+int guardarDatosInvertida(char* datos, char* nombreArchivo){
 	return 0;
 }
 

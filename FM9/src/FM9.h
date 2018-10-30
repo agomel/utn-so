@@ -30,6 +30,8 @@ typedef struct{
 int socketCPU;
 int socketDAM;
 int tamanioMemoria;
+int tamanioPagina;
+int cantidadMarcosTotales;
 int tamanioLinea;
 void* storage;
 int offset;

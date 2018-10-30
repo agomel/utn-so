@@ -16,6 +16,11 @@ int dondeEntro(int tamanioAGuardar){
 	if(tablaDeSegmentos->elements_count > 1)
 	list_sort(tablaDeSegmentos, compararElementos);
 
+	ElementoTablaSegPura* primerElemento = list_get(tablaDeSegmentos, 0);
+	int espacioDelPrincipio = primerElemento->base;
+	if(espacioDelPrincipio >= tamanioAGuardar)
+		return 0;
+
 	for(int i = 0; i++; i < tablaDeSegmentos->elements_count-1){
 		ElementoTablaSegPura* elem1 = list_get(tablaDeSegmentos, i);
 		ElementoTablaSegPura* elem2 = list_get(tablaDeSegmentos, i+1);

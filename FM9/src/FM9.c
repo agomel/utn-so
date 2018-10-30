@@ -19,10 +19,10 @@ int cargarDatosEnMemoria(char* datos, char* nombreArchivo){
 		return guardarDatosSegPura(datos, nombreArchivo);
 
 	if(strcmp(modo, "SEG_PAG") == 0)
-		return guardarDatosSegPag(datos);
+		return guardarDatosSegPag(datos, nombreArchivo);
 
 	if(strcmp(modo, "INV") == 0)
-		return guardarDatosInvertida(datos);
+		return guardarDatosInvertida(datos, nombreArchivo);
 }
 
 respuestaDeObtencionDeMemoria* obtenerLinea(char* nombreArchivo, int numeroLinea){
@@ -164,10 +164,12 @@ void init(){
 
 	tamanioLinea = config_get_int_value(configuracion, "MAX_LINEA");
 	tamanioMemoria = config_get_int_value(configuracion, "TAMANIO");
+	tamanioPagina = config_get_int_value(configuracion, "TAM_PAGINA");
 	storage = asignarMemoria(tamanioMemoria);
 	char* punteroAModo = config_get_string_value(configuracion, "MODO");
 	modo = asignarMemoria(strlen(punteroAModo) + 1);
 	memcpy(modo, punteroAModo, strlen(punteroAModo) + 1);
+	cantidadMarcosTotales = tamanioMemoria / tamanioPagina;
 
 	inicializar(modo);
 
