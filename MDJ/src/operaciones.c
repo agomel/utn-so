@@ -1,17 +1,25 @@
 #include "operaciones.h"
 
 int validarArchivo(int emisor){
-	log_info(logger, "Deserializando string de emisor  %d", emisor);
 	char* rutaArchivo = deserializarString(emisor);
 	log_info(logger, "Validando archivo en ruta: %s", rutaArchivo);
-	//0 es archivo valido, en otro caso es error
+	FILE* archivo = fopen(rutaArchivo, "r");
+	if(archivo == NULL){
+		return PATH_INEXISTENTE;
+	}
+	//0 es archivo valido
 	return 0;
-	//TODO validar el archivo posta
 }
-void crearArchivo(int emisor){
+
+int crearArchivo(int emisor){
 	char* rutaArchivo = deserializarString(emisor);
 	log_info(logger, "Creando archivo en ruta: %s", rutaArchivo);
-	//TODO crear el archivo posta
+	//TODO verificar si hay espacio antes de crearlo y esa movida
+	FILE* archivo = fopen(rutaArchivo, "w");
+	if(archivo == NULL){
+		return PATH_INEXISTENTE;// nose que error podria pasar aca
+	}
+	return 0;
 }
 
 void guardarDatos(int emisor){
@@ -22,6 +30,7 @@ void guardarDatos(int emisor){
 	log_info("Guardando datos: %s en archivo: %s", datos, rutaArchivo);
 	//TODO guardar datos posta y hacer free de los strings
 }
+
 char* obtenerDatos(int emisor){
 	char* rutaArchivo = deserializarString(emisor);
 	int offset = deserializarInt(emisor);
@@ -30,3 +39,14 @@ char* obtenerDatos(int emisor){
 	return "asginar hola\nwait hola\nsignal hola\n";
 	//TODO leer archivos posta y hacer free de los strings
  }
+
+int eliminarArchivo(int emisor){
+	char* rutaArchivo = deserializarString(emisor);
+	if(remove(rutaArchivo) == 0){
+		return 0;
+	}else{
+		//No se pudo eliminar el archivo
+		return PATH_INEXISTENTE;
+	}
+}
+

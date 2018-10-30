@@ -3,27 +3,35 @@
 
 void entenderMensaje(int emisor, char header){
 	char* datos;
-	usleep(RETARDO*1000);//tiempo en milisegundos
-
 	switch(header){
 			case VALIDAR_ARCHIVO:
-				log_info(logger, "validando archivo de emisor %d", emisor);
+				log_info(logger, "Validar archivo...");
 				int archivoValido = validarArchivo(emisor);
 				enviarYSerializarIntSinHeader(emisor, archivoValido);
 				break;
 			case CREAR_ARCHIVO:
-				crearArchivo(emisor);
+				log_info(logger, "Crear archivo...");
+				int archivoCreado = crearArchivo(emisor);
+				enviarYSerializarIntSinHeader(emisor, archivoValido);
 				break;
 			case OBTENER_DATOS:
+				log_info(logger, "Obtener datos...");
 				datos = obtenerDatos(emisor);
 				enviarYSerializarStringSinHeader(emisor, datos);
 				break;
 			case GUARDAR_DATOS:
+				log_info(logger, "Guardar datos...");
 				guardarDatos(emisor);
+				break;
+			case BORRAR_ARCHIVO:
+				log_info(logger, "Borrar archivo...");
+				int archivoEliminado = eliminarArchivo(emisor);
+				enviarYSerializarIntSinHeader(emisor, archivoValido);
 				break;
 		default:
 			log_error(logger, "Header desconocido");
 	}
+	usleep(RETARDO*1000);//tiempo en milisegundos
 }
 
 int identificarse(int emisor, char header){
