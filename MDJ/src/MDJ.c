@@ -58,7 +58,7 @@ void init(){
 	PUNTO_MONTAJE = malloc(250);//asignarMemoria(strlen(punteroPuntoMontaje) + 1);
 	memcpy(PUNTO_MONTAJE, punteroPuntoMontaje, strlen(punteroPuntoMontaje)+ 1);
 	free(punteroPuntoMontaje);
-	config_destroy(configuracion);
+	//config_destroy(configuracion);
 
 	logger = crearLogger(ARCHIVO_LOG, "MDJ");
 
