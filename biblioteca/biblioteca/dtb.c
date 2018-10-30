@@ -25,7 +25,8 @@ void serializarYEnviarDTB(int receptor, DTB dtb, t_log* logger, char operacion){
 	//Asigno tamanio al buffer
 	log_debug(logger, "Enviando dtb con id: %d", dtb.id);
 	int tamanioEscriptorio = strlen(dtb.escriptorio) + 1;
-	int tamanioBuffer = sizeof(char)*2 + sizeof(int)*6 + tamanioEscriptorio + obtenerTamanioListaStrings(dtb.listaDeArchivos);
+	int tamanioBuffer = sizeof(char) + sizeof(int) + tamanioEscriptorio + sizeof(int)*3 + obtenerTamanioListaStrings(dtb.listaDeArchivos)
+			+ sizeof(int) + sizeof(char);
 	void* buffer = asignarMemoria(tamanioBuffer);
 
 	//Lleno el buffer
