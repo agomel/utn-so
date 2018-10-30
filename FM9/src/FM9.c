@@ -153,7 +153,7 @@ void inicializar(char* modo){
 		return inicializarSegPura();
 
 	if(strcmp(modo, "SEG_PAG") == 0)
-		return inicializarSegPura(); //CAMBIAAAR
+		return inicializarSegPag();
 
 	if(strcmp(modo, "INV") == 0)
 		return inicializarSegPura(); //CAMBIAAAR

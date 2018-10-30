@@ -126,9 +126,30 @@ respuestaDeObtencionDeMemoria* obtenerDatosSegPag(char* nombreArchivo){
 }
 
 respuestaDeObtencionDeMemoria* obtenerLineaSegPag(char* nombreArchivo, int numeroLinea){
-	respuestaDeObtencionDeMemoria* respuesta;
-		return respuesta;
+	respuestaDeObtencionDeMemoria* respuesta = malloc(sizeof(respuestaDeObtencionDeMemoria));
+	ElementoTablaSeg* elemento = obtenerPorNombreArchivoPaginada(nombreArchivo);
+	if(numeroLinea < elemento->cantidadLineas){
+		int cantidadDeLineasPorPagina = tamanioPagina / tamanioLinea;
+		int paginaDondeSeEncuentraLaLinea = numeroLinea / cantidadDeLineasPorPagina;
+		int lineaDentroDeLaPagina = numeroLinea % cantidadDeLineasPorPagina;
+		if(lineaDentroDeLaPagina != 0)
+			paginaDondeSeEncuentraLaLinea++;
+		ElementoTablaPag* elemPag = obtenerPaginasPorId(paginaDondeSeEncuentraLaLinea);
+		int desplazamiento = lineaDentroDeLaPagina * tamanioLinea;
+		char* lineaConBasura = asignarMemoria(tamanioLinea);
+		memcpy(lineaConBasura, storage + elemPag->marco + desplazamiento, tamanioLinea);
+		char** lineaSinBasura = string_split(lineaConBasura, "\n");
+		respuesta->cantidadDeLineas = 1;
+		respuesta->datos = malloc(strlen(lineaSinBasura[0])+1);
+		respuesta->pudoObtener = 0;
+		memcpy(respuesta->datos, lineaSinBasura[0], strlen(lineaSinBasura[0])+1);
+	}else{
+		log_error(logger, "El DTB no posee la linea %d", numeroLinea);
+		respuesta->pudoObtener = 1;
+	}
+	return respuesta;
 }
+
 void liberarMemoriaSegPag(char* nombreArchivo){
 	log_info(logger, "liberando memoria");
 }
