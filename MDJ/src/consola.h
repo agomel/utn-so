@@ -5,8 +5,10 @@
 #include <stdio.h>
 #include <string.h>
 #include <malloc.h>
-#include <biblioteca/logger.h>
 #include <readline/readline.h>
+#include <dirent.h>
+#include <unistd.h>
+#include "comandos.h"
 
 extern char* PUNTO_MONTAJE;
 void consolita();

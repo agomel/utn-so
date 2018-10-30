@@ -10,7 +10,6 @@ extern int socketSAFA;
 extern t_log* logger;
 
 void notificarASafaExitoDeCarga(int idDTB, char* path);
-void notificarASafaExitoDeGuardado(int idDTB, char* path);
 void enviarError(int idDTB, char* path, int error);
 
 #endif /*SERVICIOSAFA_H_*/
