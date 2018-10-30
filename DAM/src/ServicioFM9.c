@@ -44,8 +44,3 @@ char* recibirFlushFM9(int cantidadDeLineas){
 	}
 	return memoriaTotal;
 }
-
-t_list* recibirListaDeDireccionesDeFM9(){
-	return deserializarListaInt(socketFM9);
-}
-

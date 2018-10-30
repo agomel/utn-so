@@ -84,7 +84,7 @@ char entendiendoLinea(char* lineaEjecutando, DTB* dtbRecibido){
 		enviarYSerializarIntSinHeader(socketSAFA, dtbRecibido->id);
 		char seguirConEjecucion = deserializarChar(socketSAFA);
 		free(recursoRecibido);
-		if(seguirConEjecucion == 'LIBERAR_DTB_DE_EJECUCION'){
+		if(seguirConEjecucion == LIBERAR_DTB_DE_EJECUCION){
 			return 'b';
 		}else{
 			return 's';
@@ -167,7 +167,7 @@ char entendiendoLinea(char* lineaEjecutando, DTB* dtbRecibido){
 		log_info(logger, "Ejecutando instruccion borrar");
 		char* pathRecibido = asignarMemoria(strlen(lineaEjecutando)-5);
 		pathRecibido = string_substring_from(lineaEjecutando, 6);
-		enviarYSerializarString(socketDIEGO, pathRecibido, BORRAR_DATOS);
+		enviarYSerializarString(socketDIEGO, pathRecibido, BORRAR_ARCHIVO);
 		free(pathRecibido);
 		return 'b';
 	}else{
@@ -240,14 +240,14 @@ void escuchar(int socketSAFA){//MensajeNano: Verificar los punteros de DTB
 								log_info(logger, "Tiene quantum el DTB");
 								pedirCosasDelFM9(dtbRecibido);
 								lineaAEjecutar = deserializarString(socketFM9);
-								if(lineaAEjecutar[0] == 'FIN_ARCHIVO'){
+								if(lineaAEjecutar[0] == FIN_ARCHIVO){
 									//Fin de archivo
 									log_info(logger, "Pasar DTB a EXIT");
 									serializarYEnviarDTB(socketSAFA, *dtbRecibido, logger, PASAR_A_EXIT);
 									enviarYSerializarIntSinHeader(socketSAFA, sentencias);
 									freeDTB(dtbRecibido);
 									break;
-								}else if(lineaAEjecutar[0] == 'ERROR_O_ACCESO_INVALIDO'){
+								}else if(lineaAEjecutar[0] == ERROR_O_ACCESO_INVALIDO){
 									//Hubo error en FM9
 									dtbRecibido->quantum--;
 									sentencias++;

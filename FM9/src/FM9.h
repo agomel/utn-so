@@ -14,37 +14,34 @@
 #include <biblioteca/semaforos.h>
 #include <biblioteca/nuestroSelect.h>
 #include <biblioteca/traductor.h>
-
-t_dictionary* conexiones;
-int socketCPU;
-int socketDAM;
-char* storage;
-pthread_mutex_t mutexStorage;
-int offset;
-pthread_mutex_t mutexOffset;
-t_log* logger;
-
-t_queue* colaOperaciones;
-pthread_mutex_t mutexOperaciones;
-sem_t semOperaciones;
-sem_t semProductores;
+#include <commons/string.h>
 
 typedef struct{
-	t_list* listaDeDirecciones;
+	int idSegmento;
 	int pudoGuardarlo;
 }respuestaDeCargaEnMemoria;
 
 typedef struct{
 	char* datos;
 	int cantidadDeLineas;
-	int pudoGuardarlo;
+	int pudoObtener;
 }respuestaDeObtencionDeMemoria;
 
-respuestaDeCargaEnMemoria cargarDatosEnMemoria(char* datos);
-respuestaDeObtencionDeMemoria* obtenerDatosDeMemoria(t_list* posiciones);
+int socketCPU;
+int socketDAM;
+int tamanioMemoria;
+int tamanioPagina;
+int cantidadMarcosTotales;
+int tamanioLinea;
+void* storage;
+int offset;
+t_log* logger;
+char* modo;
+t_queue* colaOperaciones;
+pthread_mutex_t mutexOperaciones;
+sem_t semProductores;
+sem_t semOperaciones;
 
-void init();
 void entenderMensaje(int emisor, char header);
-int main(void);
 
 #endif /*FM9_H_*/

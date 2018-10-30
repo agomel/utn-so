@@ -66,16 +66,7 @@ void enviarYSerializarInt(int destino, int numero,char operacion){
 }
 
 void enviarYSerializarIntSinHeader(int destino, int numero){
-	int tamanioMensaje = sizeof(int);
-	void* mensaje = asignarMemoria(tamanioMensaje);
-
-	int desplazamiento = 0;
-
-	concatenarInt(mensaje, &desplazamiento, numero);
-
-	enviarMensaje(destino, mensaje, tamanioMensaje);
-
-	free(mensaje);
+	enviarMensaje(destino, numero, sizeof(int));
 }
 
 void enviarYSerializarCharSinHeader(int destino, char caracter){

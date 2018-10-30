@@ -54,11 +54,10 @@ void crearSelect(int servidor){
 void init(){
 	t_config* configuracion = config_create(ARCHIVO_CONFIGURACION);
 	RETARDO = config_get_int_value(configuracion, "RETARDO");
-
 	char* punteroPuntoMontaje = config_get_string_value(configuracion, "PUNTO_MONTAJE");
 	PUNTO_MONTAJE = malloc(250);//asignarMemoria(strlen(punteroPuntoMontaje) + 1);
 	memcpy(PUNTO_MONTAJE, punteroPuntoMontaje, strlen(punteroPuntoMontaje)+ 1);
-
+	free(punteroPuntoMontaje);
 	config_destroy(configuracion);
 
 	logger = crearLogger(ARCHIVO_LOG, "MDJ");
