@@ -10,6 +10,7 @@ void entenderMensaje(int emisor, char header){
 				log_info(logger, "validando archivo de emisor %d", emisor);
 				int archivoValido = validarArchivo(emisor);
 				enviarYSerializarIntSinHeader(emisor, archivoValido);
+				log_info(logger, "Devolviendo validacion de archivo al emisor %d", emisor);
 				break;
 			case CREAR_ARCHIVO:
 				crearArchivo(emisor);

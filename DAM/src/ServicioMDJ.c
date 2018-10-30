@@ -9,7 +9,9 @@ int validarArchivoMDJ(char* path){
 	log_info(logger, "enviando a emisor %d char: %c y escriptorio %s", socketMDJ, VALIDAR_ARCHIVO, path);
 	enviarMensaje(socketMDJ, buffer, tamanioMensaje);
 	free(buffer);
-	int respuesta =  deserializarInt(socketMDJ);
+	log_debug(logger, "esperando mensaje de MDJ");
+	int respuesta = deserializarInt(socketMDJ);
+	log_debug(logger, "recibido mensaje de MDJ");
 	return respuesta;
 }
 
