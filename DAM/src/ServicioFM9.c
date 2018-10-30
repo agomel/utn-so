@@ -13,7 +13,9 @@ int enviarDatosAFM9(char* path, char* datos){
 	enviarMensaje(socketFM9, buffer, tamanioBuffer);
 	free(buffer);
 
-	return deserializarInt(socketFM9);
+	int respuestaFM9 = deserializarInt(socketFM9);
+	log_debug(logger, "Recibi %d al guardar los datos en FM9", respuestaFM9);
+	return respuestaFM9;
 }
 
 void pedirDatosAFM9(char* path){

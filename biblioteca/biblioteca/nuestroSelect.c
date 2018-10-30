@@ -4,7 +4,6 @@ void agregarPedidoACola(char header,SocketEnSelect* socketEnSelect){
 	OperacionSocket* operacion = asignarMemoria(sizeof(OperacionSocket));
 	operacion->header = header;
 	operacion->socket = socketEnSelect->conectado;
-	log_debug(socketEnSelect->select->logger, "Agregado pedido a la cola de socket %d", operacion->socket);
 	waitMutex(socketEnSelect->select->mutexOperaciones);
 	queue_push(socketEnSelect->select->colaOperaciones, operacion);
 	signalMutex(socketEnSelect->select->mutexOperaciones);
@@ -15,7 +14,6 @@ void escucharCliente(SocketEnSelect* socketEnSelect){
 	log_debug(socketEnSelect->select->logger, "Escuchando nuevo cliente en %d", socketEnSelect->conectado);
 	while(1){
 		char header;
-		log_debug(socketEnSelect->select->logger, "Esperando recibir mensaje de %d", socketEnSelect->conectado);
 		recibirMensaje(socketEnSelect->conectado, &header, sizeof(char));
 		agregarPedidoACola(header, socketEnSelect);
 		signalSem(socketEnSelect->select->semOperaciones);

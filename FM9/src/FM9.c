@@ -62,7 +62,8 @@ void entenderMensaje(int emisor, char header){
 				free(datos);
 				free(nombreArchivo);
 
-				enviarMensaje(socketDAM, respuestaDeCarga, sizeof(int));
+				log_debug(logger, "Enviando %d al guardar los datos", respuestaDeCarga);
+				enviarYSerializarIntSinHeader(socketDAM, respuestaDeCarga);
 				break;
 			}
 
@@ -73,10 +74,11 @@ void entenderMensaje(int emisor, char header){
 
 				int desplazamiento = 0;
 				int tamanioBuffer = sizeof(int) + sizeof(int) + strlen(respuestaDeObtener->datos) + 1;
-				int buffer = asignarMemoria(tamanioBuffer);
+				void* buffer = asignarMemoria(tamanioBuffer);
 				concatenarInt(buffer, &desplazamiento, respuestaDeObtener->cantidadDeLineas);
 				concatenarString(buffer, &desplazamiento, respuestaDeObtener->datos);
 				enviarMensaje(socketDAM, buffer, tamanioBuffer);
+				free(buffer);
 				freeRespuestaObtencion(respuestaDeObtener);
 				break;
 			}
@@ -94,7 +96,7 @@ void entenderMensaje(int emisor, char header){
 					concatenarString(buffer, &desplazamiento, respuesta->datos);
 					enviarMensaje(socketCPU, buffer, tamanioBuffer);
 				}else{
-					enviarMensaje(socketCPU, FIN_ARCHIVO, sizeof(char));
+					enviarYSerializarCharSinHeader(socketCPU, FIN_ARCHIVO);
 				}
 				freeRespuestaObtencion(respuesta);
 				break;

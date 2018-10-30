@@ -3,8 +3,11 @@
 
 #include <biblioteca/utilidades.h>
 #include <biblioteca/serializacion.h>
+#include <biblioteca/logger.h>
 
 extern int socketFM9;
+
+extern t_log* logger;
 
 extern int transferSize;
 
