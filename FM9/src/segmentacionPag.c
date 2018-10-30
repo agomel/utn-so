@@ -41,7 +41,7 @@ int obtenerMarcoLibre(){
 	return 0;
 }
 
-int guardarDatosSegPura(char* datos, char* nombreArchivo){
+int guardarDatosSegPag(char* datos, char* nombreArchivo){
 	log_debug(logger, "Guardando en paginacion pura");
 	int respuesta = 1;
 	int tamanioSegmento = strlen(datos) + 1;
@@ -86,62 +86,15 @@ int guardarDatosSegPura(char* datos, char* nombreArchivo){
 	return respuesta;
 }
 
-ElementoTablaSegPura* obtenerPorNombreArchivo(char* nombreArchivo){
-	bool coincideNombre(ElementoTablaSegPura* elemento){
-		if(strcmp(elemento->nombreArchivo, nombreArchivo) == 0){
-			return true;
-		}
-		return false;
-	}
-
-	return list_find(tablaDeSegmentos, coincideNombre);
-}
-
-respuestaDeObtencionDeMemoria* obtenerDatosSegPura(char* nombreArchivo){
-	respuestaDeObtencionDeMemoria* respuesta = malloc(sizeof(respuestaDeObtencionDeMemoria));
-	ElementoTablaSegPura* elemento = obtenerPorNombreArchivo(nombreArchivo);
-	respuesta->datos = malloc(elemento->limite);
-	memcpy(respuesta->datos, storage + elemento->base, elemento->limite);
-	respuesta->cantidadDeLineas = elemento->limite / tamanioLinea;
-
+respuestaDeObtencionDeMemoria* obtenerDatosSegPag(char* idsSegmentos){
+	respuestaDeObtencionDeMemoria* respuesta;
 	return respuesta;
 }
-
-respuestaDeObtencionDeMemoria* obtenerLineaSegPura(char* nombreArchivo, int numeroLinea){
-	respuestaDeObtencionDeMemoria* respuesta = malloc(sizeof(respuestaDeObtencionDeMemoria));
-	ElementoTablaSegPura* elemento = obtenerPorNombreArchivo(nombreArchivo);
-	int cantidadLineasDeArchivo = elemento->limite / tamanioLinea;
-
-	if(numeroLinea < cantidadLineasDeArchivo){
-		int desplazamiento = numeroLinea * tamanioLinea;
-		char* lineaConBasura = malloc(tamanioLinea);
-		memcpy(lineaConBasura, storage + desplazamiento, tamanioLinea);
-		char** lineaSinBasura = string_split(lineaConBasura, "\n");
-		respuesta->cantidadDeLineas = 1;
-		respuesta->datos = malloc(strlen(lineaSinBasura[0])+1);
-		respuesta->pudoObtener = 0;
-		memcpy(respuesta->datos, lineaSinBasura[0], strlen(lineaSinBasura[0])+1);
-	}else{
-		log_error(logger, "El DTB no posee la linea %d", numeroLinea);
-		respuesta->pudoObtener = 1;
-	}
-
-	return respuesta;
+respuestaDeObtencionDeMemoria* obtenerLineaSegPag(char* nombreArchivo, int numeroLinea){
+	respuestaDeObtencionDeMemoria* respuesta;
+		return respuesta;
 }
-
-void liberarMemoriaSegPura(char* nombreArchivo){
-	bool coincideNombre(ElementoTablaSegPura* elemento){
-		if(strcmp(elemento->nombreArchivo, nombreArchivo) == 0){
-			return true;
-		}
-		return false;
-	}
-
-	void destruirElemento(ElementoTablaSegPura* elemento){
-		free(elemento->nombreArchivo);
-		free(elemento);
-	}
-
-	list_remove_and_destroy_by_condition(tablaDeSegmentos, coincideNombre, destruirElemento);
+void liberarMemoriaSegPag(char* nombreArchivo){
+	log_info(logger, "liberando memoria");
 }
 
