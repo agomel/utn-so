@@ -22,7 +22,7 @@ char entendiendoLinea(char* lineaEjecutando, DTB* dtbRecibido){
 		char* pathRecibido = asignarMemoria(strlen(lineaEjecutando)-5);
 		pathRecibido = string_substring_from(lineaEjecutando, 6);
 		//Corrobora si ya esta abierto
-		if(dictionary_has_key(dtbRecibido->direccionesArchivos, pathRecibido)){
+		if(listHasValue(dtbRecibido->direccionesArchivos, pathRecibido)){
 			return 's';
 		}else {
 			int tamanioPathEscriptorioACargar;
@@ -54,7 +54,7 @@ char entendiendoLinea(char* lineaEjecutando, DTB* dtbRecibido){
 		char* path = pathYCantLineas[0];
 		int cantidadDeLineas = pathYCantLineas[1];
 		char* datos = pathYCantLineas[2];
-		if(dictionary_has_key(dtbRecibido->direccionesArchivos, path)){
+		if(listHasValue(dtbRecibido->direccionesArchivos, path)){
 			//Esta abierto
 			log_info(logger, "Ejecutando instruccion asignar");
 
@@ -107,16 +107,16 @@ char entendiendoLinea(char* lineaEjecutando, DTB* dtbRecibido){
 		log_info(logger, "Ejecutando instruccion flush");
 		char* pathRecibido = asignarMemoria(strlen(lineaEjecutando)-5);
 		pathRecibido = string_substring_from(lineaEjecutando, 6);
-		if(dictionary_has_key(dtbRecibido->direccionesArchivos, pathRecibido)){
+		if(listHasValue(dtbRecibido->direccionesArchivos, pathRecibido)){
 			//Esta abierto
 			void* buffer;
 			int desplazamiento = 0;
-			int tamanioBuffer = sizeof(char) + (strlen(pathRecibido)+1) + sizeof(int)*2 + obtenerTamanioDiccionario(dtbRecibido->direccionesArchivos);
+			int tamanioBuffer = sizeof(char) + (strlen(pathRecibido)+1) + sizeof(int) + obtenerTamanioListaStrings(dtbRecibido->direccionesArchivos);
 			buffer = asignarMemoria(tamanioBuffer);
 
 			concatenarChar(buffer, &desplazamiento, GUARDAR_ESCRIPTORIO);
 			concatenarString(buffer, &desplazamiento, pathRecibido);
-			concatenarDiccionario(buffer, &desplazamiento, dtbRecibido->direccionesArchivos);
+			concatenarListaString(buffer, &desplazamiento, dtbRecibido->direccionesArchivos);
 			enviarMensaje(socketDIEGO, buffer, tamanioBuffer);
 			free(buffer);
 			free(pathRecibido);
@@ -131,11 +131,15 @@ char entendiendoLinea(char* lineaEjecutando, DTB* dtbRecibido){
 		log_info(logger, "Ejecutando instruccion close");
 		char* pathRecibido = asignarMemoria(strlen(lineaEjecutando)-5);
 				pathRecibido = string_substring_from(lineaEjecutando, 6);
-				if(dictionary_has_key(dtbRecibido->direccionesArchivos, pathRecibido)){
+				if(listHasValue(dtbRecibido->direccionesArchivos, pathRecibido)){
 					//Esta abierto
 					void* buffer;
 					int desplazamiento = 0;
-					t_list* direccionesABorrar = dictionary_get(dtbRecibido->direccionesArchivos, pathRecibido);
+
+					bool esElEscriptorio(char* escriptorio){
+						return !strcmp(pathRecibido, escriptorio);
+					}
+					t_list* direccionesABorrar = list_find(dtbRecibido->direccionesArchivos, esElEscriptorio);
 					int tamanioBuffer = sizeof(char) + sizeof(int) + sizeof(int)*direccionesABorrar->elements_count;
 					buffer = asignarMemoria(tamanioBuffer);
 

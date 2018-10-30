@@ -10,6 +10,7 @@
 #include <commons/config.h>
 #include "logger.h"
 #include <commons/string.h>
+#include <commons/collections/list.h>
 
 #define ARCHIVO_CONFIGURACION "configuraciones/configuracion.txt"
 #define ARCHIVO_LOG "log.txt"
