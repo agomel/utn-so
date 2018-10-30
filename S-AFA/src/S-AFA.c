@@ -62,6 +62,7 @@ void entenderMensaje(int emisor, char header){
 			break;
 
 		case CARGADO_CON_EXITO_EN_MEMORIA:{
+			log_info(logger, "Recibi cargado con exito en memoria del DAM");
 			idDTB = deserializarInt(emisor);
 			path = deserializarString(emisor);
 			dtb = obtenerDTBDeCola(idDTB);
@@ -75,6 +76,7 @@ void entenderMensaje(int emisor, char header){
 			}
 
 			if(!list_any_satisfy(dtb->listaDeArchivos, compararPath)){
+				log_info(logger, "Agrego path a la lista de archivos del DTB");
 				list_add(dtb->listaDeArchivos, path);
 			}
 
@@ -89,12 +91,15 @@ void entenderMensaje(int emisor, char header){
 
 
 		case DUMMY:
+			log_info(logger, "Desbloqueo el DUMMY");
 			dtb = deserializarDTB(emisor);
 			historial = crearHistorial(dtb->id);
 			agregarHistorialAListaTiempoRespuesta(historial);
 			enviarYSerializarCharSinHeader(emisor, CONTINUAR_CON_EJECUCION);
+			log_info(logger, "Mando a CPU que continue con su ejecucion");
 			break;
 		case DESBLOQUEAR_DTB:
+			log_info(logger, "Recibi Desbloquear DTB");
 			dtb = deserializarDTB(emisor);
 			desbloquearDummy(dtb);
 
@@ -102,12 +107,14 @@ void entenderMensaje(int emisor, char header){
 			break;
 
 		case GUARDADO_CON_EXITO_EN_MDJ:
+			log_info(logger, "Recibi guardado con exito en MDJ");
 			dtb = deserializarDTB(emisor);
 			operacionDelDiego(idDTB);
 			desbloquearDTB(dtb->id);
 
 			break;
 		case ERROR:
+			log_info(logger, "Recibi un error");
 			idDTB = deserializarInt(emisor);
 			path = deserializarString(emisor);
 			operacionDelDiego(idDTB);
@@ -116,6 +123,7 @@ void entenderMensaje(int emisor, char header){
 			break;
 
 		case BLOQUEAR_DTB:
+			log_info(logger, "Recibi bloquear DTB");
 			dtb = deserializarDTB(emisor);
 			cambiarEstadoGuardandoNuevoDTB(dtb, BLOCKED);
 
@@ -127,6 +135,7 @@ void entenderMensaje(int emisor, char header){
 			break;
 
 		case PASAR_A_EXIT:
+			log_info(logger, "Recibi pasar a EXIT");
 			dtb = deserializarDTB(emisor);
 			cambiarEstadoGuardandoNuevoDTB(dtb, EXIT);
 
@@ -134,6 +143,7 @@ void entenderMensaje(int emisor, char header){
 			break;
 
 		case TERMINO_QUANTUM:
+			log_info(logger, "Recibi termino quantum");
 			dtb = deserializarDTB(emisor);
 			if(!strcmp(algoritmo, "VRR")){
 				cambiarEstadoGuardandoNuevoDTB(dtb, READY_PRIORIDAD);
@@ -145,20 +155,24 @@ void entenderMensaje(int emisor, char header){
 			terminarOperacionDeCPU(emisor, dtb);
 			break;
 		case LIBERAR_RECURSO:
+			log_info(logger, "Recibi liberar recurso");
 			recurso = deserializarString(emisor);
 			asignado = liberarRecurso(idDTB, recurso);
 			enviarYSerializarCharSinHeader(asignado);
+			log_info(logger, "Enviando a CPU que continue");
 			break;
 		case RETENCION_DE_RECURSO:
+			log_info(logger, "Recibi retener recurso");
 			recurso = deserializarString(emisor);
 			idDTB = deserializarInt(emisor);
 			asignado = asignarRecurso(idDTB, recurso);
 			enviarYSerializarCharSinHeader(asignado);
+			log_info(logger, "Enviando a CPU que continue");
 			break;
 
 
 		default:
-			log_error(logger, "Header desconocido");
+			log_error(logger, "Header desconocido del emisor %d y header %c", emisor, header);
 	}
 }
 

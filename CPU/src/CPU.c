@@ -323,7 +323,7 @@ void escuchar(int socketSAFA){//MensajeNano: Verificar los punteros de DTB
 					}
 					break;
 				default:
-					log_error(logger, "Header desconocido");
+					log_error(logger, "Header desconocido %c del SAFA", header);
 		}
 	}
 }
