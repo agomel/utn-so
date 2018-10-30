@@ -86,10 +86,45 @@ int guardarDatosSegPag(char* datos, char* nombreArchivo){
 	return respuesta;
 }
 
-respuestaDeObtencionDeMemoria* obtenerDatosSegPag(char* idsSegmentos){
-	respuestaDeObtencionDeMemoria* respuesta;
+ElementoTablaSeg* obtenerPorNombreArchivoPaginada(char* nombreArchivo){
+	bool coincideNombre(ElementoTablaSeg* elemento){
+		if(strcmp(elemento->nombreArchivo, nombreArchivo) == 0){
+			return true;
+		}
+		return false;
+	}
+	return list_find(tablaDeSegmentos, coincideNombre);
+}
+ElementoTablaPag* obtenerPaginasPorId(int pagina){
+	bool coincideLaPagina(int elemento){
+		if(elemento == pagina){
+			return true;
+		}
+		return false;
+	}
+	return list_find(tablaDePaginas, coincideLaPagina);
+}
+
+respuestaDeObtencionDeMemoria* obtenerDatosSegPag(char* nombreArchivo){
+	int paginaActual;
+	respuestaDeObtencionDeMemoria* respuesta = malloc(sizeof(respuestaDeObtencionDeMemoria));
+	ElementoTablaSeg* elemento = obtenerPorNombreArchivoPaginada(nombreArchivo);
+	ElementoTablaPag* elemPag;
+	respuesta->datos = asignarMemoria(elemento->cantidadLineas * tamanioLinea);
+	for (int i = 0; i < elemento->paginas->elements_count-1; i++) {
+		paginaActual = list_get(elemento->paginas, i);
+		elemPag = obtenerPaginasPorId(paginaActual);
+		memcpy(respuesta->datos + i*tamanioPagina,storage + elemPag->marco, tamanioPagina);
+	}
+	int lineasRestantes = elemento->cantidadLineas - (elemento->cantidadLineas % (elemento->paginas->elements_count * tamanioPagina));
+	int tamanioDelSegmento = (elemento->cantidadLineas - lineasRestantes) * tamanioLinea;
+	elemPag = obtenerPaginasPorId(list_get(elemento->paginas, elemento->paginas->elements_count-1));
+	memcpy(respuesta->datos + tamanioDelSegmento, storage + elemPag->marco, lineasRestantes*tamanioLinea);
+	respuesta->cantidadDeLineas = elemento->cantidadLineas;
+
 	return respuesta;
 }
+
 respuestaDeObtencionDeMemoria* obtenerLineaSegPag(char* nombreArchivo, int numeroLinea){
 	respuestaDeObtencionDeMemoria* respuesta;
 		return respuesta;

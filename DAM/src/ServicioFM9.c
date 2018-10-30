@@ -17,12 +17,13 @@ int enviarDatosAFM9(char* path, char* datos){
 }
 
 void pedirDatosAFM9(char* path){
-	void* buffer = asignarMemoria(sizeof(char) + sizeof(int) + strlen(path)+1);
+	int tamanioBuffer = sizeof(char) + sizeof(int) + strlen(path)+1;
+	void* buffer = asignarMemoria(tamanioBuffer);
 	int desplazamiento = 0;
 
 	concatenarChar(buffer, &desplazamiento, OBTENER_DATOS);
-	concatenarListaInt(buffer, &desplazamiento, path);
-	enviarMensaje(socketFM9, buffer, desplazamiento);
+	concatenarString(buffer, &desplazamiento, path);
+	enviarMensaje(socketFM9, buffer, tamanioBuffer);
 	free(buffer);
 }
 
