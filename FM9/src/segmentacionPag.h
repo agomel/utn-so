@@ -7,7 +7,7 @@ typedef struct{
 	int id;
 	t_list* paginas;
 	int cantidadLineas;
-	int nombreArchivo;
+	char* nombreArchivo;
 }ElementoTablaSeg;
 
 typedef struct{
@@ -25,5 +25,6 @@ int guardarDatosSegPag(char* datos, char* nombreArchivo);
 respuestaDeObtencionDeMemoria* obtenerDatosSegPag(char* idsSegmentos);
 respuestaDeObtencionDeMemoria* obtenerLineaSegPag(char* nombreArchivo, int numeroLinea);
 void liberarMemoriaSegPag(char* nombreArchivo);
+ElementoTablaPag* obtenerPaginasPorId(int pagina);
 
 #endif /* SEGMENTACIONPAG_H_ */

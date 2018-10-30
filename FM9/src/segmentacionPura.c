@@ -130,5 +130,6 @@ void liberarMemoriaSegPura(char* nombreArchivo){
 	}
 
 	list_remove_and_destroy_by_condition(tablaDeSegmentos, coincideNombre, destruirElemento);
+	log_info(logger, "liberando memoria");
 }
 

@@ -30,7 +30,7 @@ respuestaDeObtencionDeMemoria* obtenerLinea(char* nombreArchivo, int numeroLinea
 		return obtenerLineaSegPura(nombreArchivo, numeroLinea);
 
 	if(strcmp(modo, "SEG_PAG") == 0)
-		return obtenerLineaSegPura(nombreArchivo, numeroLinea); //CAMBIAAAAAAAR
+		return obtenerLineaSegPag(nombreArchivo, numeroLinea);
 
 	if(strcmp(modo, "INV") == 0)
 		return obtenerLineaSegPura(nombreArchivo, numeroLinea); //CAMBIAAAAAAAAR
@@ -41,7 +41,7 @@ void liberarMemoria(char* nombreArchivo){
 		liberarMemoriaSegPura(nombreArchivo);
 
 	if(strcmp(modo, "SEG_PAG") == 0)
-		liberarMemoriaSegPura(nombreArchivo); //CAMBIAAAAAAAR
+		liberarMemoriaSegPag(nombreArchivo);
 
 	if(strcmp(modo, "INV") == 0)
 		liberarMemoriaSegPura(nombreArchivo); //CAMBIAAAAAAAAR

@@ -57,6 +57,8 @@ int guardarDatosSegPag(char* datos, char* nombreArchivo){
 		elementoSegmento->cantidadLineas = cantidadLineas;
 		elementoSegmento->paginas = list_create();
 		elementoSegmento->id = idSegmento;
+		elementoSegmento->nombreArchivo = asignarMemoria(strlen(nombreArchivo) + 1);
+		elementoSegmento->nombreArchivo = nombreArchivo;
 		idSegmento++;
 
 		for(int i = 0; i++; i < cantidadPaginas){
@@ -151,6 +153,28 @@ respuestaDeObtencionDeMemoria* obtenerLineaSegPag(char* nombreArchivo, int numer
 }
 
 void liberarMemoriaSegPag(char* nombreArchivo){
+	//Primero libero en la tabla de paginas
+	ElementoTablaSeg* elemento = obtenerPorNombreArchivoPaginada(nombreArchivo);
+	for (int i = 0; i < elemento->paginas->elements_count; ++i) {
+		bool coincidePagina(ElementoTablaPag* elemeComparador){
+			return elemeComparador->idPag == list_get(elemento->paginas, i);
+		}
+		list_remove_and_destroy_by_condition(tablaDePaginas, coincidePagina, free);
+	}
+	//Ahora libero en la tabla de segmentos
+	bool coincideNombre(ElementoTablaSeg* elemento){
+			if(strcmp(elemento->nombreArchivo, nombreArchivo) == 0){
+				return true;
+			}
+			return false;
+		}
+
+		void destruirElemento(ElementoTablaSeg* elemento){
+			free(elemento->nombreArchivo);
+			free(elemento);
+		}
+
+		list_remove_and_destroy_by_condition(tablaDeSegmentos, coincideNombre, destruirElemento);
 	log_info(logger, "liberando memoria");
 }
 
