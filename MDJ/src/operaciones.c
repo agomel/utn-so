@@ -27,7 +27,7 @@ char* obtenerDatos(int emisor){
 	int offset = deserializarInt(emisor);
 	int tamanioALeer = deserializarInt(emisor);
 	log_info("Obteniendo %d bytes de archivo: %s", tamanioALeer, rutaArchivo);
-	return "jarcodeeoooo";
+	return "Datos hardcodeados";
 	//return "asginar hola\nwait hola\nsignal hola\n";
 	//TODO leer archivos posta y hacer free de los strings
  }

@@ -97,7 +97,9 @@ respuestaDeObtencionDeMemoria* obtenerDatosSegPura(char* nombreArchivo){
 respuestaDeObtencionDeMemoria* obtenerLineaSegPura(char* nombreArchivo, int numeroLinea){
 	respuestaDeObtencionDeMemoria* respuesta = malloc(sizeof(respuestaDeObtencionDeMemoria));
 	ElementoTablaSegPura* elemento = obtenerPorNombreArchivo(nombreArchivo);
-	int cantidadLineasDeArchivo = elemento->limite / tamanioLinea;
+	int cantidadLineasDeArchivo = 1;
+	if(elemento->limite > tamanioLinea)
+		cantidadLineasDeArchivo = elemento->limite / tamanioLinea;
 
 	if(numeroLinea < cantidadLineasDeArchivo){
 		int desplazamiento = numeroLinea * tamanioLinea;

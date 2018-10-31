@@ -7,7 +7,7 @@ typedef struct{
 	int id;
 	int limite;
 	int base;
-	int nombreArchivo;
+	char* nombreArchivo;
 }ElementoTablaSegPura;
 
 int idSegmento;

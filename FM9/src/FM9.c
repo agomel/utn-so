@@ -98,7 +98,7 @@ void entenderMensaje(int emisor, char header){
 					freeRespuestaObtencion(respuesta);
 				}else{
 					enviarYSerializarCharSinHeader(socketCPU, FIN_ARCHIVO);
-					free(respuesta);
+					free(respuesta); //Porque no hay que hacer el free de respuesta->datos
 				}
 				break;
 			}
