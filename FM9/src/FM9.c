@@ -95,10 +95,11 @@ void entenderMensaje(int emisor, char header){
 					void* buffer = asignarMemoria(tamanioBuffer);
 					concatenarString(buffer, &desplazamiento, respuesta->datos);
 					enviarMensaje(socketCPU, buffer, tamanioBuffer);
+					freeRespuestaObtencion(respuesta);
 				}else{
 					enviarYSerializarCharSinHeader(socketCPU, FIN_ARCHIVO);
+					free(respuesta);
 				}
-				freeRespuestaObtencion(respuesta);
 				break;
 			}
 
