@@ -14,15 +14,26 @@ respuestaDeObtencionDeMemoria* obtenerDatosDeMemoria(char* nombreArchivo){
 		return obtenerDatosInvertida(nombreArchivo);
 }
 
-int cargarDatosEnMemoria(char* datos, char* nombreArchivo){
+int cargarDatosEnMemoria(int idDTB, char* datos, char* nombreArchivo){
 	if(strcmp(modo, "SEG_PURA") == 0)
-		return guardarDatosSegPura(datos, nombreArchivo);
+		return guardarDatosSegPura(idDTB, datos, nombreArchivo);
 
 	if(strcmp(modo, "SEG_PAG") == 0)
-		return guardarDatosSegPag(datos, nombreArchivo);
+		return guardarDatosSegPag(idDTB, datos, nombreArchivo);
 
 	if(strcmp(modo, "INV") == 0)
-		return guardarDatosInvertida(datos, nombreArchivo);
+		return guardarDatosInvertida(idDTB, datos, nombreArchivo);
+}
+
+int cargarNuevoDTB(int idDTB, char* datos, char* nombreArchivo){
+	if(strcmp(modo, "SEG_PURA") == 0)
+		return nuevoProcesoSegPura(idDTB, datos, nombreArchivo);
+
+	if(strcmp(modo, "SEG_PAG") == 0)
+		return nuevoProcesoSegPura(idDTB, datos, nombreArchivo); //CAMBIAAAAAAAR
+
+	if(strcmp(modo, "INV") == 0)
+		return nuevoProcesoSegPura(idDTB, datos, nombreArchivo); //CAMBIAAAAAAAR
 }
 
 respuestaDeObtencionDeMemoria* obtenerLinea(char* nombreArchivo, int numeroLinea){
@@ -36,15 +47,15 @@ respuestaDeObtencionDeMemoria* obtenerLinea(char* nombreArchivo, int numeroLinea
 		return obtenerLineaSegPura(nombreArchivo, numeroLinea); //CAMBIAAAAAAAAR
 }
 
-void liberarMemoria(char* nombreArchivo){
+void liberarMemoria(int idDTB, char* nombreArchivo){
 	if(strcmp(modo, "SEG_PURA") == 0)
-		liberarMemoriaSegPura(nombreArchivo);
+		liberarMemoriaSegPura(idDTB, nombreArchivo);
 
 	if(strcmp(modo, "SEG_PAG") == 0)
-		liberarMemoriaSegPag(nombreArchivo);
+		liberarMemoriaSegPura(idDTB, nombreArchivo); //CAMBIAAAAAAAAR
 
 	if(strcmp(modo, "INV") == 0)
-		liberarMemoriaSegPura(nombreArchivo); //CAMBIAAAAAAAAR
+		liberarMemoriaSegPura(idDTB, nombreArchivo); //CAMBIAAAAAAAAR
 }
 
 void freeRespuestaObtencion(respuestaDeObtencionDeMemoria* respuesta){
@@ -56,9 +67,10 @@ void entenderMensaje(int emisor, char header){
 	switch(header){
 			case GUARDAR_DATOS: {
 				log_debug(logger, "Guardando datos en memoria");
+				int idDTB = deserializarInt(emisor);
 				char* nombreArchivo = deserializarString(emisor);
 				char* datos = deserializarString(emisor);
-				int respuestaDeCarga = cargarDatosEnMemoria(datos, nombreArchivo);
+				int respuestaDeCarga = cargarDatosEnMemoria(idDTB, datos, nombreArchivo);
 				free(datos);
 				free(nombreArchivo);
 
@@ -67,8 +79,23 @@ void entenderMensaje(int emisor, char header){
 				break;
 			}
 
+			case CARGAR_ESCRIPTORIO_EN_MEMORIA: {
+				int idDTB = deserializarInt(emisor);
+				log_debug(logger, "Guardando escriptorio %d en memoria", idDTB);
+				char* nombreArchivo = deserializarString(emisor);
+				char* datos = deserializarString(emisor);
+				int respuestaDeCarga = cargarNuevoDTB(idDTB, datos, nombreArchivo);
+				free(datos);
+				free(nombreArchivo);
+
+				log_debug(logger, "Enviando %d al cargar nuevo DTB", respuestaDeCarga);
+				enviarYSerializarIntSinHeader(socketDAM, respuestaDeCarga);
+				break;
+			}
+
 			case OBTENER_DATOS: {
 				log_debug(logger, "Obteniendo datos de memoria");
+				int idDTB = deserializarInt(emisor);
 				char* nombreArchivo = deserializarString(emisor);
 				respuestaDeObtencionDeMemoria* respuestaDeObtener = obtenerDatosDeMemoria(nombreArchivo); //TODO
 
@@ -107,9 +134,10 @@ void entenderMensaje(int emisor, char header){
 			}
 
 			case LIBERAR_MEMORIA: {
+				int idDTB = deserializarInt(emisor);
 				char* nombreArchivo = deserializarString(emisor);
 				log_debug(logger, "Liberando memoria para archivo %s", nombreArchivo);
-				liberarMemoria(nombreArchivo);
+				liberarMemoria(idDTB, nombreArchivo);
 
 				break;
 			}

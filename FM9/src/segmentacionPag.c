@@ -41,7 +41,7 @@ int obtenerMarcoLibre(){
 	return 0;
 }
 
-int guardarDatosSegPag(char* datos, char* nombreArchivo){
+int guardarDatosSegPag(int idDTB, char* datos, char* nombreArchivo){
 	log_debug(logger, "Guardando en paginacion pura");
 	int respuesta = 1;
 	int tamanioSegmento = strlen(datos) + 1;

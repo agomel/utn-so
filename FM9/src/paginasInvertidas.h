@@ -3,7 +3,7 @@
 
 #include "FM9.h"
 
-int guardarDatosInvertida(char* datos, char* nombreArchivo);
+int guardarDatosInvertida(int idDTB, char* datos, char* nombreArchivo);
 respuestaDeObtencionDeMemoria* obtenerDatosInvertida(char* ids);
 
 

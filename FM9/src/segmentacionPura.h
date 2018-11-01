@@ -10,13 +10,30 @@ typedef struct{
 	char* nombreArchivo;
 }ElementoTablaSegPura;
 
+typedef struct{
+	int idDTB;
+	t_list* tablaSegmentos;
+}ElementoTablaProcesos;
+
+typedef struct{
+	int base;
+	int limite;
+}SegmentoOcupado;
+
+typedef struct{
+	int respuestaGuardado;
+	ElementoTablaSegPura* elementoTabla;
+}RespuestaCargaSegPura;
+
 int idSegmento;
-t_list* tablaDeSegmentos; //Es una lista de ElementoTablaSegPura
+t_list* tablaDeProcesos; //Es una lista de ElementoTablaProcesos
+t_list* segmentosOcupados; //Es una lista de SegmentoOcupado
 
 void inicializarSegPura();
-int guardarDatosSegPura(char* datos, char* nombreArchivo);
-respuestaDeObtencionDeMemoria* obtenerDatosSegPura(char* idsSegmentos);
+int guardarDatosSegPura(int idDTB, char* datos, char* nombreArchivo);
+int nuevoProcesoSegPura(int idDTB, char* datos, char* nombreArchivo);
+respuestaDeObtencionDeMemoria* obtenerDatosSegPura(char* nombreArchivo);
 respuestaDeObtencionDeMemoria* obtenerLineaSegPura(char* nombreArchivo, int numeroLinea);
-void liberarMemoriaSegPura(char* nombreArchivo);
+void liberarMemoriaSegPura(int idDTB, char* nombreArchivo);
 
 #endif /* SEGMENTACIONPURA_H_ */

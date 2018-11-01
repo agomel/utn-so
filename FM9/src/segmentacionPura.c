@@ -2,86 +2,103 @@
 #include "stdbool.h"
 
 void inicializarSegPura(){
-	tablaDeSegmentos = list_create();
+	tablaDeProcesos = list_create();
 	idSegmento = 0;
 }
 
-bool compararElementos(ElementoTablaSegPura* elem1, ElementoTablaSegPura* elem2){
-	return elem1->base < elem2->base;
+static ElementoTablaProcesos* obtenerProcesoPorIdDTB(int idDTB);
+static void freeRespuestaCargaSegPura(RespuestaCargaSegPura* respuesta);
+static RespuestaCargaSegPura* guardarDatosInternaSegPura(char* datos, char* nombreArchivo);
+
+ElementoTablaProcesos* crearElemTablaProcesos(int idDTB, int tablaSegmentos){
+	ElementoTablaProcesos* elemento = malloc(sizeof(ElementoTablaProcesos*));
+	elemento->idDTB = idDTB;
+	elemento->tablaSegmentos = tablaSegmentos;
+	return elemento;
 }
 
-int dondeEntro(int tamanioAGuardar){
-	if(tablaDeSegmentos->elements_count >= 1){
+ElementoTablaSegPura* crearElemTablaSegPura(int base, int tamanioSegmento, char* nombreArchivo){
+	ElementoTablaSegPura* elemento= malloc(sizeof(ElementoTablaSegPura));
+	elemento->id = idSegmento;
+	elemento->base = tamanioSegmento;
+	elemento->limite = tamanioSegmento;
+	elemento->nombreArchivo = malloc(strlen(nombreArchivo)+1);
+	return elemento;
+}
 
-	if(tablaDeSegmentos->elements_count > 1)
-	list_sort(tablaDeSegmentos, compararElementos);
+int nuevoProcesoSegPura(int idDTB, char* datos, char* nombreArchivo){
+	RespuestaCargaSegPura* respuestaCarga = guardarDatosInternaSegPura(datos, nombreArchivo);
 
-	ElementoTablaSegPura* primerElemento = list_get(tablaDeSegmentos, 0);
-	int espacioDelPrincipio = primerElemento->base;
-	if(espacioDelPrincipio >= tamanioAGuardar)
+	if(respuestaCarga->respuestaGuardado == 0){ //No rompio
+		t_list* tablaSegmentos = list_create();
+		ElementoTablaSegPura* nuevoRegistro = malloc(sizeof(ElementoTablaSegPura));
+		memcpy(nuevoRegistro, respuestaCarga->elementoTabla, sizeof(respuestaCarga->elementoTabla));
+		list_add(tablaSegmentos, nuevoRegistro);
+		freeRespuestaCargaSegPura(respuestaCarga);
+		ElementoTablaProcesos* elementoTablaProcesos = crearElemTablaProcesos(idDTB, tablaSegmentos);
+		list_add(tablaDeProcesos, elementoTablaProcesos);
+		log_info(logger, "Agregado proceso %d a tabla de procesos", idDTB);
 		return 0;
-
-	for(int i = 0; i++; i < tablaDeSegmentos->elements_count-1){
-		ElementoTablaSegPura* elem1 = list_get(tablaDeSegmentos, i);
-		ElementoTablaSegPura* elem2 = list_get(tablaDeSegmentos, i+1);
-
-		int posicionInicial = elem1->base + elem1->limite;
-		int tamanioEntreAmbos = elem2->base - posicionInicial;
-
-		if(tamanioEntreAmbos >= tamanioAGuardar){
-			//Entra en ese lugar
-			return posicionInicial;
-		}
+	}else{
+		log_error(logger, "No se pudo agregar proceso %d a tabla de procesos", idDTB);
+		int rta = respuestaCarga->respuestaGuardado;
+		free(respuestaCarga);
+		return rta;
 	}
-
-	ElementoTablaSegPura* ultimoElemento = list_get(tablaDeSegmentos, tablaDeSegmentos->elements_count -1);
-	int ultimaPosicion = ultimoElemento->base + ultimoElemento->limite;
-	int tamanioRestanteEnMemoria = tamanioMemoria - ultimaPosicion;
-
-	if(tamanioRestanteEnMemoria >= tamanioAGuardar){
-		return ultimaPosicion;
-	}
-
-	log_error(logger, "No hay suficiente espacio en memoria");
-	return -1;
-	}
-
-	return 0;
 }
 
-int guardarDatosSegPura(char* datos, char* nombreArchivo){
-	log_debug(logger, "Guardando en paginacion pura");
-	int respuesta = 1;
-	bool rompio = false;
+int guardarDatosSegPura(int idDTB, char* datos, char* nombreArchivo){
+	ElementoTablaProcesos* proceso = obtenerProcesoPorIdDTB(idDTB);
+	RespuestaCargaSegPura* cargaEnMemoria = guardarDatosInternaSegPura(datos, nombreArchivo);
+	if(cargaEnMemoria->respuestaGuardado == 0){
+		ElementoTablaSegPura* nuevoRegistro = malloc(sizeof(ElementoTablaSegPura));
+		memcpy(nuevoRegistro, cargaEnMemoria->elementoTabla, sizeof(cargaEnMemoria->elementoTabla));
+		list_add(proceso->tablaSegmentos, nuevoRegistro);
+		freeRespuestaCargaSegPura(cargaEnMemoria);
+		return 0;
+	}else{
+		int rta = cargaEnMemoria->respuestaGuardado;
+		free(cargaEnMemoria);
+		return rta;
+	}
+}
 
-	int tamanioSegmento = strlen(datos) + 1;
+static RespuestaCargaSegPura* guardarDatosInternaSegPura(char* datos, char* nombreArchivo){
+	log_debug(logger, "Guardando en paginacion pura");
+	int rompio = 1;
+
+	RespuestaCargaSegPura* respuesta = malloc(sizeof(RespuestaCargaSegPura));
+	int totalLineas = cantidadDeLineas(datos);
+	char** lineas = string_split(datos, "\n");
+	int tamanioSegmento = totalLineas * tamanioLinea;
 	int posicionDondeGuardar = dondeEntro(tamanioSegmento);
 	if(posicionDondeGuardar != -1){
-			ElementoTablaSegPura* elementoTabla = malloc(sizeof(ElementoTablaSegPura));
-			elementoTabla->id = idSegmento;
-			elementoTabla->base = posicionDondeGuardar;
-			elementoTabla->limite = tamanioSegmento;
-			elementoTabla->nombreArchivo = malloc(strlen(nombreArchivo)+1);
-			memcpy(elementoTabla->nombreArchivo, nombreArchivo, strlen(nombreArchivo)+1);
-			list_add(tablaDeSegmentos, elementoTabla);
-			memcpy(storage + posicionDondeGuardar, datos, tamanioSegmento);
-			idSegmento++;
-			respuesta = 0;
-			log_debug(logger, "Datos guardados");
+		ElementoTablaSegPura* elementoTabla = crearElemTablaSegPura(posicionDondeGuardar, tamanioSegmento, nombreArchivo);
+		respuesta->elementoTabla = elementoTabla;
+		int base = storage + posicionDondeGuardar;
+		for(int i = 0; i<totalLineas; i++){
+			memcpy(base + tamanioLinea * i, lineas[i], tamanioLinea); //Guardando de a una linea
+		}
+		idSegmento++;
+		rompio = 0;
+		log_debug(logger, "Datos guardados");
 		}
 
+	respuesta->respuestaGuardado = rompio;
 	return respuesta;
 }
 
-ElementoTablaSegPura* obtenerPorNombreArchivo(char* nombreArchivo){
-	bool coincideNombre(ElementoTablaSegPura* elemento){
-		if(strcmp(elemento->nombreArchivo, nombreArchivo) == 0){
-			return true;
-		}
-		return false;
+static ElementoTablaProcesos* obtenerProcesoPorIdDTB(int idDTB){
+	bool coincideId(ElementoTablaProcesos* elemento){
+		return elemento->idDTB == idDTB;
 	}
 
-	return list_find(tablaDeSegmentos, coincideNombre);
+	return list_find(tablaDeProcesos, coincideId);
+}
+
+static void freeRespuestaCargaSegPura(RespuestaCargaSegPura* respuesta){
+	free(respuesta->elementoTabla);
+	free(respuesta);
 }
 
 respuestaDeObtencionDeMemoria* obtenerDatosSegPura(char* nombreArchivo){
@@ -118,7 +135,7 @@ respuestaDeObtencionDeMemoria* obtenerLineaSegPura(char* nombreArchivo, int nume
 	return respuesta;
 }
 
-void liberarMemoriaSegPura(char* nombreArchivo){
+void liberarMemoriaSegPura(int idDTB, char* nombreArchivo){
 	bool coincideNombre(ElementoTablaSegPura* elemento){
 		if(strcmp(elemento->nombreArchivo, nombreArchivo) == 0){
 			return true;
@@ -131,7 +148,50 @@ void liberarMemoriaSegPura(char* nombreArchivo){
 		free(elemento);
 	}
 
-	list_remove_and_destroy_by_condition(tablaDeSegmentos, coincideNombre, destruirElemento);
+	ElementoTablaProcesos* proceso = obtenerProcesoPorIdDTB(idDTB);
+	list_remove_and_destroy_by_condition(proceso->tablaSegmentos, coincideNombre, destruirElemento);
 	log_info(logger, "liberando memoria");
 }
 
+static bool compararElementos(SegmentoOcupado* elem1, SegmentoOcupado* elem2){
+	return elem1->base < elem2->base;
+}
+
+int dondeEntro(int tamanioAGuardar){
+	if(segmentosOcupados->elements_count >= 1){
+
+	if(segmentosOcupados->elements_count > 1)
+	list_sort(segmentosOcupados, compararElementos);
+
+	SegmentoOcupado* primerElemento = list_get(segmentosOcupados, 0);
+	int espacioDelPrincipio = primerElemento->base;
+	if(espacioDelPrincipio >= tamanioAGuardar)
+		return 0;
+
+	for(int i = 0; i++; i < segmentosOcupados->elements_count-1){
+		SegmentoOcupado* elem1 = list_get(segmentosOcupados, i);
+		SegmentoOcupado* elem2 = list_get(segmentosOcupados, i+1);
+
+		int posicionInicial = elem1->base + elem1->limite;
+		int tamanioEntreAmbos = elem2->base - posicionInicial;
+
+		if(tamanioEntreAmbos >= tamanioAGuardar){
+			//Entra en ese lugar
+			return posicionInicial;
+		}
+	}
+
+	SegmentoOcupado* ultimoElemento = list_get(segmentosOcupados, segmentosOcupados->elements_count -1);
+	int ultimaPosicion = ultimoElemento->base + ultimoElemento->limite;
+	int tamanioRestanteEnMemoria = tamanioMemoria - ultimaPosicion;
+
+	if(tamanioRestanteEnMemoria >= tamanioAGuardar){
+		return ultimaPosicion;
+	}
+
+	log_error(logger, "No hay suficiente espacio en memoria");
+	return -1;
+	}
+
+	return 0;
+}

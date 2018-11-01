@@ -15,6 +15,7 @@
 #include <biblioteca/nuestroSelect.h>
 #include <biblioteca/traductor.h>
 #include <commons/string.h>
+#include "manejoLineas.h"
 
 typedef struct{
 	int idSegmento;
