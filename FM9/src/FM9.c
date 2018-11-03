@@ -94,7 +94,7 @@ void entenderMensaje(int emisor, char header){
 					mensajeAEnviar = respuesta->datos;
 				}else{
 					mensajeAEnviar = asignarMemoria(sizeof(char) + 1);
-					mensajeAEnviar = FIN_ARCHIVO + "\0";
+					mensajeAEnviar = "v/0";
 				}
 				int desplazamiento = 0;
 				int tamanioBuffer = sizeof(int) + strlen(mensajeAEnviar) + 1;
