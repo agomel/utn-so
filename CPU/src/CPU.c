@@ -298,7 +298,6 @@ void escuchar(int socketSAFA){//MensajeNano: Verificar los punteros de DTB
 									continuar = 0;
 								}else if(lineaAEjecutar[0] != '#'){
 									sentencias++;
-									dtbRecibido->programCounter++;
 									mensajeEntendido = entendiendoLinea(lineaAEjecutar, dtbRecibido);
 									if(mensajeEntendido == 'b'){
 										continuar = 0;
@@ -312,7 +311,6 @@ void escuchar(int socketSAFA){//MensajeNano: Verificar los punteros de DTB
 								}
 									dtbRecibido->programCounter++;
 									dtbRecibido->quantum--;
-									sentencias++;
 							log_info(logger, "Ejecutando una linea del escriptorio");
 							}if(dtbRecibido->quantum == 0){
 								log_info(logger, "Termino quantum");
