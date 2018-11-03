@@ -1,13 +1,6 @@
 #include "consola.h"
 
 
-char* concatenar(char* str1, char* str2){
-	char* resultado = asignarMemoria(strlen(str1) + strlen(str2)+1);
-	memcpy(resultado, str1, strlen(str1));
-	memcpy(resultado + strlen(str1), str2, strlen(str2)+1);
-	return resultado;
-}
-
 void consolita(){
 
 	//ir al punto de montaje

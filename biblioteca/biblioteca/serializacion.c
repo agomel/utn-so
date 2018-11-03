@@ -1,5 +1,14 @@
 #include "serializacion.h"
 
+
+char* concatenar(char* str1, char* str2){
+	char* resultado = asignarMemoria(strlen(str1) + strlen(str2)+1);
+	memcpy(resultado, str1, strlen(str1));
+	memcpy(resultado + strlen(str1), str2, strlen(str2)+1);
+	return resultado;
+}
+
+
 void handshake(int servidor, char modulo){
 	int tamanioMensaje = sizeof(char)*2;
 	void* mensaje = asignarMemoria(tamanioMensaje);
@@ -27,12 +36,12 @@ void enviarYSerializarString(int destino, char* texto,char operacion){
 	free(mensaje);
 }
 
-void enviarySerializarPathyCantidadDeLineas(int destino ,char* path, int cantidadDeLineas){
+void enviarySerializarPathyTamanioArchivo(int destino ,char* path, int tamanioArchivo){
 	void* buffer = asignarMemoria(sizeof(char) + sizeof(int) + (strlen(path)+1) + sizeof(int));
 	int desplazamiento = 0;
 	concatenarChar(buffer, &desplazamiento, CREAR_ARCHIVO);
 	concatenarString(buffer, &desplazamiento, path);
-	concatenarInt(buffer, &desplazamiento, cantidadDeLineas);
+	concatenarInt(buffer, &desplazamiento, tamanioArchivo);
 	enviarMensaje(destino, buffer, desplazamiento);
 	free(buffer);
 }
@@ -144,6 +153,12 @@ char* deserializarString(int emisor){
 	return mensaje;
 }
 
+char* deserializarStringSinElInt(int emisor, int tamanioMensaje){
+	char* mensaje = asignarMemoria(tamanioMensaje);
+	recibirMensaje(emisor, mensaje, tamanioMensaje);
+	printf("Recibi %s de parte de %d \n" , mensaje, emisor);
+	return mensaje;
+}
 int deserializarInt(int emisor){
 	int mensaje;
 	recibirMensaje(emisor, &mensaje, sizeof(int));

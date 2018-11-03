@@ -35,7 +35,7 @@ char entendiendoLinea(char* lineaEjecutando, DTB* dtbRecibido){
 
 			concatenarChar(buffer2, &desplazamiento, CARGAR_ESCRIPTORIO_EN_MEMORIA);
 			concatenarInt(buffer2, &desplazamiento, dtbRecibido->id);
-			concatenarString(buffer2, &desplazamiento, dtbRecibido->escriptorio);
+			concatenarString(buffer2, &desplazamiento, pathRecibido);
 			concatenarInt(buffer2, &desplazamiento, 1); //No DUMMY
 			enviarMensaje(socketDIEGO, buffer2, tamanioBuffer2);
 			free(buffer2);
@@ -166,7 +166,7 @@ char entendiendoLinea(char* lineaEjecutando, DTB* dtbRecibido){
 		char** pathYCantLineas = string_n_split(parametros, 2, ' ');
 		char* path = pathYCantLineas[0];
 		int cantidadDeLineas = pathYCantLineas[1];
-		enviarySerializarPathyCantidadDeLineas(socketDIEGO, path, cantidadDeLineas);
+		enviarySerializarPathyTamanioArchivo(socketDIEGO, path, cantidadDeLineas);
 		return 'b';
 	}else if(string_starts_with(lineaEjecutando, "borrar")){
 		log_info(logger, "Ejecutando instruccion borrar");

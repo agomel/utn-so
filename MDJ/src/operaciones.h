@@ -7,11 +7,16 @@
 #include <malloc.h>
 #include <commons/config.h>
 #include <biblioteca/logger.h>
+#include <biblioteca/utilidades.h>
+#include <sys/mman.h>
+#include <sys/stat.h>
+#include <fcntl.h>
 
 int validarArchivo(int emisor);
-void crearArchivo(int emisor);
+int crearArchivo(int emisor);
 void guardarDatos(int emisor);
 char* obtenerDatos(int emisor);
+int eliminarArchivo(int emisor);
 
 extern t_log* logger;
 

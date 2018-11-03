@@ -44,7 +44,7 @@ void entenderMensaje(int emisor, char header){
 			pedirDatosAFM9(idDTB, path);
 			cantidadDeLineas = deserializarInt(socketFM9);
 			char* datos = recibirFlushFM9(cantidadDeLineas);
-			int guardarDatos = guardarDatosEnMDJ(datos, path, cantidadDeLineas);
+			int guardarDatos = guardarDatosEnMDJ(datos, path);
 			if(guardarDatos != 0){
 				enviarError(idDTB, path, guardarDatos);
 			}else{
