@@ -1,23 +1,29 @@
 #include "operaciones.h"
-char* obtenerDatosDeArchivo(int offset, int tamanio, char* path){
-	size_t tamanioALeer = tamanio;
-	off_t of = offset;
-	int myFile = open(path, O_WRONLY | O_RDONLY | O_CREAT, S_IRWXU);
+
+
+/*char* obtenerDatosDeArchivo(int offset, int tamanio, char* path){
+	//size_t tamanioALeer = tamanio;
+	//off_t of = offset;
+	int myFile = open(path, O_RDONLY);
 	if(myFile < 0){
 		log_info(logger, "Error gato!");
 	}
 
+	lseek(myFile, offset, SEEK_SET);
+	char* buffer = asignarMemoria(tamanio);
+	read(myFile, buffer, tamanio);
+
 	/*struct stat myStat;
 	if(fstat(myFile, &myStat)){
-		//fstat error
+		log_info(logger, "Error2 gato!");
 	}
 
-	off_t size = myStat.st_size;*/
+	off_t size = myStat.st_size;
 
-	char* buffer = mmap(NULL, tamanioALeer, PROT_READ | PROT_WRITE | PROT_EXEC, MAP_SHARED, myFile, of);
+	//char* buffer = mmap(NULL, tamanioALeer, PROT_READ | PROT_WRITE | PROT_EXEC, MAP_SHARED, myFile, of);
 	//free(rutaArchivo);
 	return buffer;
-}
+}*/
 
 int validarArchivo(int emisor){
 	char* rutaArchivo = deserializarString(emisor);
@@ -57,100 +63,59 @@ void guardarDatos(int emisor){
 	char* datos = deserializarString(emisor);
 	//log_info("Guardando datos: %s en archivo: %s", datos, rutaArchivo);
 
-	char* buffer = obtenerDatosDeArchivo(offset, tamanioALeer, rutaArchivo);
-	buffer[0] = datos;
 
-	log_info(logger, "Guardados los datos %s", datos);
-	free(rutaArchivo);
-	free(datos);
+	int myFile = open(rutaArchivo, O_WRONLY);
+	if(myFile < 0){
+		log_info(logger, "Error gato!");
+	}
 
+	lseek(myFile, offset, SEEK_SET);
 
+	//char* buffer = asignarMemoria(tamanioALeer);
+	//read(myFile, buffer, tamanioALeer);
+
+	//close(myFile);
+	//free(rutaArchivo);
+
+	//char* buffer = obtenerDatosDeArchivo(offset, tamanioALeer, rutaArchivo);
+	//buffer[0] = datos;
+
+	//log_info(logger, "Guardados los datos %s", datos);
+	//free(rutaArchivo);
+	//free(datos);
+
+	return 0;
 	//TODO guardar datos posta y hacer free de los strings
 }
 
-
-char* leerTodoElArchivo(char *filename)
-{
-   char *buffer = NULL;
-   int string_size, read_size;
-   FILE *handler = fopen(filename, "r");
-
-   if (handler)
-   {
-       // Seek the last byte of the file
-       fseek(handler, 0, SEEK_END);
-       // Offset from the first to the last byte, or in other words, filesize
-       string_size = ftell(handler);
-       // go back to the start of the file
-       rewind(handler);
-
-       // Allocate a string that can hold it all
-       buffer = (char*) malloc(sizeof(char) * (string_size + 1) );
-
-       // Read it all in one operation
-       read_size = fread(buffer, sizeof(char), string_size, handler);
-
-       // fread doesn't set it so put a \0 in the last position
-       // and buffer is now officially a string
-       buffer[string_size] = '\0';
-
-       if (string_size != read_size)
-       {
-    	   log_error(logger, "hubo un error al leer el archivo :(");
-           // Something went wrong, throw away the memory and set
-           // the buffer to NULL
-           free(buffer);
-           buffer = NULL;
-       }
-
-       // Always remember to close the file.
-       fclose(handler);
-    }
-
-    return buffer;
-}
-
-char* leerParteDeArchivo(char *filename, int tamanioALeer, int offset)
-{
-   char *buffer = NULL;
-   FILE *handler = fopen(filename, "r");
-
-   if (handler)
-   {
-	   lseek(handler, offset, SEEK_SET);
-
-       // Allocate a string that can hold it all
-       buffer = (char*) malloc(sizeof(char) * (tamanioALeer + 1) );
-
-       // Read it all in one operation
-       int tamanioLeido = fread(buffer, sizeof(char), tamanioALeer, handler);
-
-       // fread doesn't set it so put a \0 in the last position
-       // and buffer is now officially a string
-       buffer[tamanioALeer] = '\0';
-
-       if (tamanioALeer != tamanioLeido)
-       {
-    	   log_error(logger, "hubo un error al leer el archivo de a partes :(");
-           // Something went wrong, throw away the memory and set
-           // the buffer to NULL
-           free(buffer);
-           buffer = NULL;
-       }
-
-       // Always remember to close the file.
-       fclose(handler);
-    }
-
-    return buffer;
-}
 char* obtenerDatos(int emisor){
-	char* rutaArchivo = "a";//deserializarString(emisor);
-	int offset = 10;//deserializarInt(emisor);
-	int tamanioALeer = 5;//deserializarInt(emisor);
+	char* rutaArchivo = deserializarString(emisor);
+	int offset = deserializarInt(emisor);
+	int tamanioALeer;
 
-	//return obtenerDatosDeArchivo(offset, tamanioALeer, rutaArchivo);
+	int myFile = open(rutaArchivo, O_RDONLY);
+	if(myFile < 0){
+		log_info(logger, "Error gato!");
+	}
 
+	if(offset >= 0){
+		tamanioALeer = deserializarInt(emisor);
+		lseek(myFile, offset, SEEK_SET);
+	}else{
+		struct stat myStat;
+		if(fstat(myFile, &myStat)){
+			log_info(logger, "Error2 gato!");
+		}
+		tamanioALeer = myStat.st_size;
+	}
+
+	char* buffer = asignarMemoria(tamanioALeer);
+	read(myFile, buffer, tamanioALeer);
+
+	close(myFile);
+	free(rutaArchivo);
+
+	return buffer;
  }
 
 int eliminarArchivo(int emisor){
