@@ -346,9 +346,11 @@ void escuchar(int socketSAFA){//MensajeNano: Verificar los punteros de DTB
 										b = 0;
 									}
 								}
-								dtbRecibido->programCounter++;
-								pedirCosasDelFM9(dtbRecibido);
-								lineaAEjecutar = deserializarString(socketFM9);
+								if(b == 1){
+									dtbRecibido->programCounter++;
+									pedirCosasDelFM9(dtbRecibido);
+									lineaAEjecutar = deserializarString(socketFM9);
+								}
 							}
 						}
 					}
