@@ -11,9 +11,10 @@ static ElementoTablaProcesos* obtenerProcesoPorIdDTB(int idDTB);
 static void freeRespuestaCargaSegPura(RespuestaCargaSegPura* respuesta);
 static RespuestaCargaSegPura* guardarDatosInternaSegPura(char* datos, char* nombreArchivo);
 static int dondeEntro(int tamanioAGuardar);
+static void freeLineasBasura(char** lineaSinBasura, char* lineaConBasura);
 
 ElementoTablaProcesos* crearElemTablaProcesos(int idDTB, int tablaSegmentos){
-	ElementoTablaProcesos* elemento = malloc(sizeof(ElementoTablaProcesos*));
+	ElementoTablaProcesos* elemento = malloc(sizeof(ElementoTablaProcesos));
 	elemento->idDTB = idDTB;
 	elemento->tablaSegmentos = tablaSegmentos;
 	return elemento;
@@ -143,9 +144,7 @@ respuestaDeObtencionDeMemoria* obtenerDatosSegPura(int idDTB, char* nombreArchiv
 		memcpy(lineaConBasura, storage + desplazamiento, tamanioLinea);
 		char** lineaSinBasura = string_split(lineaConBasura, "\n");
 		string_append_with_format(archivo, "%s\n", lineaSinBasura[0]);
-		free(lineaConBasura);
-		free(lineaSinBasura[0]);
-		free(lineaSinBasura[1]);
+		freeLineasBasura(lineaSinBasura, lineaConBasura);
 	}
 
 	respuesta->datos = malloc(strlen(archivo));
@@ -153,6 +152,13 @@ respuestaDeObtencionDeMemoria* obtenerDatosSegPura(int idDTB, char* nombreArchiv
 	respuesta->cantidadDeLineas = cantidadLineas;
 
 	return respuesta;
+}
+
+static void freeLineasBasura(char** lineaSinBasura, char* lineaConBasura){
+	free(lineaConBasura);
+	free(lineaSinBasura[0]);
+	free(lineaSinBasura[1]);
+	free(lineaSinBasura);
 }
 
 respuestaDeObtencionDeMemoria* obtenerLineaSegPura(int idDTB, char* nombreArchivo, int numeroLinea){
@@ -172,7 +178,7 @@ respuestaDeObtencionDeMemoria* obtenerLineaSegPura(int idDTB, char* nombreArchiv
 		respuesta->datos = malloc(strlen(lineaSinBasura[0])+1);
 		respuesta->pudoObtener = 0;
 		memcpy(respuesta->datos, lineaSinBasura[0], strlen(lineaSinBasura[0])+1);
-		free(lineaConBasura);
+		freeLineasBasura(lineaSinBasura, lineaConBasura);
 	}else{
 		log_error(logger, "El DTB no posee la linea %d", numeroLinea);
 		respuesta->pudoObtener = 1;
@@ -218,17 +224,13 @@ int asignarDatosSegPura(int IdDTB, char* nombreArchivo, int numeroLinea, char* d
 		//Se puede escribir
 		string_append_with_format(lineaSinBasura[0], " %s\n", datos);
 		memcpy(storage + desplazamiento, lineaSinBasura[0], strlen(lineaSinBasura[0]));
-		free(lineaConBasura);
-		free(lineaSinBasura[0]);
-		free(lineaSinBasura[1]);
+		freeLineasBasura(lineaSinBasura, lineaConBasura);
 		log_debug(logger, "Asignados datos con exito");
 
 	}else{
 		log_error(logger, "No hay suficiente espacio en la linea %d del archivo %s", numeroLinea, nombreArchivo);
 		return 20002;
 	}
-
-
 }
 
 

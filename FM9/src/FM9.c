@@ -58,7 +58,7 @@ void liberarMemoria(int idDTB, char* nombreArchivo){
 		liberarMemoriaSegPura(idDTB, nombreArchivo); //CAMBIAAAAAAAAR
 }
 
-int asignarDatos(int idDTB, int numeroLinea, char* datos, char* nombreArchivo){
+int asignarDatos(int idDTB, char* nombreArchivo, int numeroLinea, char* datos){
 	if(strcmp(modo, "SEG_PURA") == 0)
 		return asignarDatosSegPura(idDTB, nombreArchivo, numeroLinea, datos);
 

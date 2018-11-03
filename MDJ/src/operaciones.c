@@ -27,6 +27,6 @@ char* obtenerDatos(int emisor){
 	int offset = deserializarInt(emisor);
 	int tamanioALeer = deserializarInt(emisor);
 	log_info("Obteniendo %d bytes de archivo: %s", tamanioALeer, rutaArchivo);
-	return "wait hola\nsignal hola\nabrir chay\nconcentrar\flush hola\ncrear hola\nborrar hola";
+	return "wait algo\nsignal algo\nabrir chau\nconcentrar\nasignar chau 1 brendi\nflush chau\ncrear nano\nborrar nano\n";
 	//TODO leer archivos posta y hacer free de los strings
  }

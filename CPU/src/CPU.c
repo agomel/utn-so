@@ -51,7 +51,7 @@ char entendiendoLinea(char* lineaEjecutando, DTB* dtbRecibido){
 		//Asignar
 		log_info(logger, "Ejecutando instruccion asignar");
 		char* parametros = string_substring_from(lineaEjecutando, 8);
-		char** pathYNumeroLinea= string_n_split(parametros, 3, ' ');
+		char** pathYNumeroLinea= string_n_split(parametros, 3, " ");
 		char* path = pathYNumeroLinea[0];
 		int numeroDeLinea = pathYNumeroLinea[1];
 		char* datos = pathYNumeroLinea[2];
@@ -124,6 +124,7 @@ char entendiendoLinea(char* lineaEjecutando, DTB* dtbRecibido){
 			free(pathRecibido);
 			return 'b';
 		}else{
+			log_error(logger, "El DTB %d no tiene el archivo %s abierto", dtbRecibido->id, pathRecibido);
 			//No esta abierto ese archivo
 			free(pathRecibido);
 			return 'a';
