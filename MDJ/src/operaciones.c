@@ -151,6 +151,10 @@ char* obtenerDatos(int emisor){
 
 	//return obtenerDatosDeArchivo(offset, tamanioALeer, rutaArchivo);
 
+	log_info("Obteniendo bytes de archivo: %s", rutaArchivo);
+
+	return obtenerDatosDeArchivo(offset, tamanioALeer, rutaArchivo);
+	//TODO leer archivos posta y hacer free de los strings
  }
 
 int eliminarArchivo(int emisor){

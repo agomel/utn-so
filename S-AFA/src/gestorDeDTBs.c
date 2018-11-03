@@ -281,6 +281,7 @@ int verificarSiExisteRecurso(char* recurso){
 		waitMutex(&mutexRecursos);
 		dictionary_put(recursos, recurso, cantidadRecurso);
 		signalMutex(&mutexRecursos);
+		log_info(logger, "Creado el recurso, no existia");
 	}
 	return tieneLaClave;
 }
@@ -295,6 +296,7 @@ char asignarRecurso(int idDTB, char* recurso){
 		waitMutex(&mutexRecursos);
 		dictionary_put(recursos, recurso, cant);
 		signalMutex(&mutexRecursos);
+		log_info(logger, "Le di el recurso al dtb %d", idDTB);
 		return CONTINUAR_CON_EJECUCION;
 	}else{
 		waitMutex(&mutexEsperandoRecursos);
@@ -303,6 +305,7 @@ char asignarRecurso(int idDTB, char* recurso){
 		der->recurso = recurso;
 		list_add(esperandoRecursos, der);
 		signalMutex(&mutexEsperandoRecursos);
+		log_info(logger, "No esta el recurso disponible.. vas a pasar a bloqueado :( DTB: %d", idDTB);
 		return LIBERAR_DTB_DE_EJECUCION;
 	}
 }
@@ -321,6 +324,7 @@ char liberarRecurso(char* recurso){
 		Historial* historial = crearHistorial(espera->idDTB);
 		agregarHistorialAListaTiempoRespuesta(historial);
 		ponerEnReady(espera->idDTB);
+		log_info(logger, "Se libero el recurso que esperaba el dtb %d y se lo paso a ready", espera->idDTB);
 	}else{
 		//Le sumo uno a los recursos
 		waitMutex(&mutexRecursos);
@@ -330,6 +334,7 @@ char liberarRecurso(char* recurso){
 		waitMutex(&mutexRecursos);
 		dictionary_put(recursos, recurso, cant);
 		signalMutex(&mutexRecursos);
+		log_info(logger, "Se libero el recurso que no tenia asignado nadie");
 	}
 	return CONTINUAR_CON_EJECUCION;
 

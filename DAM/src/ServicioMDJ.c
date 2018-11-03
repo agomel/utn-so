@@ -9,7 +9,9 @@ int validarArchivoMDJ(char* path){
 	log_info(logger, "enviando a emisor %d char: %c y escriptorio %s", socketMDJ, VALIDAR_ARCHIVO, path);
 	enviarMensaje(socketMDJ, buffer, tamanioMensaje);
 	free(buffer);
-	int respuesta =  deserializarInt(socketMDJ);
+	log_debug(logger, "esperando mensaje de MDJ");
+	int respuesta = deserializarInt(socketMDJ);
+	log_debug(logger, "recibido mensaje de MDJ");
 	return respuesta;
 }
 
@@ -51,23 +53,10 @@ int borrarArchivoEnMDJ(char* path){
 	free(buffer);
 	return deserializarInt(socketMDJ);
 }
-int guardarDatosEnMDJ(char* datos, char* path, int cantidadDeLineas){
+int guardarDatosEnMDJ(char* datos, char* path){
 	int cantidadTotal = (sizeof(datos)+1) ;
-	enviarYSerializarInt(socketMDJ, cantidadTotal, GUARDAR_DATOS);
-	int desplazamiento = 0;
-	while(cantidadTotal > 0){
-		int cantidadAEnviar;
-		if(cantidadTotal > transferSize){
-			cantidadAEnviar = transferSize;
-		}else{
-			cantidadAEnviar = cantidadTotal;
-		}
-		enviarMensaje(socketMDJ, datos + desplazamiento, cantidadAEnviar);
-		desplazamiento = desplazamiento + cantidadAEnviar;
-		cantidadTotal = cantidadTotal - cantidadAEnviar;
-	}
-
-	enviarySerializarPathyCantidadDeLineas(socketMDJ, path, cantidadDeLineas);
+	enviarYSerializarCharSinHeader(socketMDJ, GUARDAR_DATOS);
+	enviarYSerializarStringSinHeader(socketMDJ, datos);
 	return deserializarInt(socketMDJ);
 }
 

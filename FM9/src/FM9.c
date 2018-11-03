@@ -1,112 +1,122 @@
-/*
- ============================================================================
- Name        : FM9.c
- Author      : 
- Version     :
- Copyright   : Your copyright notice
- Description : Hello World in C, Ansi-style
- ============================================================================
- */
-
 #include "FM9.h"
-t_list* guardarDatos(char* datos){
-	t_list* direccionesGuardadas = list_create();
-	waitMutex(&mutexOffset);
-	list_add(direccionesGuardadas, offset);
-	signalMutex(&mutexOffset);
+#include "segmentacionPura.h"
+#include "segmentacionPag.h"
+#include "paginasInvertidas.h"
 
-	waitMutex(&mutexStorage);
-	memcpy(storage, datos, strlen(datos) + 1);
-	signalMutex(&mutexStorage);
+respuestaDeObtencionDeMemoria* obtenerDatosDeMemoria(char* nombreArchivo){
+	if(strcmp(modo, "SEG_PURA") == 0)
+		return obtenerDatosSegPura(nombreArchivo);
 
-	waitMutex(&mutexOffset);
-	offset = offset + strlen(datos) + 1;
-	signalMutex(&mutexOffset);
-	return direccionesGuardadas;
+	if(strcmp(modo, "SEG_PAG") == 0)
+		return obtenerDatosSegPag(nombreArchivo);
+
+	if(strcmp(modo, "INV") == 0)
+		return obtenerDatosInvertida(nombreArchivo);
 }
 
-respuestaDeObtencionDeMemoria* obtenerDatosDeMemoria(t_list* posiciones){
-	//TODO OBTENER DATOS
-	respuestaDeObtencionDeMemoria* respuesta;
-	respuesta->cantidadDeLineas = 0;
-	t_list* lista = list_create();
-	respuesta->datos = lista;
-	respuesta->pudoGuardarlo = 0;
-	return respuesta;
+int cargarDatosEnMemoria(char* datos, char* nombreArchivo){
+	if(strcmp(modo, "SEG_PURA") == 0)
+		return guardarDatosSegPura(datos, nombreArchivo);
+
+	if(strcmp(modo, "SEG_PAG") == 0)
+		return guardarDatosSegPag(datos, nombreArchivo);
+
+	if(strcmp(modo, "INV") == 0)
+		return guardarDatosInvertida(datos, nombreArchivo);
 }
 
-respuestaDeCargaEnMemoria cargarDatosEnMemoria(char* datos){
-	respuestaDeCargaEnMemoria respuesta;
-	respuesta.listaDeDirecciones = guardarDatos(datos);// TODO
-	respuesta.pudoGuardarlo = 0;//0 significa que pudo, si no, numero de error
-	log_info(logger, "Guardados datos: %s", datos);
-	return respuesta; //pudo guardar. TODO hacer si tuvo un error return 0
+respuestaDeObtencionDeMemoria* obtenerLinea(char* nombreArchivo, int numeroLinea){
+	if(strcmp(modo, "SEG_PURA") == 0)
+		return obtenerLineaSegPura(nombreArchivo, numeroLinea);
+
+	if(strcmp(modo, "SEG_PAG") == 0)
+		return obtenerLineaSegPag(nombreArchivo, numeroLinea);
+
+	if(strcmp(modo, "INV") == 0)
+		return obtenerLineaSegPura(nombreArchivo, numeroLinea); //CAMBIAAAAAAAAR
 }
 
+void liberarMemoria(char* nombreArchivo){
+	if(strcmp(modo, "SEG_PURA") == 0)
+		liberarMemoriaSegPura(nombreArchivo);
+
+	if(strcmp(modo, "SEG_PAG") == 0)
+		liberarMemoriaSegPag(nombreArchivo);
+
+	if(strcmp(modo, "INV") == 0)
+		liberarMemoriaSegPura(nombreArchivo); //CAMBIAAAAAAAAR
+}
+
+void freeRespuestaObtencion(respuestaDeObtencionDeMemoria* respuesta){
+	free(respuesta->datos);
+	free(respuesta);
+}
 
 void entenderMensaje(int emisor, char header){
-	char* datos;
-	respuestaDeCargaEnMemoria respuestaDeCarga;
-	respuestaDeObtencionDeMemoria* respuestaDeObtener;
-	int id;
-	int tamanioBuffer;
-	int offset;
-	int sizeDeLaRespuesta;
-	int desplazamiento;
-	int tamanioPath;
-	void* buffer;
-	t_list* posiciones;
-	int programCounter;
+	switch(header){
+			case GUARDAR_DATOS: {
+				log_debug(logger, "Guardando datos en memoria");
+				char* nombreArchivo = deserializarString(emisor);
+				char* datos = deserializarString(emisor);
+				int respuestaDeCarga = cargarDatosEnMemoria(datos, nombreArchivo);
+				free(datos);
+				free(nombreArchivo);
 
-		switch(header){
-
-			case GUARDAR_DATOS:
-				datos = deserializarString(emisor);
-				respuestaDeCarga = cargarDatosEnMemoria(datos);
-
-				if(respuestaDeCarga.pudoGuardarlo == 0){
-					desplazamiento = 0;
-					tamanioBuffer = sizeof(int) + sizeof(int) + sizeof(int)*(respuestaDeCarga.listaDeDirecciones->elements_count);
-					buffer = asignarMemoria(tamanioBuffer);
-					concatenarInt(buffer, &desplazamiento, respuestaDeCarga.pudoGuardarlo);
-					concatenarListaInt(buffer, &desplazamiento, respuestaDeCarga.listaDeDirecciones);
-					enviarMensaje(socketDAM, buffer, tamanioBuffer);
-					free(buffer);
-
-				}else{
-					enviarYSerializarIntSinHeader(socketDAM, respuestaDeCarga.pudoGuardarlo);
-				}
+				log_debug(logger, "Enviando %d al guardar los datos", respuestaDeCarga);
+				enviarYSerializarIntSinHeader(socketDAM, respuestaDeCarga);
 				break;
-			case OBTENER_DATOS:
-				posiciones = deserializarListaInt(emisor);
-				respuestaDeObtener = obtenerDatosDeMemoria(posiciones); //TODO
+			}
 
-				desplazamiento = 0;
-				tamanioBuffer = sizeof(int) + sizeof(int) + sizeof(int) + strlen("hola") + 1;
-				buffer = asignarMemoria(tamanioBuffer);
-				concatenarInt(buffer, &desplazamiento, 0);
-				concatenarInt(buffer, &desplazamiento, 1);
-				concatenarString(buffer, &desplazamiento, "hola");
+			case OBTENER_DATOS: {
+				log_debug(logger, "Obteniendo datos de memoria");
+				char* nombreArchivo = deserializarString(emisor);
+				respuestaDeObtencionDeMemoria* respuestaDeObtener = obtenerDatosDeMemoria(nombreArchivo); //TODO
+
+				int desplazamiento = 0;
+				int tamanioBuffer = sizeof(int) + sizeof(int) + strlen(respuestaDeObtener->datos) + 1;
+				void* buffer = asignarMemoria(tamanioBuffer);
+				concatenarInt(buffer, &desplazamiento, respuestaDeObtener->cantidadDeLineas);
+				concatenarString(buffer, &desplazamiento, respuestaDeObtener->datos);
 				enviarMensaje(socketDAM, buffer, tamanioBuffer);
+				free(buffer);
+				freeRespuestaObtencion(respuestaDeObtener);
 				break;
-			case TRAER_LINEA_ESCRIPTORIO:
-				programCounter = deserializarInt(emisor);
-				posiciones = deserializarListaInt(emisor);
-				char* respuesta = "Respuesta hardcodeada";
-				for(int i = 0; i < posiciones->elements_count; i ++){
-					waitMutex(&mutexStorage);
-					//TODO obtener del storage lo pedido y agregar al string realocandole memoria
-					signalMutex(&mutexStorage);
-				}
+			}
 
-				desplazamiento = 0;
-				tamanioBuffer = sizeof(int) + strlen(respuesta) + 1;
-				buffer = asignarMemoria(tamanioBuffer);
-				concatenarString(buffer, &desplazamiento, respuesta);
+			case TRAER_LINEA_ESCRIPTORIO: {
+				log_debug(logger, "Trayendo linea escriptorio");
+				char* nombreArchivo = deserializarString(emisor);
+				int numeroLinea = deserializarInt(emisor);
+				respuestaDeObtencionDeMemoria* respuesta = obtenerLinea(nombreArchivo, numeroLinea);
+				char* mensajeAEnviar;
+				if(respuesta->pudoObtener == 0){
+					mensajeAEnviar = asignarMemoria(strlen(respuesta->datos) + 1);
+					mensajeAEnviar = respuesta->datos;
+				}else{
+					mensajeAEnviar = asignarMemoria(sizeof(char) + 1);
+					mensajeAEnviar = "v/0";
+				}
+				int desplazamiento = 0;
+				int tamanioBuffer = sizeof(int) + strlen(mensajeAEnviar) + 1;
+				void* buffer = asignarMemoria(tamanioBuffer);
+				concatenarString(buffer, &desplazamiento, mensajeAEnviar);
 				enviarMensaje(socketCPU, buffer, tamanioBuffer);
+				freeRespuestaObtencion(respuesta);
+				free(respuesta); //Porque no hay que hacer el free de respuesta->datos
 				break;
+			}
+
+			case LIBERAR_MEMORIA: {
+				char* nombreArchivo = deserializarString(emisor);
+				log_debug(logger, "Liberando memoria para archivo %s", nombreArchivo);
+				liberarMemoria(nombreArchivo);
+
+				break;
+			}
+
 			default:
 				log_error(logger, "Header desconocido");
+				break;
 		}
 }
 int identificarse(int emisor, char header){
@@ -143,18 +153,41 @@ void crearSelect(int servidor){
 	select->semProductores = &semProductores;
 	realizarNuestroSelect(select);
 }
+
+void inicializar(char* modo){
+	if(strcmp(modo, "SEG_PURA") == 0)
+		return inicializarSegPura();
+
+	if(strcmp(modo, "SEG_PAG") == 0)
+		return inicializarSegPag();
+
+	if(strcmp(modo, "INV") == 0)
+		return inicializarSegPura(); //CAMBIAAAR
+}
+
 void init(){
-	inicializarMutex(&mutexOffset);
-	inicializarMutex(&mutexStorage);
 	t_config* configuracion = config_create(ARCHIVO_CONFIGURACION);
-	storage = asignarMemoria(config_get_int_value(configuracion, "TAMANIO"));
-	//TODO el offset no va a ser siempre 0
+
+	tamanioLinea = config_get_int_value(configuracion, "MAX_LINEA");
+	tamanioMemoria = config_get_int_value(configuracion, "TAMANIO");
+	tamanioPagina = config_get_int_value(configuracion, "TAM_PAGINA");
+	storage = asignarMemoria(tamanioMemoria);
+	char* punteroAModo = config_get_string_value(configuracion, "MODO");
+	modo = asignarMemoria(strlen(punteroAModo) + 1);
+	memcpy(modo, punteroAModo, strlen(punteroAModo) + 1);
+	cantidadMarcosTotales = tamanioMemoria / tamanioPagina;
+
+	inicializar(modo);
+
 	offset = 0;
 	logger = crearLogger(ARCHIVO_LOG, "FM9");
-	inicializarMutex(&mutexOperaciones);
+
 	colaOperaciones = queue_create();
+	inicializarMutex(&mutexOperaciones);
 	inicializarSem(&semOperaciones, 0);
 	inicializarSem(&semProductores, 0);
+
+	config_destroy(configuracion);
 }
 
 int main(void) {

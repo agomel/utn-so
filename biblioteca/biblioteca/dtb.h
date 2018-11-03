@@ -14,7 +14,7 @@ typedef struct{
 	char* escriptorio;
 	int programCounter;
 	int flag;
-	t_dictionary* direccionesArchivos;
+	t_list* listaDeArchivos;
 	int quantum;
 	char estado;
 }DTB;

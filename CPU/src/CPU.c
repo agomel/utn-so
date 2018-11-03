@@ -22,7 +22,7 @@ char entendiendoLinea(char* lineaEjecutando, DTB* dtbRecibido){
 		char* pathRecibido = asignarMemoria(strlen(lineaEjecutando)-5);
 		pathRecibido = string_substring_from(lineaEjecutando, 6);
 		//Corrobora si ya esta abierto
-		if(dictionary_has_key(dtbRecibido->direccionesArchivos, pathRecibido)){
+		if(listHasValue(dtbRecibido->listaDeArchivos, pathRecibido)){
 			return 's';
 		}else {
 			int tamanioPathEscriptorioACargar;
@@ -54,11 +54,11 @@ char entendiendoLinea(char* lineaEjecutando, DTB* dtbRecibido){
 		char* path = pathYCantLineas[0];
 		int cantidadDeLineas = pathYCantLineas[1];
 		char* datos = pathYCantLineas[2];
-		if(dictionary_has_key(dtbRecibido->direccionesArchivos, path)){
+		if(listHasValue(dtbRecibido->listaDeArchivos, path)){
 			//Esta abierto
 			log_info(logger, "Ejecutando instruccion asignar");
 
-			void* buffer = asignarMemoria(sizeof(char) + sizeof(int) + (strlen(path)+1) + sizeof(int));
+			void* buffer = asignarMemoria(sizeof(char) + sizeof(int)*3 + (strlen(path)+1) + strlen(datos) + 1);
 			int desplazamiento = 0;
 
 			concatenarChar(buffer, &desplazamiento, ASIGNAR_DATOS);
@@ -84,7 +84,7 @@ char entendiendoLinea(char* lineaEjecutando, DTB* dtbRecibido){
 		enviarYSerializarIntSinHeader(socketSAFA, dtbRecibido->id);
 		char seguirConEjecucion = deserializarChar(socketSAFA);
 		free(recursoRecibido);
-		if(seguirConEjecucion == 'LIBERAR_DTB_DE_EJECUCION'){
+		if(seguirConEjecucion == LIBERAR_DTB_DE_EJECUCION){
 			return 'b';
 		}else{
 			return 's';
@@ -97,7 +97,7 @@ char entendiendoLinea(char* lineaEjecutando, DTB* dtbRecibido){
 		enviarYSerializarString(socketSAFA, recursoRecibido, LIBERAR_RECURSO);
 		char seguirConEjecucion = deserializarChar(socketSAFA);
 		free(recursoRecibido);
-		if(seguirConEjecucion == 'LIBERAR_DTB_DE_EJECUCION'){
+		if(seguirConEjecucion == LIBERAR_DTB_DE_EJECUCION){
 			return 'b';
 		}else{
 			return 's';
@@ -107,16 +107,16 @@ char entendiendoLinea(char* lineaEjecutando, DTB* dtbRecibido){
 		log_info(logger, "Ejecutando instruccion flush");
 		char* pathRecibido = asignarMemoria(strlen(lineaEjecutando)-5);
 		pathRecibido = string_substring_from(lineaEjecutando, 6);
-		if(dictionary_has_key(dtbRecibido->direccionesArchivos, pathRecibido)){
+		if(listHasValue(dtbRecibido->listaDeArchivos, pathRecibido)){
 			//Esta abierto
 			void* buffer;
 			int desplazamiento = 0;
-			int tamanioBuffer = sizeof(char) + (strlen(pathRecibido)+1) + sizeof(int)*2 + obtenerTamanioDiccionario(dtbRecibido->direccionesArchivos);
+			int tamanioBuffer = sizeof(char) + (strlen(pathRecibido)+1) + sizeof(int) + obtenerTamanioListaStrings(dtbRecibido->listaDeArchivos);
 			buffer = asignarMemoria(tamanioBuffer);
 
 			concatenarChar(buffer, &desplazamiento, GUARDAR_ESCRIPTORIO);
 			concatenarString(buffer, &desplazamiento, pathRecibido);
-			concatenarDiccionario(buffer, &desplazamiento, dtbRecibido->direccionesArchivos);
+			concatenarListaString(buffer, &desplazamiento, dtbRecibido->listaDeArchivos);
 			enviarMensaje(socketDIEGO, buffer, tamanioBuffer);
 			free(buffer);
 			free(pathRecibido);
@@ -131,19 +131,25 @@ char entendiendoLinea(char* lineaEjecutando, DTB* dtbRecibido){
 		log_info(logger, "Ejecutando instruccion close");
 		char* pathRecibido = asignarMemoria(strlen(lineaEjecutando)-5);
 				pathRecibido = string_substring_from(lineaEjecutando, 6);
-				if(dictionary_has_key(dtbRecibido->direccionesArchivos, pathRecibido)){
+				if(listHasValue(dtbRecibido->listaDeArchivos, pathRecibido)){
 					//Esta abierto
 					void* buffer;
 					int desplazamiento = 0;
-					t_list* direccionesABorrar = dictionary_get(dtbRecibido->direccionesArchivos, pathRecibido);
-					int tamanioBuffer = sizeof(char) + sizeof(int) + sizeof(int)*direccionesABorrar->elements_count;
+					int tamanioBuffer = sizeof(char) + sizeof(int) + strlen(pathRecibido) + 1;
+					concatenarChar(buffer, &desplazamiento, LIBERAR_MEMORIA);
+					concatenarString(buffer, &desplazamiento, pathRecibido);
 					buffer = asignarMemoria(tamanioBuffer);
 
-					concatenarChar(buffer, &desplazamiento, LIBERAR_MEMORIA);
-					concatenarListaInt(buffer, &desplazamiento, direccionesABorrar);
 					enviarMensaje(socketFM9, buffer, tamanioBuffer);
 					free(buffer);
-					dictionary_remove_and_destroy(dtbRecibido->direccionesArchivos, pathRecibido, list_destroy_and_destroy_elements);
+
+					bool coincideNombre(char* pathAComparar){
+							if(strcmp(pathAComparar, pathRecibido) == 0){
+								return true;
+							}
+							return false;
+						}
+					list_remove_and_destroy_by_condition(dtbRecibido->listaDeArchivos, coincideNombre, free);
 					free(pathRecibido);
 					return 'b';
 				}else{
@@ -157,13 +163,13 @@ char entendiendoLinea(char* lineaEjecutando, DTB* dtbRecibido){
 		char** pathYCantLineas = string_n_split(parametros, 2, ' ');
 		char* path = pathYCantLineas[0];
 		int cantidadDeLineas = pathYCantLineas[1];
-		enviarySerializarPathyCantidadDeLineas(socketDIEGO, path, cantidadDeLineas);
+		enviarySerializarPathyTamanioArchivo(socketDIEGO, path, cantidadDeLineas);
 		return 'b';
 	}else if(string_starts_with(lineaEjecutando, "borrar")){
 		log_info(logger, "Ejecutando instruccion borrar");
 		char* pathRecibido = asignarMemoria(strlen(lineaEjecutando)-5);
 		pathRecibido = string_substring_from(lineaEjecutando, 6);
-		enviarYSerializarString(socketDIEGO, pathRecibido, BORRAR_DATOS);
+		enviarYSerializarString(socketDIEGO, pathRecibido, BORRAR_ARCHIVO);
 		free(pathRecibido);
 		return 'b';
 	}else{
@@ -174,14 +180,12 @@ char entendiendoLinea(char* lineaEjecutando, DTB* dtbRecibido){
 void pedirCosasDelFM9(DTB* dtbRecibido){
 	void* buffer;
 	int desplazamiento = 0;
-	t_list* listaDeDirecciones = list_create();
-	listaDeDirecciones = dictionary_get(dtbRecibido->direccionesArchivos, dtbRecibido->escriptorio);
-	int tamanioBuffer = sizeof(char) + sizeof(int)*2 + sizeof(int)*(listaDeDirecciones->elements_count);
+	int tamanioBuffer = sizeof(char) + sizeof(int) + strlen(dtbRecibido->escriptorio) + 1 + sizeof(int);
 	buffer = asignarMemoria(tamanioBuffer);
 
 	concatenarChar(buffer, &desplazamiento, TRAER_LINEA_ESCRIPTORIO);
+	concatenarString(buffer, &desplazamiento, dtbRecibido->escriptorio);
 	concatenarInt(buffer, &desplazamiento, dtbRecibido->programCounter);
-	concatenarListaInt(buffer, &desplazamiento, listaDeDirecciones);
 	enviarMensaje(socketFM9, buffer, tamanioBuffer);
 	free(buffer);
 }
@@ -208,7 +212,9 @@ void escuchar(int socketSAFA){//MensajeNano: Verificar los punteros de DTB
 						log_info(logger, "Recibi DTB Dummy");
 						//Es el dummy
 						serializarYEnviarDTB(socketSAFA, *dtbRecibido, logger, DUMMY);
-						char recibioOk = deserializarChar(socketSAFA);
+						log_debug(logger, "esperando que SAFA desbloquee para continuar");
+						deserializarChar(socketSAFA);
+						log_debug(logger, "continuo ejecucion");
 
 						int tamanioPathEscriptorio = strlen(dtbRecibido->escriptorio) + 1;
 						int tamanioBuffer = sizeof(char) + tamanioPathEscriptorio + sizeof(int)*2;
@@ -236,14 +242,14 @@ void escuchar(int socketSAFA){//MensajeNano: Verificar los punteros de DTB
 								log_info(logger, "Tiene quantum el DTB");
 								pedirCosasDelFM9(dtbRecibido);
 								lineaAEjecutar = deserializarString(socketFM9);
-								if(lineaAEjecutar[0] == 'FIN_ARCHIVO'){
+								if(lineaAEjecutar[0] == FIN_ARCHIVO){
 									//Fin de archivo
 									log_info(logger, "Pasar DTB a EXIT");
 									serializarYEnviarDTB(socketSAFA, *dtbRecibido, logger, PASAR_A_EXIT);
 									enviarYSerializarIntSinHeader(socketSAFA, sentencias);
 									freeDTB(dtbRecibido);
 									break;
-								}else if(lineaAEjecutar[0] == 'ERROR_O_ACCESO_INVALIDO'){
+								}else if(lineaAEjecutar[0] == ERROR_O_ACCESO_INVALIDO){
 									//Hubo error en FM9
 									dtbRecibido->quantum--;
 									sentencias++;
@@ -287,6 +293,7 @@ void escuchar(int socketSAFA){//MensajeNano: Verificar los punteros de DTB
 							lineaAEjecutar = deserializarString(socketFM9);
 							while(1){
 								if(lineaAEjecutar[0] == ERROR_O_ACCESO_INVALIDO || lineaAEjecutar[0] == FIN_ARCHIVO){
+									log_info(logger, "finalizando archivo");
 									//Fin de archivo o hubo un error
 									sentencias++;
 									serializarYEnviarDTB(socketSAFA, *dtbRecibido, logger, PASAR_A_EXIT);
@@ -319,7 +326,7 @@ void escuchar(int socketSAFA){//MensajeNano: Verificar los punteros de DTB
 					}
 					break;
 				default:
-					log_error(logger, "Header desconocido");
+					log_error(logger, "Header desconocido %c del SAFA", header);
 		}
 	}
 }
