@@ -1,7 +1,7 @@
 #include "operaciones.h"
 
 
-/*char* obtenerDatosDeArchivo(int offset, int tamanio, char* path){
+char* obtenerDatosDeArchivo(int offset, int tamanio, char* path){
 	//size_t tamanioALeer = tamanio;
 	//off_t of = offset;
 	int myFile = open(path, O_RDONLY);
@@ -13,7 +13,7 @@
 	char* buffer = asignarMemoria(tamanio);
 	read(myFile, buffer, tamanio);
 
-	/*struct stat myStat;
+	struct stat myStat;
 	if(fstat(myFile, &myStat)){
 		log_info(logger, "Error2 gato!");
 	}
@@ -23,7 +23,7 @@
 	//char* buffer = mmap(NULL, tamanioALeer, PROT_READ | PROT_WRITE | PROT_EXEC, MAP_SHARED, myFile, of);
 	//free(rutaArchivo);
 	return buffer;
-}*/
+}
 
 int validarArchivo(int emisor){
 	char* rutaArchivo = deserializarString(emisor);
