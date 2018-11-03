@@ -164,7 +164,7 @@ respuestaDeObtencionDeMemoria* obtenerLineaSegPura(int idDTB, char* nombreArchiv
 		cantidadLineasDeArchivo = segmento->limite / tamanioLinea;
 
 	if(numeroLinea < cantidadLineasDeArchivo){
-		int desplazamiento = numeroLinea * tamanioLinea;
+		int desplazamiento = segmento->base + numeroLinea * tamanioLinea;
 		char* lineaConBasura = malloc(tamanioLinea);
 		memcpy(lineaConBasura, storage + desplazamiento, tamanioLinea);
 		char** lineaSinBasura = string_split(lineaConBasura, "\n");
@@ -206,6 +206,31 @@ void liberarMemoriaSegPura(int idDTB, char* nombreArchivo){
 	list_remove_and_destroy_by_condition(segmentosOcupados, coincideBase, free);
 	log_info(logger, "liberando memoria");
 }
+
+int asignarDatosSegPura(int IdDTB, char* nombreArchivo, int numeroLinea, char* datos){
+	ElementoTablaProcesos* proceso = obtenerProcesoPorIdDTB(IdDTB);
+	ElementoTablaSegPura* segmento = obtenerSegmentoPorArchivo(nombreArchivo, proceso->tablaSegmentos);
+	int desplazamiento = segmento->base + numeroLinea * tamanioLinea;
+	char* lineaConBasura = malloc(tamanioLinea);
+	memcpy(lineaConBasura, storage + desplazamiento, tamanioLinea);
+	char** lineaSinBasura = string_split(lineaConBasura, "\n");
+	if((strlen(lineaSinBasura[0] + strlen(datos)) + 2) < tamanioLinea){ //Lo que ya estaba, los datos nuevos, el /n y el espacio en el medio
+		//Se puede escribir
+		string_append_with_format(lineaSinBasura[0], " %s\n", datos);
+		memcpy(storage + desplazamiento, lineaSinBasura[0], strlen(lineaSinBasura[0]));
+		free(lineaConBasura);
+		free(lineaSinBasura[0]);
+		free(lineaSinBasura[1]);
+		log_debug(logger, "Asignados datos con exito");
+
+	}else{
+		log_error(logger, "No hay suficiente espacio en la linea %d del archivo %s", numeroLinea, nombreArchivo);
+		return 20002;
+	}
+
+
+}
+
 
 static bool compararElementos(SegmentoOcupado* elem1, SegmentoOcupado* elem2){
 	return elem1->base < elem2->base;

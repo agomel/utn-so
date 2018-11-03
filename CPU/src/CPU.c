@@ -48,13 +48,13 @@ char entendiendoLinea(char* lineaEjecutando, DTB* dtbRecibido){
 		return 's';
 
 	}else if(string_starts_with(lineaEjecutando, "asignar")){
-//Asignar
+		//Asignar
 		log_info(logger, "Ejecutando instruccion asignar");
 		char* parametros = string_substring_from(lineaEjecutando, 8);
-		char** pathYCantLineas = string_n_split(parametros, 3, ' ');
-		char* path = pathYCantLineas[0];
-		int cantidadDeLineas = pathYCantLineas[1];
-		char* datos = pathYCantLineas[2];
+		char** pathYNumeroLinea= string_n_split(parametros, 3, ' ');
+		char* path = pathYNumeroLinea[0];
+		int numeroDeLinea = pathYNumeroLinea[1];
+		char* datos = pathYNumeroLinea[2];
 		if(listaContiene(dtbRecibido->listaDeArchivos, path)){
 			//Esta abierto
 			log_info(logger, "Ejecutando instruccion asignar");
@@ -65,7 +65,7 @@ char entendiendoLinea(char* lineaEjecutando, DTB* dtbRecibido){
 			concatenarChar(buffer, &desplazamiento, ASIGNAR_DATOS);
 			concatenarInt(buffer, &desplazamiento, dtbRecibido->id);
 			concatenarString(buffer, &desplazamiento, path);
-			concatenarInt(buffer, &desplazamiento, cantidadDeLineas);
+			concatenarInt(buffer, &desplazamiento, numeroDeLinea);
 			concatenarString(buffer, &desplazamiento, datos);
 
 			enviarMensaje(socketFM9, buffer, desplazamiento);

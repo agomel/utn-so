@@ -58,6 +58,17 @@ void liberarMemoria(int idDTB, char* nombreArchivo){
 		liberarMemoriaSegPura(idDTB, nombreArchivo); //CAMBIAAAAAAAAR
 }
 
+int asignarDatos(int idDTB, int numeroLinea, char* datos, char* nombreArchivo){
+	if(strcmp(modo, "SEG_PURA") == 0)
+		return asignarDatosSegPura(idDTB, nombreArchivo, numeroLinea, datos);
+
+	if(strcmp(modo, "SEG_PAG") == 0)
+		return asignarDatosSegPura(idDTB, nombreArchivo, numeroLinea, datos); //CAMBIAAAAAAAAAR
+
+	if(strcmp(modo, "INV") == 0)
+		return asignarDatosSegPura(idDTB, nombreArchivo, numeroLinea, datos); //CAMBIAAAAAAAAAAAR
+}
+
 void freeRespuestaObtencion(respuestaDeObtencionDeMemoria* respuesta){
 	free(respuesta->datos);
 	free(respuesta);
@@ -133,6 +144,20 @@ void entenderMensaje(int emisor, char header){
 				char* nombreArchivo = deserializarString(emisor);
 				log_debug(logger, "Liberando memoria para archivo %s", nombreArchivo);
 				liberarMemoria(idDTB, nombreArchivo);
+
+				break;
+			}
+
+			case ASIGNAR_DATOS: {
+				int idDTB = deserializarInt(emisor);
+				char* nombreArchivo = deserializarString(emisor);
+				int numeroLinea = deserializarInt(emisor);
+				char* datos = deserializarString(emisor);
+				log_debug(logger, "Escribiendo: %s. En: %s ", datos, nombreArchivo);
+				int respuesta = asignarDatos(idDTB, nombreArchivo, numeroLinea, datos);
+				enviarYSerializarIntSinHeader(emisor, respuesta);
+				free(nombreArchivo);
+				free(datos);
 
 				break;
 			}
