@@ -84,7 +84,6 @@ void guardarDatos(int emisor){
 	//free(rutaArchivo);
 	//free(datos);
 
-	return 0;
 	//TODO guardar datos posta y hacer free de los strings
 }
 
