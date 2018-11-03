@@ -73,23 +73,7 @@ char* obtenerDatos(int emisor){
 	int offset = 10;//deserializarInt(emisor);
 	int tamanioALeer = 5;//deserializarInt(emisor);
 
-	size_t tamanio = tamanioALeer;
-	off_t of = offset;
-	int myFile = open(rutaArchivo, O_WRONLY | O_RDONLY | O_CREAT, S_IRWXU);
-	if(myFile < 0){
-		log_info(logger, "Error gato!");
-	}
-
-	/*struct stat myStat;
-	if(fstat(myFile, &myStat)){
-		//fstat error
-	}
-
-	off_t size = myStat.st_size;*/
-
-	char* buffer = mmap(NULL, tamanio, PROT_READ | PROT_WRITE | PROT_EXEC, MAP_SHARED, myFile, of);
-	//free(rutaArchivo);
-	return buffer;
+	return obtenerDatosDeArchivo(offset, tamanioALeer, rutaArchivo);
  }
 
 int eliminarArchivo(int emisor){
