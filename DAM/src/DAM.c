@@ -15,37 +15,31 @@ void entenderMensaje(int emisor, char header){
 	char* path = deserializarString(emisor);
 	int cantidadDeLineas;
 	switch(header){
-		case CARGAR_ESCRIPTORIO_EN_MEMORIA:
+		case CARGAR_ESCRIPTORIO_EN_MEMORIA: {
+			int esDummy = deserializarInt(emisor); //Si es = 0, es DUMMY
+			char header;
+			if(esDummy == 0)
+				header = CARGAR_ESCRIPTORIO_EN_MEMORIA;
+			else
+				header = GUARDAR_DATOS;
+
 			log_info(logger, "Ehhh, voy a buscar %s para %d", path, idDTB);
 			int validarArchivo = validarArchivoMDJ(path);
 			if(validarArchivo != 0){
 				enviarError(idDTB, path, validarArchivo);
 			}else {
 				char* datos = obtenerDatosDeMDJ(path);
-				int estadoDeCarga = enviarDatosAFM9(idDTB, path, datos, GUARDAR_DATOS);
+				int estadoDeCarga = enviarDatosAFM9(idDTB, path, datos, header);
 				if(estadoDeCarga != 0){
 					enviarError(idDTB, path, estadoDeCarga);
 				}else{
-					notificarASafaExito('CARGADO_CON_EXITO_EN_MEMORIA',idDTB, path);
+					notificarASafaExito(CARGADO_CON_EXITO_EN_MEMORIA,idDTB, path);
 				}
 			}
 			break;
-		case CARGAR_DUMMY_EN_MEMORIA:
-			log_info(logger, "Ehhh, voy a buscar %s para %d", path, idDTB);
-			int validarArchivoDummy = validarArchivoMDJ(path);
-			if(validarArchivo != 0){
-				enviarError(idDTB, path, validarArchivo);
-			}else {
-				char* datos = obtenerDatosDeMDJ(path);
-				int estadoDeCargaDummy = enviarDatosAFM9(idDTB, path, datos, GUARDAR_DATOS_DUMMY);
-				if(estadoDeCargaDummy != 0){
-					enviarError(idDTB, path, estadoDeCargaDummy);
-				}else{
-					notificarASafaExito('CARGADO_DUMMY_CON_EXITO_EN_MEMORIA',idDTB, path);
-				}
-			}
-			break;
-		case GUARDAR_ESCRIPTORIO:
+		}
+
+		case GUARDAR_ESCRIPTORIO: {
 			log_debug(logger, "Guardando escriptorio");
 			pedirDatosAFM9(idDTB, path);
 			cantidadDeLineas = deserializarInt(socketFM9);
@@ -54,31 +48,39 @@ void entenderMensaje(int emisor, char header){
 			if(guardarDatos != 0){
 				enviarError(idDTB, path, guardarDatos);
 			}else{
-				notificarASafaExito('GUARDADO_CON_EXITO_EN_MDJ',idDTB, path);
+				notificarASafaExito(GUARDADO_CON_EXITO_EN_MDJ,idDTB, path);
 			}
 			free(datos);
 			break;
-		case CREAR_ARCHIVO:
+		}
+
+		case CREAR_ARCHIVO:{
 			log_debug(logger, "creando archivo");
 			cantidadDeLineas = deserializarInt(emisor);
 			int crearArchivo = crearArchivoEnMDJ(socketMDJ, path, cantidadDeLineas);
 			if(crearArchivo != 0){
 				enviarError(idDTB, path, crearArchivo);
 			}else{
-				notificarASafaExito('CREADO_CON_EXITO_EN_MDJ',idDTB, path);
+				notificarASafaExito(CREADO_CON_EXITO_EN_MDJ,idDTB, path);
 			}
 			break;
-		case BORRAR_ARCHIVO:
+		}
+
+		case BORRAR_ARCHIVO: {
 			log_debug(logger, "borrar archivo");
 			int borrarArchivo = borrarArchivoEnMDJ(path);
 			if(borrarArchivo != 0){
 				enviarError(idDTB, path, borrarArchivo);
 			}else{
-				notificarASafaExito('BORRADO_CON_EXITO_EN_MDJ',idDTB, path);
+				notificarASafaExito(BORRADO_CON_EXITO_EN_MDJ,idDTB, path);
 			}
 			break;
-		default:
+		}
+
+		default: {
 			log_error(logger, "Header desconocido");
+			break;
+		}
 	}
 }
 

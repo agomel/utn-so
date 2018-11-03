@@ -22,7 +22,7 @@ char entendiendoLinea(char* lineaEjecutando, DTB* dtbRecibido){
 		char* pathRecibido = asignarMemoria(strlen(lineaEjecutando)-5);
 		pathRecibido = string_substring_from(lineaEjecutando, 6);
 		//Corrobora si ya esta abierto
-		if(listHasValue(dtbRecibido->listaDeArchivos, pathRecibido)){
+		if(listaContiene(dtbRecibido->listaDeArchivos, pathRecibido)){
 			return 's';
 		}else {
 			int tamanioPathEscriptorioACargar;
@@ -30,12 +30,13 @@ char entendiendoLinea(char* lineaEjecutando, DTB* dtbRecibido){
 			int desplazamiento = 0;
 			void* buffer2;
 			tamanioPathEscriptorioACargar = strlen(pathRecibido) + 1;
-			tamanioBuffer2 = sizeof(char) + tamanioPathEscriptorioACargar + sizeof(int)*2;
+			tamanioBuffer2 = sizeof(char) + tamanioPathEscriptorioACargar + sizeof(int)*3;
 			buffer2 = asignarMemoria(tamanioBuffer2);
 
 			concatenarChar(buffer2, &desplazamiento, CARGAR_ESCRIPTORIO_EN_MEMORIA);
-			concatenarString(buffer2, &desplazamiento, dtbRecibido->escriptorio);
 			concatenarInt(buffer2, &desplazamiento, dtbRecibido->id);
+			concatenarString(buffer2, &desplazamiento, dtbRecibido->escriptorio);
+			concatenarInt(buffer2, &desplazamiento, 1); //No DUMMY
 			enviarMensaje(socketDIEGO, buffer2, tamanioBuffer2);
 			free(buffer2);
 			free(pathRecibido);
@@ -47,23 +48,24 @@ char entendiendoLinea(char* lineaEjecutando, DTB* dtbRecibido){
 		return 's';
 
 	}else if(string_starts_with(lineaEjecutando, "asignar")){
-//Asignar
+		//Asignar
 		log_info(logger, "Ejecutando instruccion asignar");
 		char* parametros = string_substring_from(lineaEjecutando, 8);
-		char** pathYCantLineas = string_n_split(parametros, 3, ' ');
-		char* path = pathYCantLineas[0];
-		int cantidadDeLineas = pathYCantLineas[1];
-		char* datos = pathYCantLineas[2];
-		if(listHasValue(dtbRecibido->listaDeArchivos, path)){
+		char** pathYNumeroLinea= string_n_split(parametros, 3, ' ');
+		char* path = pathYNumeroLinea[0];
+		int numeroDeLinea = pathYNumeroLinea[1];
+		char* datos = pathYNumeroLinea[2];
+		if(listaContiene(dtbRecibido->listaDeArchivos, path)){
 			//Esta abierto
 			log_info(logger, "Ejecutando instruccion asignar");
 
-			void* buffer = asignarMemoria(sizeof(char) + sizeof(int)*3 + (strlen(path)+1) + strlen(datos) + 1);
+			void* buffer = asignarMemoria(sizeof(char) + sizeof(int)*4 + (strlen(path)+1) + strlen(datos) + 1);
 			int desplazamiento = 0;
 
 			concatenarChar(buffer, &desplazamiento, ASIGNAR_DATOS);
+			concatenarInt(buffer, &desplazamiento, dtbRecibido->id);
 			concatenarString(buffer, &desplazamiento, path);
-			concatenarInt(buffer, &desplazamiento, cantidadDeLineas);
+			concatenarInt(buffer, &desplazamiento, numeroDeLinea);
 			concatenarString(buffer, &desplazamiento, datos);
 
 			enviarMensaje(socketFM9, buffer, desplazamiento);
@@ -107,16 +109,16 @@ char entendiendoLinea(char* lineaEjecutando, DTB* dtbRecibido){
 		log_info(logger, "Ejecutando instruccion flush");
 		char* pathRecibido = asignarMemoria(strlen(lineaEjecutando)-5);
 		pathRecibido = string_substring_from(lineaEjecutando, 6);
-		if(listHasValue(dtbRecibido->listaDeArchivos, pathRecibido)){
+		if(listaContiene(dtbRecibido->listaDeArchivos, pathRecibido)){
 			//Esta abierto
 			void* buffer;
 			int desplazamiento = 0;
-			int tamanioBuffer = sizeof(char) + (strlen(pathRecibido)+1) + sizeof(int) + obtenerTamanioListaStrings(dtbRecibido->listaDeArchivos);
+			int tamanioBuffer = sizeof(char) + (strlen(pathRecibido)+1) + sizeof(int)*2;
 			buffer = asignarMemoria(tamanioBuffer);
 
 			concatenarChar(buffer, &desplazamiento, GUARDAR_ESCRIPTORIO);
+			concatenarInt(buffer, &desplazamiento, dtbRecibido->id);
 			concatenarString(buffer, &desplazamiento, pathRecibido);
-			concatenarListaString(buffer, &desplazamiento, dtbRecibido->listaDeArchivos);
 			enviarMensaje(socketDIEGO, buffer, tamanioBuffer);
 			free(buffer);
 			free(pathRecibido);
@@ -131,7 +133,7 @@ char entendiendoLinea(char* lineaEjecutando, DTB* dtbRecibido){
 		log_info(logger, "Ejecutando instruccion close");
 		char* pathRecibido = asignarMemoria(strlen(lineaEjecutando)-5);
 				pathRecibido = string_substring_from(lineaEjecutando, 6);
-				if(listHasValue(dtbRecibido->listaDeArchivos, pathRecibido)){
+				if(listaContiene(dtbRecibido->listaDeArchivos, pathRecibido)){
 					//Esta abierto
 					void* buffer;
 					int desplazamiento = 0;
@@ -180,10 +182,11 @@ char entendiendoLinea(char* lineaEjecutando, DTB* dtbRecibido){
 void pedirCosasDelFM9(DTB* dtbRecibido){
 	void* buffer;
 	int desplazamiento = 0;
-	int tamanioBuffer = sizeof(char) + sizeof(int) + strlen(dtbRecibido->escriptorio) + 1 + sizeof(int);
+	int tamanioBuffer = sizeof(char) + sizeof(int) + strlen(dtbRecibido->escriptorio) + 1 + sizeof(int)*2;
 	buffer = asignarMemoria(tamanioBuffer);
 
 	concatenarChar(buffer, &desplazamiento, TRAER_LINEA_ESCRIPTORIO);
+	concatenarInt(buffer, &desplazamiento, dtbRecibido->id);
 	concatenarString(buffer, &desplazamiento, dtbRecibido->escriptorio);
 	concatenarInt(buffer, &desplazamiento, dtbRecibido->programCounter);
 	enviarMensaje(socketFM9, buffer, tamanioBuffer);
@@ -217,16 +220,16 @@ void escuchar(int socketSAFA){//MensajeNano: Verificar los punteros de DTB
 						log_debug(logger, "continuo ejecucion");
 
 						int tamanioPathEscriptorio = strlen(dtbRecibido->escriptorio) + 1;
-						int tamanioBuffer = sizeof(char) + tamanioPathEscriptorio + sizeof(int)*2;
+						int tamanioBuffer = sizeof(char) + tamanioPathEscriptorio + sizeof(int)*3;
 						void* buffer = asignarMemoria(tamanioBuffer);
 						int desplazamiento = 0;
 
 						concatenarChar(buffer, &desplazamiento, CARGAR_ESCRIPTORIO_EN_MEMORIA);
 						concatenarInt(buffer, &desplazamiento, dtbRecibido->id);
 						concatenarString(buffer, &desplazamiento, dtbRecibido->escriptorio);
-
-
+						concatenarInt(buffer, &desplazamiento, 0);
 						enviarMensaje(socketDIEGO, buffer, tamanioBuffer);
+
 						free(buffer);
 						log_info(logger, "Enviando a SAFA que desbloquee dummy");
 						serializarYEnviarDTB(socketSAFA, *dtbRecibido, logger, DESBLOQUEAR_DTB);
