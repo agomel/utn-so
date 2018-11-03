@@ -48,10 +48,10 @@ int crearArchivo(int emisor){
 	}
 	*/
 
-	char* buffer = obtenerDatosDeArchivo(0, cantidadDeBytes, rutaArchivo);
+	/*char* buffer = obtenerDatosDeArchivo(0, cantidadDeBytes, rutaArchivo);
 	for(int i = 0; i<cantidadDeBytes; i++){
 		buffer[i] = '/0';
-	}
+	}*/
 
 	return 0;
 }
@@ -59,10 +59,8 @@ int crearArchivo(int emisor){
 void guardarDatos(int emisor){
 	char* rutaArchivo = deserializarString(emisor);
 	int offset = deserializarInt(emisor);
-	int tamanioALeer = deserializarInt(emisor);
-	char* datos = deserializarString(emisor);
-	//log_info("Guardando datos: %s en archivo: %s", datos, rutaArchivo);
-
+	int tamanioMensaje = deserializarInt(emisor);
+	char* datos = deserializarStringSinElInt(emisor, tamanioMensaje);
 
 	int myFile = open(rutaArchivo, O_WRONLY);
 	if(myFile < 0){
@@ -71,20 +69,12 @@ void guardarDatos(int emisor){
 
 	lseek(myFile, offset, SEEK_SET);
 
-	//char* buffer = asignarMemoria(tamanioALeer);
-	//read(myFile, buffer, tamanioALeer);
+	write(myFile, datos, tamanioMensaje);
 
-	//close(myFile);
-	//free(rutaArchivo);
+	close(myFile);
 
-	//char* buffer = obtenerDatosDeArchivo(offset, tamanioALeer, rutaArchivo);
-	//buffer[0] = datos;
-
-	//log_info(logger, "Guardados los datos %s", datos);
-	//free(rutaArchivo);
-	//free(datos);
-
-	//TODO guardar datos posta y hacer free de los strings
+	free(rutaArchivo);
+	free(datos);
 }
 
 char* obtenerDatos(int emisor){
