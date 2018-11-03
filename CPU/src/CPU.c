@@ -21,6 +21,7 @@ char entendiendoLinea(char* lineaEjecutando, DTB* dtbRecibido){
 		log_info(logger, "Ejecutando instruccion abrir");
 		char* pathRecibido = asignarMemoria(strlen(lineaEjecutando)-5);
 		pathRecibido = string_substring_from(lineaEjecutando, 6);
+		string_append(&pathRecibido, "\0");
 		//Corrobora si ya esta abierto
 		if(listaContiene(dtbRecibido->listaDeArchivos, pathRecibido)){
 			return 's';
