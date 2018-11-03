@@ -6,22 +6,22 @@ so-commons-library:
 	cd ~; git clone https://github.com/sisoputnfrba/so-commons-library; cd so-commons-library; make; sudo make install
 
 biblioteca:
-	cd biblioteca/Debug; make; export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:~/workspace/tp-2018-2c-5-fant-sticos/biblioteca/Debug
+	cd ~; cd biblioteca/Debug; make; export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:~/workspace/tp-2018-2c-5-fant-sticos/biblioteca/Debug
 
 S-AFA:
-	cd S-AFA/Debug; make; export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:~/workspace/tp-2018-2c-5-fant-sticos/biblioteca/Debug
+	cd ~; cd S-AFA/Debug; make; export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:~/workspace/tp-2018-2c-5-fant-sticos/biblioteca/Debug
 
 CPU:
-	cd CPU/Debug; make; export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:~/workspace/tp-2018-2c-5-fant-sticos/biblioteca/Debug
+	cd ~; cd CPU/Debug; make; export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:~/workspace/tp-2018-2c-5-fant-sticos/biblioteca/Debug
 
 DAM:
-	cd DAM/Debug; make; export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:~/workspace/tp-2018-2c-5-fant-sticos/biblioteca/Debug
+	cd ~; cd DAM/Debug; make; export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:~/workspace/tp-2018-2c-5-fant-sticos/biblioteca/Debug
 
 FM9:
-	cd FM9/Debug; make; export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:~/workspace/tp-2018-2c-5-fant-sticos/biblioteca/Debug
+	cd ~; cd FM9/Debug; make; export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:~/workspace/tp-2018-2c-5-fant-sticos/biblioteca/Debug
 
 MDJ:
-	cd MDJ/Debug; make; export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:~/workspace/tp-2018-2c-5-fant-sticos/biblioteca/Debug
+	cd ~; cd MDJ/Debug; make; export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:~/workspace/tp-2018-2c-5-fant-sticos/biblioteca/Debug
 
 clean:
 	sudo rm -rf ~/so-commons-library
