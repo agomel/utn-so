@@ -12,13 +12,14 @@ int validarArchivoMDJ(char* path){
 	log_debug(logger, "Esperando repuesta validacion de MDJ");
 	int respuesta = deserializarInt(socketMDJ);
 	log_debug(logger, "Recibida respuesta %d de MDJ", respuesta);
+
 	return respuesta;
 }
 
 char* obtenerDatosDeMDJ(char* path){
 	enviarYSerializarCharSinHeader(socketMDJ, OBTENER_DATOS);
 	enviarYSerializarStringSinHeader(socketMDJ, path);
-	enviarYSerializarIntSinHeader(socketMDJ, -1); //Obtener todo el archivo (no mando el string)
+	enviarYSerializarIntSinHeader(socketMDJ, -1); //Obtener todo el archivo (no mando el size)
 	int tamanioARecibirTotal = deserializarInt(socketMDJ);
 	int tamanioRecibido = 0;
 	char* escriptorio;
