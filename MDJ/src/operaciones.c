@@ -19,7 +19,7 @@ int crearArchivo(int emisor){
 	//TODO se tiene que crear con esa cantidad de bytes.. debe ser para el bitmap
 	FILE* archivo = fopen(rutaArchivo, "w");
 	if(archivo == NULL){
-		return PATH_INEXISTENTE;// nose que error podria pasar aca
+		return ESPACIO_INSUFICIENTE;// nose que error podria pasar aca
 	}
 	return 0;
 }
