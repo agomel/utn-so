@@ -25,6 +25,13 @@ char entendiendoLinea(char* lineaEjecutando, DTB* dtbRecibido){
 		if(listaContiene(dtbRecibido->listaDeArchivos, pathRecibido)){
 			return 's';
 		}else {
+			//Bloquear dtb
+			log_info(logger, "Bloquear DTB");
+			serializarYEnviarDTB(socketSAFA, *dtbRecibido, logger, BLOQUEAR_DTB);
+			freeDTB(dtbRecibido);
+			enviarYSerializarIntSinHeader(socketSAFA, sentencias);
+			char continuar = deserializarChar(socketSAFA);
+			//continuar
 			int tamanioPathEscriptorioACargar;
 			int tamanioBuffer2;
 			int desplazamiento = 0;
@@ -110,6 +117,14 @@ char entendiendoLinea(char* lineaEjecutando, DTB* dtbRecibido){
 		char* pathRecibido = asignarMemoria(strlen(lineaEjecutando)-5);
 		pathRecibido = string_substring_from(lineaEjecutando, 6);
 		if(listaContiene(dtbRecibido->listaDeArchivos, pathRecibido)){
+			//Bloquear dtb
+			log_info(logger, "Bloquear DTB");
+			serializarYEnviarDTB(socketSAFA, *dtbRecibido, logger, BLOQUEAR_DTB);
+			freeDTB(dtbRecibido);
+			enviarYSerializarIntSinHeader(socketSAFA, sentencias);
+			char continuar = deserializarChar(socketSAFA);
+			//continuar
+
 			//Esta abierto
 			void* buffer;
 			int desplazamiento = 0;
@@ -162,6 +177,15 @@ char entendiendoLinea(char* lineaEjecutando, DTB* dtbRecibido){
 				}
 	}else if(string_starts_with(lineaEjecutando, "crear")){
 		log_info(logger, "Ejecutando instruccion crear");
+
+		//Bloquear dtb
+		log_info(logger, "Bloquear DTB");
+		serializarYEnviarDTB(socketSAFA, *dtbRecibido, logger, BLOQUEAR_DTB);
+		freeDTB(dtbRecibido);
+		enviarYSerializarIntSinHeader(socketSAFA, sentencias);
+		char continuar = deserializarChar(socketSAFA);
+		//continuar
+
 		char* parametros = string_substring_from(lineaEjecutando, 6);
 		char** pathYCantLineas = string_n_split(parametros, 2, ' ');
 		char* path = pathYCantLineas[0];
@@ -170,6 +194,15 @@ char entendiendoLinea(char* lineaEjecutando, DTB* dtbRecibido){
 		return 'b';
 	}else if(string_starts_with(lineaEjecutando, "borrar")){
 		log_info(logger, "Ejecutando instruccion borrar");
+
+		//Bloquear dtb
+		log_info(logger, "Bloquear DTB");
+		serializarYEnviarDTB(socketSAFA, *dtbRecibido, logger, BLOQUEAR_DTB);
+		freeDTB(dtbRecibido);
+		enviarYSerializarIntSinHeader(socketSAFA, sentencias);
+		char continuar = deserializarChar(socketSAFA);
+		//continuar
+
 		char* pathRecibido = asignarMemoria(strlen(lineaEjecutando)-5);
 		pathRecibido = string_substring_from(lineaEjecutando, 6);
 		enviarYSerializarString(socketDIEGO, pathRecibido, BORRAR_ARCHIVO);
@@ -263,18 +296,12 @@ void escuchar(int socketSAFA){//MensajeNano: Verificar los punteros de DTB
 									freeDTB(dtbRecibido);
 									break;
 								}else if(lineaAEjecutar[0] != '#'){
+									sentencias++;
+									dtbRecibido->programCounter++;
 									mensajeEntendido = entendiendoLinea(lineaAEjecutar, dtbRecibido);
 									if(mensajeEntendido == 'b'){
-										sentencias++;
-										dtbRecibido->programCounter++;
-										log_info(logger, "Bloquear DTB");
-										serializarYEnviarDTB(socketSAFA, *dtbRecibido, logger, BLOQUEAR_DTB);
-										freeDTB(dtbRecibido);
-										enviarYSerializarIntSinHeader(socketSAFA, sentencias);
-										char continuar = deserializarChar(socketSAFA);
 										break;
 									}else if(mensajeEntendido == 'a'){
-										sentencias++;
 										log_info(logger, "Pasar DTB a EXIT");
 										serializarYEnviarDTB(socketSAFA, *dtbRecibido, logger, PASAR_A_EXIT);
 										freeDTB(dtbRecibido);

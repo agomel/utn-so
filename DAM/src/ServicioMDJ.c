@@ -34,6 +34,7 @@ char* obtenerDatosDeMDJ(char* path){
 		}
 		char* parteRecibida = deserializarStringSinElInt(socketMDJ, tamanioARecibir);
 		memcpy(escriptorio + desplazamiento, parteRecibida, tamanioARecibir);
+		free(parteRecibida);
 		desplazamiento = desplazamiento + tamanioARecibir;
 		tamanioRecibido += tamanioARecibir;
 	}

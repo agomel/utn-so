@@ -29,7 +29,7 @@ int validarArchivo(int emisor){
 	char* rutaArchivo = deserializarString(emisor);
 	log_info(logger, "Validando archivo en ruta: %s", rutaArchivo);
 	FILE* archivo = fopen(rutaArchivo, "r");
-	if(archivo == NULL){
+	if(archivo < 0){
 		return PATH_INEXISTENTE;
 	}
 	//0 es archivo valido

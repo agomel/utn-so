@@ -1,6 +1,6 @@
 wait algo
 signal algo
-abrir b
+abrir c
 concentrar
-asignar b 1 brendi
-flush b
+asignar c 1 brendi
+flush c
