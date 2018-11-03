@@ -242,7 +242,7 @@ void escuchar(int socketSAFA){//MensajeNano: Verificar los punteros de DTB
 		log_info(logger, "Finalizando retardo");
 		sentencias = 0;
 			switch(header){
-				case ENVIAR_DTB:
+				case ENVIAR_DTB:{
 					log_info(logger, "Recibiendo un dtb");
 					dtbRecibido = deserializarDTB(socketSAFA);
 					if(dtbRecibido->flag == 0){
@@ -274,7 +274,8 @@ void escuchar(int socketSAFA){//MensajeNano: Verificar los punteros de DTB
 						char* lineaAEjecutar;
 						//No es el dummy
 						if(dtbRecibido->quantum != -1){
-							while(dtbRecibido->quantum != 0){
+							int continuar = 1;
+							while(dtbRecibido->quantum != 0 && continuar){
 
 								log_info(logger, "Tiene quantum el DTB");
 								pedirCosasDelFM9(dtbRecibido);
@@ -285,7 +286,7 @@ void escuchar(int socketSAFA){//MensajeNano: Verificar los punteros de DTB
 									serializarYEnviarDTB(socketSAFA, *dtbRecibido, logger, PASAR_A_EXIT);
 									enviarYSerializarIntSinHeader(socketSAFA, sentencias);
 									freeDTB(dtbRecibido);
-									break;
+									continuar = 0;
 								}else if(lineaAEjecutar[0] == ERROR_O_ACCESO_INVALIDO){
 									//Hubo error en FM9
 									dtbRecibido->quantum--;
@@ -294,19 +295,19 @@ void escuchar(int socketSAFA){//MensajeNano: Verificar los punteros de DTB
 									serializarYEnviarDTB(socketSAFA, *dtbRecibido, logger, PASAR_A_EXIT);
 									enviarYSerializarIntSinHeader(socketSAFA, sentencias);
 									freeDTB(dtbRecibido);
-									break;
+									continuar = 0;
 								}else if(lineaAEjecutar[0] != '#'){
 									sentencias++;
 									dtbRecibido->programCounter++;
 									mensajeEntendido = entendiendoLinea(lineaAEjecutar, dtbRecibido);
 									if(mensajeEntendido == 'b'){
-										break;
+										continuar = 0;
 									}else if(mensajeEntendido == 'a'){
 										log_info(logger, "Pasar DTB a EXIT");
 										serializarYEnviarDTB(socketSAFA, *dtbRecibido, logger, PASAR_A_EXIT);
 										freeDTB(dtbRecibido);
 										enviarYSerializarIntSinHeader(socketSAFA, sentencias);
-										break;
+										continuar = 0;
 									}
 								}
 									dtbRecibido->programCounter++;
@@ -336,7 +337,6 @@ void escuchar(int socketSAFA){//MensajeNano: Verificar los punteros de DTB
 									sentencias++;
 									if(mensajeEntendido == 'b'){
 										dtbRecibido->programCounter++;
-										log_info(logger, "Bloquear DTB");
 										b = 0;
 									}else if(mensajeEntendido == 'a'){
 										log_info(logger, "Pasar DTB a EXIT");
@@ -353,8 +353,10 @@ void escuchar(int socketSAFA){//MensajeNano: Verificar los punteros de DTB
 						}
 					}
 					break;
+				}
 				default:
 					log_error(logger, "Header desconocido %c del SAFA", header);
+					break;
 		}
 	}
 }
