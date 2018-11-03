@@ -68,12 +68,89 @@ void guardarDatos(int emisor){
 	//TODO guardar datos posta y hacer free de los strings
 }
 
+
+char* leerTodoElArchivo(char *filename)
+{
+   char *buffer = NULL;
+   int string_size, read_size;
+   FILE *handler = fopen(filename, "r");
+
+   if (handler)
+   {
+       // Seek the last byte of the file
+       fseek(handler, 0, SEEK_END);
+       // Offset from the first to the last byte, or in other words, filesize
+       string_size = ftell(handler);
+       // go back to the start of the file
+       rewind(handler);
+
+       // Allocate a string that can hold it all
+       buffer = (char*) malloc(sizeof(char) * (string_size + 1) );
+
+       // Read it all in one operation
+       read_size = fread(buffer, sizeof(char), string_size, handler);
+
+       // fread doesn't set it so put a \0 in the last position
+       // and buffer is now officially a string
+       buffer[string_size] = '\0';
+
+       if (string_size != read_size)
+       {
+    	   log_error(logger, "hubo un error al leer el archivo :(");
+           // Something went wrong, throw away the memory and set
+           // the buffer to NULL
+           free(buffer);
+           buffer = NULL;
+       }
+
+       // Always remember to close the file.
+       fclose(handler);
+    }
+
+    return buffer;
+}
+
+char* leerParteDeArchivo(char *filename, int tamanioALeer, int offset)
+{
+   char *buffer = NULL;
+   FILE *handler = fopen(filename, "r");
+
+   if (handler)
+   {
+	   lseek(handler, offset, SEEK_SET);
+
+       // Allocate a string that can hold it all
+       buffer = (char*) malloc(sizeof(char) * (tamanioALeer + 1) );
+
+       // Read it all in one operation
+       int tamanioLeido = fread(buffer, sizeof(char), tamanioALeer, handler);
+
+       // fread doesn't set it so put a \0 in the last position
+       // and buffer is now officially a string
+       buffer[tamanioALeer] = '\0';
+
+       if (tamanioALeer != tamanioLeido)
+       {
+    	   log_error(logger, "hubo un error al leer el archivo de a partes :(");
+           // Something went wrong, throw away the memory and set
+           // the buffer to NULL
+           free(buffer);
+           buffer = NULL;
+       }
+
+       // Always remember to close the file.
+       fclose(handler);
+    }
+
+    return buffer;
+}
 char* obtenerDatos(int emisor){
 	char* rutaArchivo = "a";//deserializarString(emisor);
 	int offset = 10;//deserializarInt(emisor);
 	int tamanioALeer = 5;//deserializarInt(emisor);
 
-	return obtenerDatosDeArchivo(offset, tamanioALeer, rutaArchivo);
+	//return obtenerDatosDeArchivo(offset, tamanioALeer, rutaArchivo);
+
  }
 
 int eliminarArchivo(int emisor){

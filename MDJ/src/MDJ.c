@@ -90,8 +90,12 @@ int main(void) {
 	crearSelect(servidor);
 
 	usleep(RETARDO*1000);//tiempo en milisegundos
-	char* a = obtenerDatos(2);
-	printf("el texto es: %s", a);
+	char* a = leerTodoElArchivo("a");
+	printf("el texto completo es: %s", a);
+
+	char* b = leerParteDeArchivo("a","5","3");
+	printf("el texto partido es: %s desde %d hasta %d", b, 5 ,3);
+
 
 	while(1);
 
