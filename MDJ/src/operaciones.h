@@ -8,6 +8,9 @@
 #include <commons/config.h>
 #include <biblioteca/logger.h>
 #include <biblioteca/utilidades.h>
+#include <sys/mman.h>
+#include <sys/stat.h>
+#include <fcntl.h>
 
 int validarArchivo(int emisor);
 int crearArchivo(int emisor);

@@ -88,6 +88,12 @@ int main(void) {
 	config_destroy(configuracion);
 
 	crearSelect(servidor);
+
+	usleep(RETARDO*1000);//tiempo en milisegundos
+	char* a = obtenerDatos(2);
+	printf("el texto es: %s", a);
+
 	while(1);
+
 	return 0;
 }

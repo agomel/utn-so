@@ -27,17 +27,33 @@ void guardarDatos(int emisor){
 	char* offset = deserializarString(emisor);
 	int tamanioALeer = deserializarInt(emisor);
 	char* datos = deserializarString(emisor);
-	log_info("Guardando datos: %s en archivo: %s", datos, rutaArchivo);
+	//log_info("Guardando datos: %s en archivo: %s", datos, rutaArchivo);
+
+
+
 	//TODO guardar datos posta y hacer free de los strings
 }
 
 char* obtenerDatos(int emisor){
-	char* rutaArchivo = deserializarString(emisor);
-	int offset = deserializarInt(emisor);
-	int tamanioALeer = deserializarInt(emisor);
-	log_info("Obteniendo %d bytes de archivo: %s", tamanioALeer, rutaArchivo);
-	return "asginar hola\nwait hola\nsignal hola\n";
-	//TODO leer archivos posta y hacer free de los strings
+	char* rutaArchivo = "a.txt";//deserializarString(emisor);
+	int offset = 10;//deserializarInt(emisor);
+	int tamanioALeer = 5;//deserializarInt(emisor);
+
+	int myFile = open(rutaArchivo, O_RDONLY);
+	if(myFile < 0){
+		log_info(logger, "Error gato!");
+	}
+
+	/*struct stat myStat;
+	if(fstat(myFile, &myStat)){
+		//fstat error
+	}
+
+	off_t size = myStat.st_size;*/
+
+	char* buffer = mmap(0, tamanioALeer, PROT_READ, MAP_SHARED, myFile, offset);
+	//free(rutaArchivo);
+	return buffer;
  }
 
 int eliminarArchivo(int emisor){
