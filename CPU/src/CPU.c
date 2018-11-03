@@ -322,31 +322,28 @@ void escuchar(int socketSAFA){//MensajeNano: Verificar los punteros de DTB
 						}else{
 							pedirCosasDelFM9(dtbRecibido);
 							lineaAEjecutar = deserializarString(socketFM9);
-							while(1){
+							int b = 1;
+							while(b){
 								if(lineaAEjecutar[0] == ERROR_O_ACCESO_INVALIDO || lineaAEjecutar[0] == FIN_ARCHIVO){
 									log_info(logger, "finalizando archivo");
 									//Fin de archivo o hubo un error
 									sentencias++;
 									serializarYEnviarDTB(socketSAFA, *dtbRecibido, logger, PASAR_A_EXIT);
 									enviarYSerializarIntSinHeader(socketSAFA, sentencias);
-									freeDTB(dtbRecibido);
-									break;
+									b = 0;
 								}else if(lineaAEjecutar[0] != '#'){
 									mensajeEntendido = entendiendoLinea(lineaAEjecutar, dtbRecibido);
 									sentencias++;
 									if(mensajeEntendido == 'b'){
 										dtbRecibido->programCounter++;
 										log_info(logger, "Bloquear DTB");
-										serializarYEnviarDTB(socketSAFA, *dtbRecibido, logger, BLOQUEAR_DTB);
-										enviarYSerializarIntSinHeader(socketSAFA, sentencias);
-										char continuar = deserializarChar(socketSAFA);
-										freeDTB(dtbRecibido);
+										b = 0;
 									}else if(mensajeEntendido == 'a'){
 										log_info(logger, "Pasar DTB a EXIT");
 										serializarYEnviarDTB(socketSAFA, *dtbRecibido, logger, PASAR_A_EXIT);
 										freeDTB(dtbRecibido);
 										enviarYSerializarIntSinHeader(socketSAFA, sentencias);
-										break;
+										b = 0;
 									}
 								}
 								dtbRecibido->programCounter++;
