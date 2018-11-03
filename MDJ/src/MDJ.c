@@ -8,6 +8,7 @@ void entenderMensaje(int emisor, char header){
 				log_info(logger, "Validar archivo...");
 				int archivoValido = validarArchivo(emisor);
 				enviarYSerializarIntSinHeader(emisor, archivoValido);
+				log_info(logger, "Devolviendo validacion de archivo al emisor %d", emisor);
 				break;
 			case CREAR_ARCHIVO:
 				log_info(logger, "Crear archivo...");
@@ -62,12 +63,11 @@ void crearSelect(int servidor){
 void init(){
 	t_config* configuracion = config_create(ARCHIVO_CONFIGURACION);
 	RETARDO = config_get_int_value(configuracion, "RETARDO");
-
 	char* punteroPuntoMontaje = config_get_string_value(configuracion, "PUNTO_MONTAJE");
 	PUNTO_MONTAJE = malloc(250);//asignarMemoria(strlen(punteroPuntoMontaje) + 1);
 	memcpy(PUNTO_MONTAJE, punteroPuntoMontaje, strlen(punteroPuntoMontaje)+ 1);
-
-	config_destroy(configuracion);
+	free(punteroPuntoMontaje);
+	//config_destroy(configuracion);
 
 	logger = crearLogger(ARCHIVO_LOG, "MDJ");
 
