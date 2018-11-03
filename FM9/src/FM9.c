@@ -118,16 +118,13 @@ void entenderMensaje(int emisor, char header){
 				respuestaDeObtencionDeMemoria* respuesta = obtenerLinea(idDTB, nombreArchivo, numeroLinea);
 
 				if(respuesta->pudoObtener == 0){
-					int desplazamiento = 0;
-					int tamanioBuffer = sizeof(int) + strlen(respuesta->datos) + 1;
-					void* buffer = asignarMemoria(tamanioBuffer);
-					concatenarString(buffer, &desplazamiento, respuesta->datos);
-					enviarMensaje(socketCPU, buffer, tamanioBuffer);
+					enviarYSerializarStringSinHeader(emisor, respuesta->datos);
 					freeRespuestaObtencion(respuesta);
 				}else{
-					enviarYSerializarCharSinHeader(socketCPU, FIN_ARCHIVO);
+					enviarYSerializarStringSinHeader(emisor, "v/0");
 					free(respuesta); //Porque no hay que hacer el free de respuesta->datos
 				}
+
 				break;
 			}
 

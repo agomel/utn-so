@@ -25,6 +25,7 @@ ElementoTablaSegPura* crearElemTablaSegPura(int base, int tamanioSegmento, char*
 	elemento->base = base;
 	elemento->limite = tamanioSegmento;
 	elemento->nombreArchivo = malloc(strlen(nombreArchivo)+1);
+	memcpy(elemento->nombreArchivo, nombreArchivo, strlen(nombreArchivo)+1);
 	return elemento;
 }
 
@@ -35,13 +36,21 @@ void agregarASegmentoOcupado(int base, int limite){
 	list_add(segmentosOcupados, segmento);
 }
 
+static void copiarElemSegPura(ElementoTablaSegPura* de, ElementoTablaSegPura* hasta){
+	hasta->nombreArchivo = malloc(strlen(de->nombreArchivo) + 1);
+	memcpy(hasta->nombreArchivo, de->nombreArchivo, strlen(de->nombreArchivo) +1);
+	hasta->base = de->base;
+	hasta->id = de->id;
+	hasta->limite = de->limite;
+}
+
 int nuevoProcesoSegPura(int idDTB, char* datos, char* nombreArchivo){
 	RespuestaCargaSegPura* respuestaCarga = guardarDatosInternaSegPura(datos, nombreArchivo);
 
 	if(respuestaCarga->respuestaGuardado == 0){ //No rompio
 		t_list* tablaSegmentos = list_create();
 		ElementoTablaSegPura* nuevoRegistro = malloc(sizeof(ElementoTablaSegPura));
-		memcpy(nuevoRegistro, respuestaCarga->elementoTabla, sizeof(respuestaCarga->elementoTabla));
+		copiarElemSegPura(respuestaCarga->elementoTabla, nuevoRegistro);
 		list_add(tablaSegmentos, nuevoRegistro);
 		freeRespuestaCargaSegPura(respuestaCarga);
 		ElementoTablaProcesos* elementoTablaProcesos = crearElemTablaProcesos(idDTB, tablaSegmentos);
@@ -61,7 +70,7 @@ int guardarDatosSegPura(int idDTB, char* datos, char* nombreArchivo){
 	RespuestaCargaSegPura* cargaEnMemoria = guardarDatosInternaSegPura(datos, nombreArchivo);
 	if(cargaEnMemoria->respuestaGuardado == 0){
 		ElementoTablaSegPura* nuevoRegistro = malloc(sizeof(ElementoTablaSegPura));
-		memcpy(nuevoRegistro, cargaEnMemoria->elementoTabla, sizeof(cargaEnMemoria->elementoTabla));
+		copiarElemSegPura(cargaEnMemoria->elementoTabla, nuevoRegistro);
 		list_add(proceso->tablaSegmentos, nuevoRegistro);
 		freeRespuestaCargaSegPura(cargaEnMemoria);
 		return 0;

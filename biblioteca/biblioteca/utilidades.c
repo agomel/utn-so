@@ -29,7 +29,7 @@ char* intToString(int numero){
 	return string_from_format("%d", numero);
 }
 
-int listHasValue(t_list* list, char* string){
+int listaContiene(t_list* list, char* string){
 	bool isEqual(char* elem){
 		return strcmp(string, elem);
 	}

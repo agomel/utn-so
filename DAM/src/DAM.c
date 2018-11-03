@@ -15,66 +15,72 @@ void entenderMensaje(int emisor, char header){
 	char* path = deserializarString(emisor);
 	int cantidadDeLineas;
 	switch(header){
-		case CARGAR_ESCRIPTORIO_EN_MEMORIA:
+		case CARGAR_ESCRIPTORIO_EN_MEMORIA: {
+			int esDummy = deserializarInt(emisor); //Si es = 0, es DUMMY
+			char header;
+			if(esDummy == 0)
+				header = CARGAR_ESCRIPTORIO_EN_MEMORIA;
+			else
+				header = GUARDAR_DATOS;
+
 			log_info(logger, "Ehhh, voy a buscar %s para %d", path, idDTB);
 			int validarArchivo = validarArchivoMDJ(path);
 			if(validarArchivo != 0){
-				log_info(logger, "Enviando error a SAFA para id del DTB %d con el path %s y el error %d", idDTB, path, validarArchivo);
 				enviarError(idDTB, path, validarArchivo);
 			}else {
 				char* datos = obtenerDatosDeMDJ(path);
-				int estadoDeCarga = enviarDatosAFM9(path, datos);
+				int estadoDeCarga = enviarDatosAFM9(idDTB, path, datos, header);
 				if(estadoDeCarga != 0){
-					log_info(logger, "Enviando error a SAFA para id del DTB %d con el path %s y el error %d", idDTB, path, estadoDeCarga);
 					enviarError(idDTB, path, estadoDeCarga);
 				}else{
-
-					log_info(logger, "Enviando exito a SAFA para el DTB %d con el path %s", idDTB, path);
 					notificarASafaExito(CARGADO_CON_EXITO_EN_MEMORIA,idDTB, path);
 				}
 			}
 			break;
-		case GUARDAR_ESCRIPTORIO:
+		}
+
+		case GUARDAR_ESCRIPTORIO: {
 			log_debug(logger, "Guardando escriptorio");
-			pedirDatosAFM9(path);
+			pedirDatosAFM9(idDTB, path);
 			cantidadDeLineas = deserializarInt(socketFM9);
 			char* datos = recibirFlushFM9(cantidadDeLineas);
-			log_info(logger, "Recibi flush de FM9");
 			int guardarDatos = guardarDatosEnMDJ(datos, path, cantidadDeLineas);
 			if(guardarDatos != 0){
-				log_info(logger, "Enviando error a SAFA para id del DTB %d con el path %s y el error %d", idDTB, path, guardarDatos);
 				enviarError(idDTB, path, guardarDatos);
 			}else{
-				log_info(logger, "Enviando exito a SAFA para el DTB %d con el path %s", idDTB, path);
 				notificarASafaExito(GUARDADO_CON_EXITO_EN_MDJ,idDTB, path);
 			}
 			free(datos);
 			break;
-		case CREAR_ARCHIVO:
+		}
+
+		case CREAR_ARCHIVO:{
 			log_debug(logger, "creando archivo");
 			cantidadDeLineas = deserializarInt(emisor);
 			int crearArchivo = crearArchivoEnMDJ(socketMDJ, path, cantidadDeLineas);
 			if(crearArchivo != 0){
-				log_info(logger, "Enviando error a SAFA para id del DTB %d con el path %s y el error %d", idDTB, path, crearArchivo);
 				enviarError(idDTB, path, crearArchivo);
 			}else{
-				log_info(logger, "Enviando creado archivo con exito a SAFA para el DTB %d con el path %s", idDTB, path);
 				notificarASafaExito(CREADO_CON_EXITO_EN_MDJ,idDTB, path);
 			}
 			break;
-		case BORRAR_ARCHIVO:
+		}
+
+		case BORRAR_ARCHIVO: {
 			log_debug(logger, "borrar archivo");
 			int borrarArchivo = borrarArchivoEnMDJ(path);
 			if(borrarArchivo != 0){
-				log_info(logger, "Enviando error a SAFA para id del DTB %d con el path %s y el error %d", idDTB, path, borrarArchivo);
 				enviarError(idDTB, path, borrarArchivo);
 			}else{
-				log_info(logger, "Enviando borrado archivo con exito a SAFA para el DTB %d con el path %s", idDTB, path);
 				notificarASafaExito(BORRADO_CON_EXITO_EN_MDJ,idDTB, path);
 			}
 			break;
-		default:
+		}
+
+		default: {
 			log_error(logger, "Header desconocido");
+			break;
+		}
 	}
 }
 
