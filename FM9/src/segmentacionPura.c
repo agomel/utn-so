@@ -3,12 +3,14 @@
 
 void inicializarSegPura(){
 	tablaDeProcesos = list_create();
+	segmentosOcupados = list_create();
 	idSegmento = 0;
 }
 
 static ElementoTablaProcesos* obtenerProcesoPorIdDTB(int idDTB);
 static void freeRespuestaCargaSegPura(RespuestaCargaSegPura* respuesta);
 static RespuestaCargaSegPura* guardarDatosInternaSegPura(char* datos, char* nombreArchivo);
+static int dondeEntro(int tamanioAGuardar);
 
 ElementoTablaProcesos* crearElemTablaProcesos(int idDTB, int tablaSegmentos){
 	ElementoTablaProcesos* elemento = malloc(sizeof(ElementoTablaProcesos*));
@@ -20,10 +22,17 @@ ElementoTablaProcesos* crearElemTablaProcesos(int idDTB, int tablaSegmentos){
 ElementoTablaSegPura* crearElemTablaSegPura(int base, int tamanioSegmento, char* nombreArchivo){
 	ElementoTablaSegPura* elemento= malloc(sizeof(ElementoTablaSegPura));
 	elemento->id = idSegmento;
-	elemento->base = tamanioSegmento;
+	elemento->base = base;
 	elemento->limite = tamanioSegmento;
 	elemento->nombreArchivo = malloc(strlen(nombreArchivo)+1);
 	return elemento;
+}
+
+void agregarASegmentoOcupado(int base, int limite){
+	SegmentoOcupado* segmento = malloc(sizeof(SegmentoOcupado));
+	segmento->base = base;
+	segmento->limite = limite;
+	list_add(segmentosOcupados, segmento);
 }
 
 int nuevoProcesoSegPura(int idDTB, char* datos, char* nombreArchivo){
@@ -75,6 +84,7 @@ static RespuestaCargaSegPura* guardarDatosInternaSegPura(char* datos, char* nomb
 	if(posicionDondeGuardar != -1){
 		ElementoTablaSegPura* elementoTabla = crearElemTablaSegPura(posicionDondeGuardar, tamanioSegmento, nombreArchivo);
 		respuesta->elementoTabla = elementoTabla;
+		agregarASegmentoOcupado(posicionDondeGuardar, tamanioSegmento);
 		int base = storage + posicionDondeGuardar;
 		for(int i = 0; i<totalLineas; i++){
 			memcpy(base + tamanioLinea * i, lineas[i], tamanioLinea); //Guardando de a una linea
@@ -96,27 +106,53 @@ static ElementoTablaProcesos* obtenerProcesoPorIdDTB(int idDTB){
 	return list_find(tablaDeProcesos, coincideId);
 }
 
+static ElementoTablaSegPura* obtenerSegmentoPorArchivo(char* nombreArchivo, t_list* tablaSegmentos){
+	bool coincideNombre(ElementoTablaSegPura* elemento){
+		if(strcmp(elemento->nombreArchivo, nombreArchivo) == 0)
+			return true;
+
+		return false;
+	}
+
+	return list_find(tablaSegmentos, coincideNombre);
+}
+
 static void freeRespuestaCargaSegPura(RespuestaCargaSegPura* respuesta){
 	free(respuesta->elementoTabla);
 	free(respuesta);
 }
 
-respuestaDeObtencionDeMemoria* obtenerDatosSegPura(char* nombreArchivo){
+respuestaDeObtencionDeMemoria* obtenerDatosSegPura(int idDTB, char* nombreArchivo){
 	respuestaDeObtencionDeMemoria* respuesta = malloc(sizeof(respuestaDeObtencionDeMemoria));
-	ElementoTablaSegPura* elemento = obtenerPorNombreArchivo(nombreArchivo);
-	respuesta->datos = malloc(elemento->limite);
-	memcpy(respuesta->datos, storage + elemento->base, elemento->limite);
-	respuesta->cantidadDeLineas = elemento->limite / tamanioLinea;
+	ElementoTablaProcesos* proceso = obtenerProcesoPorIdDTB(idDTB);
+	ElementoTablaSegPura* segmento = obtenerSegmentoPorArchivo(nombreArchivo, proceso->tablaSegmentos);
+	int cantidadLineas = segmento->limite / tamanioLinea;
+	char* archivo = malloc(tamanioLinea);
+	for(int i=0; i<cantidadLineas; i++){
+		int desplazamiento = i * tamanioLinea;
+		char* lineaConBasura = malloc(tamanioLinea);
+		memcpy(lineaConBasura, storage + desplazamiento, tamanioLinea);
+		char** lineaSinBasura = string_split(lineaConBasura, "\n");
+		string_append_with_format(archivo, "%s\n", lineaSinBasura[0]);
+		free(lineaConBasura);
+		free(lineaSinBasura[0]);
+		free(lineaSinBasura[1]);
+	}
+
+	respuesta->datos = malloc(strlen(archivo));
+	memcpy(respuesta->datos, archivo, strlen(archivo));
+	respuesta->cantidadDeLineas = cantidadLineas;
 
 	return respuesta;
 }
 
-respuestaDeObtencionDeMemoria* obtenerLineaSegPura(char* nombreArchivo, int numeroLinea){
+respuestaDeObtencionDeMemoria* obtenerLineaSegPura(int idDTB, char* nombreArchivo, int numeroLinea){
 	respuestaDeObtencionDeMemoria* respuesta = malloc(sizeof(respuestaDeObtencionDeMemoria));
-	ElementoTablaSegPura* elemento = obtenerPorNombreArchivo(nombreArchivo);
+	ElementoTablaProcesos* proceso = obtenerProcesoPorIdDTB(idDTB);
+	ElementoTablaSegPura* segmento = obtenerSegmentoPorArchivo(nombreArchivo, proceso->tablaSegmentos);
 	int cantidadLineasDeArchivo = 1;
-	if(elemento->limite > tamanioLinea)
-		cantidadLineasDeArchivo = elemento->limite / tamanioLinea;
+	if(segmento->limite > tamanioLinea)
+		cantidadLineasDeArchivo = segmento->limite / tamanioLinea;
 
 	if(numeroLinea < cantidadLineasDeArchivo){
 		int desplazamiento = numeroLinea * tamanioLinea;
@@ -127,6 +163,7 @@ respuestaDeObtencionDeMemoria* obtenerLineaSegPura(char* nombreArchivo, int nume
 		respuesta->datos = malloc(strlen(lineaSinBasura[0])+1);
 		respuesta->pudoObtener = 0;
 		memcpy(respuesta->datos, lineaSinBasura[0], strlen(lineaSinBasura[0])+1);
+		free(lineaConBasura);
 	}else{
 		log_error(logger, "El DTB no posee la linea %d", numeroLinea);
 		respuesta->pudoObtener = 1;
@@ -136,8 +173,10 @@ respuestaDeObtencionDeMemoria* obtenerLineaSegPura(char* nombreArchivo, int nume
 }
 
 void liberarMemoriaSegPura(int idDTB, char* nombreArchivo){
+	int base;
 	bool coincideNombre(ElementoTablaSegPura* elemento){
 		if(strcmp(elemento->nombreArchivo, nombreArchivo) == 0){
+			base = elemento->base;
 			return true;
 		}
 		return false;
@@ -150,6 +189,12 @@ void liberarMemoriaSegPura(int idDTB, char* nombreArchivo){
 
 	ElementoTablaProcesos* proceso = obtenerProcesoPorIdDTB(idDTB);
 	list_remove_and_destroy_by_condition(proceso->tablaSegmentos, coincideNombre, destruirElemento);
+
+	bool coincideBase(SegmentoOcupado* segmento){
+		return segmento->base == base;
+	}
+
+	list_remove_and_destroy_by_condition(segmentosOcupados, coincideBase, free);
 	log_info(logger, "liberando memoria");
 }
 
@@ -157,7 +202,7 @@ static bool compararElementos(SegmentoOcupado* elem1, SegmentoOcupado* elem2){
 	return elem1->base < elem2->base;
 }
 
-int dondeEntro(int tamanioAGuardar){
+static int dondeEntro(int tamanioAGuardar){
 	if(segmentosOcupados->elements_count >= 1){
 
 	if(segmentosOcupados->elements_count > 1)
@@ -168,7 +213,7 @@ int dondeEntro(int tamanioAGuardar){
 	if(espacioDelPrincipio >= tamanioAGuardar)
 		return 0;
 
-	for(int i = 0; i++; i < segmentosOcupados->elements_count-1){
+	for(int i = 0; i < segmentosOcupados->elements_count-1; i++){
 		SegmentoOcupado* elem1 = list_get(segmentosOcupados, i);
 		SegmentoOcupado* elem2 = list_get(segmentosOcupados, i+1);
 

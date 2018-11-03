@@ -3,9 +3,9 @@
 #include "segmentacionPag.h"
 #include "paginasInvertidas.h"
 
-respuestaDeObtencionDeMemoria* obtenerDatosDeMemoria(char* nombreArchivo){
+respuestaDeObtencionDeMemoria* obtenerDatosDeMemoria(int idDTB, char* nombreArchivo){
 	if(strcmp(modo, "SEG_PURA") == 0)
-		return obtenerDatosSegPura(nombreArchivo);
+		return obtenerDatosSegPura(idDTB, nombreArchivo);
 
 	if(strcmp(modo, "SEG_PAG") == 0)
 		return obtenerDatosSegPag(nombreArchivo);
@@ -36,15 +36,15 @@ int cargarNuevoDTB(int idDTB, char* datos, char* nombreArchivo){
 		return nuevoProcesoSegPura(idDTB, datos, nombreArchivo); //CAMBIAAAAAAAR
 }
 
-respuestaDeObtencionDeMemoria* obtenerLinea(char* nombreArchivo, int numeroLinea){
+respuestaDeObtencionDeMemoria* obtenerLinea(int idDTB, char* nombreArchivo, int numeroLinea){
 	if(strcmp(modo, "SEG_PURA") == 0)
-		return obtenerLineaSegPura(nombreArchivo, numeroLinea);
+		return obtenerLineaSegPura(idDTB, nombreArchivo, numeroLinea);
 
 	if(strcmp(modo, "SEG_PAG") == 0)
 		return obtenerLineaSegPag(nombreArchivo, numeroLinea);
 
 	if(strcmp(modo, "INV") == 0)
-		return obtenerLineaSegPura(nombreArchivo, numeroLinea); //CAMBIAAAAAAAAR
+		return obtenerLineaSegPura(idDTB, nombreArchivo, numeroLinea); //CAMBIAAAAAAAAR
 }
 
 void liberarMemoria(int idDTB, char* nombreArchivo){
@@ -97,7 +97,7 @@ void entenderMensaje(int emisor, char header){
 				log_debug(logger, "Obteniendo datos de memoria");
 				int idDTB = deserializarInt(emisor);
 				char* nombreArchivo = deserializarString(emisor);
-				respuestaDeObtencionDeMemoria* respuestaDeObtener = obtenerDatosDeMemoria(nombreArchivo); //TODO
+				respuestaDeObtencionDeMemoria* respuestaDeObtener = obtenerDatosDeMemoria(idDTB, nombreArchivo);
 
 				int desplazamiento = 0;
 				int tamanioBuffer = sizeof(int) + sizeof(int) + strlen(respuestaDeObtener->datos) + 1;
@@ -112,24 +112,22 @@ void entenderMensaje(int emisor, char header){
 
 			case TRAER_LINEA_ESCRIPTORIO: {
 				log_debug(logger, "Trayendo linea escriptorio");
+				int idDTB = deserializarInt(emisor);
 				char* nombreArchivo = deserializarString(emisor);
 				int numeroLinea = deserializarInt(emisor);
-				respuestaDeObtencionDeMemoria* respuesta = obtenerLinea(nombreArchivo, numeroLinea);
-				char* mensajeAEnviar;
+				respuestaDeObtencionDeMemoria* respuesta = obtenerLinea(idDTB, nombreArchivo, numeroLinea);
+
 				if(respuesta->pudoObtener == 0){
-					mensajeAEnviar = asignarMemoria(strlen(respuesta->datos) + 1);
-					mensajeAEnviar = respuesta->datos;
+					int desplazamiento = 0;
+					int tamanioBuffer = sizeof(int) + strlen(respuesta->datos) + 1;
+					void* buffer = asignarMemoria(tamanioBuffer);
+					concatenarString(buffer, &desplazamiento, respuesta->datos);
+					enviarMensaje(socketCPU, buffer, tamanioBuffer);
+					freeRespuestaObtencion(respuesta);
 				}else{
-					mensajeAEnviar = asignarMemoria(sizeof(char) + 1);
-					mensajeAEnviar = FIN_ARCHIVO + "\0";
+					enviarYSerializarCharSinHeader(socketCPU, FIN_ARCHIVO);
+					free(respuesta); //Porque no hay que hacer el free de respuesta->datos
 				}
-				int desplazamiento = 0;
-				int tamanioBuffer = sizeof(int) + strlen(mensajeAEnviar) + 1;
-				void* buffer = asignarMemoria(tamanioBuffer);
-				concatenarString(buffer, &desplazamiento, mensajeAEnviar);
-				enviarMensaje(socketCPU, buffer, tamanioBuffer);
-				freeRespuestaObtencion(respuesta);
-				free(respuesta); //Porque no hay que hacer el free de respuesta->datos
 				break;
 			}
 

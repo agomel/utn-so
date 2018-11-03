@@ -32,8 +32,8 @@ t_list* segmentosOcupados; //Es una lista de SegmentoOcupado
 void inicializarSegPura();
 int guardarDatosSegPura(int idDTB, char* datos, char* nombreArchivo);
 int nuevoProcesoSegPura(int idDTB, char* datos, char* nombreArchivo);
-respuestaDeObtencionDeMemoria* obtenerDatosSegPura(char* nombreArchivo);
-respuestaDeObtencionDeMemoria* obtenerLineaSegPura(char* nombreArchivo, int numeroLinea);
+respuestaDeObtencionDeMemoria* obtenerDatosSegPura(int idDTB, char* nombreArchivo);
+respuestaDeObtencionDeMemoria* obtenerLineaSegPura(int idDTB, char* nombreArchivo, int numeroLinea);
 void liberarMemoriaSegPura(int idDTB, char* nombreArchivo);
 
 #endif /* SEGMENTACIONPURA_H_ */
