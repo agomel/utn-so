@@ -9,19 +9,19 @@ biblioteca:
 	cd ~; cd home/utnso/workspace/tp-tp-2018-2c-5-fant-sticos/biblioteca/Debug; make; export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:~/workspace/tp-2018-2c-5-fant-sticos/biblioteca/Debug
 
 S-AFA:
-	cd ~; cd home/utnso/workspace/tp-tp-2018-2c-5-fant-sticos/Debug; make; export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:~/workspace/tp-2018-2c-5-fant-sticos/biblioteca/Debug
+	cd ~; cd home/utnso/workspace/tp-tp-2018-2c-5-fant-sticos/S-AFA/Debug; make; export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:~/workspace/tp-2018-2c-5-fant-sticos/biblioteca/Debug
 
 CPU:
-	cd ~; cd home/utnso/workspace/tp-tp-2018-2c-5-fant-sticos/Debug; make; export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:~/workspace/tp-2018-2c-5-fant-sticos/biblioteca/Debug
+	cd ~; cd home/utnso/workspace/tp-tp-2018-2c-5-fant-sticos/CPU/Debug; make; export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:~/workspace/tp-2018-2c-5-fant-sticos/biblioteca/Debug
 
 DAM:
-	cd ~; cd home/utnso/workspace/tp-tp-2018-2c-5-fant-sticos/Debug; make; export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:~/workspace/tp-2018-2c-5-fant-sticos/biblioteca/Debug
+	cd ~; cd home/utnso/workspace/tp-tp-2018-2c-5-fant-sticos/DAM/Debug; make; export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:~/workspace/tp-2018-2c-5-fant-sticos/biblioteca/Debug
 
 FM9:
-	cd ~; cd home/utnso/workspace/tp-tp-2018-2c-5-fant-sticos/Debug; make; export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:~/workspace/tp-2018-2c-5-fant-sticos/biblioteca/Debug
+	cd ~; cd home/utnso/workspace/tp-tp-2018-2c-5-fant-sticos/FM9/Debug; make; export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:~/workspace/tp-2018-2c-5-fant-sticos/biblioteca/Debug
 
 MDJ:
-	cd ~; cd home/utnso/workspace/tp-tp-2018-2c-5-fant-sticos/Debug; make; export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:~/workspace/tp-2018-2c-5-fant-sticos/biblioteca/Debug
+	cd ~; cd home/utnso/workspace/tp-tp-2018-2c-5-fant-sticos/MDJ/Debug; make; export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:~/workspace/tp-2018-2c-5-fant-sticos/biblioteca/Debug
 
 clean:
 	sudo rm -rf ~/so-commons-library
