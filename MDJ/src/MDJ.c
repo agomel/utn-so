@@ -2,32 +2,71 @@
 
 
 void entenderMensaje(int emisor, char header){
+	char* path;
+	int offset;
+	int size;
 	char* datos;
+
+	int estadoDeOperacion;
+
 	switch(header){
 			case VALIDAR_ARCHIVO:
 				log_info(logger, "Validar archivo...");
-				int archivoValido = validarArchivo(emisor);
-				enviarYSerializarIntSinHeader(emisor, archivoValido);
-				log_info(logger, "Devolviendo validacion de archivo al emisor %d", emisor);
+				path = deserializarString(emisor);
+
+				estadoDeOperacion = validarArchivo(path);
+
+				enviarYSerializarIntSinHeader(emisor, estadoDeOperacion);
+
+				free(path);
 				break;
 			case CREAR_ARCHIVO:
 				log_info(logger, "Crear archivo...");
-				int archivoCreado = crearArchivo(emisor);
-				enviarYSerializarIntSinHeader(emisor, archivoValido);
+				path = deserializarString(emisor);
+				size = deserializarInt(emisor);
+
+				estadoDeOperacion = crearArchivo(path, size);
+
+				enviarYSerializarIntSinHeader(emisor, estadoDeOperacion);
+
+				free(path);
 				break;
 			case OBTENER_DATOS:
 				log_info(logger, "Obtener datos...");
-				datos = obtenerDatos(emisor);
+				path = deserializarString(emisor);
+				offset = deserializarInt(emisor);
+				size = deserializarInt(emisor);
+
+				datos = obtenerDatos(path, offset, size);
+
 				enviarYSerializarStringSinHeader(emisor, datos);
+
+				free(path);
+				free(datos);
 				break;
 			case GUARDAR_DATOS:
 				log_info(logger, "Guardar datos...");
-				guardarDatos(emisor);
+				path = deserializarString(emisor);
+				offset = deserializarInt(emisor);
+				size = deserializarInt(emisor);
+				datos = deserializarStringSinElInt(emisor, size);
+
+				estadoDeOperacion = guardarDatos(path, offset, size, datos);
+
+				enviarYSerializarIntSinHeader(emisor, estadoDeOperacion);
+
+				free(path);
+				free(datos);
 				break;
 			case BORRAR_ARCHIVO:
 				log_info(logger, "Borrar archivo...");
-				int archivoEliminado = eliminarArchivo(emisor);
-				enviarYSerializarIntSinHeader(emisor, archivoValido);
+				path = deserializarString(emisor);
+
+				estadoDeOperacion = eliminarArchivo(path);
+
+				enviarYSerializarIntSinHeader(emisor, estadoDeOperacion);
+
+				free(path);
 				break;
 		default:
 			log_error(logger, "Header desconocido");

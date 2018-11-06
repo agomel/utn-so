@@ -12,11 +12,11 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 
-int validarArchivo(int emisor);
-int crearArchivo(int emisor);
-void guardarDatos(int emisor);
-char* obtenerDatos(int emisor);
-int eliminarArchivo(int emisor);
+int validarArchivo(char* rutaArchivo);
+int crearArchivo(char* rutaArchivo, int cantidadDeBytes);
+char* obtenerDatos(char* rutaArchivo, int offset, int tamanioALeer);
+int guardarDatos(char* rutaArchivo, int offset, int tamanioMensaje, char* datos);
+int eliminarArchivo(char* rutaArchivo);
 
 extern t_log* logger;
 

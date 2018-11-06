@@ -25,43 +25,33 @@ char* obtenerDatosDeArchivo(int offset, int tamanio, char* path){
 	return buffer;
 }
 
-int validarArchivo(int emisor){
-	char* rutaArchivo = deserializarString(emisor);
-	log_info(logger, "Validando archivo en ruta: %s", rutaArchivo);
+int validarArchivo(char* rutaArchivo){
 	FILE* archivo = fopen(rutaArchivo, "r");
 	if(archivo == NULL){
 		return PATH_INEXISTENTE;
 	}
+	fclose(archivo);
 	//0 es archivo valido
 	return 0;
 }
 
-int crearArchivo(int emisor){
-	char* rutaArchivo = deserializarString(emisor);
-	int cantidadDeBytes = deserializarInt(emisor);
-	log_info(logger, "Creando archivo en ruta: %s", rutaArchivo);
-	//TODO verificar si hay espacio antes de crearlo y esa movida
-	//TODO se tiene que crear con esa cantidad de bytes.. debe ser para el bitmap
-	/*FILE* archivo = fopen(rutaArchivo, "w");
+int crearArchivo(char* rutaArchivo, int cantidadDeBytes){
+	//TODO verificar si hay espacio antes de crearlo y esa movida de los bloques en el bitmap
+
+	FILE* archivo = fopen(rutaArchivo, "w");
 	if(archivo == NULL){
-		return ESPACIO_INSUFICIENTE;// nose que error podria pasar aca
+		log_info(logger, "Error gato!");
+		return PATH_INEXISTENTE;
 	}
-	*/
+	for(int i = 0; i < cantidadDeBytes; i++){
+		fputs("\n", archivo);
+	}
 
-	/*char* buffer = obtenerDatosDeArchivo(0, cantidadDeBytes, rutaArchivo);
-	for(int i = 0; i<cantidadDeBytes; i++){
-		buffer[i] = '/0';
-	}*/
-
+	fclose(archivo);
 	return 0;
 }
 
-void guardarDatos(int emisor){
-	char* rutaArchivo = deserializarString(emisor);
-	int offset = deserializarInt(emisor);
-	int tamanioMensaje = deserializarInt(emisor);
-	char* datos = deserializarStringSinElInt(emisor, tamanioMensaje);
-
+int guardarDatos(char* rutaArchivo, int offset, int tamanioMensaje, char* datos){
 	int myFile = open(rutaArchivo, O_WRONLY);
 	if(myFile < 0){
 		log_info(logger, "Error gato!");
@@ -73,42 +63,36 @@ void guardarDatos(int emisor){
 
 	close(myFile);
 
-	free(rutaArchivo);
-	free(datos);
+	return 0;
 }
 
-char* obtenerDatos(int emisor){
-	char* rutaArchivo = deserializarString(emisor);
-	int offset = deserializarInt(emisor);
-	int tamanioALeer;
-
+char* obtenerDatos(char* rutaArchivo, int offset, int tamanioALeer){
 	int myFile = open(rutaArchivo, O_RDONLY);
 	if(myFile < 0){
 		log_info(logger, "Error gato!");
 	}
 
-	if(offset >= 0){
-		tamanioALeer = deserializarInt(emisor);
-		lseek(myFile, offset, SEEK_SET);
-	}else{
+	lseek(myFile, offset, SEEK_SET);
+
+	int size = tamanioALeer;
+
+	if(size < 0){
 		struct stat myStat;
 		if(fstat(myFile, &myStat)){
 			log_info(logger, "Error2 gato!");
 		}
-		tamanioALeer = myStat.st_size;
+		size = myStat.st_size;
 	}
 
-	char* buffer = asignarMemoria(tamanioALeer);
-	read(myFile, buffer, tamanioALeer);
+	char* buffer = asignarMemoria(size);
+	read(myFile, buffer, size);
 
 	close(myFile);
-	free(rutaArchivo);
 
 	return buffer;
  }
 
-int eliminarArchivo(int emisor){
-	char* rutaArchivo = deserializarString(emisor);
+int eliminarArchivo(char* rutaArchivo){
 	if(remove(rutaArchivo) == 0){
 		return 0;
 	}else{
