@@ -1,30 +1,5 @@
 #include "operaciones.h"
 
-
-char* obtenerDatosDeArchivo(int offset, int tamanio, char* path){
-	//size_t tamanioALeer = tamanio;
-	//off_t of = offset;
-	int myFile = open(path, O_RDONLY);
-	if(myFile < 0){
-		log_info(logger, "Error gato!");
-	}
-
-	lseek(myFile, offset, SEEK_SET);
-	char* buffer = asignarMemoria(tamanio);
-	read(myFile, buffer, tamanio);
-
-	struct stat myStat;
-	if(fstat(myFile, &myStat)){
-		log_info(logger, "Error2 gato!");
-	}
-
-	off_t size = myStat.st_size;
-
-	//char* buffer = mmap(NULL, tamanioALeer, PROT_READ | PROT_WRITE | PROT_EXEC, MAP_SHARED, myFile, of);
-	//free(rutaArchivo);
-	return buffer;
-}
-
 int validarArchivo(char* rutaArchivo){
 	FILE* archivo = fopen(rutaArchivo, "r");
 	if(archivo < 0){
