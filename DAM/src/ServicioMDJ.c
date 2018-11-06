@@ -19,7 +19,8 @@ int validarArchivoMDJ(char* path){
 char* obtenerDatosDeMDJ(char* path){
 	enviarYSerializarCharSinHeader(socketMDJ, OBTENER_DATOS);
 	enviarYSerializarStringSinHeader(socketMDJ, path);
-	enviarYSerializarIntSinHeader(socketMDJ, -1); //Obtener todo el archivo (no mando el size)
+	enviarYSerializarIntSinHeader(socketMDJ, 0);
+	enviarYSerializarIntSinHeader(socketMDJ, -1);
 	int tamanioARecibirTotal = deserializarInt(socketMDJ);
 	int tamanioRecibido = 0;
 	char* escriptorio;
