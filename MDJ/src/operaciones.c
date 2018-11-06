@@ -27,7 +27,7 @@ char* obtenerDatosDeArchivo(int offset, int tamanio, char* path){
 
 int validarArchivo(char* rutaArchivo){
 	FILE* archivo = fopen(rutaArchivo, "r");
-	if(archivo == NULL){
+	if(archivo < 0){
 		return PATH_INEXISTENTE;
 	}
 	fclose(archivo);
@@ -69,7 +69,7 @@ int guardarDatos(char* rutaArchivo, int offset, int tamanioMensaje, char* datos)
 char* obtenerDatos(char* rutaArchivo, int offset, int tamanioALeer){
 	int myFile = open(rutaArchivo, O_RDONLY);
 	if(myFile < 0){
-		log_info(logger, "Error gato!");
+		log_info(logger, "Error Al abrir el archivo!");
 	}
 
 	lseek(myFile, offset, SEEK_SET);
@@ -79,7 +79,7 @@ char* obtenerDatos(char* rutaArchivo, int offset, int tamanioALeer){
 	if(size < 0){
 		struct stat myStat;
 		if(fstat(myFile, &myStat)){
-			log_info(logger, "Error2 gato!");
+			log_info(logger, "Error al ver el estado del archivo!");
 		}
 		size = myStat.st_size;
 	}

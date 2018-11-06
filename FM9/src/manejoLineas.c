@@ -5,7 +5,7 @@ bool esUltimoCaracter(char caracter) {
 }
 
 int cantidadDeLineas(char* texto){
-	int contador = 1;
+	int contador = 0;
 	for(int i = 0; i < strlen(texto); i++){
 		if(esUltimoCaracter(texto[i]))
 			break;

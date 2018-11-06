@@ -75,6 +75,7 @@ void enviarYSerializarInt(int destino, int numero,char operacion){
 }
 
 void enviarYSerializarIntSinHeader(int destino, int numero){
+
 	int tamanioMensaje = sizeof(int);
 	void* mensaje = asignarMemoria(tamanioMensaje);
 
@@ -159,6 +160,7 @@ char* deserializarStringSinElInt(int emisor, int tamanioMensaje){
 	printf("Recibi %s de parte de %d \n" , mensaje, emisor);
 	return mensaje;
 }
+
 int deserializarInt(int emisor){
 	int mensaje;
 	recibirMensaje(emisor, &mensaje, sizeof(int));

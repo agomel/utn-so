@@ -6,19 +6,20 @@ int validarArchivoMDJ(char* path){
 	int desplazamiento = 0;
 	concatenarChar(buffer, &desplazamiento, VALIDAR_ARCHIVO);
 	concatenarString(buffer, &desplazamiento, path);
-	log_info(logger, "enviando a emisor %d char: %c y escriptorio %s", socketMDJ, VALIDAR_ARCHIVO, path);
+	log_info(logger, "Enviando a MDJ que valide escriptorio %s", path);
 	enviarMensaje(socketMDJ, buffer, tamanioMensaje);
 	free(buffer);
-	log_debug(logger, "esperando mensaje de MDJ");
+	log_debug(logger, "Esperando repuesta validacion de MDJ");
 	int respuesta = deserializarInt(socketMDJ);
-	log_debug(logger, "recibido mensaje de MDJ");
+	log_debug(logger, "Recibida respuesta %d de MDJ", respuesta);
+
 	return respuesta;
 }
 
 char* obtenerDatosDeMDJ(char* path){
 	enviarYSerializarCharSinHeader(socketMDJ, OBTENER_DATOS);
 	enviarYSerializarStringSinHeader(socketMDJ, path);
-	enviarYSerializarIntSinHeader(socketMDJ, -1); //Obtener todo el archivo (no mando el string)
+	enviarYSerializarIntSinHeader(socketMDJ, -1); //Obtener todo el archivo (no mando el size)
 	int tamanioARecibirTotal = deserializarInt(socketMDJ);
 	int tamanioRecibido = 0;
 	char* escriptorio;
@@ -34,6 +35,7 @@ char* obtenerDatosDeMDJ(char* path){
 		}
 		char* parteRecibida = deserializarStringSinElInt(socketMDJ, tamanioARecibir);
 		memcpy(escriptorio + desplazamiento, parteRecibida, tamanioARecibir);
+		free(parteRecibida);
 		desplazamiento = desplazamiento + tamanioARecibir;
 		tamanioRecibido += tamanioARecibir;
 	}

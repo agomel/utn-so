@@ -31,7 +31,7 @@ char* intToString(int numero){
 
 int listaContiene(t_list* list, char* string){
 	bool isEqual(char* elem){
-		return strcmp(string, elem);
+		return !strcmp(string, elem);
 	}
 	return list_any_satisfy(list, isEqual);
 }

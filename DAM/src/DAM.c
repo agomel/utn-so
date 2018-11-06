@@ -30,6 +30,7 @@ void entenderMensaje(int emisor, char header){
 			}else {
 				char* datos = obtenerDatosDeMDJ(path);
 				int estadoDeCarga = enviarDatosAFM9(idDTB, path, datos, header);
+				free(datos);
 				if(estadoDeCarga != 0){
 					enviarError(idDTB, path, estadoDeCarga);
 				}else{
