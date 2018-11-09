@@ -1,6 +1,7 @@
 #include "ServicioMDJ.h"
 
 int validarArchivoMDJ(char* path){
+
 	int tamanioMensaje = sizeof(char) + sizeof(int) + strlen(path)+1;
 	void* buffer = asignarMemoria(tamanioMensaje);
 	int desplazamiento = 0;
@@ -13,7 +14,6 @@ int validarArchivoMDJ(char* path){
 	int respuesta = deserializarInt(socketMDJ);
 	log_debug(logger, "Recibida respuesta %d de MDJ", respuesta);
 
-	return respuesta;
 }
 
 char* obtenerDatosDeMDJ(char* path){

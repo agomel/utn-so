@@ -8,7 +8,6 @@ void entenderMensaje(int emisor, char header){
 	char* datos;
 	char* rutaCompleta;
 	int estadoDeOperacion;
-
 	switch(header){
 			case VALIDAR_ARCHIVO:
 				log_info(logger, "Validar archivo...");
@@ -17,8 +16,10 @@ void entenderMensaje(int emisor, char header){
 				estadoDeOperacion = validarArchivo(rutaCompleta);
 				enviarYSerializarIntSinHeader(emisor, estadoDeOperacion);
 
+				log_info(logger, "enviando %d a DAM", estadoDeOperacion);
 				free(rutaCompleta);
 				free(path);
+
 				break;
 			case CREAR_ARCHIVO:
 				log_info(logger, "Crear archivo...");
@@ -53,6 +54,7 @@ void entenderMensaje(int emisor, char header){
 				offset = deserializarInt(emisor);
 				size = deserializarInt(emisor);
 				datos = deserializarStringSinElInt(emisor, size);
+				size -= 1; //NO quiero que me guarde el \0
 
 				rutaCompleta = concatenar(PUNTO_MONTAJE, path);
 				estadoDeOperacion = guardarDatos(rutaCompleta, offset, size, datos);
