@@ -12,7 +12,7 @@ void entenderMensaje(int emisor, char header){
 			case VALIDAR_ARCHIVO:
 				log_info(logger, "Validar archivo...");
 				path = deserializarString(emisor);
-				rutaCompleta = concatenar(PUNTO_MONTAJE, path);
+				rutaCompleta = concatenar(PUNTO_MONTAJE_ARCHIVOS, path);
 				estadoDeOperacion = validarArchivo(rutaCompleta);
 				enviarYSerializarIntSinHeader(emisor, estadoDeOperacion);
 
@@ -27,7 +27,7 @@ void entenderMensaje(int emisor, char header){
 				size = deserializarInt(emisor);
 
 
-				rutaCompleta = concatenar(PUNTO_MONTAJE, path);
+				rutaCompleta = concatenar(PUNTO_MONTAJE_ARCHIVOS, path);
 				estadoDeOperacion = crearArchivo(rutaCompleta, size);
 				enviarYSerializarIntSinHeader(emisor, estadoDeOperacion);
 
@@ -40,7 +40,7 @@ void entenderMensaje(int emisor, char header){
 				offset = deserializarInt(emisor);
 				size = deserializarInt(emisor);
 
-				rutaCompleta = concatenar(PUNTO_MONTAJE, path);
+				rutaCompleta = concatenar(PUNTO_MONTAJE_ARCHIVOS, path);
 				datos = obtenerDatos(rutaCompleta, offset, size);
 				enviarYSerializarStringSinHeader(emisor, datos);
 
@@ -56,7 +56,7 @@ void entenderMensaje(int emisor, char header){
 				datos = deserializarStringSinElInt(emisor, size);
 				size -= 1; //NO quiero que me guarde el \0
 
-				rutaCompleta = concatenar(PUNTO_MONTAJE, path);
+				rutaCompleta = concatenar(PUNTO_MONTAJE_ARCHIVOS, path);
 				estadoDeOperacion = guardarDatos(rutaCompleta, offset, size, datos);
 
 				enviarYSerializarIntSinHeader(emisor, estadoDeOperacion);
@@ -69,7 +69,7 @@ void entenderMensaje(int emisor, char header){
 				log_info(logger, "Borrar archivo...");
 				path = deserializarString(emisor);
 
-				rutaCompleta = concatenar(PUNTO_MONTAJE, path);
+				rutaCompleta = concatenar(PUNTO_MONTAJE_ARCHIVOS, path);
 				estadoDeOperacion = eliminarArchivo(path);
 
 				enviarYSerializarIntSinHeader(emisor, estadoDeOperacion);
@@ -107,7 +107,9 @@ void crearSelect(int servidor){
 	realizarNuestroSelect(select);
 }
 void levantarMetadata(){
-	t_config* configuracion = config_create("mnt/FIFA_FS/Metadata/Metadata.bin");
+	char* ubicacionMetadata = concatenar(PUNTO_MONTAJE_METADATA, "Metadata.bin");
+	//t_config* configuracion = config_create("mnt/FIFA_FS/Metadata/Metadata.bin");
+	t_config* configuracion = config_create(ubicacionMetadata);
 
 	TAMANIO_BLOQUES = config_get_int_value(configuracion, "TAMANIO_BLOQUES");
 	CANTIDAD_BLOQUES = config_get_int_value(configuracion, "CANTIDAD_BLOQUES");
@@ -129,6 +131,11 @@ void obtenerPuntoMontaje(char* primerMontaje){
 	log_info(logger, "el montaje es %s", PUNTO_MONTAJE);
 }
 
+void crearPuntosDeMontaje(){
+	PUNTO_MONTAJE_ARCHIVOS = concatenar(PUNTO_MONTAJE, "Archivos/");
+	PUNTO_MONTAJE_METADATA = concatenar(PUNTO_MONTAJE, "Metadata/");
+	PUNTO_MONTAJE_BLOQUES = concatenar(PUNTO_MONTAJE, "Bloques/");
+}
 void init(){
 	t_config* configuracion = config_create(ARCHIVO_CONFIGURACION);
 	RETARDO = config_get_int_value(configuracion, "RETARDO");
@@ -138,13 +145,16 @@ void init(){
 	free(punteroPuntoMontaje);
 	//config_destroy(configuracion);
 
+	logger = crearLogger(ARCHIVO_LOG, "MDJ");
+
+	obtenerPuntoMontaje(MONTAJE_ACTUAL);
+
+	crearPuntosDeMontaje();
 
 	levantarMetadata();
 
-	logger = crearLogger(ARCHIVO_LOG, "MDJ");
+	verificarExistenciaDeBitmap();
 
-
-	obtenerPuntoMontaje(MONTAJE_ACTUAL);
 
 	inicializarMutex(&mutexOperaciones);
 	colaOperaciones = queue_create();

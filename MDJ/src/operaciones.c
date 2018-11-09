@@ -3,7 +3,7 @@
 int validarArchivo(char* rutaArchivo){
 	log_info(logger, "validando archivo en ruta %s", rutaArchivo);
 	FILE* archivo = fopen(rutaArchivo, "r");
-	if(archivo < 0){
+	if(archivo == NULL || archivo < 0){
 		return PATH_INEXISTENTE;
 	}
 	fclose(archivo);
@@ -11,7 +11,7 @@ int validarArchivo(char* rutaArchivo){
 	return 0;
 }
 
-int crearArchivo(char* rutaArchivo, int cantidadDeBytes){
+int crearArchivoSinBarraN(char* rutaArchivo){
 	//TODO verificar si hay espacio antes de crearlo y esa movida de los bloques en el bitmap
 
 	log_info(logger, "creando archivo en ruta %s", rutaArchivo);
@@ -20,12 +20,26 @@ int crearArchivo(char* rutaArchivo, int cantidadDeBytes){
 		log_info(logger, "Error gato!");
 		return PATH_INEXISTENTE;
 	}
-	for(int i = 0; i < cantidadDeBytes; i++){
-		fputs("\n", archivo);
-	}
 
 	fclose(archivo);
 	return 0;
+}
+
+int crearArchivo(char* rutaArchivo, int cantidadDeBytes){
+	//TODO verificar si hay espacio antes de crearlo y esa movida de los bloques en el bitmap
+
+	FILE* archivo;
+	int creacionDeArchivo = crearArchivoSinBarraN(rutaArchivo);
+	if(creacionDeArchivo == 0){
+		char* datos = asignarMemoria(cantidadDeBytes) + 1;
+		for(int i = 0; i < cantidadDeBytes; i++){
+			datos[i] = '\n';
+		}
+		datos[cantidadDeBytes] = EOF;
+		guardarDatos(rutaArchivo, 0, cantidadDeBytes + 1, datos);
+
+	}
+	return creacionDeArchivo;
 }
 
 int guardarDatos(char* rutaArchivo, int offset, int tamanioMensaje, char* datos){
