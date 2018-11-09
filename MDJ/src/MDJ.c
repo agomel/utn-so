@@ -6,18 +6,18 @@ void entenderMensaje(int emisor, char header){
 	int offset;
 	int size;
 	char* datos;
-
+	char* rutaCompleta;
 	int estadoDeOperacion;
 
 	switch(header){
 			case VALIDAR_ARCHIVO:
 				log_info(logger, "Validar archivo...");
 				path = deserializarString(emisor);
-
-				estadoDeOperacion = validarArchivo(path);
-
+				rutaCompleta = concatenar(PUNTO_MONTAJE, path);
+				estadoDeOperacion = validarArchivo(rutaCompleta);
 				enviarYSerializarIntSinHeader(emisor, estadoDeOperacion);
 
+				free(rutaCompleta);
 				free(path);
 				break;
 			case CREAR_ARCHIVO:
@@ -25,10 +25,12 @@ void entenderMensaje(int emisor, char header){
 				path = deserializarString(emisor);
 				size = deserializarInt(emisor);
 
-				estadoDeOperacion = crearArchivo(path, size);
 
+				rutaCompleta = concatenar(PUNTO_MONTAJE, path);
+				estadoDeOperacion = crearArchivo(rutaCompleta, size);
 				enviarYSerializarIntSinHeader(emisor, estadoDeOperacion);
 
+				free(rutaCompleta);
 				free(path);
 				break;
 			case OBTENER_DATOS:
@@ -37,10 +39,11 @@ void entenderMensaje(int emisor, char header){
 				offset = deserializarInt(emisor);
 				size = deserializarInt(emisor);
 
-				datos = obtenerDatos(path, offset, size);
-
+				rutaCompleta = concatenar(PUNTO_MONTAJE, path);
+				datos = obtenerDatos(rutaCompleta, offset, size);
 				enviarYSerializarStringSinHeader(emisor, datos);
 
+				free(rutaCompleta);
 				free(path);
 				free(datos);
 				break;
@@ -51,10 +54,12 @@ void entenderMensaje(int emisor, char header){
 				size = deserializarInt(emisor);
 				datos = deserializarStringSinElInt(emisor, size);
 
-				estadoDeOperacion = guardarDatos(path, offset, size, datos);
+				rutaCompleta = concatenar(PUNTO_MONTAJE, path);
+				estadoDeOperacion = guardarDatos(rutaCompleta, offset, size, datos);
 
 				enviarYSerializarIntSinHeader(emisor, estadoDeOperacion);
 
+				free(rutaCompleta);
 				free(path);
 				free(datos);
 				break;
@@ -62,10 +67,11 @@ void entenderMensaje(int emisor, char header){
 				log_info(logger, "Borrar archivo...");
 				path = deserializarString(emisor);
 
+				rutaCompleta = concatenar(PUNTO_MONTAJE, path);
 				estadoDeOperacion = eliminarArchivo(path);
 
 				enviarYSerializarIntSinHeader(emisor, estadoDeOperacion);
-
+				free(rutaCompleta);
 				free(path);
 				break;
 		default:
@@ -99,9 +105,7 @@ void crearSelect(int servidor){
 	realizarNuestroSelect(select);
 }
 void levantarMetadata(){
-	char* ubicacionMetadata = concatenar(PUNTO_MONTAJE, "Metadata/Metadata.txt");
-	t_config* configuracion = config_create(ubicacionMetadata);
-	free(ubicacionMetadata);
+	t_config* configuracion = config_create("mnt/FIFA_FS/Metadata/Metadata.bin");
 
 	TAMANIO_BLOQUES = config_get_int_value(configuracion, "TAMANIO_BLOQUES");
 	CANTIDAD_BLOQUES = config_get_int_value(configuracion, "CANTIDAD_BLOQUES");
@@ -114,20 +118,31 @@ void levantarMetadata(){
 
 }
 
+void obtenerPuntoMontaje(char* primerMontaje){
+	PUNTO_MONTAJE = asignarMemoria(250);
+	char* path = malloc(250);
+	getcwd(path, 250);
+	PUNTO_MONTAJE = concatenar(path, primerMontaje);
+	free(path);
+	log_info(logger, "el montaje es %s", PUNTO_MONTAJE);
+}
+
 void init(){
 	t_config* configuracion = config_create(ARCHIVO_CONFIGURACION);
 	RETARDO = config_get_int_value(configuracion, "RETARDO");
 	char* punteroPuntoMontaje = config_get_string_value(configuracion, "PUNTO_MONTAJE");
-	PUNTO_MONTAJE = asignarMemoria(strlen(punteroPuntoMontaje) + 1);//asignarMemoria(strlen(punteroPuntoMontaje) + 1);
 	MONTAJE_ACTUAL = asignarMemoria(250);
-	memcpy(PUNTO_MONTAJE, punteroPuntoMontaje, strlen(punteroPuntoMontaje)+ 1);
 	memcpy(MONTAJE_ACTUAL, punteroPuntoMontaje, strlen(punteroPuntoMontaje)+ 1);
 	free(punteroPuntoMontaje);
 	//config_destroy(configuracion);
 
+
 	levantarMetadata();
 
 	logger = crearLogger(ARCHIVO_LOG, "MDJ");
+
+
+	obtenerPuntoMontaje(MONTAJE_ACTUAL);
 
 	inicializarMutex(&mutexOperaciones);
 	colaOperaciones = queue_create();

@@ -111,7 +111,11 @@ void concatenarInt(void* buffer, int* desplazamiento, int numero){
 	*desplazamiento = *desplazamiento + sizeof(int);
 }
 
+void agregarBarraCero(char* texto){
+	texto[strlen(texto)] = '\0';
+}
 void concatenarString(void* buffer, int* desplazamiento, char* mensaje){
+	agregarBarraCero(mensaje);
 	concatenarInt(buffer, desplazamiento, strlen(mensaje) + 1);
 	memcpy(buffer + *desplazamiento, mensaje, strlen(mensaje) + 1);
 	*desplazamiento = *desplazamiento + strlen(mensaje) + 1;
@@ -150,6 +154,7 @@ char* deserializarString(int emisor){
 	int tamanioMensaje = deserializarInt(emisor);
 	char* mensaje = asignarMemoria(tamanioMensaje);
 	recibirMensaje(emisor, mensaje, tamanioMensaje);
+	agregarBarraCero(mensaje);
 	printf("Recibi %s de parte de %d \n" , mensaje, emisor);
 	return mensaje;
 }
@@ -157,6 +162,7 @@ char* deserializarString(int emisor){
 char* deserializarStringSinElInt(int emisor, int tamanioMensaje){
 	char* mensaje = asignarMemoria(tamanioMensaje);
 	recibirMensaje(emisor, mensaje, tamanioMensaje);
+	agregarBarraCero(mensaje);
 	printf("Recibi %s de parte de %d \n" , mensaje, emisor);
 	return mensaje;
 }

@@ -1,6 +1,7 @@
 #include "operaciones.h"
 
 int validarArchivo(char* rutaArchivo){
+	log_info(logger, "validando archivo en ruta %s", rutaArchivo);
 	FILE* archivo = fopen(rutaArchivo, "r");
 	if(archivo < 0){
 		return PATH_INEXISTENTE;
@@ -13,6 +14,7 @@ int validarArchivo(char* rutaArchivo){
 int crearArchivo(char* rutaArchivo, int cantidadDeBytes){
 	//TODO verificar si hay espacio antes de crearlo y esa movida de los bloques en el bitmap
 
+	log_info(logger, "creando archivo en ruta %s", rutaArchivo);
 	FILE* archivo = fopen(rutaArchivo, "w");
 	if(archivo == NULL){
 		log_info(logger, "Error gato!");

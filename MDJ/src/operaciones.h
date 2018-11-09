@@ -20,4 +20,5 @@ int eliminarArchivo(char* rutaArchivo);
 
 extern t_log* logger;
 
+
 #endif /*OPERACIONES_H_*/
