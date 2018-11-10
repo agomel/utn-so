@@ -11,6 +11,8 @@
 
 extern char* MONTAJE_ACTUAL;
 
+extern int CANTIDAD_BLOQUES;
+
 void ls(char* parametro);
 void cd(char* parametro);
 void cat(char* parametro);
