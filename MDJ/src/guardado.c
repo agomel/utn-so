@@ -12,7 +12,6 @@ void verificarExistenciaDeBitmap(){
 				datos[i] = '0';
 			}
 
-			datos[CANTIDAD_BLOQUES] = EOF;
 			guardarDatos(rutaBitmap, 0, CANTIDAD_BLOQUES + 1, datos);
 
 		}

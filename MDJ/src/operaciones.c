@@ -35,7 +35,6 @@ int crearArchivo(char* rutaArchivo, int cantidadDeBytes){
 		for(int i = 0; i < cantidadDeBytes; i++){
 			datos[i] = '\n';
 		}
-		datos[cantidadDeBytes] = EOF;
 		guardarDatos(rutaArchivo, 0, cantidadDeBytes + 1, datos);
 
 	}
