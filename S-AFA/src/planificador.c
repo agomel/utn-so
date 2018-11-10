@@ -2,7 +2,6 @@
 #include "S-AFA.h"
 
 void inicializarPlanificadores(){
-	configuracion = config_create(ARCHIVO_CONFIGURACION);
 	inicializarColas();
 	inicializarSemaforos();
 	dtbDummy = asignarMemoria(sizeof(DTB));
@@ -11,7 +10,6 @@ void inicializarPlanificadores(){
 	algoritmo = asignarMemoria(strlen(punteroAlgoritmo) + 1);
 	memcpy(algoritmo, punteroAlgoritmo, strlen(punteroAlgoritmo)+ 1);
 	log_info(logger, "Algoritmo elegido %s", algoritmo);
-	config_destroy(configuracion);
 }
 
 void inicializarColas(){
@@ -22,13 +20,11 @@ void inicializarSemaforos(){
 	inicializarMutex(&mutexListaDTBs);
 	inicializarMutex(&mutexDummy);
 
-	configuracion = config_create(ARCHIVO_CONFIGURACION);
 	int multiprogramacion = config_get_int_value(configuracion, "MULTIPROGRAMACION");
 	inicializarSem(&gradoMultiprogramacion, multiprogramacion);
 	inicializarSem(&gradoMultiprocesamiento, 0);
 	inicializarSem(&cantidadTotalREADY, 0);
 	inicializarSem(&semCantidadEnNew, 0);
-	config_destroy(configuracion);
 }
 
 void cambiarEstado(int idDTB, char nuevoEstado){
