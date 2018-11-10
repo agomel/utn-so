@@ -20,7 +20,7 @@ void cd(char* directorio){
 	if(chdir(directorio) == 0){
 		char* path = malloc(250);
 			getcwd(path, 250);
-			memcpy(MONTAJE_ACTUAL, path, strlen(path));
+			memcpy(MONTAJE_ACTUAL, path, strlen(path) + 1);
 			agregarBarraCero(MONTAJE_ACTUAL);
 			free(path);
 	}else{
