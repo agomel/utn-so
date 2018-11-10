@@ -32,6 +32,7 @@ sem_t semOperaciones;
 sem_t semProductores;
 
 t_log* logger;
+t_config* configuracion;
 
 int identificarse(int emisor, char header);
 

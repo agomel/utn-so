@@ -72,7 +72,7 @@ char* obtenerDatos(char* rutaArchivo, int offset, int size){
 		size = myStat.st_size;
 	}
 
-	char* buffer = asignarMemoria(size);
+	char* buffer = asignarMemoria(size + 1);
 	read(myFile, buffer, size);
 
 	close(myFile);

@@ -7,6 +7,7 @@ void inicializarDAM(){
 	colaOperaciones = queue_create();
 	configuraciones = config_create(ARCHIVO_CONFIGURACION);
 	transferSize = config_get_int_value(configuraciones, "TRANSFER_SIZE");
+	config_destroy(configuraciones);
 	logger = crearLogger(ARCHIVO_LOG, "DAM");
 }
 

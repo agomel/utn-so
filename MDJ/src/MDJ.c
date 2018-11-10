@@ -123,16 +123,16 @@ void levantarMetadata(){
 	memcpy(ubicacionMetadata, PUNTO_MONTAJE_METADATA, strlen(PUNTO_MONTAJE_METADATA) + 1);
 	string_append(&ubicacionMetadata, "Metadata.bin");
 
-	t_config* configuracion = config_create(ubicacionMetadata);
+	t_config* metadataConfig = config_create(ubicacionMetadata);
 
-	TAMANIO_BLOQUES = config_get_int_value(configuracion, "TAMANIO_BLOQUES");
-	CANTIDAD_BLOQUES = config_get_int_value(configuracion, "CANTIDAD_BLOQUES");
-	char* magicNumber = config_get_string_value(configuracion, "MAGIC_NUMBER");
+	TAMANIO_BLOQUES = config_get_int_value(metadataConfig, "TAMANIO_BLOQUES");
+	CANTIDAD_BLOQUES = config_get_int_value(metadataConfig, "CANTIDAD_BLOQUES");
+	char* magicNumber = config_get_string_value(metadataConfig, "MAGIC_NUMBER");
 	MAGIC_NUMBER = asignarMemoria(strlen(magicNumber) +1);
 	memcpy(MAGIC_NUMBER, magicNumber, strlen(magicNumber) +1);
 	free(magicNumber);
 
-	//config_destroy(configuracion);
+	//config_destroy(metadataConfig);
 
 }
 
@@ -162,7 +162,7 @@ void crearPuntosDeMontaje(){
 
 }
 void init(){
-	t_config* configuracion = config_create(ARCHIVO_CONFIGURACION);
+	configuracion = config_create(ARCHIVO_CONFIGURACION);
 	RETARDO = config_get_int_value(configuracion, "RETARDO");
 	char* punteroPuntoMontaje = config_get_string_value(configuracion, "PUNTO_MONTAJE");
 	MONTAJE_ACTUAL = asignarMemoria(250);
@@ -190,8 +190,6 @@ void init(){
 }
 int main(void) {
 	init();
-
-	t_config* configuracion = config_create(ARCHIVO_CONFIGURACION);
 
 	direccionServidor direccionMDJ = levantarDeConfiguracion(NULL, "PUERTO", configuracion);
 	int servidor = crearServidor(direccionMDJ.puerto, INADDR_ANY);
