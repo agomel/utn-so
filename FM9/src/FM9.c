@@ -234,14 +234,10 @@ void init(){
 	inicializarMutex(&mutexOperaciones);
 	inicializarSem(&semOperaciones, 0);
 	inicializarSem(&semProductores, 0);
-
-	config_destroy(configuracion);
 }
 
 int main(void) {
 	init();
-
-	configuracion = config_create(ARCHIVO_CONFIGURACION);
 	direccionServidor direccionFM9 = levantarDeConfiguracion(NULL, "PUERTO", configuracion);
 	int servidor = crearServidor(direccionFM9.puerto, INADDR_ANY);
 	crearSelect(servidor);
