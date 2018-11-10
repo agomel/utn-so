@@ -21,6 +21,7 @@ void cd(char* directorio){
 		char* path = malloc(250);
 			getcwd(path, 250);
 			memcpy(MONTAJE_ACTUAL, path, strlen(path));
+			agregarBarraCero(MONTAJE_ACTUAL);
 			free(path);
 	}else{
 		printf("Error, no pude entrar a ese path\n");

@@ -27,12 +27,13 @@ void enviarYSerializarString(int destino, char* texto,char operacion){
 }
 
 void enviarySerializarPathyTamanioArchivo(int destino ,char* path, int tamanioArchivo){
-	void* buffer = asignarMemoria(sizeof(char) + sizeof(int) + (strlen(path)+1) + sizeof(int));
+	int tamanioBuffer = sizeof(char) + sizeof(int) + strlen(path) + 1 + sizeof(int);
+	void* buffer = asignarMemoria(tamanioBuffer);
 	int desplazamiento = 0;
 	concatenarChar(buffer, &desplazamiento, CREAR_ARCHIVO);
 	concatenarString(buffer, &desplazamiento, path);
 	concatenarInt(buffer, &desplazamiento, tamanioArchivo);
-	enviarMensaje(destino, buffer, desplazamiento);
+	enviarMensaje(destino, buffer, tamanioBuffer);
 	free(buffer);
 }
 
@@ -97,7 +98,7 @@ void concatenarChar(void* buffer, int* desplazamiento, char mensaje){
 }
 
 void concatenarInt(void* buffer, int* desplazamiento, int numero){
-	memcpy(buffer + *desplazamiento, &numero, sizeof(int));
+	memcpy(buffer + *desplazamiento, numero, sizeof(int));
 	*desplazamiento = *desplazamiento + sizeof(int);
 }
 

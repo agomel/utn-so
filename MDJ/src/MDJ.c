@@ -125,8 +125,8 @@ void levantarMetadata(){
 	TAMANIO_BLOQUES = config_get_int_value(configuracion, "TAMANIO_BLOQUES");
 	CANTIDAD_BLOQUES = config_get_int_value(configuracion, "CANTIDAD_BLOQUES");
 	char* magicNumber = config_get_string_value(configuracion, "MAGIC_NUMBER");
-	MAGIC_NUMBER = asignarMemoria(strlen(magicNumber));
-	memcpy(MAGIC_NUMBER, magicNumber, strlen(magicNumber));
+	MAGIC_NUMBER = asignarMemoria(strlen(magicNumber) +1);
+	memcpy(MAGIC_NUMBER, magicNumber, strlen(magicNumber) +1);
 	free(magicNumber);
 
 	//config_destroy(configuracion);
@@ -137,7 +137,7 @@ void obtenerPuntoMontaje(char* primerMontaje){
 	PUNTO_MONTAJE = asignarMemoria(250);
 	char* path = asignarMemoria(250);
 	getcwd(path, 250);
-	memcpy(PUNTO_MONTAJE, path, strlen(path));
+	memcpy(PUNTO_MONTAJE, path, strlen(path) +1);
 	string_append_with_format(&PUNTO_MONTAJE, "%s\0", primerMontaje);
 	free(path);
 	log_info(logger, "el montaje es %s", PUNTO_MONTAJE);
@@ -148,7 +148,7 @@ void init(){
 	RETARDO = config_get_int_value(configuracion, "RETARDO");
 	char* punteroPuntoMontaje = config_get_string_value(configuracion, "PUNTO_MONTAJE");
 	MONTAJE_ACTUAL = asignarMemoria(250);
-	memcpy(MONTAJE_ACTUAL, punteroPuntoMontaje, strlen(punteroPuntoMontaje));
+	memcpy(MONTAJE_ACTUAL, punteroPuntoMontaje, strlen(punteroPuntoMontaje) + 1);
 	free(punteroPuntoMontaje);
 	//config_destroy(configuracion);
 
