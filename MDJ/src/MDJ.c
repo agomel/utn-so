@@ -60,6 +60,7 @@ void entenderMensaje(int emisor, char header){
 				offset = deserializarInt(emisor);
 				size = deserializarInt(emisor);
 				datos = deserializarStringSinElInt(emisor, size);
+				agregarBarraCero(datos);
 				size -= 1; //NO quiero que me guarde el \0
 				char* rutaCompleta = asignarMemoria(strlen(PUNTO_MONTAJE_ARCHIVOS) + 1);
 				memcpy(rutaCompleta, PUNTO_MONTAJE_ARCHIVOS, strlen(PUNTO_MONTAJE_ARCHIVOS) + 1);
