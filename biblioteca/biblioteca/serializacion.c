@@ -98,7 +98,7 @@ void concatenarChar(void* buffer, int* desplazamiento, char mensaje){
 }
 
 void concatenarInt(void* buffer, int* desplazamiento, int numero){
-	memcpy(buffer + *desplazamiento, numero, sizeof(int));
+	memcpy(buffer + *desplazamiento, &numero, sizeof(int));
 	*desplazamiento = *desplazamiento + sizeof(int);
 }
 
