@@ -365,8 +365,7 @@ void escuchar(int socketSAFA){//MensajeNano: Verificar los punteros de DTB
 int main(void) {
 	logger = crearLogger(ARCHIVO_LOG, "CPU");
 
-	t_config* configuracion = config_create(ARCHIVO_CONFIGURACION);
-	retardo = config_get_int_value(configuracion, "RETARDO");
+	t_config* configuracion = config_get_int_value(configuracion, "RETARDO");
 
 	direccionServidor direccionSAFA = levantarDeConfiguracion("IP_SAFA", "PUERTO_SAFA", configuracion);
 	socketSAFA = conectarConServidor(direccionSAFA.puerto, inet_addr(direccionSAFA.ip));
