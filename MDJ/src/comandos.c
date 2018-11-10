@@ -30,7 +30,7 @@ void cd(char* directorio){
 
 void cat(char* parametro){
 	FILE* archivo = fopen(parametro, "r");
-	char* linea = asignarMemoria(CANTIDAD_BLOQUES) + 1;
+	char* linea = asignarMemoria(CANTIDAD_BLOQUES + 1);
 	while(fscanf(archivo, "%s", linea) != EOF){
 		printf("%s\n", linea);
 	}
