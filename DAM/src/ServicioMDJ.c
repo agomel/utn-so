@@ -64,10 +64,17 @@ int borrarArchivoEnMDJ(char* path){
 	free(buffer);
 	return deserializarInt(socketMDJ);
 }
-int guardarDatosEnMDJ(char* datos, char* path){ //TODO esta mal, el MDJ recibe otrAs cosas
-	int cantidadTotal = (sizeof(datos)+1) ;
-	enviarYSerializarCharSinHeader(socketMDJ, GUARDAR_DATOS);
-	enviarYSerializarStringSinHeader(socketMDJ, datos);
+int guardarDatosEnMDJ(char* datos, char* path){
+	void* buffer = asignarMemoria(sizeof(char) + sizeof(int)*3 + strlen(path) + 1 + strlen(datos) + 1);
+	int desplazamiento = 0;
+	concatenarChar(buffer, &desplazamiento, GUARDAR_DATOS);
+	concatenarString(buffer, &desplazamiento, path);
+	concatenarInt(buffer, &desplazamiento, 0);
+	concatenarString(buffer, &desplazamiento, datos);
+
+	enviarMensaje(socketMDJ, buffer, desplazamiento);
+	free(buffer);
+
 	return deserializarInt(socketMDJ);
 }
 
