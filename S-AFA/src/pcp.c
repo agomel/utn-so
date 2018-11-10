@@ -45,7 +45,7 @@ void planificadorACortoPlazo(){
 		DTB* dtb = seleccionarDTB();
 		if(dtb->flag == 0){
 			cambiarEstadoDummy(EXECUTE);
-			log_info(logger, "Pasado Dummy a ejecutar con scriptorio %s", dtb->escriptorio);
+			log_info(logger, "Pasado Dummy a ejecutar con escriptorio %s", dtb->escriptorio);
 		}else{
 			cambiarEstado(dtb->id, EXECUTE);
 		}
