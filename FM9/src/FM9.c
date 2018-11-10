@@ -214,7 +214,7 @@ void inicializar(char* modo){
 }
 
 void init(){
-	t_config* configuracion = config_create(ARCHIVO_CONFIGURACION);
+	configuracion = config_create(ARCHIVO_CONFIGURACION);
 
 	tamanioLinea = config_get_int_value(configuracion, "MAX_LINEA");
 	tamanioMemoria = config_get_int_value(configuracion, "TAMANIO");
@@ -234,14 +234,10 @@ void init(){
 	inicializarMutex(&mutexOperaciones);
 	inicializarSem(&semOperaciones, 0);
 	inicializarSem(&semProductores, 0);
-
-	config_destroy(configuracion);
 }
 
 int main(void) {
 	init();
-
-	t_config* configuracion = config_create(ARCHIVO_CONFIGURACION);
 	direccionServidor direccionFM9 = levantarDeConfiguracion(NULL, "PUERTO", configuracion);
 	int servidor = crearServidor(direccionFM9.puerto, INADDR_ANY);
 	crearSelect(servidor);

@@ -42,6 +42,7 @@ t_queue* colaOperaciones;
 pthread_mutex_t mutexOperaciones;
 sem_t semProductores;
 sem_t semOperaciones;
+t_config* configuracion;
 
 void entenderMensaje(int emisor, char header);
 

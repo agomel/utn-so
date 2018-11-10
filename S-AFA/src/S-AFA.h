@@ -28,7 +28,7 @@ pthread_mutex_t mutexCpusAFinalizarDTBs;
 t_dictionary* cpusAFinalizarDTBs;
 t_dictionary* recursos;
 pthread_mutex_t mutexRecursos;
-
+t_config* configuracion;
 
 t_list* esperandoRecursos;
 pthread_mutex_t mutexEsperandoRecursos;

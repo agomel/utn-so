@@ -212,7 +212,7 @@ void crearSelect(int servidor){
 }
 int main(void) {
 	inicializarSAFA();
-	t_config* configuracion = config_create(ARCHIVO_CONFIGURACION);
+	configuracion = config_create(ARCHIVO_CONFIGURACION);
 	retardo = config_get_int_value(configuracion, "RETARDO_PLANIF");
 
 

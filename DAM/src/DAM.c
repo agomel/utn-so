@@ -5,9 +5,8 @@ void inicializarDAM(){
 	inicializarSem(&semHayEnColaOperaciones, 0);
 	inicializarSem(&semProductores, 0);
 	colaOperaciones = queue_create();
-	configuraciones = config_create(ARCHIVO_CONFIGURACION);
-	transferSize = config_get_int_value(configuraciones, "TRANSFER_SIZE");
-	config_destroy(configuraciones);
+	configuracion = config_create(ARCHIVO_CONFIGURACION);
+	transferSize = config_get_int_value(configuracion, "TRANSFER_SIZE");
 	logger = crearLogger(ARCHIVO_LOG, "DAM");
 }
 
@@ -112,7 +111,6 @@ void crearSelect(int servidor){
 
 int main(void) {
 	inicializarDAM();
-	t_config* configuracion = config_create(ARCHIVO_CONFIGURACION);
 
 	direccionServidor direccionDAM = levantarDeConfiguracion(NULL, "PUERTO", configuracion);
 	int servidorDAM = crearServidor(direccionDAM.puerto, INADDR_ANY);
