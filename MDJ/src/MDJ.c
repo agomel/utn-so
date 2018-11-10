@@ -194,7 +194,7 @@ int main(void) {
 
 	direccionServidor direccionMDJ = levantarDeConfiguracion(NULL, "PUERTO", configuracion);
 	int servidor = crearServidor(direccionMDJ.puerto, INADDR_ANY);
-	config_destroy(configuracion);
+	//config_destroy(configuracion);
 
 	crearSelect(servidor);
 
