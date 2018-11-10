@@ -4,13 +4,18 @@
 void consolita(){
 
 	//ir al punto de montaje
-	char* montajeActual = concatenar(".", MONTAJE_ACTUAL);
+	char* montajeActual = asignarMemoria(sizeof(char)); //No hace falta hacer el malloc para todo, se hace el realloc en la funcion
+	memcpy(montajeActual, ".", sizeof(char));
+	string_append(&montajeActual, MONTAJE_ACTUAL);
 	cd(montajeActual);
 	free(montajeActual);
 
 	//escuchar la consola
 	while(1){
-		char* mensajeReadLine = concatenar(MONTAJE_ACTUAL, "$ ");
+
+		char* mensajeReadLine = asignarMemoria(strlen(MONTAJE_ACTUAL));
+		memcpy(mensajeReadLine, MONTAJE_ACTUAL, strlen(MONTAJE_ACTUAL));
+		string_append(&mensajeReadLine, "$ ");
 		char* texto = readline(mensajeReadLine);
 		free(mensajeReadLine);
 

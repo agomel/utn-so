@@ -9,6 +9,7 @@
 #include <dirent.h>
 #include <unistd.h>
 #include "comandos.h"
+#include <commons/string.h>
 
 extern char* MONTAJE_ACTUAL;
 void consolita();

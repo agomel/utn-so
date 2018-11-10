@@ -143,7 +143,7 @@ respuestaDeObtencionDeMemoria* obtenerDatosSegPura(int idDTB, char* nombreArchiv
 		char* lineaConBasura = malloc(tamanioLinea);
 		memcpy(lineaConBasura, storage + desplazamiento, tamanioLinea);
 		char** lineaSinBasura = string_split(lineaConBasura, "\n");
-		string_append_with_format(archivo, "%s\n", lineaSinBasura[0]);
+		string_append_with_format(&archivo, "%s\n", lineaSinBasura[0]);
 		freeLineasBasura(lineaSinBasura, lineaConBasura);
 	}
 
@@ -220,11 +220,14 @@ int asignarDatosSegPura(int IdDTB, char* nombreArchivo, int numeroLinea, char* d
 	char* lineaConBasura = malloc(tamanioLinea);
 	memcpy(lineaConBasura, storage + desplazamiento, tamanioLinea);
 	char** lineaSinBasura = string_split(lineaConBasura, "\n");
+	char* lineaPosta = malloc(strlen(lineaSinBasura[0]));
+	memcpy(lineaPosta, lineaConBasura[0], strlen(lineaSinBasura[0]));
 	if((strlen(lineaSinBasura[0] + strlen(datos)) + 2) < tamanioLinea){ //Lo que ya estaba, los datos nuevos, el /n y el espacio en el medio
 		//Se puede escribir
-		string_append_with_format(lineaSinBasura[0], " %s\n", datos);
-		memcpy(storage + desplazamiento, lineaSinBasura[0], strlen(lineaSinBasura[0]));
+		string_append_with_format(&lineaPosta, " %s\n", datos);
+		memcpy(storage + desplazamiento, lineaPosta, strlen(lineaPosta));
 		freeLineasBasura(lineaSinBasura, lineaConBasura);
+		free(lineaPosta);
 		log_debug(logger, "Asignados datos con exito");
 
 	}else{

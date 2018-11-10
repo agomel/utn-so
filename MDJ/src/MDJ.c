@@ -6,13 +6,14 @@ void entenderMensaje(int emisor, char header){
 	int offset;
 	int size;
 	char* datos;
-	char* rutaCompleta;
 	int estadoDeOperacion;
 	switch(header){
-			case VALIDAR_ARCHIVO:
+			case VALIDAR_ARCHIVO: {
 				log_info(logger, "Validar archivo...");
 				path = deserializarString(emisor);
-				rutaCompleta = concatenar(PUNTO_MONTAJE, path);
+				char* rutaCompleta = asignarMemoria(strlen(PUNTO_MONTAJE));
+				memcpy(rutaCompleta, PUNTO_MONTAJE, strlen(PUNTO_MONTAJE));
+				string_append(&rutaCompleta, path);
 				estadoDeOperacion = validarArchivo(rutaCompleta);
 				enviarYSerializarIntSinHeader(emisor, estadoDeOperacion);
 
@@ -21,26 +22,31 @@ void entenderMensaje(int emisor, char header){
 				free(path);
 
 				break;
-			case CREAR_ARCHIVO:
+			}
+			case CREAR_ARCHIVO: {
 				log_info(logger, "Crear archivo...");
 				path = deserializarString(emisor);
 				size = deserializarInt(emisor);
 
-
-				rutaCompleta = concatenar(PUNTO_MONTAJE, path);
+				char* rutaCompleta = asignarMemoria(strlen(PUNTO_MONTAJE));
+				memcpy(rutaCompleta, PUNTO_MONTAJE, strlen(PUNTO_MONTAJE));
+				string_append(&rutaCompleta, path);
 				estadoDeOperacion = crearArchivo(rutaCompleta, size);
 				enviarYSerializarIntSinHeader(emisor, estadoDeOperacion);
 
 				free(rutaCompleta);
 				free(path);
 				break;
-			case OBTENER_DATOS:
+			}
+			case OBTENER_DATOS: {
 				log_info(logger, "Obtener datos...");
 				path = deserializarString(emisor);
 				offset = deserializarInt(emisor);
 				size = deserializarInt(emisor);
 
-				rutaCompleta = concatenar(PUNTO_MONTAJE, path);
+				char* rutaCompleta = asignarMemoria(strlen(PUNTO_MONTAJE));
+				memcpy(rutaCompleta, PUNTO_MONTAJE, strlen(PUNTO_MONTAJE));
+				string_append(&rutaCompleta, path);
 				datos = obtenerDatos(rutaCompleta, offset, size);
 				enviarYSerializarStringSinHeader(emisor, datos);
 
@@ -48,7 +54,8 @@ void entenderMensaje(int emisor, char header){
 				free(path);
 				free(datos);
 				break;
-			case GUARDAR_DATOS:
+			}
+			case GUARDAR_DATOS: {
 				log_info(logger, "Guardar datos...");
 				path = deserializarString(emisor);
 				offset = deserializarInt(emisor);
@@ -56,7 +63,9 @@ void entenderMensaje(int emisor, char header){
 				datos = deserializarStringSinElInt(emisor, size);
 				size -= 1; //NO quiero que me guarde el \0
 
-				rutaCompleta = concatenar(PUNTO_MONTAJE, path);
+				char* rutaCompleta = asignarMemoria(strlen(PUNTO_MONTAJE));
+				memcpy(rutaCompleta, PUNTO_MONTAJE, strlen(PUNTO_MONTAJE));
+				string_append(&rutaCompleta, path);
 				estadoDeOperacion = guardarDatos(rutaCompleta, offset, size, datos);
 
 				enviarYSerializarIntSinHeader(emisor, estadoDeOperacion);
@@ -65,17 +74,21 @@ void entenderMensaje(int emisor, char header){
 				free(path);
 				free(datos);
 				break;
-			case BORRAR_ARCHIVO:
+			}
+			case BORRAR_ARCHIVO: {
 				log_info(logger, "Borrar archivo...");
 				path = deserializarString(emisor);
 
-				rutaCompleta = concatenar(PUNTO_MONTAJE, path);
+				char* rutaCompleta = asignarMemoria(strlen(PUNTO_MONTAJE));
+				memcpy(rutaCompleta, PUNTO_MONTAJE, strlen(PUNTO_MONTAJE));
+				string_append(&rutaCompleta, path);
 				estadoDeOperacion = eliminarArchivo(path);
 
 				enviarYSerializarIntSinHeader(emisor, estadoDeOperacion);
 				free(rutaCompleta);
 				free(path);
 				break;
+			}
 		default:
 			log_error(logger, "Header desconocido");
 	}
@@ -112,8 +125,8 @@ void levantarMetadata(){
 	TAMANIO_BLOQUES = config_get_int_value(configuracion, "TAMANIO_BLOQUES");
 	CANTIDAD_BLOQUES = config_get_int_value(configuracion, "CANTIDAD_BLOQUES");
 	char* magicNumber = config_get_string_value(configuracion, "MAGIC_NUMBER");
-	MAGIC_NUMBER = asignarMemoria(strlen(magicNumber) + 1);
-	memcpy(MAGIC_NUMBER, magicNumber, strlen(magicNumber)+ 1);
+	MAGIC_NUMBER = asignarMemoria(strlen(magicNumber));
+	memcpy(MAGIC_NUMBER, magicNumber, strlen(magicNumber));
 	free(magicNumber);
 
 	//config_destroy(configuracion);
@@ -122,9 +135,10 @@ void levantarMetadata(){
 
 void obtenerPuntoMontaje(char* primerMontaje){
 	PUNTO_MONTAJE = asignarMemoria(250);
-	char* path = malloc(250);
+	char* path = asignarMemoria(250);
 	getcwd(path, 250);
-	PUNTO_MONTAJE = concatenar(path, primerMontaje);
+	memcpy(PUNTO_MONTAJE, path, strlen(path));
+	string_append(&PUNTO_MONTAJE, primerMontaje);
 	free(path);
 	log_info(logger, "el montaje es %s", PUNTO_MONTAJE);
 }
@@ -134,7 +148,7 @@ void init(){
 	RETARDO = config_get_int_value(configuracion, "RETARDO");
 	char* punteroPuntoMontaje = config_get_string_value(configuracion, "PUNTO_MONTAJE");
 	MONTAJE_ACTUAL = asignarMemoria(250);
-	memcpy(MONTAJE_ACTUAL, punteroPuntoMontaje, strlen(punteroPuntoMontaje)+ 1);
+	memcpy(MONTAJE_ACTUAL, punteroPuntoMontaje, strlen(punteroPuntoMontaje));
 	free(punteroPuntoMontaje);
 	//config_destroy(configuracion);
 
