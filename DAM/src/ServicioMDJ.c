@@ -17,10 +17,17 @@ int validarArchivoMDJ(char* path){
 }
 
 char* obtenerDatosDeMDJ(char* path){
-	enviarYSerializarCharSinHeader(socketMDJ, OBTENER_DATOS);
-	enviarYSerializarStringSinHeader(socketMDJ, path);
-	enviarYSerializarIntSinHeader(socketMDJ, 0);
-	enviarYSerializarIntSinHeader(socketMDJ, -1);
+	int tamanioMensaje = sizeof(char) + strlen(path)+1 + sizeof(int)*3;
+	void* buffer = asignarMemoria(tamanioMensaje);
+	int desplazamiento = 0;
+
+	concatenarChar(buffer, &desplazamiento, OBTENER_DATOS);
+	concatenarString(buffer, &desplazamiento, path);
+	concatenarInt(buffer, &desplazamiento, 0); //Offset
+	concatenarInt(buffer, &desplazamiento, -1);//Size
+
+	enviarMensaje(socketMDJ, buffer, tamanioMensaje);
+
 	int tamanioARecibirTotal = deserializarInt(socketMDJ);
 	int tamanioRecibido = 0;
 	char* escriptorio;
@@ -57,7 +64,7 @@ int borrarArchivoEnMDJ(char* path){
 	free(buffer);
 	return deserializarInt(socketMDJ);
 }
-int guardarDatosEnMDJ(char* datos, char* path){
+int guardarDatosEnMDJ(char* datos, char* path){ //TODO esta mal, el MDJ recibe otrAs cosas
 	int cantidadTotal = (sizeof(datos)+1) ;
 	enviarYSerializarCharSinHeader(socketMDJ, GUARDAR_DATOS);
 	enviarYSerializarStringSinHeader(socketMDJ, datos);

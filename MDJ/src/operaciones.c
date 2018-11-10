@@ -43,15 +43,13 @@ int guardarDatos(char* rutaArchivo, int offset, int tamanioMensaje, char* datos)
 	return 0;
 }
 
-char* obtenerDatos(char* rutaArchivo, int offset, int tamanioALeer){
+char* obtenerDatos(char* rutaArchivo, int offset, int size){
 	int myFile = open(rutaArchivo, O_RDONLY);
 	if(myFile < 0){
 		log_info(logger, "Error al abrir el archivo %s", rutaArchivo);
 	}
 
 	lseek(myFile, offset, SEEK_SET);
-
-	int size = tamanioALeer;
 
 	if(size < 0){
 		struct stat myStat;
