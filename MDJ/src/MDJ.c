@@ -11,8 +11,8 @@ void entenderMensaje(int emisor, char header){
 			case VALIDAR_ARCHIVO: {
 				log_info(logger, "Validar archivo...");
 				path = deserializarString(emisor);
-				char* rutaCompleta = asignarMemoria(strlen(PUNTO_MONTAJE));
-				memcpy(rutaCompleta, PUNTO_MONTAJE, strlen(PUNTO_MONTAJE));
+				char* rutaCompleta = asignarMemoria(strlen(PUNTO_MONTAJE) + 1);
+				memcpy(rutaCompleta, PUNTO_MONTAJE, strlen(PUNTO_MONTAJE) + 1);
 				string_append(&rutaCompleta, path);
 				estadoDeOperacion = validarArchivo(rutaCompleta);
 				enviarYSerializarIntSinHeader(emisor, estadoDeOperacion);
@@ -28,8 +28,8 @@ void entenderMensaje(int emisor, char header){
 				path = deserializarString(emisor);
 				size = deserializarInt(emisor);
 
-				char* rutaCompleta = asignarMemoria(strlen(PUNTO_MONTAJE));
-				memcpy(rutaCompleta, PUNTO_MONTAJE, strlen(PUNTO_MONTAJE));
+				char* rutaCompleta = asignarMemoria(strlen(PUNTO_MONTAJE) + 1);
+				memcpy(rutaCompleta, PUNTO_MONTAJE, strlen(PUNTO_MONTAJE) + 1);
 				string_append(&rutaCompleta, path);
 				estadoDeOperacion = crearArchivo(rutaCompleta, size);
 				enviarYSerializarIntSinHeader(emisor, estadoDeOperacion);
@@ -44,8 +44,8 @@ void entenderMensaje(int emisor, char header){
 				offset = deserializarInt(emisor);
 				size = deserializarInt(emisor);
 
-				char* rutaCompleta = asignarMemoria(strlen(PUNTO_MONTAJE));
-				memcpy(rutaCompleta, PUNTO_MONTAJE, strlen(PUNTO_MONTAJE));
+				char* rutaCompleta = asignarMemoria(strlen(PUNTO_MONTAJE) + 1);
+				memcpy(rutaCompleta, PUNTO_MONTAJE, strlen(PUNTO_MONTAJE) + 1);
 				string_append(&rutaCompleta, path);
 				datos = obtenerDatos(rutaCompleta, offset, size);
 				enviarYSerializarStringSinHeader(emisor, datos);
@@ -63,8 +63,8 @@ void entenderMensaje(int emisor, char header){
 				datos = deserializarStringSinElInt(emisor, size);
 				size -= 1; //NO quiero que me guarde el \0
 
-				char* rutaCompleta = asignarMemoria(strlen(PUNTO_MONTAJE));
-				memcpy(rutaCompleta, PUNTO_MONTAJE, strlen(PUNTO_MONTAJE));
+				char* rutaCompleta = asignarMemoria(strlen(PUNTO_MONTAJE) + 1);
+				memcpy(rutaCompleta, PUNTO_MONTAJE, strlen(PUNTO_MONTAJE) + 1);
 				string_append(&rutaCompleta, path);
 				estadoDeOperacion = guardarDatos(rutaCompleta, offset, size, datos);
 
@@ -79,8 +79,8 @@ void entenderMensaje(int emisor, char header){
 				log_info(logger, "Borrar archivo...");
 				path = deserializarString(emisor);
 
-				char* rutaCompleta = asignarMemoria(strlen(PUNTO_MONTAJE));
-				memcpy(rutaCompleta, PUNTO_MONTAJE, strlen(PUNTO_MONTAJE));
+				char* rutaCompleta = asignarMemoria(strlen(PUNTO_MONTAJE) + 1);
+				memcpy(rutaCompleta, PUNTO_MONTAJE, strlen(PUNTO_MONTAJE) + 1);
 				string_append(&rutaCompleta, path);
 				estadoDeOperacion = eliminarArchivo(path);
 
@@ -138,7 +138,7 @@ void obtenerPuntoMontaje(char* primerMontaje){
 	char* path = asignarMemoria(250);
 	getcwd(path, 250);
 	memcpy(PUNTO_MONTAJE, path, strlen(path));
-	string_append(&PUNTO_MONTAJE, primerMontaje);
+	string_append_with_format(&PUNTO_MONTAJE, "%s\0", primerMontaje);
 	free(path);
 	log_info(logger, "el montaje es %s", PUNTO_MONTAJE);
 }
