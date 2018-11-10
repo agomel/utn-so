@@ -11,8 +11,8 @@ void entenderMensaje(int emisor, char header){
 			case VALIDAR_ARCHIVO: {
 				log_info(logger, "Validar archivo...");
 				path = deserializarString(emisor);
-				char* rutaCompleta = asignarMemoria(strlen(PUNTO_MONTAJE) + 1);
-				memcpy(rutaCompleta, PUNTO_MONTAJE, strlen(PUNTO_MONTAJE) + 1);
+				char* rutaCompleta = asignarMemoria(strlen(PUNTO_MONTAJE_ARCHIVOS) + 1);
+				memcpy(rutaCompleta, PUNTO_MONTAJE_ARCHIVOS, strlen(PUNTO_MONTAJE_ARCHIVOS) + 1);
 				string_append(&rutaCompleta, path);
 				estadoDeOperacion = validarArchivo(rutaCompleta);
 				enviarYSerializarIntSinHeader(emisor, estadoDeOperacion);
@@ -28,8 +28,8 @@ void entenderMensaje(int emisor, char header){
 				path = deserializarString(emisor);
 				size = deserializarInt(emisor);
 
-				char* rutaCompleta = asignarMemoria(strlen(PUNTO_MONTAJE) + 1);
-				memcpy(rutaCompleta, PUNTO_MONTAJE, strlen(PUNTO_MONTAJE) + 1);
+				char* rutaCompleta = asignarMemoria(strlen(PUNTO_MONTAJE_ARCHIVOS) + 1);
+				memcpy(rutaCompleta, PUNTO_MONTAJE_ARCHIVOS, strlen(PUNTO_MONTAJE_ARCHIVOS) + 1);
 				string_append(&rutaCompleta, path);
 				estadoDeOperacion = crearArchivo(rutaCompleta, size);
 				enviarYSerializarIntSinHeader(emisor, estadoDeOperacion);
@@ -43,9 +43,8 @@ void entenderMensaje(int emisor, char header){
 				path = deserializarString(emisor);
 				offset = deserializarInt(emisor);
 				size = deserializarInt(emisor);
-
-				char* rutaCompleta = asignarMemoria(strlen(PUNTO_MONTAJE) + 1);
-				memcpy(rutaCompleta, PUNTO_MONTAJE, strlen(PUNTO_MONTAJE) + 1);
+				char* rutaCompleta = asignarMemoria(strlen(PUNTO_MONTAJE_ARCHIVOS) + 1);
+				memcpy(rutaCompleta, PUNTO_MONTAJE_ARCHIVOS, strlen(PUNTO_MONTAJE_ARCHIVOS) + 1);
 				string_append(&rutaCompleta, path);
 				datos = obtenerDatos(rutaCompleta, offset, size);
 				enviarYSerializarStringSinHeader(emisor, datos);
@@ -62,10 +61,10 @@ void entenderMensaje(int emisor, char header){
 				size = deserializarInt(emisor);
 				datos = deserializarStringSinElInt(emisor, size);
 				size -= 1; //NO quiero que me guarde el \0
-
-				char* rutaCompleta = asignarMemoria(strlen(PUNTO_MONTAJE) + 1);
-				memcpy(rutaCompleta, PUNTO_MONTAJE, strlen(PUNTO_MONTAJE) + 1);
+				char* rutaCompleta = asignarMemoria(strlen(PUNTO_MONTAJE_ARCHIVOS) + 1);
+				memcpy(rutaCompleta, PUNTO_MONTAJE_ARCHIVOS, strlen(PUNTO_MONTAJE_ARCHIVOS) + 1);
 				string_append(&rutaCompleta, path);
+
 				estadoDeOperacion = guardarDatos(rutaCompleta, offset, size, datos);
 
 				enviarYSerializarIntSinHeader(emisor, estadoDeOperacion);
@@ -78,10 +77,10 @@ void entenderMensaje(int emisor, char header){
 			case BORRAR_ARCHIVO: {
 				log_info(logger, "Borrar archivo...");
 				path = deserializarString(emisor);
-
-				char* rutaCompleta = asignarMemoria(strlen(PUNTO_MONTAJE) + 1);
-				memcpy(rutaCompleta, PUNTO_MONTAJE, strlen(PUNTO_MONTAJE) + 1);
+				char* rutaCompleta = asignarMemoria(strlen(PUNTO_MONTAJE_ARCHIVOS) + 1);
+				memcpy(rutaCompleta, PUNTO_MONTAJE_ARCHIVOS, strlen(PUNTO_MONTAJE_ARCHIVOS) + 1);
 				string_append(&rutaCompleta, path);
+
 				estadoDeOperacion = eliminarArchivo(path);
 
 				enviarYSerializarIntSinHeader(emisor, estadoDeOperacion);
@@ -120,7 +119,11 @@ void crearSelect(int servidor){
 	realizarNuestroSelect(select);
 }
 void levantarMetadata(){
-	t_config* configuracion = config_create("mnt/FIFA_FS/Metadata/Metadata.bin");
+	char* ubicacionMetadata = asignarMemoria(strlen(PUNTO_MONTAJE_METADATA) + 1);
+	memcpy(ubicacionMetadata, PUNTO_MONTAJE_METADATA, strlen(PUNTO_MONTAJE_METADATA) + 1);
+	string_append(&ubicacionMetadata, "Metadata.bin");
+
+	t_config* configuracion = config_create(ubicacionMetadata);
 
 	TAMANIO_BLOQUES = config_get_int_value(configuracion, "TAMANIO_BLOQUES");
 	CANTIDAD_BLOQUES = config_get_int_value(configuracion, "CANTIDAD_BLOQUES");
@@ -143,6 +146,21 @@ void obtenerPuntoMontaje(char* primerMontaje){
 	log_info(logger, "el montaje es %s", PUNTO_MONTAJE);
 }
 
+void crearPuntosDeMontaje(){
+	PUNTO_MONTAJE_ARCHIVOS = asignarMemoria(strlen(PUNTO_MONTAJE) + 1);
+	memcpy(PUNTO_MONTAJE_ARCHIVOS, PUNTO_MONTAJE, strlen(PUNTO_MONTAJE) + 1);
+	string_append(&PUNTO_MONTAJE_ARCHIVOS, "Archivos/");
+
+	PUNTO_MONTAJE_METADATA = asignarMemoria(strlen(PUNTO_MONTAJE) + 1);
+	memcpy(PUNTO_MONTAJE_METADATA, PUNTO_MONTAJE, strlen(PUNTO_MONTAJE) + 1);
+	string_append(&PUNTO_MONTAJE_METADATA, "Metadata/");
+
+
+	PUNTO_MONTAJE_BLOQUES = asignarMemoria(strlen(PUNTO_MONTAJE) + 1);
+	memcpy(PUNTO_MONTAJE_BLOQUES, PUNTO_MONTAJE, strlen(PUNTO_MONTAJE) + 1);
+	string_append(&PUNTO_MONTAJE_BLOQUES, "Bloques/");
+
+}
 void init(){
 	t_config* configuracion = config_create(ARCHIVO_CONFIGURACION);
 	RETARDO = config_get_int_value(configuracion, "RETARDO");
@@ -152,13 +170,16 @@ void init(){
 	free(punteroPuntoMontaje);
 	//config_destroy(configuracion);
 
+	logger = crearLogger(ARCHIVO_LOG, "MDJ");
+
+	obtenerPuntoMontaje(MONTAJE_ACTUAL);
+
+	crearPuntosDeMontaje();
 
 	levantarMetadata();
 
-	logger = crearLogger(ARCHIVO_LOG, "MDJ");
+	verificarExistenciaDeBitmap();
 
-
-	obtenerPuntoMontaje(MONTAJE_ACTUAL);
 
 	inicializarMutex(&mutexOperaciones);
 	colaOperaciones = queue_create();

@@ -32,7 +32,7 @@ char* obtenerDatosDeMDJ(char* path){
 	int tamanioRecibido = 0;
 	char* escriptorio;
 	escriptorio = asignarMemoria(tamanioARecibirTotal);
-	int desplazamiento = 0;
+	desplazamiento = 0;
 	int tamanioARecibir;
 
 	while(tamanioRecibido< tamanioARecibirTotal){

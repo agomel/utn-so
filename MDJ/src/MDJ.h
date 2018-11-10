@@ -12,12 +12,16 @@
 #include <biblioteca/semaforos.h>
 #include <biblioteca/nuestroSelect.h>
 #include <biblioteca/traductor.h>
+#include "guardado.h"
 #include "consola.h"
 
 int RETARDO;
 char* PUNTO_MONTAJE;
 char* MONTAJE_ACTUAL;
 
+char* PUNTO_MONTAJE_ARCHIVOS;
+char* PUNTO_MONTAJE_METADATA;
+char* PUNTO_MONTAJE_BLOQUES;
 int TAMANIO_BLOQUES;
 int CANTIDAD_BLOQUES;
 char* MAGIC_NUMBER;
