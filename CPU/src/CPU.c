@@ -65,7 +65,6 @@ char entendiendoLinea(char* lineaEjecutando, DTB* dtbRecibido){
 		char* datos = pathYNumeroLinea[2];
 		if(listaContiene(dtbRecibido->listaDeArchivos, path)){
 			//Esta abierto
-			log_info(logger, "Ejecutando instruccion asignar");
 
 			void* buffer = asignarMemoria(sizeof(char) + sizeof(int)*4 + (strlen(path)+1) + strlen(datos) + 1);
 			int desplazamiento = 0;
@@ -84,6 +83,7 @@ char entendiendoLinea(char* lineaEjecutando, DTB* dtbRecibido){
 
 		}else{
 			//No esta abierto ese archivo
+			log_info(logger, "No esta abierto el archivo %s, no se hace asignar y se aborta el dtb", path);
 			return 'a';
 		}
 	}else if(string_starts_with(lineaEjecutando, "wait")){
