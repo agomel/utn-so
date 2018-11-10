@@ -4,8 +4,8 @@
 void consolita(){
 
 	//ir al punto de montaje
-	char* montajeActual = asignarMemoria(sizeof(char)); //No hace falta hacer el malloc para todo, se hace el realloc en la funcion
-	memcpy(montajeActual, ".", sizeof(char));
+	char* montajeActual = asignarMemoria(sizeof(char) + 1); //No hace falta hacer el malloc para todo, se hace el realloc en la funcion
+	memcpy(montajeActual, ".", sizeof(char) + 1);
 	string_append(&montajeActual, MONTAJE_ACTUAL);
 	cd(montajeActual);
 	free(montajeActual);
