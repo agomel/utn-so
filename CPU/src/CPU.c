@@ -44,7 +44,7 @@ void escuchar(int socketSAFA){
 							}
 						}
 					}
-					free(dtbRecibido);
+					freeDTB(dtbRecibido);
 					break;
 				}
 				default:
