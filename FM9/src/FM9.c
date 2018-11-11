@@ -115,6 +115,7 @@ void entenderMensaje(int emisor, char header){
 				void* buffer = asignarMemoria(tamanioBuffer);
 				concatenarInt(buffer, &desplazamiento, respuestaDeObtener->cantidadDeLineas);
 				concatenarString(buffer, &desplazamiento, respuestaDeObtener->datos);
+				log_info(logger, respuestaDeObtener->datos);
 				enviarMensaje(socketDAM, buffer, tamanioBuffer);
 				free(buffer);
 				freeRespuestaObtencion(respuestaDeObtener);

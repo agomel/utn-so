@@ -173,6 +173,7 @@ respuestaDeObtencionDeMemoria* obtenerLineaSegPura(int idDTB, char* nombreArchiv
 		int desplazamiento = segmento->base + numeroLinea * tamanioLinea;
 		char* lineaConBasura = malloc(tamanioLinea);
 		memcpy(lineaConBasura, storage + desplazamiento, tamanioLinea);
+		log_debug(logger, "En obtener: Linea con basura: %s", lineaConBasura);
 		char** lineaSinBasura = string_split(lineaConBasura, "\n");
 		respuesta->cantidadDeLineas = 1;
 		respuesta->datos = malloc(strlen(lineaSinBasura[0])+1);
@@ -217,12 +218,13 @@ int asignarDatosSegPura(int IdDTB, char* nombreArchivo, int numeroLinea, char* d
 	numeroLinea--;
 	ElementoTablaProcesos* proceso = obtenerProcesoPorIdDTB(IdDTB);
 	ElementoTablaSegPura* segmento = obtenerSegmentoPorArchivo(nombreArchivo, proceso->tablaSegmentos);
-	int desplazamiento = segmento->base + (numeroLinea * tamanioLinea);
+	int desplazamiento = segmento->base + numeroLinea * tamanioLinea;
 	char* lineaConBasura = malloc(tamanioLinea);
 	memcpy(lineaConBasura, storage + desplazamiento, tamanioLinea);
+	log_debug(logger, "En asignar: Linea con basura: %s", lineaConBasura);
 	char** lineaSinBasura = string_split(lineaConBasura, "\n");
 	char* lineaPosta = malloc(strlen(lineaSinBasura[0]));
-	memcpy(lineaPosta, lineaConBasura[0], strlen(lineaSinBasura[0]));
+	memcpy(lineaPosta, lineaSinBasura[0], strlen(lineaSinBasura[0]));
 	if((strlen(lineaSinBasura[0] + strlen(datos)) + 2) < tamanioLinea){ //Lo que ya estaba, los datos nuevos, el /n y el espacio en el medio
 		//Se puede escribir
 		printf("Estos son los datos que asigno %s, con cant: %d\n", datos, strlen(datos));
@@ -232,9 +234,13 @@ int asignarDatosSegPura(int IdDTB, char* nombreArchivo, int numeroLinea, char* d
 		freeLineasBasura(lineaSinBasura, lineaConBasura);
 		free(lineaPosta);
 		log_debug(logger, "Asignados datos con exito");
+		return 0;
 
 	}else{
 		log_error(logger, "No hay suficiente espacio en la linea %d del archivo %s", (numeroLinea+1), nombreArchivo);
+
+		freeLineasBasura(lineaSinBasura, lineaConBasura);
+		free(lineaPosta);
 		return 20002;
 	}
 }
