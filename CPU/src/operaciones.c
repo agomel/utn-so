@@ -32,7 +32,6 @@ char abrir(char* lineaEjecutando, DTB* dtbRecibido){
 		enviarMensaje(socketDIEGO, buffer2, tamanioBuffer2);
 		free(buffer2);
 		free(pathRecibido);
-		freeDTB(dtbRecibido);
 		return 'b';
 	}
 }
@@ -111,7 +110,6 @@ char flush(char* lineaEjecutando, DTB* dtbRecibido){
 		enviarMensaje(socketDIEGO, buffer, tamanioBuffer);
 		free(buffer);
 		free(pathRecibido);
-		freeDTB(dtbRecibido);
 		return 'b';
 	}else{
 		log_error(logger, "El DTB %d no tiene el archivo %s abierto", dtbRecibido->id, pathRecibido);
