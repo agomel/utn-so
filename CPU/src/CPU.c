@@ -35,8 +35,6 @@ void escuchar(int socketSAFA){
 								enviarYSerializarIntSinHeader(socketSAFA, sentencias);
 							}
 						}else{
-							pedirCosasDelFM9(dtbRecibido);
-							lineaAEjecutar = deserializarString(socketFM9);
 							int continuar2 = 1;
 							while(continuar2){
 								continuar2 = entenderLinea(lineaAEjecutar, dtbRecibido, mensajeEntendido, 1);
