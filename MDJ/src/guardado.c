@@ -78,11 +78,11 @@ t_list* crearArchivoEnBloques(char* datosTotales){
 	}
 	return bloques;
  }
-void crearArchivoFifa(char path, char* datosTotales){
+void crearArchivoFifa(char* path, char* datosTotales){
 
 	char* rutaArchivo = asignarMemoria(strlen(PUNTO_MONTAJE_ARCHIVOS) + 1);
 	memcpy(rutaArchivo, PUNTO_MONTAJE_ARCHIVOS, strlen(PUNTO_MONTAJE_ARCHIVOS) + 1);
-	string_append(&rutaArchivo , "Bitmap.bin");
+	string_append(&rutaArchivo , path);
 
 	t_list* bloques = crearArchivoEnBloques(datosTotales);
 
@@ -93,20 +93,23 @@ void crearArchivoFifa(char path, char* datosTotales){
 	for(int i = 0; i<bloques->elements_count; i++){
 		string_append(&texto, intToString(list_get(bloques, i)));
 		if(i == bloques->elements_count -1){
-			string_append(&texto, "]\0");
+			string_append(&texto, "]\n");
 		}else{
 			string_append(&texto, ",");
 		}
 
 	}
-	log_info(logger, "texto a aescribir es %s", texto);
-	/*
-	 *
-	 *
-TAMANIO=5
-BLOQUES=[40,52,30]
-	 *
-	 * */
+	int creacionDeArchivo = crearArchivoSinBarraN(rutaArchivo);
+	if(creacionDeArchivo == 0){
+		guardarDatos(rutaArchivo, 0, strlen(texto), texto);
+	}else{
+		log_info(logger, "No se pudo crear el archivo");
+	}
+	list_destroy(bloques);
+	free(texto);
+	free(rutaArchivo);
+
+
 }
 void initGuardado(){
 	rutaBitmap = asignarMemoria(strlen(PUNTO_MONTAJE_METADATA) + 1);
