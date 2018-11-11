@@ -17,7 +17,6 @@ void entenderMensaje(int emisor, char header){
 				estadoDeOperacion = validarArchivo(rutaCompleta);
 				log_info(logger, "enviando %d a DAM", estadoDeOperacion);
 				enviarYSerializarIntSinHeader(emisor, estadoDeOperacion);
-				log_info(logger, "enviando %d a DAM (es la misma que la de antes)", estadoDeOperacion);
 				free(rutaCompleta);
 				free(path);
 
