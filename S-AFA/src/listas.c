@@ -85,6 +85,27 @@ t_list* filtrarListaPorEstado(char estado){
 	return lista;
 }
 
+t_list* filtrarListaPorDTBsConArchivosAbiertos(){
+	bool tieneArchivosAbiertos(DTB* dtb){
+		return (dtb->tamanioArchivosAbiertos > 0);
+	}
+	waitMutex(&mutexListaDTBs);
+	t_list* lista = list_filter(listaDeTodosLosDTBs, tieneArchivosAbiertos);
+	signalMutex(&mutexListaDTBs);
+	return lista;
+}
+
+DTB* obtenerDTBConArchivoMasGrande(){
+	bool tieneArchivoMasGrande(DTB* dtb1, DTB* dtb2){
+		return (dtb1->tamanioArchivosAbiertos > dtb2->tamanioArchivosAbiertos);
+	}
+	waitMutex(&mutexListaDTBs);
+	t_list* lista = list_sorted(listaDeTodosLosDTBs, tieneArchivoMasGrande);
+	DTB* dtb = list_get(lista, 0);
+	signalMutex(&mutexListaDTBs);
+	list_destroy(lista);
+	return dtb;
+}
 void agregarDTBALista(DTB* dtb){
 	waitMutex(&mutexListaDTBs);
 	list_add(listaDeTodosLosDTBs, dtb);

@@ -18,6 +18,7 @@ DTB crearDTB (char* parametro){
 	dtb.programCounter = 0;
 	dtb.estado = NEW;
 	dtb.quantum = 0;
+	dtb.tamanioArchivosAbiertos = dtb.id;
 	return dtb;
 }
 
@@ -26,7 +27,7 @@ void serializarYEnviarDTB(int receptor, DTB dtb, t_log* logger, char operacion){
 	log_debug(logger, "Enviando dtb con id: %d", dtb.id);
 	int tamanioEscriptorio = strlen(dtb.escriptorio) + 1;
 	int tamanioBuffer = sizeof(char) + sizeof(int) + tamanioEscriptorio + sizeof(int)*3 + obtenerTamanioListaStrings(dtb.listaDeArchivos)
-			+ sizeof(int) + sizeof(char);
+			+ sizeof(int) + sizeof(char) + sizeof(int);
 	void* buffer = asignarMemoria(tamanioBuffer);
 
 	//Lleno el buffer
@@ -40,6 +41,7 @@ void serializarYEnviarDTB(int receptor, DTB dtb, t_log* logger, char operacion){
 	concatenarListaString(buffer, &desplazamiento, dtb.listaDeArchivos);
 	concatenarInt(buffer, &desplazamiento, dtb.quantum);
 	concatenarChar(buffer, &desplazamiento, dtb.estado);
+	concatenarInt(buffer, &desplazamiento, dtb.tamanioArchivosAbiertos);
 	enviarMensaje(receptor, buffer, tamanioBuffer);
 
 	free(buffer);
@@ -54,6 +56,7 @@ DTB* deserializarDTB(int emisor){
 	dtb->listaDeArchivos = deserializarListaString(emisor);
 	dtb->quantum = deserializarInt(emisor);
 	dtb->estado = deserializarChar(emisor);
+	dtb->tamanioArchivosAbiertos = deserializarInt(emisor);
 	return dtb;
 }
 
