@@ -24,7 +24,6 @@ void consolita(){
 		char* comando = strtok(texto, " ");
 		char* parametro = strtok(NULL, " ");
 
-		free(texto);
 		if(strcmp(comando, "ls") == 0){
 			if(parametro == NULL){
 				ls(".");
@@ -40,9 +39,14 @@ void consolita(){
 		}
 		else if(strcmp(comando, "cat") == 0){
 			cat(parametro);
-		}else{
+		}else if(strcmp(comando, "exit") == 0){
+			exit(200);
+		}
+		else{
 			printf("No te entiendo man \n");
 		}
+
+		free(texto);
 	}
 }
 

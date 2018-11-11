@@ -178,8 +178,8 @@ void init(){
 
 	levantarMetadata();
 
+	initGuardado();
 	verificarExistenciaDeBitmap();
-
 
 	inicializarMutex(&mutexOperaciones);
 	colaOperaciones = queue_create();

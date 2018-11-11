@@ -16,11 +16,12 @@ extern char* PUNTO_MONTAJE_ARCHIVOS;
 extern char* PUNTO_MONTAJE_METADATA;
 extern char* PUNTO_MONTAJE_BLOQUES;
 
+char* rutaBitmap;
 extern int TAMANIO_BLOQUES;
 extern int CANTIDAD_BLOQUES;
 
 extern t_log* logger;
-
+void initGuardado();
 void verificarExistenciaDeBitmap();
 
 #endif /*GUARDADO_H_*/

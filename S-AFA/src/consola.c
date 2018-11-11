@@ -19,6 +19,9 @@ void consola(){
 	    char* comandoIngresado =  strtok(mensaje, " ");
 	    char* parametro =  strtok(NULL, " ");
 
+	    if(strcmp(comandoIngresado, "exit") == 0){
+	    			exit(200);
+	    }
 		if(estado == CORRUPTO){
 			log_error(logger, "Estado corrupto: No se reciben mensajes");
 		}else{
