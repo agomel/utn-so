@@ -132,7 +132,10 @@ void entenderMensaje(int emisor, char header){
 					enviarYSerializarStringSinHeader(emisor, respuesta->datos);
 					freeRespuestaObtencion(respuesta);
 				}else{
-					enviarYSerializarStringSinHeader(emisor, "v/0");
+					char* rta = malloc(2);
+					memcpy(rta, "v", 1);
+					enviarYSerializarStringSinHeader(emisor, rta);
+					free(rta);
 					free(respuesta); //Porque no hay que hacer el free de respuesta->datos
 				}
 

@@ -1,12 +1,5 @@
 #include "ServicioMDJ.h"
 
-int obtenerRtaValidar(){
-	log_debug(logger, "Esperando repuesta validacion de MDJ");
-	int respuesta = deserializarInt(socketMDJ);
-	log_debug(logger, "Recibida respuesta %d de MDJ", respuesta);
-
-	return respuesta;
-}
 int validarArchivoMDJ(char* path){
 
 	int tamanioMensaje = sizeof(char) + sizeof(int) + strlen(path)+1;
@@ -17,7 +10,11 @@ int validarArchivoMDJ(char* path){
 	log_info(logger, "Enviando a MDJ que valide escriptorio %s", path);
 	enviarMensaje(socketMDJ, buffer, tamanioMensaje);
 	free(buffer);
-	return obtenerRtaValidar();
+	log_debug(logger, "Esperando repuesta validacion de MDJ");
+	int respuesta = deserializarInt(socketMDJ);
+	log_debug(logger, "Recibida respuesta %d de MDJ", respuesta);
+
+	return respuesta;
 }
 
 char* obtenerDatosDeMDJ(char* path){

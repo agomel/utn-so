@@ -57,27 +57,43 @@ int guardarDatos(char* rutaArchivo, int offset, int tamanioMensaje, char* datos)
 	return 0;
 }
 
+int obtenerArchivoCompleto(char* rutaArchivo){
+	char * buffer = 0;
+	long length;
+	FILE * f = fopen (rutaArchivo, "rb");
+
+	if (f)
+	{
+	  fseek (f, 0, SEEK_END);
+	  length = ftell (f);
+	  log_debug(logger, "El tamanio de archivo es: %d", length);
+	  fseek (f, 0, SEEK_SET);
+	  buffer = malloc (length);
+	  if (buffer)
+	  {
+	    fread (buffer, 1, length, f);
+	  }
+	  fclose (f);
+	}
+	return buffer;
+}
 char* obtenerDatos(char* rutaArchivo, int offset, int size){
-	int myFile = open(rutaArchivo, O_RDONLY);
-	if(myFile < 0){
-		log_info(logger, "Error al abrir el archivo %s", rutaArchivo);
-	}
-
-	lseek(myFile, offset, SEEK_SET);
-
+	char* buffer;
 	if(size < 0){
-		struct stat myStat;
-		if(fstat(myFile, &myStat)){
-			log_info(logger, "Error al ver el estado del archivo %s", rutaArchivo);
+		buffer = obtenerArchivoCompleto(rutaArchivo);
+	}else{
+		int myFile = open(rutaArchivo, O_RDONLY);
+		if(myFile < 0){
+			log_info(logger, "Error al abrir el archivo %s", rutaArchivo);
 		}
-		size = myStat.st_size;
+		lseek(myFile, offset, SEEK_SET);
+		buffer = asignarMemoria(size + 1);
+		read(myFile, buffer, size);
+		close(myFile);
 	}
 
-	char* buffer = asignarMemoria(size + 1);
-	read(myFile, buffer, size);
-
-	close(myFile);
-
+	buffer[strlen(buffer)] = '\0';
+	log_info(logger, "El archivo a enviar es %s", buffer);
 	return buffer;
  }
 

@@ -103,7 +103,8 @@ void concatenarInt(void* buffer, int* desplazamiento, int numero){
 }
 
 void agregarBarraCero(char* texto){
-	texto[strlen(texto)] = '\0';
+	int ultimaPosicion = strlen(texto);
+	texto[ultimaPosicion] = '\0';
 }
 void concatenarString(void* buffer, int* desplazamiento, char* mensaje){
 	agregarBarraCero(mensaje);
