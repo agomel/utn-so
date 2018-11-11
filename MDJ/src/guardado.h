@@ -10,6 +10,7 @@
 #include <unistd.h>
 #include "comandos.h"
 #include "operaciones.h"
+#include <commons/collections/list.h>
 
 
 extern char* PUNTO_MONTAJE_ARCHIVOS;

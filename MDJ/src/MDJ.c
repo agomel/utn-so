@@ -181,7 +181,7 @@ void init(){
 	initGuardado();
 	verificarExistenciaDeBitmap();
 
-	crearArchivoEnBloques("wait algo\nsignal algo\nabrir c\nconcentrar\nasignar c 1 brendi\nflush c\nhola\nnanu\ncomo\nestas\ntodo\nbien\n");
+crearArchivoFifa("hola","wait algo\nsignal algo\nabrir c\nconcentrar\nasignar c 1 brendi\nflush c\nhola\nnanu\ncomo\nestas\ntodo\nbien\n");
 	inicializarMutex(&mutexOperaciones);
 	colaOperaciones = queue_create();
 	inicializarSem(&semOperaciones, 0);
