@@ -41,7 +41,6 @@ char asignar(char* lineaEjecutando, DTB* dtbRecibido){
 	char** pathYNumeroLinea= string_n_split(parametros, 3, " ");
 	char* path = pathYNumeroLinea[0];
 	int numeroDeLinea = atoi(pathYNumeroLinea[1]);
-	log_debug(logger, "ASIGNAR ---- LINEA: %d", numeroDeLinea);
 	char* datos = pathYNumeroLinea[2];
 	if(listaContiene(dtbRecibido->listaDeArchivos, path)){
 		//Esta abierto
@@ -59,7 +58,12 @@ char asignar(char* lineaEjecutando, DTB* dtbRecibido){
 
 		free(buffer);
 
-		return 'b';
+		int respuestaAsignado = deserializarInt(socketFM9);
+		if(respuestaAsignado == 0){
+			return 's';
+		}else {
+			return 'a';
+		}
 
 	}else{
 		//No esta abierto ese archivo

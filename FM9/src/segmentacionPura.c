@@ -214,9 +214,10 @@ void liberarMemoriaSegPura(int idDTB, char* nombreArchivo){
 }
 
 int asignarDatosSegPura(int IdDTB, char* nombreArchivo, int numeroLinea, char* datos){
+	numeroLinea--;
 	ElementoTablaProcesos* proceso = obtenerProcesoPorIdDTB(IdDTB);
 	ElementoTablaSegPura* segmento = obtenerSegmentoPorArchivo(nombreArchivo, proceso->tablaSegmentos);
-	int desplazamiento = segmento->base + numeroLinea * tamanioLinea;
+	int desplazamiento = segmento->base + (numeroLinea * tamanioLinea);
 	char* lineaConBasura = malloc(tamanioLinea);
 	memcpy(lineaConBasura, storage + desplazamiento, tamanioLinea);
 	char** lineaSinBasura = string_split(lineaConBasura, "\n");
@@ -224,6 +225,8 @@ int asignarDatosSegPura(int IdDTB, char* nombreArchivo, int numeroLinea, char* d
 	memcpy(lineaPosta, lineaConBasura[0], strlen(lineaSinBasura[0]));
 	if((strlen(lineaSinBasura[0] + strlen(datos)) + 2) < tamanioLinea){ //Lo que ya estaba, los datos nuevos, el /n y el espacio en el medio
 		//Se puede escribir
+		printf("Estos son los datos que asigno %s, con cant: %d\n", datos, strlen(datos));
+		printf("Esta es la linea que queda %s con cant: %d\n", lineaPosta, strlen(lineaPosta));
 		string_append_with_format(&lineaPosta, " %s\n", datos);
 		memcpy(storage + desplazamiento, lineaPosta, strlen(lineaPosta));
 		freeLineasBasura(lineaSinBasura, lineaConBasura);
@@ -231,7 +234,7 @@ int asignarDatosSegPura(int IdDTB, char* nombreArchivo, int numeroLinea, char* d
 		log_debug(logger, "Asignados datos con exito");
 
 	}else{
-		log_error(logger, "No hay suficiente espacio en la linea %d del archivo %s", numeroLinea, nombreArchivo);
+		log_error(logger, "No hay suficiente espacio en la linea %d del archivo %s", (numeroLinea+1), nombreArchivo);
 		return 20002;
 	}
 }
