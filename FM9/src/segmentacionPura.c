@@ -97,6 +97,7 @@ static RespuestaCargaSegPura* guardarDatosInternaSegPura(char* datos, char* nomb
 		agregarASegmentoOcupado(posicionDondeGuardar, tamanioSegmento);
 		int base = storage + posicionDondeGuardar;
 		for(int i = 0; i<totalLineas; i++){
+			string_append(&lineas[i], "\n");
 			memcpy(base + tamanioLinea * i, lineas[i], tamanioLinea); //Guardando de a una linea
 		}
 		idSegmento++;
@@ -221,16 +222,15 @@ int asignarDatosSegPura(int IdDTB, char* nombreArchivo, int numeroLinea, char* d
 	int desplazamiento = segmento->base + numeroLinea * tamanioLinea;
 	char* lineaConBasura = malloc(tamanioLinea);
 	memcpy(lineaConBasura, storage + desplazamiento, tamanioLinea);
-	log_debug(logger, "En asignar: Linea con basura: %s", lineaConBasura);
 	char** lineaSinBasura = string_split(lineaConBasura, "\n");
 	char* lineaPosta = malloc(strlen(lineaSinBasura[0]));
 	memcpy(lineaPosta, lineaSinBasura[0], strlen(lineaSinBasura[0]));
-	if((strlen(lineaSinBasura[0] + strlen(datos)) + 2) < tamanioLinea){ //Lo que ya estaba, los datos nuevos, el /n y el espacio en el medio
+	if((strlen(lineaSinBasura[0]) + strlen(datos) + 2) < tamanioLinea){ //Lo que ya estaba, los datos nuevos, el /n y el espacio en el medio
 		//Se puede escribir
 		printf("Estos son los datos que asigno %s, con cant: %d\n", datos, strlen(datos));
-		printf("Esta es la linea que queda %s con cant: %d\n", lineaPosta, strlen(lineaPosta));
 		string_append_with_format(&lineaPosta, " %s\n", datos);
-		memcpy(storage + desplazamiento, lineaPosta, strlen(lineaPosta));
+		printf("Esta es la linea que queda %s con cant: %d\n", lineaPosta, strlen(lineaPosta));
+		memcpy(storage + desplazamiento, lineaPosta, tamanioLinea);
 		freeLineasBasura(lineaSinBasura, lineaConBasura);
 		free(lineaPosta);
 		log_debug(logger, "Asignados datos con exito");
