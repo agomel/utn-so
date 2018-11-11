@@ -4,6 +4,7 @@ int validarArchivo(char* rutaArchivo){
 	log_info(logger, "validando archivo en ruta %s", rutaArchivo);
 	FILE* archivo = fopen(rutaArchivo, "r");
 	if(archivo == NULL || archivo < 0){
+		printf("Entro a un path inexistente");
 		return PATH_INEXISTENTE;
 	}
 	fclose(archivo);

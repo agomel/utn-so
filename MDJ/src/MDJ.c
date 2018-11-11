@@ -15,9 +15,9 @@ void entenderMensaje(int emisor, char header){
 				memcpy(rutaCompleta, PUNTO_MONTAJE_ARCHIVOS, strlen(PUNTO_MONTAJE_ARCHIVOS) + 1);
 				string_append(&rutaCompleta, path);
 				estadoDeOperacion = validarArchivo(rutaCompleta);
-				enviarYSerializarIntSinHeader(emisor, estadoDeOperacion);
-
 				log_info(logger, "enviando %d a DAM", estadoDeOperacion);
+				enviarYSerializarIntSinHeader(emisor, estadoDeOperacion);
+				log_info(logger, "enviando %d a DAM (es la misma que la de antes)", estadoDeOperacion);
 				free(rutaCompleta);
 				free(path);
 

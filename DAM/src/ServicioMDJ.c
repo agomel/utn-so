@@ -14,6 +14,7 @@ int validarArchivoMDJ(char* path){
 	int respuesta = deserializarInt(socketMDJ);
 	log_debug(logger, "Recibida respuesta %d de MDJ", respuesta);
 
+	return respuesta;
 }
 
 char* obtenerDatosDeMDJ(char* path){
@@ -29,6 +30,7 @@ char* obtenerDatosDeMDJ(char* path){
 	enviarMensaje(socketMDJ, buffer, tamanioMensaje);
 
 	int tamanioARecibirTotal = deserializarInt(socketMDJ);
+	printf("tamanio a recibir llego como %d\n", tamanioARecibirTotal);
 	int tamanioRecibido = 0;
 	char* escriptorio;
 	escriptorio = asignarMemoria(tamanioARecibirTotal);

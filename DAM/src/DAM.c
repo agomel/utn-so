@@ -26,8 +26,10 @@ void entenderMensaje(int emisor, char header){
 			log_info(logger, "Ehhh, voy a buscar %s para %d", path, idDTB);
 			int validarArchivo = validarArchivoMDJ(path);
 			if(validarArchivo != 0){
+				printf("Entro al error de validar archivo, valor: %d\n", validarArchivo);
 				enviarError(idDTB, path, validarArchivo);
-			}else {
+			}else{
+				printf("No tiene error, valor: %d\n", validarArchivo);
 				char* datos = obtenerDatosDeMDJ(path);
 				int estadoDeCarga = enviarDatosAFM9(idDTB, path, datos, header);
 				free(datos);
@@ -118,12 +120,15 @@ int main(void) {
 	//crear servidores para ser cliente de ellos
 	direccionServidor direccionSAFA = levantarDeConfiguracion("IP_SAFA", "PUERTO_SAFA", configuracion);
 	socketSAFA = conectarConServidor(direccionSAFA.puerto, inet_addr(direccionSAFA.ip));
+	printf("Soy SAFA y mi numero de socket es %d\n", socketSAFA);
 
 	direccionServidor direccionMDJ = levantarDeConfiguracion("IP_MDJ", "PUERTO_MDJ", configuracion);
 	socketMDJ = conectarConServidor(direccionMDJ.puerto, inet_addr(direccionMDJ.ip));
+	printf("Soy MDJ y mi numero de socket es %d\n", socketMDJ);
 
 	direccionServidor direccionFM9 = levantarDeConfiguracion("IP_FM9", "PUERTO_FM9", configuracion);
 	socketFM9 = conectarConServidor(direccionFM9.puerto, inet_addr(direccionFM9.ip));
+	printf("Soy FM9 y mi numero de socket es %d\n", socketFM9);
 
 	config_destroy(configuracion);
 
