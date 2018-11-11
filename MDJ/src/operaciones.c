@@ -78,6 +78,7 @@ char* obtenerDatos(char* rutaArchivo, int offset, int size){
 
 	close(myFile);
 
+	log_info(logger, "obteniendo datos de archivo: %s", buffer);
 	return buffer;
  }
 
