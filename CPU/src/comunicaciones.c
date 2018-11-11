@@ -36,7 +36,6 @@ void tratarDummy(DTB* dtbRecibido){
 	free(buffer);
 	log_info(logger, "Enviando a SAFA que desbloquee dummy");
 	serializarYEnviarDTB(socketSAFA, *dtbRecibido, logger, DESBLOQUEAR_DTB);
-	freeDTB(dtbRecibido);
 	enviarYSerializarIntSinHeader(socketSAFA, 1); //Ejecuta una sentencia
 }
 
