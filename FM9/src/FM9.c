@@ -155,6 +155,7 @@ void entenderMensaje(int emisor, char header){
 				int idDTB = deserializarInt(emisor);
 				char* nombreArchivo = deserializarString(emisor);
 				int numeroLinea = deserializarInt(emisor);
+				log_debug(logger, "Asignando datos en linea Nro %d", numeroLinea);
 				char* datos = deserializarString(emisor);
 				log_debug(logger, "Escribiendo: %s. En: %s ", datos, nombreArchivo);
 				int respuesta = asignarDatos(idDTB, nombreArchivo, numeroLinea, datos);

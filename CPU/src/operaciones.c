@@ -40,7 +40,8 @@ char asignar(char* lineaEjecutando, DTB* dtbRecibido){
 	char* parametros = string_substring_from(lineaEjecutando, 8);
 	char** pathYNumeroLinea= string_n_split(parametros, 3, " ");
 	char* path = pathYNumeroLinea[0];
-	int numeroDeLinea = pathYNumeroLinea[1];
+	int numeroDeLinea = atoi(pathYNumeroLinea[1]);
+	log_debug(logger, "ASIGNAR ---- LINEA: %d", numeroDeLinea);
 	char* datos = pathYNumeroLinea[2];
 	if(listaContiene(dtbRecibido->listaDeArchivos, path)){
 		//Esta abierto
