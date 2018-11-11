@@ -38,8 +38,47 @@ void liberarBloqueEnBitmap(int bloqueAOcupar){
 	guardarDatos(rutaBitmap, bloqueAOcupar, sizeof(char), "0");
 }
 
+char* crearRutaBloque(int* bloque){
+	char* rutaArchivo = asignarMemoria(strlen(PUNTO_MONTAJE_BLOQUES) + 1);
+	memcpy(rutaArchivo, PUNTO_MONTAJE_BLOQUES, strlen(PUNTO_MONTAJE_BLOQUES) + 1);
+
+	*bloque = obtenerBloqueLibreBitmap();
+	ocuparBloqueEnBitmap(*bloque);
+	string_append(&rutaArchivo, intToString(*bloque));
+	string_append(&rutaArchivo, ".bin");
+	return rutaArchivo;
+}
+crearArchivoEnBloques(char* datosTotales){
+	int tamanioTotal = strlen(datosTotales) + 1;
+	int tamanioEscrito = 0;
+	while(tamanioEscrito < tamanioTotal){
+		int tamanioAEscribir;
+		if(tamanioTotal - tamanioEscrito < TAMANIO_BLOQUES){
+			//Datos a guardar no alcanzan tamanio de bloque
+			tamanioAEscribir = tamanioTotal - tamanioEscrito;
+		}else{
+			//Datos a guardar superan el de un bloque
+			tamanioAEscribir = TAMANIO_BLOQUES;
+		}
+
+		int bloqueAEscribir;
+		char* rutaBloque = crearRutaBloque(&bloqueAEscribir);
+		int creacionDeArchivo = crearArchivoSinBarraN(rutaBloque);
+		if(creacionDeArchivo == 0){
+			char* textoAEscribir = asignarMemoria(tamanioAEscribir);
+			strncpy(textoAEscribir, datosTotales + tamanioEscrito, tamanioAEscribir);
+			guardarDatos(rutaBloque, 0, tamanioAEscribir, textoAEscribir);
+			tamanioEscrito += tamanioAEscribir;
+		}else{
+			log_info(logger, "No se pudo crear el archivo");
+		}
+
+
+	}
+}
 void initGuardado(){
 	rutaBitmap = asignarMemoria(strlen(PUNTO_MONTAJE_METADATA) + 1);
 	memcpy(rutaBitmap, PUNTO_MONTAJE_METADATA, strlen(PUNTO_MONTAJE_METADATA) + 1);
 	string_append(&rutaBitmap, "Bitmap.bin");
+
 }
