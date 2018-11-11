@@ -76,7 +76,7 @@ char* obtenerDatos(char* rutaArchivo, int offset, int size){
 	char* buffer = asignarMemoria(size + 1);
 	read(myFile, buffer, size);
 	close(myFile);
-	buffer[strlen(buffer)] = '\0';
+	buffer[size] = '\0';
 	log_info(logger, "obteniendo datos de archivo: %s", buffer);
 	return buffer;
  }
