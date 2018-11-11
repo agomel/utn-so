@@ -221,7 +221,7 @@ int asignarDatosSegPura(int IdDTB, char* nombreArchivo, int numeroLinea, char* d
 	memcpy(lineaConBasura, storage + desplazamiento, tamanioLinea);
 	char** lineaSinBasura = string_split(lineaConBasura, "\n");
 	char* lineaPosta = malloc(strlen(lineaSinBasura[0]));
-	memcpy(lineaPosta, lineaConBasura[0], strlen(lineaSinBasura[0]));
+	memcpy(lineaPosta, lineaSinBasura[0], strlen(lineaSinBasura[0]));
 	if((strlen(lineaSinBasura[0] + strlen(datos)) + 2) < tamanioLinea){ //Lo que ya estaba, los datos nuevos, el /n y el espacio en el medio
 		//Se puede escribir
 		string_append_with_format(&lineaPosta, " %s\n", datos);
@@ -229,9 +229,12 @@ int asignarDatosSegPura(int IdDTB, char* nombreArchivo, int numeroLinea, char* d
 		freeLineasBasura(lineaSinBasura, lineaConBasura);
 		free(lineaPosta);
 		log_debug(logger, "Asignados datos con exito");
+		return 0;
 
 	}else{
 		log_error(logger, "No hay suficiente espacio en la linea %d del archivo %s", numeroLinea, nombreArchivo);
+		freeLineasBasura(lineaSinBasura, lineaConBasura);
+		free(lineaPosta);
 		return 20002;
 	}
 }
