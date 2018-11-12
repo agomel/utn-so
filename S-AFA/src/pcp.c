@@ -28,6 +28,12 @@ DTB* planificarPorVRR(){
 	}
 }
 
+DTB* planificarPorBOAF(){
+	DTB* dtb = obtenerDTBConArchivoMasGrande();
+	dtb->quantum = -1;
+	return dtb;
+}
+
 DTB* seleccionarDTB(){
 	if(!strcmp(algoritmo, "FIFO")){
 		return planificarPorFIFO();
@@ -35,6 +41,8 @@ DTB* seleccionarDTB(){
 		return planificarPorRR();
 	}else if(!strcmp(algoritmo, "VRR")){
 		return planificarPorVRR();
+	}else if(!strcmp(algoritmo, "BOAF")){
+		return planificarPorBOAF();
 	}
 }
 void planificadorACortoPlazo(){

@@ -18,9 +18,9 @@
 #include "manejoLineas.h"
 
 typedef struct{
-	int idSegmento;
-	int pudoGuardarlo;
-}respuestaDeCargaEnMemoria;
+	int pudoGuardar;
+	int pesoArchivo;
+}RespuestaGuardado;
 
 typedef struct{
 	char* datos;

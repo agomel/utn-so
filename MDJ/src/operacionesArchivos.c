@@ -58,23 +58,23 @@ int guardarDatos(char* rutaArchivo, int offset, int tamanioMensaje, char* datos)
 }
 
 char* obtenerDatos(char* rutaArchivo, int offset, int size){
-	int myFile = open(rutaArchivo, O_RDONLY);
-	if(myFile < 0){
-		log_info(logger, "Error al abrir el archivo %s", rutaArchivo);
-	}
+ 	int myFile = open(rutaArchivo, O_RDONLY);
+ 	if(myFile < 0){
+ 		log_info(logger, "Error al abrir el archivo %s", rutaArchivo);
+ 	}
 
-	lseek(myFile, offset, SEEK_SET);
+ 	lseek(myFile, offset, SEEK_SET);
 
-	if(size < 0){
-		struct stat myStat;
-		if(fstat(myFile, &myStat)){
-			log_info(logger, "Error al ver el estado del archivo %s", rutaArchivo);
-		}
-		size = myStat.st_size;
-	}
-
-	char* buffer = asignarMemoria(size + 1);
+ 	if(size < 0){
+ 		struct stat myStat;
+ 		if(fstat(myFile, &myStat)){
+ 			log_info(logger, "Error al ver el estado del archivo %s", rutaArchivo);
+ 		}
+ 		size = myStat.st_size;
+ 	}
+ 	char* buffer = asignarMemoria(size + 1);
 	read(myFile, buffer, size);
+
 	close(myFile);
 	buffer[size] = '\0';
 	return buffer;
