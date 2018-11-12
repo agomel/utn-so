@@ -14,7 +14,7 @@
 #include "guardado.h"
 #include "consola.h"
 #include "bitmap.h"
-#include "operacionesArchivos.h"
+#include "operacionesFIFA.h"
 
 int RETARDO;
 char* PUNTO_MONTAJE;

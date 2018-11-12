@@ -1,4 +1,4 @@
-#ifndef OPERACIONESARCHIVOS_H_
+#ifndef OPERACIONESFIFA_H_
 #define OPERACIONESARCHIVOS_H_
 
 #include <stdlib.h>
@@ -13,7 +13,7 @@
 #include <fcntl.h>
 
 int validarArchivo(char* rutaArchivo);
-int crearArchivo(char* rutaArchivo, int cantidadDeBytes);
+int crearArchivo(char* rutaArchivo);
 char* obtenerDatos(char* rutaArchivo, int offset, int tamanioALeer);
 int guardarDatos(char* rutaArchivo, int offset, int tamanioMensaje, char* datos);
 int eliminarArchivo(char* rutaArchivo);

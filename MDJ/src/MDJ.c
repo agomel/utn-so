@@ -11,13 +11,12 @@ void entenderMensaje(int emisor, char header){
 			case VALIDAR_ARCHIVO: {
 				log_info(logger, "Validar archivo...");
 				path = deserializarString(emisor);
-				char* rutaCompleta = concatenar(PUNTO_MONTAJE_ARCHIVOS, path);
-				estadoDeOperacion = validarArchivo(rutaCompleta);
-				log_info(logger, "enviando %d a DAM", estadoDeOperacion);
-				enviarYSerializarIntSinHeader(emisor, estadoDeOperacion);
-				free(rutaCompleta);
-				free(path);
 
+				estadoDeOperacion = validarArchivoFIFA(path);
+
+				enviarYSerializarIntSinHeader(emisor, estadoDeOperacion);
+
+				free(path);
 				break;
 			}
 			case CREAR_ARCHIVO: {
@@ -25,11 +24,10 @@ void entenderMensaje(int emisor, char header){
 				path = deserializarString(emisor);
 				size = deserializarInt(emisor);
 
-				char* rutaCompleta = concatenar(PUNTO_MONTAJE_ARCHIVOS, path);
-				estadoDeOperacion = crearArchivo(rutaCompleta, size);
+				estadoDeOperacion = crearArchivoFIFA(path, size);
+
 				enviarYSerializarIntSinHeader(emisor, estadoDeOperacion);
 
-				free(rutaCompleta);
 				free(path);
 				break;
 			}
@@ -38,11 +36,11 @@ void entenderMensaje(int emisor, char header){
 				path = deserializarString(emisor);
 				offset = deserializarInt(emisor);
 				size = deserializarInt(emisor);
-				char* rutaCompleta = concatenar(PUNTO_MONTAJE_ARCHIVOS, path);
-				datos = obtenerDatos(rutaCompleta, offset, size);
+
+				datos = obtenerDatosFIFA(path, offset, size);
+
 				enviarYSerializarStringSinHeader(emisor, datos);
 
-				free(rutaCompleta);
 				free(path);
 				free(datos);
 				break;
@@ -55,13 +53,11 @@ void entenderMensaje(int emisor, char header){
 				datos = deserializarStringSinElInt(emisor, size);
 				agregarBarraCero(datos);
 				size -= 1; //NO quiero que me guarde el \0
-				char* rutaCompleta = concatenar(PUNTO_MONTAJE_ARCHIVOS, path);
 
-				estadoDeOperacion = guardarDatos(rutaCompleta, offset, size, datos);
+				estadoDeOperacion = guardarDatosFIFA(path, offset, size, datos);
 
 				enviarYSerializarIntSinHeader(emisor, estadoDeOperacion);
 
-				free(rutaCompleta);
 				free(path);
 				free(datos);
 				break;
@@ -69,11 +65,10 @@ void entenderMensaje(int emisor, char header){
 			case BORRAR_ARCHIVO: {
 				log_info(logger, "Borrar archivo...");
 				path = deserializarString(emisor);
-				char* rutaCompleta = concatenar(PUNTO_MONTAJE_ARCHIVOS, path);
-				estadoDeOperacion = eliminarArchivo(path);
+
+				estadoDeOperacion = borrarArchivoFIFA(path);
 
 				enviarYSerializarIntSinHeader(emisor, estadoDeOperacion);
-				free(rutaCompleta);
 				free(path);
 				break;
 			}
