@@ -1,5 +1,5 @@
-#ifndef GUARDADO_H_
-#define GUARDADO_H_
+#ifndef FILESYSTEM_H_
+#define FILESYSTEM_H_
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -21,4 +21,4 @@ extern int CANTIDAD_BLOQUES;
 
 extern t_log* logger;
 
-#endif /*GUARDADO_H_*/
+#endif /*FILESYSTEM_H_*/

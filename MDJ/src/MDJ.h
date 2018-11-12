@@ -11,9 +11,9 @@
 #include <biblioteca/semaforos.h>
 #include <biblioteca/nuestroSelect.h>
 #include <biblioteca/traductor.h>
-#include "guardado.h"
 #include "consola.h"
 #include "bitmap.h"
+#include "fileSystem.h"
 #include "operacionesFIFA.h"
 
 int RETARDO;

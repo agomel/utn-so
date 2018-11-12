@@ -1,13 +1,12 @@
-#include "guardado.h"
+#include "fileSystem.h"
 
-void crearArchivoFifa(char* path, char* datosTotales){
-
-	char* rutaArchivo = concatenar(PUNTO_MONTAJE_ARCHIVOS, path);
-	t_list* bloques = crearArchivoEnBloques(datosTotales);
+int crearArchivoFS(char* rutaArchivo, char* datosTotales){
+	int operacionCrearArchivo;
+	t_list* bloques = crearArchivoEnBloques(datosTotales, &operacionCrearArchivo);
 	char* texto = concatenar("TAMANIO=", intToString(strlen(datosTotales) + 1));
 	concatenarATexto(&texto, "\nBLOQUES=[");
 
-	for(int i = 0; i<bloques->elements_count; i++){
+	for(int i = 0; i< bloques->elements_count; i++){
 		concatenarATexto(&texto, intToString(list_get(bloques, i)));
 
 		if(i == bloques->elements_count -1){
@@ -22,11 +21,9 @@ void crearArchivoFifa(char* path, char* datosTotales){
 	if(creacionDeArchivo == 0){
 		guardarDatos(rutaArchivo, 0, strlen(texto), texto);
 	}else{
-		log_info(logger, "No se pudo crear el archivo");
+		return PATH_INEXISTENTE;
 	}
+
 	list_destroy(bloques);
 	free(texto);
-	free(rutaArchivo);
-
-
 }
