@@ -1,5 +1,5 @@
-#ifndef OPERACIONES_H_
-#define OPERACIONES_H_
+#ifndef OPERACIONESARCHIVOS_H_
+#define OPERACIONESARCHIVOS_H_
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -21,4 +21,4 @@ int eliminarArchivo(char* rutaArchivo);
 extern t_log* logger;
 
 
-#endif /*OPERACIONES_H_*/
+#endif /*OPERACIONESARCHIVOS_H_*/

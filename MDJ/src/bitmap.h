@@ -3,7 +3,7 @@
 
 
 #include "comandos.h"
-#include "operaciones.h"
+#include "operacionesArchivos.h"
 
 char* rutaBitmap;
 

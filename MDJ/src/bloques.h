@@ -9,8 +9,8 @@
 #include <readline/readline.h>
 #include <dirent.h>
 #include <unistd.h>
-#include "operaciones.h"
 #include <commons/collections/list.h>
+#include "operacionesArchivos.h"
 
 
 extern char* PUNTO_MONTAJE_ARCHIVOS;

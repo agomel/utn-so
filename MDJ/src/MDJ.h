@@ -7,7 +7,6 @@
 #include <biblioteca/socket.h>
 #include <biblioteca/select.h>
 #include <biblioteca/hilos.h>
-#include "operaciones.h"
 #include <commons/collections/queue.h>
 #include <biblioteca/semaforos.h>
 #include <biblioteca/nuestroSelect.h>
@@ -15,6 +14,7 @@
 #include "guardado.h"
 #include "consola.h"
 #include "bitmap.h"
+#include "operacionesArchivos.h"
 
 int RETARDO;
 char* PUNTO_MONTAJE;

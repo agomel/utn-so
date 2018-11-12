@@ -1,4 +1,4 @@
-#include "operaciones.h"
+#include "operacionesArchivos.h"
 
 int validarArchivo(char* rutaArchivo){
 	log_info(logger, "validando archivo en ruta %s", rutaArchivo);
