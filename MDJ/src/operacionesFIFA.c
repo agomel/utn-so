@@ -12,57 +12,17 @@ int validarArchivoFIFA(char* rutaArchivo){
 }
 
 int crearArchivoFIFA(char* rutaArchivo, int cantidadDeBytes){
-	//TODO verificar si hay espacio antes de crearlo y esa movida de los bloques en el bitmap
-
 	char* rutaCompleta = generarPathAbsoluto(rutaArchivo);
 
-	int creacionDeArchivo = crearArchivo(rutaCompleta);
-
-	if(creacionDeArchivo == 0){
-		char* datos = asignarMemoria(cantidadDeBytes) + 1;
-		for(int i = 0; i < cantidadDeBytes; i++){
-			datos[i] = '\n';
-		}
-		guardarDatos(rutaArchivo, 0, cantidadDeBytes, datos);
+	char* datos = asignarMemoria(cantidadDeBytes) + 1;
+	for(int i = 0; i < cantidadDeBytes; i++){
+		datos[i] = '\n';
 	}
+	int estadoCrearArchivoFS = crearArchivoFS(rutaCompleta, datos);
 
 	free(rutaCompleta);
-	return creacionDeArchivo;
-
-
-
-
-	char* rutaArchivo = concatenar(PUNTO_MONTAJE_ARCHIVOS, path);
-	t_list* bloques = crearArchivoEnBloques(datosTotales);
-	char* texto = concatenar("TAMANIO=", intToString(strlen(datosTotales) + 1));
-	concatenarATexto(&texto, "\nBLOQUES=[");
-
-	for(int i = 0; i<bloques->elements_count; i++){
-		concatenarATexto(&texto, intToString(list_get(bloques, i)));
-
-		if(i == bloques->elements_count -1){
-			concatenarATexto(&texto, "]\n");
-		}else{
-			concatenarATexto(&texto, ",");
-		}
-
-	}
-
-	int creacionDeArchivo = crearArchivo(rutaArchivo);
-	if(creacionDeArchivo == 0){
-		guardarDatos(rutaArchivo, 0, strlen(texto), texto);
-	}else{
-		log_info(logger, "No se pudo crear el archivo");
-	}
-	list_destroy(bloques);
-	free(texto);
-	free(rutaArchivo);
-
-
+	return estadoCrearArchivoFS;
 }
-
-
-
 
 char* obtenerDatosFIFA(char* rutaArchivo, int offset, int size){
 	char* rutaCompleta = generarPathAbsoluto(rutaArchivo);
