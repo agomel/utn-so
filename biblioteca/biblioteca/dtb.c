@@ -18,7 +18,7 @@ DTB crearDTB (char* parametro){
 	dtb.programCounter = 0;
 	dtb.estado = NEW;
 	dtb.quantum = 0;
-	dtb.tamanioArchivosAbiertos = dtb.id;
+	dtb.tamanioArchivosAbiertos = 0;
 	return dtb;
 }
 
