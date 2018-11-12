@@ -14,6 +14,7 @@
 #include <biblioteca/traductor.h>
 #include "guardado.h"
 #include "consola.h"
+#include "bitmap.h"
 
 int RETARDO;
 char* PUNTO_MONTAJE;

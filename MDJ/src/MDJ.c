@@ -130,7 +130,6 @@ void obtenerPuntoMontaje(char* primerMontaje){
 	memcpy(PUNTO_MONTAJE, path, strlen(path) +1);
 	string_append_with_format(&PUNTO_MONTAJE, "%s\0", primerMontaje);
 	free(path);
-	log_info(logger, "el montaje es %s", PUNTO_MONTAJE);
 }
 
 void crearPuntosDeMontaje(){
@@ -156,10 +155,10 @@ void init(){
 
 	levantarMetadata();
 
-	initGuardado();
+	initBitmap();
 	verificarExistenciaDeBitmap();
 
-crearArchivoFifa("hola","wait algo\nsignal algo\nabrir c\nconcentrar\nasignar c 1 brendi\nflush c\nhola\nnanu\ncomo\nestas\ntodo\nbien\n");
+crearArchivoFifa("jaja","wait algo\nsignal algo\nabrir c\nconcentrar\nasignar c 1 brendi\nflush c\nhola\nnanu\ncomo\nestas\ntodo\nbien\n");
 	inicializarMutex(&mutexOperaciones);
 	colaOperaciones = queue_create();
 	inicializarSem(&semOperaciones, 0);
