@@ -12,12 +12,9 @@
 #include "operacionesArchivos.h"
 
 
-extern char* PUNTO_MONTAJE_ARCHIVOS;
-extern char* PUNTO_MONTAJE_METADATA;
-extern char* PUNTO_MONTAJE_BLOQUES;
+int crearArchivoFS(char* rutaArchivo, char* datosTotales);
 
-extern int TAMANIO_BLOQUES;
-extern int CANTIDAD_BLOQUES;
+int borrarArchivoFS(char* rutaArchivo);
 
 extern t_log* logger;
 

@@ -45,11 +45,7 @@ int guardarDatosFIFA(char* rutaArchivo, int offset, int tamanioMensaje, char* da
 int borrarArchivoFIFA(char* rutaArchivo){
 	char* rutaCompleta = generarPathAbsoluto(rutaArchivo);
 
-	//liberar los bloques del bitmap
-	//eliminar el archivo con la metadata
-	//contemplar el caso de que no exista el archivo, de ser asi, devolver error de archivo inexistente
-
-	int estadoDeBorrado = eliminarArchivo(rutaCompleta);
+	int estadoDeBorrado = borrarArchivoFS(rutaCompleta);
 
 	free(rutaCompleta);
 	return estadoDeBorrado;

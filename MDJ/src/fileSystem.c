@@ -27,3 +27,13 @@ int crearArchivoFS(char* rutaArchivo, char* datosTotales){
 	list_destroy(bloques);
 	free(texto);
 }
+
+int borrarArchivoFS(char* rutaArchivo){
+
+
+
+
+}
+
+
+
