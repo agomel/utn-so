@@ -9,19 +9,19 @@ char* crearRutaBloque(int* bloque){
 	concatenarATexto(&rutaArchivo, ".bin");
 	return rutaArchivo;
 }
-int guardarDatosEnBloque(char* rutaBloque, int tamanioAEscribir, int tamanioEscrito, char* datosTotales){
+int guardarDatosEnBloque(char* rutaBloque, int tamanioAEscribir, int tamanioEscrito, char* datosTotales, int* error){
 	int creacionDeArchivo = crearArchivo(rutaBloque);
 	if(creacionDeArchivo == 0){
 		char* textoAEscribir = asignarMemoria(tamanioAEscribir);
 		strncpy(textoAEscribir, datosTotales + tamanioEscrito, tamanioAEscribir);
-		guardarDatos(rutaBloque, 0, tamanioAEscribir, textoAEscribir);
+		*error = guardarDatos(rutaBloque, 0, tamanioAEscribir, textoAEscribir);
 		return tamanioAEscribir;
 	}else{
-		log_info(logger, "No se pudo crear el archivo");
+		*error = PATH_INEXISTENTE;
 		return 0;
 	}
 }
-t_list* crearArchivoEnBloques(char* datosTotales){
+t_list* crearArchivoEnBloques(char* datosTotales, int* error){
 	t_list* bloques = list_create();
 	int tamanioTotal = strlen(datosTotales) + 1;
 	int tamanioEscrito = 0;
@@ -38,7 +38,7 @@ t_list* crearArchivoEnBloques(char* datosTotales){
 		int bloqueAEscribir;
 		char* rutaBloque = crearRutaBloque(&bloqueAEscribir);
 		list_add(bloques, bloqueAEscribir);
-		tamanioEscrito += guardarDatosEnBloque(rutaBloque, tamanioAEscribir, tamanioEscrito, datosTotales);
+		tamanioEscrito += guardarDatosEnBloque(rutaBloque, tamanioAEscribir, tamanioEscrito, datosTotales, error);
 
 	}
 	return bloques;
