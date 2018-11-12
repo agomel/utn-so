@@ -12,6 +12,7 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 #include "operacionesArchivos.h"
+#include "fileSystem.h"
 
 int validarArchivoFIFA(char* rutaArchivo);
 int crearArchivoFIFA(char* rutaArchivo, int cantidadDeBytes);
