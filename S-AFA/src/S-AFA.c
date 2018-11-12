@@ -65,6 +65,7 @@ void entenderMensaje(int emisor, char header){
 			log_info(logger, "Recibi cargado con exito en memoria del DAM");
 			idDTB = deserializarInt(emisor);
 			path = deserializarString(emisor);
+			int pesoArchivo = deserializarInt(emisor);
 			dtb = obtenerDTBDeCola(idDTB);
 
 			bool compararPath(char* pathDeLista){
@@ -76,8 +77,9 @@ void entenderMensaje(int emisor, char header){
 			}
 
 			if(!list_any_satisfy(dtb->listaDeArchivos, compararPath)){
-				log_info(logger, "Agrego path a la lista de archivos del DTB");
+				log_info(logger, "Agrego path a la lista de archivos del DTB con peso: %d", pesoArchivo);
 				list_add(dtb->listaDeArchivos, path);
+				dtb->tamanioArchivosAbiertos += pesoArchivo;
 			}
 
 			operacionDelDiego(idDTB);

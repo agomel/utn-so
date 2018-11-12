@@ -52,7 +52,9 @@ char* obtenerDatos(char* rutaArchivo, int offset, int size){
 	}
 
 	char* buffer = asignarMemoria(size + 1);
+
 	read(myFile, buffer, size);
+
 	close(myFile);
 	buffer[size] = '\0';
 	return buffer;

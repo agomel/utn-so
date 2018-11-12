@@ -45,41 +45,45 @@ static void copiarElemSegPura(ElementoTablaSegPura* de, ElementoTablaSegPura* ha
 	hasta->limite = de->limite;
 }
 
-int nuevoProcesoSegPura(int idDTB, char* datos, char* nombreArchivo){
-	RespuestaCargaSegPura* respuestaCarga = guardarDatosInternaSegPura(datos, nombreArchivo);
+RespuestaGuardado* nuevoProcesoSegPura(int idDTB, char* datos, char* nombreArchivo){
+	RespuestaCargaSegPura* cargaEnMemoria = guardarDatosInternaSegPura(datos, nombreArchivo);
+	RespuestaGuardado* respuesta = malloc(sizeof(RespuestaGuardado));
 
-	if(respuestaCarga->respuestaGuardado == 0){ //No rompio
+	if(cargaEnMemoria->resultado == 0){ //No rompio
 		t_list* tablaSegmentos = list_create();
 		ElementoTablaSegPura* nuevoRegistro = malloc(sizeof(ElementoTablaSegPura));
-		copiarElemSegPura(respuestaCarga->elementoTabla, nuevoRegistro);
+		copiarElemSegPura(cargaEnMemoria->elementoTabla, nuevoRegistro);
 		list_add(tablaSegmentos, nuevoRegistro);
-		freeRespuestaCargaSegPura(respuestaCarga);
 		ElementoTablaProcesos* elementoTablaProcesos = crearElemTablaProcesos(idDTB, tablaSegmentos);
 		list_add(tablaDeProcesos, elementoTablaProcesos);
 		log_info(logger, "Agregado proceso %d a tabla de procesos", idDTB);
-		return 0;
+		respuesta->pudoGuardar = 0;
+		respuesta->pesoArchivo = cargaEnMemoria->pesoArchivo;
+		freeRespuestaCargaSegPura(cargaEnMemoria);
 	}else{
 		log_error(logger, "No se pudo agregar proceso %d a tabla de procesos", idDTB);
-		int rta = respuestaCarga->respuestaGuardado;
-		free(respuestaCarga);
-		return rta;
+		respuesta->pudoGuardar = cargaEnMemoria->resultado;
 	}
+
+	return respuesta;
 }
 
-int guardarDatosSegPura(int idDTB, char* datos, char* nombreArchivo){
+RespuestaGuardado* guardarDatosSegPura(int idDTB, char* datos, char* nombreArchivo){
 	ElementoTablaProcesos* proceso = obtenerProcesoPorIdDTB(idDTB);
 	RespuestaCargaSegPura* cargaEnMemoria = guardarDatosInternaSegPura(datos, nombreArchivo);
-	if(cargaEnMemoria->respuestaGuardado == 0){
+	RespuestaGuardado* respuesta = malloc(sizeof(RespuestaGuardado));
+	if(cargaEnMemoria->resultado == 0){
 		ElementoTablaSegPura* nuevoRegistro = malloc(sizeof(ElementoTablaSegPura));
 		copiarElemSegPura(cargaEnMemoria->elementoTabla, nuevoRegistro);
 		list_add(proceso->tablaSegmentos, nuevoRegistro);
+		respuesta->pudoGuardar = 0;
+		respuesta->pesoArchivo = cargaEnMemoria->pesoArchivo;
 		freeRespuestaCargaSegPura(cargaEnMemoria);
-		return 0;
 	}else{
-		int rta = cargaEnMemoria->respuestaGuardado;
-		free(cargaEnMemoria);
-		return rta;
+		respuesta->pudoGuardar = 0;
 	}
+
+	return respuesta;
 }
 
 static RespuestaCargaSegPura* guardarDatosInternaSegPura(char* datos, char* nombreArchivo){
@@ -94,9 +98,11 @@ static RespuestaCargaSegPura* guardarDatosInternaSegPura(char* datos, char* nomb
 	if(posicionDondeGuardar != -1){
 		ElementoTablaSegPura* elementoTabla = crearElemTablaSegPura(posicionDondeGuardar, tamanioSegmento, nombreArchivo);
 		respuesta->elementoTabla = elementoTabla;
+		respuesta->pesoArchivo = totalLineas;
 		agregarASegmentoOcupado(posicionDondeGuardar, tamanioSegmento);
 		int base = storage + posicionDondeGuardar;
 		for(int i = 0; i<totalLineas; i++){
+			string_append(&lineas[i], "\n");
 			memcpy(base + tamanioLinea * i, lineas[i], tamanioLinea); //Guardando de a una linea
 		}
 		idSegmento++;
@@ -104,7 +110,7 @@ static RespuestaCargaSegPura* guardarDatosInternaSegPura(char* datos, char* nomb
 		log_debug(logger, "Datos guardados");
 		}
 
-	respuesta->respuestaGuardado = rompio;
+	respuesta->resultado = rompio;
 	return respuesta;
 }
 
@@ -128,6 +134,7 @@ static ElementoTablaSegPura* obtenerSegmentoPorArchivo(char* nombreArchivo, t_li
 }
 
 static void freeRespuestaCargaSegPura(RespuestaCargaSegPura* respuesta){
+	free(respuesta->elementoTabla->nombreArchivo);
 	free(respuesta->elementoTabla);
 	free(respuesta);
 }
@@ -137,9 +144,9 @@ respuestaDeObtencionDeMemoria* obtenerDatosSegPura(int idDTB, char* nombreArchiv
 	ElementoTablaProcesos* proceso = obtenerProcesoPorIdDTB(idDTB);
 	ElementoTablaSegPura* segmento = obtenerSegmentoPorArchivo(nombreArchivo, proceso->tablaSegmentos);
 	int cantidadLineas = segmento->limite / tamanioLinea;
-	char* archivo = malloc(tamanioLinea);
+	char* archivo = string_new();
 	for(int i=0; i<cantidadLineas; i++){
-		int desplazamiento = i * tamanioLinea;
+		int desplazamiento = segmento->base + i * tamanioLinea;
 		char* lineaConBasura = malloc(tamanioLinea);
 		memcpy(lineaConBasura, storage + desplazamiento, tamanioLinea);
 		char** lineaSinBasura = string_split(lineaConBasura, "\n");
@@ -173,6 +180,7 @@ respuestaDeObtencionDeMemoria* obtenerLineaSegPura(int idDTB, char* nombreArchiv
 		int desplazamiento = segmento->base + numeroLinea * tamanioLinea;
 		char* lineaConBasura = malloc(tamanioLinea);
 		memcpy(lineaConBasura, storage + desplazamiento, tamanioLinea);
+		log_debug(logger, "En obtener: Linea con basura: %s", lineaConBasura);
 		char** lineaSinBasura = string_split(lineaConBasura, "\n");
 		respuesta->cantidadDeLineas = 1;
 		respuesta->datos = malloc(strlen(lineaSinBasura[0])+1);
@@ -214,6 +222,7 @@ void liberarMemoriaSegPura(int idDTB, char* nombreArchivo){
 }
 
 int asignarDatosSegPura(int IdDTB, char* nombreArchivo, int numeroLinea, char* datos){
+	numeroLinea--;
 	ElementoTablaProcesos* proceso = obtenerProcesoPorIdDTB(IdDTB);
 	ElementoTablaSegPura* segmento = obtenerSegmentoPorArchivo(nombreArchivo, proceso->tablaSegmentos);
 	int desplazamiento = segmento->base + numeroLinea * tamanioLinea;
@@ -221,17 +230,23 @@ int asignarDatosSegPura(int IdDTB, char* nombreArchivo, int numeroLinea, char* d
 	memcpy(lineaConBasura, storage + desplazamiento, tamanioLinea);
 	char** lineaSinBasura = string_split(lineaConBasura, "\n");
 	char* lineaPosta = malloc(strlen(lineaSinBasura[0]));
-	memcpy(lineaPosta, lineaConBasura[0], strlen(lineaSinBasura[0]));
-	if((strlen(lineaSinBasura[0] + strlen(datos)) + 2) < tamanioLinea){ //Lo que ya estaba, los datos nuevos, el /n y el espacio en el medio
+	memcpy(lineaPosta, lineaSinBasura[0], strlen(lineaSinBasura[0]));
+	if((strlen(lineaSinBasura[0]) + strlen(datos) + 2) < tamanioLinea){ //Lo que ya estaba, los datos nuevos, el /n y el espacio en el medio
 		//Se puede escribir
 		string_append_with_format(&lineaPosta, " %s\n", datos);
-		memcpy(storage + desplazamiento, lineaPosta, strlen(lineaPosta));
+		log_debug("Linea resultante de la asignación: %s", lineaPosta);
+		memcpy(storage + desplazamiento, lineaPosta, tamanioLinea);
 		freeLineasBasura(lineaSinBasura, lineaConBasura);
 		free(lineaPosta);
+		respuestaDeObtencionDeMemoria* lineaObtenida = obtenerLineaSegPura(IdDTB, nombreArchivo, numeroLinea);
 		log_debug(logger, "Asignados datos con exito");
+		return 0;
 
 	}else{
-		log_error(logger, "No hay suficiente espacio en la linea %d del archivo %s", numeroLinea, nombreArchivo);
+		log_error(logger, "No hay suficiente espacio en la linea %d del archivo %s", (numeroLinea+1), nombreArchivo);
+
+		freeLineasBasura(lineaSinBasura, lineaConBasura);
+		free(lineaPosta);
 		return 20002;
 	}
 }
@@ -248,7 +263,7 @@ static int dondeEntro(int tamanioAGuardar){
 	list_sort(segmentosOcupados, compararElementos);
 
 	SegmentoOcupado* primerElemento = list_get(segmentosOcupados, 0);
-	int espacioDelPrincipio = primerElemento->base;
+	int espacioDelPrincipio = primerElemento->base - 1;
 	if(espacioDelPrincipio >= tamanioAGuardar)
 		return 0;
 
@@ -256,8 +271,8 @@ static int dondeEntro(int tamanioAGuardar){
 		SegmentoOcupado* elem1 = list_get(segmentosOcupados, i);
 		SegmentoOcupado* elem2 = list_get(segmentosOcupados, i+1);
 
-		int posicionInicial = elem1->base + elem1->limite;
-		int tamanioEntreAmbos = elem2->base - posicionInicial;
+		int posicionInicial = elem1->base + elem1->limite + 1;
+		int tamanioEntreAmbos = (elem2->base - 1) - posicionInicial;
 
 		if(tamanioEntreAmbos >= tamanioAGuardar){
 			//Entra en ese lugar
@@ -270,7 +285,7 @@ static int dondeEntro(int tamanioAGuardar){
 	int tamanioRestanteEnMemoria = tamanioMemoria - ultimaPosicion;
 
 	if(tamanioRestanteEnMemoria >= tamanioAGuardar){
-		return ultimaPosicion;
+		return ultimaPosicion + 1;
 	}
 
 	log_error(logger, "No hay suficiente espacio en memoria");
