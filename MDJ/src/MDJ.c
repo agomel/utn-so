@@ -11,9 +11,7 @@ void entenderMensaje(int emisor, char header){
 			case VALIDAR_ARCHIVO: {
 				log_info(logger, "Validar archivo...");
 				path = deserializarString(emisor);
-				char* rutaCompleta = asignarMemoria(strlen(PUNTO_MONTAJE_ARCHIVOS) + 1);
-				memcpy(rutaCompleta, PUNTO_MONTAJE_ARCHIVOS, strlen(PUNTO_MONTAJE_ARCHIVOS) + 1);
-				string_append(&rutaCompleta, path);
+				char* rutaCompleta = concatenar(PUNTO_MONTAJE_ARCHIVOS, path);
 				estadoDeOperacion = validarArchivo(rutaCompleta);
 				log_info(logger, "enviando %d a DAM", estadoDeOperacion);
 				enviarYSerializarIntSinHeader(emisor, estadoDeOperacion);
@@ -27,9 +25,7 @@ void entenderMensaje(int emisor, char header){
 				path = deserializarString(emisor);
 				size = deserializarInt(emisor);
 
-				char* rutaCompleta = asignarMemoria(strlen(PUNTO_MONTAJE_ARCHIVOS) + 1);
-				memcpy(rutaCompleta, PUNTO_MONTAJE_ARCHIVOS, strlen(PUNTO_MONTAJE_ARCHIVOS) + 1);
-				string_append(&rutaCompleta, path);
+				char* rutaCompleta = concatenar(PUNTO_MONTAJE_ARCHIVOS, path);
 				estadoDeOperacion = crearArchivo(rutaCompleta, size);
 				enviarYSerializarIntSinHeader(emisor, estadoDeOperacion);
 
@@ -42,9 +38,7 @@ void entenderMensaje(int emisor, char header){
 				path = deserializarString(emisor);
 				offset = deserializarInt(emisor);
 				size = deserializarInt(emisor);
-				char* rutaCompleta = asignarMemoria(strlen(PUNTO_MONTAJE_ARCHIVOS) + 1);
-				memcpy(rutaCompleta, PUNTO_MONTAJE_ARCHIVOS, strlen(PUNTO_MONTAJE_ARCHIVOS) + 1);
-				string_append(&rutaCompleta, path);
+				char* rutaCompleta = concatenar(PUNTO_MONTAJE_ARCHIVOS, path);
 				datos = obtenerDatos(rutaCompleta, offset, size);
 				enviarYSerializarStringSinHeader(emisor, datos);
 
@@ -61,9 +55,7 @@ void entenderMensaje(int emisor, char header){
 				datos = deserializarStringSinElInt(emisor, size);
 				agregarBarraCero(datos);
 				size -= 1; //NO quiero que me guarde el \0
-				char* rutaCompleta = asignarMemoria(strlen(PUNTO_MONTAJE_ARCHIVOS) + 1);
-				memcpy(rutaCompleta, PUNTO_MONTAJE_ARCHIVOS, strlen(PUNTO_MONTAJE_ARCHIVOS) + 1);
-				string_append(&rutaCompleta, path);
+				char* rutaCompleta = concatenar(PUNTO_MONTAJE_ARCHIVOS, path);
 
 				estadoDeOperacion = guardarDatos(rutaCompleta, offset, size, datos);
 
@@ -77,10 +69,7 @@ void entenderMensaje(int emisor, char header){
 			case BORRAR_ARCHIVO: {
 				log_info(logger, "Borrar archivo...");
 				path = deserializarString(emisor);
-				char* rutaCompleta = asignarMemoria(strlen(PUNTO_MONTAJE_ARCHIVOS) + 1);
-				memcpy(rutaCompleta, PUNTO_MONTAJE_ARCHIVOS, strlen(PUNTO_MONTAJE_ARCHIVOS) + 1);
-				string_append(&rutaCompleta, path);
-
+				char* rutaCompleta = concatenar(PUNTO_MONTAJE_ARCHIVOS, path);
 				estadoDeOperacion = eliminarArchivo(path);
 
 				enviarYSerializarIntSinHeader(emisor, estadoDeOperacion);
@@ -119,9 +108,7 @@ void crearSelect(int servidor){
 	realizarNuestroSelect(select);
 }
 void levantarMetadata(){
-	char* ubicacionMetadata = asignarMemoria(strlen(PUNTO_MONTAJE_METADATA) + 1);
-	memcpy(ubicacionMetadata, PUNTO_MONTAJE_METADATA, strlen(PUNTO_MONTAJE_METADATA) + 1);
-	string_append(&ubicacionMetadata, "Metadata.bin");
+	char* ubicacionMetadata = concatenar(PUNTO_MONTAJE_METADATA, "Metadata.bin");
 
 	t_config* metadataConfig = config_create(ubicacionMetadata);
 
@@ -147,18 +134,9 @@ void obtenerPuntoMontaje(char* primerMontaje){
 }
 
 void crearPuntosDeMontaje(){
-	PUNTO_MONTAJE_ARCHIVOS = asignarMemoria(strlen(PUNTO_MONTAJE) + 1);
-	memcpy(PUNTO_MONTAJE_ARCHIVOS, PUNTO_MONTAJE, strlen(PUNTO_MONTAJE) + 1);
-	string_append(&PUNTO_MONTAJE_ARCHIVOS, "Archivos/");
-
-	PUNTO_MONTAJE_METADATA = asignarMemoria(strlen(PUNTO_MONTAJE) + 1);
-	memcpy(PUNTO_MONTAJE_METADATA, PUNTO_MONTAJE, strlen(PUNTO_MONTAJE) + 1);
-	string_append(&PUNTO_MONTAJE_METADATA, "Metadata/");
-
-
-	PUNTO_MONTAJE_BLOQUES = asignarMemoria(strlen(PUNTO_MONTAJE) + 1);
-	memcpy(PUNTO_MONTAJE_BLOQUES, PUNTO_MONTAJE, strlen(PUNTO_MONTAJE) + 1);
-	string_append(&PUNTO_MONTAJE_BLOQUES, "Bloques/");
+	PUNTO_MONTAJE_ARCHIVOS = concatenar(PUNTO_MONTAJE, "Archivos/");
+	PUNTO_MONTAJE_METADATA = concatenar(PUNTO_MONTAJE, "Metadata/");
+	PUNTO_MONTAJE_BLOQUES = concatenar(PUNTO_MONTAJE, "Bloques/");
 
 }
 void init(){

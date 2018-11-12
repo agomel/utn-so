@@ -54,3 +54,14 @@ char* nombreEstado(char estado){
 	break;
 	}
 }
+
+char* concatenar(char* str1, char* str2){
+	char* concatenado = asignarMemoria(strlen(str1) + 1);
+	memcpy(concatenado, str1, strlen(str1) + 1);
+	string_append(&concatenado, str2);
+	return concatenado;
+}
+
+void concatenarATexto(char** texto, char* adicional){
+	string_append(texto, adicional);
+}
