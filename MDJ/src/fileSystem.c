@@ -1,8 +1,8 @@
 #include "fileSystem.h"
 
 int crearArchivoFS(char* rutaArchivo, char* datosTotales){
-	int operacionCrearArchivo;
-	t_list* bloques = crearArchivoEnBloques(datosTotales, &operacionCrearArchivo);
+	int error = 0;
+	t_list* bloques = crearArchivoEnBloques(datosTotales, &error);
 	char* texto = concatenar("TAMANIO=", intToString(strlen(datosTotales) + 1));
 	concatenarATexto(&texto, "\nBLOQUES=[");
 
@@ -17,13 +17,16 @@ int crearArchivoFS(char* rutaArchivo, char* datosTotales){
 
 	}
 
-	int creacionDeArchivo = crearArchivo(rutaArchivo);
-	if(creacionDeArchivo == 0){
-		guardarDatos(rutaArchivo, 0, strlen(texto), texto);
-	}else{
-		return PATH_INEXISTENTE;
+	if(error == 0){
+		error = crearArchivo(rutaArchivo);
+		if(error == 0){
+			error = guardarDatos(rutaArchivo, 0, strlen(texto), texto);
+		}else{
+			error = ESPACIO_INSUFICIENTE_EN_MDJ;
+		}
 	}
 
 	list_destroy(bloques);
 	free(texto);
+	return error;
 }
