@@ -14,18 +14,18 @@ respuestaDeObtencionDeMemoria* obtenerDatosDeMemoria(int idDTB, char* nombreArch
 		return obtenerDatosInvertida(nombreArchivo);
 }
 
-int cargarDatosEnMemoria(int idDTB, char* datos, char* nombreArchivo){
+RespuestaGuardado* cargarDatosEnMemoria(int idDTB, char* datos, char* nombreArchivo){
 	if(strcmp(modo, "SEG_PURA") == 0)
 		return guardarDatosSegPura(idDTB, datos, nombreArchivo);
 
 	if(strcmp(modo, "SEG_PAG") == 0)
-		return guardarDatosSegPag(idDTB, datos, nombreArchivo);
+		return guardarDatosSegPura(idDTB, datos, nombreArchivo); //CAMBIAAAAAAAR
 
 	if(strcmp(modo, "INV") == 0)
-		return guardarDatosInvertida(idDTB, datos, nombreArchivo);
+		return guardarDatosSegPura(idDTB, datos, nombreArchivo); //CAMBIAAAAAAAR
 }
 
-int cargarNuevoDTB(int idDTB, char* datos, char* nombreArchivo){
+RespuestaGuardado* cargarNuevoDTB(int idDTB, char* datos, char* nombreArchivo){
 	if(strcmp(modo, "SEG_PURA") == 0)
 		return nuevoProcesoSegPura(idDTB, datos, nombreArchivo);
 
@@ -81,12 +81,17 @@ void entenderMensaje(int emisor, char header){
 				int idDTB = deserializarInt(emisor);
 				char* nombreArchivo = deserializarString(emisor);
 				char* datos = deserializarString(emisor);
-				int respuestaDeCarga = cargarDatosEnMemoria(idDTB, datos, nombreArchivo);
+				RespuestaGuardado* respuestaDeCarga = cargarDatosEnMemoria(idDTB, datos, nombreArchivo);
 				free(datos);
 				free(nombreArchivo);
 
 				log_debug(logger, "Enviando %d al guardar los datos", respuestaDeCarga);
-				enviarYSerializarIntSinHeader(socketDAM, respuestaDeCarga);
+				enviarYSerializarIntSinHeader(socketDAM, respuestaDeCarga->pudoGuardar);
+				if(respuestaDeCarga->pudoGuardar == 0)
+					enviarYSerializarIntSinHeader(socketDAM, respuestaDeCarga->pesoArchivo);
+
+				free(respuestaDeCarga);
+
 				break;
 			}
 
@@ -95,12 +100,16 @@ void entenderMensaje(int emisor, char header){
 				log_debug(logger, "Guardando escriptorio %d en memoria", idDTB);
 				char* nombreArchivo = deserializarString(emisor);
 				char* datos = deserializarString(emisor);
-				int respuestaDeCarga = cargarNuevoDTB(idDTB, datos, nombreArchivo);
+				RespuestaGuardado* respuestaDeCarga = cargarNuevoDTB(idDTB, datos, nombreArchivo);
 				free(datos);
 				free(nombreArchivo);
 
 				log_debug(logger, "Enviando %d al cargar nuevo DTB", respuestaDeCarga);
-				enviarYSerializarIntSinHeader(socketDAM, respuestaDeCarga);
+				enviarYSerializarIntSinHeader(socketDAM, respuestaDeCarga->pudoGuardar);
+				if(respuestaDeCarga->pudoGuardar == 0)
+					enviarYSerializarIntSinHeader(socketDAM, respuestaDeCarga->pesoArchivo);
+
+				free(respuestaDeCarga);
 				break;
 			}
 

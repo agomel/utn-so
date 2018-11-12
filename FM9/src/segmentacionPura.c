@@ -45,41 +45,43 @@ static void copiarElemSegPura(ElementoTablaSegPura* de, ElementoTablaSegPura* ha
 	hasta->limite = de->limite;
 }
 
-int nuevoProcesoSegPura(int idDTB, char* datos, char* nombreArchivo){
-	RespuestaCargaSegPura* respuestaCarga = guardarDatosInternaSegPura(datos, nombreArchivo);
+RespuestaGuardado* nuevoProcesoSegPura(int idDTB, char* datos, char* nombreArchivo){
+	RespuestaCargaSegPura* cargaEnMemoria = guardarDatosInternaSegPura(datos, nombreArchivo);
+	RespuestaGuardado* respuesta = malloc(sizeof(RespuestaGuardado));
 
-	if(respuestaCarga->respuestaGuardado == 0){ //No rompio
+	if(cargaEnMemoria->resultado == 0){ //No rompio
 		t_list* tablaSegmentos = list_create();
 		ElementoTablaSegPura* nuevoRegistro = malloc(sizeof(ElementoTablaSegPura));
-		copiarElemSegPura(respuestaCarga->elementoTabla, nuevoRegistro);
+		copiarElemSegPura(cargaEnMemoria->elementoTabla, nuevoRegistro);
 		list_add(tablaSegmentos, nuevoRegistro);
-		freeRespuestaCargaSegPura(respuestaCarga);
 		ElementoTablaProcesos* elementoTablaProcesos = crearElemTablaProcesos(idDTB, tablaSegmentos);
 		list_add(tablaDeProcesos, elementoTablaProcesos);
 		log_info(logger, "Agregado proceso %d a tabla de procesos", idDTB);
-		return 0;
+		respuesta->pudoGuardar = 0;
+		respuesta->pesoArchivo = cargaEnMemoria->pesoArchivo;
+		freeRespuestaCargaSegPura(cargaEnMemoria);
 	}else{
 		log_error(logger, "No se pudo agregar proceso %d a tabla de procesos", idDTB);
-		int rta = respuestaCarga->respuestaGuardado;
-		free(respuestaCarga);
-		return rta;
+		respuesta->pudoGuardar = cargaEnMemoria->resultado;
 	}
 }
 
-int guardarDatosSegPura(int idDTB, char* datos, char* nombreArchivo){
+RespuestaGuardado* guardarDatosSegPura(int idDTB, char* datos, char* nombreArchivo){
 	ElementoTablaProcesos* proceso = obtenerProcesoPorIdDTB(idDTB);
 	RespuestaCargaSegPura* cargaEnMemoria = guardarDatosInternaSegPura(datos, nombreArchivo);
-	if(cargaEnMemoria->respuestaGuardado == 0){
+	RespuestaGuardado* respuesta = malloc(sizeof(RespuestaGuardado));
+	if(cargaEnMemoria->resultado == 0){
 		ElementoTablaSegPura* nuevoRegistro = malloc(sizeof(ElementoTablaSegPura));
 		copiarElemSegPura(cargaEnMemoria->elementoTabla, nuevoRegistro);
 		list_add(proceso->tablaSegmentos, nuevoRegistro);
+		respuesta->pudoGuardar = 0;
+		respuesta->pesoArchivo = cargaEnMemoria->pesoArchivo;
 		freeRespuestaCargaSegPura(cargaEnMemoria);
-		return 0;
 	}else{
-		int rta = cargaEnMemoria->respuestaGuardado;
-		free(cargaEnMemoria);
-		return rta;
+		respuesta->pudoGuardar = 0;
 	}
+
+	return respuesta;
 }
 
 static RespuestaCargaSegPura* guardarDatosInternaSegPura(char* datos, char* nombreArchivo){
@@ -94,6 +96,7 @@ static RespuestaCargaSegPura* guardarDatosInternaSegPura(char* datos, char* nomb
 	if(posicionDondeGuardar != -1){
 		ElementoTablaSegPura* elementoTabla = crearElemTablaSegPura(posicionDondeGuardar, tamanioSegmento, nombreArchivo);
 		respuesta->elementoTabla = elementoTabla;
+		respuesta->pesoArchivo = totalLineas;
 		agregarASegmentoOcupado(posicionDondeGuardar, tamanioSegmento);
 		int base = storage + posicionDondeGuardar;
 		for(int i = 0; i<totalLineas; i++){
@@ -105,7 +108,7 @@ static RespuestaCargaSegPura* guardarDatosInternaSegPura(char* datos, char* nomb
 		log_debug(logger, "Datos guardados");
 		}
 
-	respuesta->respuestaGuardado = rompio;
+	respuesta->resultado = rompio;
 	return respuesta;
 }
 
