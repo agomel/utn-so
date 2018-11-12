@@ -144,9 +144,9 @@ respuestaDeObtencionDeMemoria* obtenerDatosSegPura(int idDTB, char* nombreArchiv
 	ElementoTablaProcesos* proceso = obtenerProcesoPorIdDTB(idDTB);
 	ElementoTablaSegPura* segmento = obtenerSegmentoPorArchivo(nombreArchivo, proceso->tablaSegmentos);
 	int cantidadLineas = segmento->limite / tamanioLinea;
-	char* archivo = malloc(tamanioLinea);
+	char* archivo = string_new();
 	for(int i=0; i<cantidadLineas; i++){
-		int desplazamiento = i * tamanioLinea;
+		int desplazamiento = segmento->base + i * tamanioLinea;
 		char* lineaConBasura = malloc(tamanioLinea);
 		memcpy(lineaConBasura, storage + desplazamiento, tamanioLinea);
 		char** lineaSinBasura = string_split(lineaConBasura, "\n");
@@ -233,12 +233,12 @@ int asignarDatosSegPura(int IdDTB, char* nombreArchivo, int numeroLinea, char* d
 	memcpy(lineaPosta, lineaSinBasura[0], strlen(lineaSinBasura[0]));
 	if((strlen(lineaSinBasura[0]) + strlen(datos) + 2) < tamanioLinea){ //Lo que ya estaba, los datos nuevos, el /n y el espacio en el medio
 		//Se puede escribir
-		printf("Estos son los datos que asigno %s, con cant: %d\n", datos, strlen(datos));
 		string_append_with_format(&lineaPosta, " %s\n", datos);
-		printf("Esta es la linea que queda %s con cant: %d\n", lineaPosta, strlen(lineaPosta));
+		log_debug("Linea resultante de la asignación: %s", lineaPosta);
 		memcpy(storage + desplazamiento, lineaPosta, tamanioLinea);
 		freeLineasBasura(lineaSinBasura, lineaConBasura);
 		free(lineaPosta);
+		respuestaDeObtencionDeMemoria* lineaObtenida = obtenerLineaSegPura(IdDTB, nombreArchivo, numeroLinea);
 		log_debug(logger, "Asignados datos con exito");
 		return 0;
 
@@ -263,7 +263,7 @@ static int dondeEntro(int tamanioAGuardar){
 	list_sort(segmentosOcupados, compararElementos);
 
 	SegmentoOcupado* primerElemento = list_get(segmentosOcupados, 0);
-	int espacioDelPrincipio = primerElemento->base;
+	int espacioDelPrincipio = primerElemento->base - 1;
 	if(espacioDelPrincipio >= tamanioAGuardar)
 		return 0;
 
@@ -271,8 +271,8 @@ static int dondeEntro(int tamanioAGuardar){
 		SegmentoOcupado* elem1 = list_get(segmentosOcupados, i);
 		SegmentoOcupado* elem2 = list_get(segmentosOcupados, i+1);
 
-		int posicionInicial = elem1->base + elem1->limite;
-		int tamanioEntreAmbos = elem2->base - posicionInicial;
+		int posicionInicial = elem1->base + elem1->limite + 1;
+		int tamanioEntreAmbos = (elem2->base - 1) - posicionInicial;
 
 		if(tamanioEntreAmbos >= tamanioAGuardar){
 			//Entra en ese lugar
@@ -285,7 +285,7 @@ static int dondeEntro(int tamanioAGuardar){
 	int tamanioRestanteEnMemoria = tamanioMemoria - ultimaPosicion;
 
 	if(tamanioRestanteEnMemoria >= tamanioAGuardar){
-		return ultimaPosicion;
+		return ultimaPosicion + 1;
 	}
 
 	log_error(logger, "No hay suficiente espacio en memoria");
