@@ -154,6 +154,7 @@ char* deserializarString(int emisor){
 char* deserializarStringSinElInt(int emisor, int tamanioMensaje){
 	char* mensaje = asignarMemoria(tamanioMensaje);
 	recibirMensaje(emisor, mensaje, tamanioMensaje);
+	agregarBarraCero(mensaje);
 	printf("Recibi %s de parte de %d \n" , mensaje, emisor);
 	return mensaje;
 }

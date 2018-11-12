@@ -154,8 +154,9 @@ respuestaDeObtencionDeMemoria* obtenerDatosSegPura(int idDTB, char* nombreArchiv
 		freeLineasBasura(lineaSinBasura, lineaConBasura);
 	}
 
-	respuesta->datos = malloc(strlen(archivo));
-	memcpy(respuesta->datos, archivo, strlen(archivo));
+	agregarBarraCero(archivo);
+	respuesta->datos = malloc(strlen(archivo) + 1);
+	memcpy(respuesta->datos, archivo, strlen(archivo) + 1);
 	respuesta->cantidadDeLineas = cantidadLineas;
 
 	return respuesta;

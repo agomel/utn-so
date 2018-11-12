@@ -29,22 +29,22 @@ void pedirDatosAFM9(int idDTB, char* path){
 	free(buffer);
 }
 
-char* recibirFlushFM9(int cantidadDeLineas){
-	char* memoriaTotal = asignarMemoria(cantidadDeLineas);
-	int desplazamiento = 0;
-	while(cantidadDeLineas > 0){
-		int cantidadARecibir;
-		if(cantidadDeLineas > transferSize){
+char* recibirFlushFM9(int tamanioArchivo){
+	char* archivo = string_new();
+	int cantidadARecibir = 0;
+	while(tamanioArchivo > 0){
+		if(tamanioArchivo > transferSize)
 			cantidadARecibir = transferSize;
-		}else{
-			cantidadARecibir = cantidadDeLineas;
-		}
-		void* buffer = asignarMemoria(cantidadARecibir);
-		recibirMensaje(socketFM9, buffer, cantidadARecibir);
-		concatenarVoid(memoriaTotal, &desplazamiento, buffer, cantidadARecibir);
+		else
+			cantidadARecibir = tamanioArchivo;
+
+		char* buffer = asignarMemoria(cantidadARecibir);
+		buffer = deserializarStringSinElInt(socketFM9, cantidadARecibir);
+		string_append(&archivo, buffer);
+
 		free(buffer);
-		cantidadDeLineas = cantidadDeLineas - cantidadARecibir;
+		tamanioArchivo -= cantidadARecibir;
 	}
-	return memoriaTotal;
+	return archivo;
 }
 

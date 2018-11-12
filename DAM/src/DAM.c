@@ -46,8 +46,8 @@ void entenderMensaje(int emisor, char header){
 		case GUARDAR_ESCRIPTORIO: {
 			log_debug(logger, "Guardando escriptorio");
 			pedirDatosAFM9(idDTB, path);
-			cantidadDeLineas = deserializarInt(socketFM9);
-			char* datos = recibirFlushFM9(cantidadDeLineas);
+			int tamanioArchivo = deserializarInt(socketFM9);
+			char* datos = recibirFlushFM9(tamanioArchivo);
 			int guardarDatos = guardarDatosEnMDJ(datos, path);
 			if(guardarDatos != 0){
 				enviarError(idDTB, path, guardarDatos);

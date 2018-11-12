@@ -120,9 +120,8 @@ void entenderMensaje(int emisor, char header){
 				respuestaDeObtencionDeMemoria* respuestaDeObtener = obtenerDatosDeMemoria(idDTB, nombreArchivo);
 
 				int desplazamiento = 0;
-				int tamanioBuffer = sizeof(int) + sizeof(int) + strlen(respuestaDeObtener->datos) + 1;
+				int tamanioBuffer = sizeof(int) + strlen(respuestaDeObtener->datos) + 1;
 				void* buffer = asignarMemoria(tamanioBuffer);
-				concatenarInt(buffer, &desplazamiento, respuestaDeObtener->cantidadDeLineas);
 				concatenarString(buffer, &desplazamiento, respuestaDeObtener->datos);
 				log_info(logger, "Datos obtenidos: %s ", respuestaDeObtener->datos);
 				enviarMensaje(socketDAM, buffer, tamanioBuffer);
