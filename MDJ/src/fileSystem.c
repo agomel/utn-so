@@ -33,8 +33,13 @@ int crearArchivoFS(char* rutaArchivo, char* datosTotales){
 
 int borrarArchivoFS(char* rutaArchivo){
 
+	//liberar bloques del bitmap
 
+	//borrar archivo con la metadata
 
+	//contemplar archivo ineficiente
+
+	return 0;
 
 }
 
