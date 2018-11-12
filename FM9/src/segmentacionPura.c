@@ -64,6 +64,8 @@ RespuestaGuardado* nuevoProcesoSegPura(int idDTB, char* datos, char* nombreArchi
 		log_error(logger, "No se pudo agregar proceso %d a tabla de procesos", idDTB);
 		respuesta->pudoGuardar = cargaEnMemoria->resultado;
 	}
+
+	return respuesta;
 }
 
 RespuestaGuardado* guardarDatosSegPura(int idDTB, char* datos, char* nombreArchivo){
@@ -132,6 +134,7 @@ static ElementoTablaSegPura* obtenerSegmentoPorArchivo(char* nombreArchivo, t_li
 }
 
 static void freeRespuestaCargaSegPura(RespuestaCargaSegPura* respuesta){
+	free(respuesta->elementoTabla->nombreArchivo);
 	free(respuesta->elementoTabla);
 	free(respuesta);
 }
