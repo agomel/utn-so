@@ -38,11 +38,12 @@ char* recibirFlushFM9(int tamanioArchivo){
 		else
 			cantidadARecibir = tamanioArchivo;
 
-		char* buffer = asignarMemoria(cantidadARecibir);
-		buffer = deserializarStringSinElInt(socketFM9, cantidadARecibir);
-		string_append(&archivo, buffer);
+		char* buffer = deserializarStringSinElInt(socketFM9, cantidadARecibir);
+		char* recibido = string_substring(buffer, 0, cantidadARecibir);
+		string_append(&archivo, recibido);
 
 		free(buffer);
+		free(recibido);
 		tamanioArchivo -= cantidadARecibir;
 	}
 	return archivo;

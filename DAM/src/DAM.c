@@ -37,7 +37,7 @@ void entenderMensaje(int emisor, char header){
 					enviarError(idDTB, path, estadoDeCarga);
 				}else{
 					int pesoArchivo = deserializarInt(socketFM9);
-					notificarASafaExito(CARGADO_CON_EXITO_EN_MEMORIA, idDTB, path, pesoArchivo);
+					notificarASafaExitoConPesoArchivo(CARGADO_CON_EXITO_EN_MEMORIA, idDTB, path, pesoArchivo);
 				}
 			}
 			break;

@@ -80,7 +80,7 @@ RespuestaGuardado* guardarDatosSegPura(int idDTB, char* datos, char* nombreArchi
 		respuesta->pesoArchivo = cargaEnMemoria->pesoArchivo;
 		freeRespuestaCargaSegPura(cargaEnMemoria);
 	}else{
-		respuesta->pudoGuardar = 0;
+		respuesta->pudoGuardar = cargaEnMemoria->resultado;
 	}
 
 	return respuesta;
