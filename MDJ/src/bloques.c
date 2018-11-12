@@ -10,7 +10,7 @@ char* crearRutaBloque(int* bloque){
 	return rutaArchivo;
 }
 int guardarDatosEnBloque(char* rutaBloque, int tamanioAEscribir, int tamanioEscrito, char* datosTotales){
-	int creacionDeArchivo = crearArchivoSinBarraN(rutaBloque);
+	int creacionDeArchivo = crearArchivo(rutaBloque);
 	if(creacionDeArchivo == 0){
 		char* textoAEscribir = asignarMemoria(tamanioAEscribir);
 		strncpy(textoAEscribir, datosTotales + tamanioEscrito, tamanioAEscribir);

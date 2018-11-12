@@ -18,7 +18,7 @@ void crearArchivoFifa(char* path, char* datosTotales){
 
 	}
 
-	int creacionDeArchivo = crearArchivoSinBarraN(rutaArchivo);
+	int creacionDeArchivo = crearArchivo(rutaArchivo);
 	if(creacionDeArchivo == 0){
 		guardarDatos(rutaArchivo, 0, strlen(texto), texto);
 	}else{

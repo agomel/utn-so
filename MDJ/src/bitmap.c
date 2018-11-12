@@ -4,7 +4,7 @@ void verificarExistenciaDeBitmap(){
 	int archivoExiste = validarArchivo(rutaBitmap);
 	if(archivoExiste != 0){
 		//El bitmap no existe
-		int archivoCreado = crearArchivoSinBarraN(rutaBitmap);
+		int archivoCreado = crearArchivo(rutaBitmap);
 		if(archivoCreado == 0){
 			char* datos = asignarMemoria(CANTIDAD_BLOQUES) + 1;
 			for(int i = 0; i<CANTIDAD_BLOQUES; i++){

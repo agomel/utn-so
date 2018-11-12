@@ -1,5 +1,9 @@
 #include "operacionesFIFA.h"
 
+char* generarPathAbsoluto(char* path){
+	return concatenar(PUNTO_MONTAJE_ARCHIVOS, path);
+}
+
 int validarArchivoFIFA(char* rutaArchivo){
 	char* rutaCompleta = generarPathAbsoluto(rutaArchivo);
 	int estadoDeOperacion = validarArchivo(rutaCompleta);
@@ -51,8 +55,4 @@ int borrarArchivoFIFA(char* rutaArchivo){
 
 	free(rutaCompleta);
 	return estadoDeBorrado;
-}
-
-char* generarPathAbsoluto(char* path){
-	return concatenar(PUNTO_MONTAJE_ARCHIVOS, path);
 }
