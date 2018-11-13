@@ -12,7 +12,7 @@ int validarArchivo(char* rutaArchivo){
 int crearArchivo(char* rutaArchivo){
 	FILE* archivo = fopen(rutaArchivo, "w");
 	if(archivo == NULL){
-		return PATH_INEXISTENTE;
+		return ESPACIO_INSUFICIENTE_EN_MDJ;
 	}
 	fclose(archivo);
 	return 0;
@@ -21,7 +21,7 @@ int crearArchivo(char* rutaArchivo){
 int guardarDatos(char* rutaArchivo, int offset, int tamanioMensaje, char* datos){
 	int myFile = open(rutaArchivo, O_WRONLY);
 	if(myFile < 0){
-		return PATH_INEXISTENTE;
+		return ESPACIO_INSUFICIENTE_EN_MDJ;
 	}
 
 	lseek(myFile, offset, SEEK_SET);
