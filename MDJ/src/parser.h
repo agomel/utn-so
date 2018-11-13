@@ -3,6 +3,7 @@
 
 #include "operacionesArchivos.h"
 
+extern char* TAMANIO_BLOQUES;
 
 typedef struct{
 	char** bloques;
@@ -10,4 +11,5 @@ typedef struct{
 }Metadata;
 
 Metadata obtenerMetadata(char* path);
+void freeMetadata(Metadata* metadata);
 #endif /*PARSER_H_*/

@@ -4,9 +4,14 @@
 
 #include "comandos.h"
 #include "operacionesArchivos.h"
+void verificarExistenciaDeBitmap();
+
+int obtenerBloqueLibreBitmap();
 
 int ocuparBloqueEnBitmap(int bloqueAOcupar);
 int liberarBloqueEnBitmap(int bloqueALiberar);
+
+void initBitmap();
 
 char* rutaBitmap;
 
