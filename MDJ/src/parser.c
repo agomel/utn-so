@@ -10,7 +10,7 @@ Metadata* obtenerMetadata(char* path){
 }
 
 void freeMetadata(Metadata* metadata){
-	int cantidadBloques = metadata->bloques / TAMANIO_BLOQUES + 1;
+	int cantidadBloques = obtenerCantidadBloques(metadata->tamanio);
 	for(int i = 0; i < cantidadBloques; i++){
 		free(metadata->bloques[i]);
 	}
