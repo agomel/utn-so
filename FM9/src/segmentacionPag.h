@@ -15,6 +15,11 @@ typedef struct{
 	int marco;
 }ElementoTablaPag;
 
+typedef struct{
+	int idDTB;
+	t_list* segmentos;
+}ElementoTablaDTBS;
+
 int idSegmento;
 int idPagina;
 t_list* tablaDeSegmentos;
