@@ -5,6 +5,9 @@
 #include "comandos.h"
 #include "operacionesArchivos.h"
 
+int ocuparBloqueEnBitmap(int bloqueAOcupar);
+int liberarBloqueEnBitmap(int bloqueALiberar);
+
 char* rutaBitmap;
 
 extern t_log* logger;

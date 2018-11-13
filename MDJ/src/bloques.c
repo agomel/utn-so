@@ -1,14 +1,30 @@
 #include "bloques.h"
 
-
-char* crearRutaBloque(int* bloque){
-	*bloque = obtenerBloqueLibreBitmap();
-	ocuparBloqueEnBitmap(*bloque);
-
-	char* rutaArchivo = concatenar(PUNTO_MONTAJE_BLOQUES, intToString(*bloque));
+char* getPathDeBloque(int bloque){
+	char* rutaArchivo = concatenar(PUNTO_MONTAJE_BLOQUES, intToString(bloque));
 	concatenarATexto(&rutaArchivo, ".bin");
 	return rutaArchivo;
 }
+
+int obtenerBloque(){
+	int bloque = obtenerBloqueLibreBitmap();
+	ocuparBloqueEnBitmap(bloque);
+	return bloque;
+}
+
+int eliminarBloque(int bloque){
+	int error = 0;
+	char* rutaArchivoDeBloque = getPathDeBloque(bloque);
+
+	error = eliminarArchivo(rutaArchivoDeBloque);
+	if(error == 0){
+		error = liberarBloqueEnBitmap(bloque);
+	}
+
+	free(rutaArchivoDeBloque);
+	return error;
+}
+
 int guardarDatosEnBloque(char* rutaBloque, int tamanioAEscribir, int tamanioEscrito, char* datosTotales, int* error){
 	int creacionDeArchivo = crearArchivo(rutaBloque);
 	if(creacionDeArchivo == 0){
@@ -35,8 +51,8 @@ t_list* crearArchivoEnBloques(char* datosTotales, int* error){
 			tamanioAEscribir = TAMANIO_BLOQUES;
 		}
 
-		int bloqueAEscribir;
-		char* rutaBloque = crearRutaBloque(&bloqueAEscribir);
+		int bloqueAEscribir = obtenerBloque();
+		char* rutaBloque = getPathDeBloque(bloqueAEscribir);
 		list_add(bloques, bloqueAEscribir);
 		tamanioEscrito += guardarDatosEnBloque(rutaBloque, tamanioAEscribir, tamanioEscrito, datosTotales, error);
 

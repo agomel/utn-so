@@ -13,6 +13,9 @@
 #include "operacionesArchivos.h"
 
 
+int obtenerBloque();
+int eliminarBloque(int bloque);
+
 extern char* PUNTO_MONTAJE_ARCHIVOS;
 extern char* PUNTO_MONTAJE_METADATA;
 extern char* PUNTO_MONTAJE_BLOQUES;

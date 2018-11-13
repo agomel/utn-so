@@ -1,4 +1,5 @@
 #include "bitmap.h"
+
 void verificarExistenciaDeBitmap(){
 
 	int archivoExiste = validarArchivo(rutaBitmap);
@@ -30,11 +31,11 @@ int obtenerBloqueLibreBitmap(){
 	return posicion;
 }
 
-void ocuparBloqueEnBitmap(int bloqueAOcupar){
-	guardarDatos(rutaBitmap, bloqueAOcupar, sizeof(char), "1");
+int ocuparBloqueEnBitmap(int bloqueAOcupar){
+	return guardarDatos(rutaBitmap, bloqueAOcupar, sizeof(char), "1");
 }
-void liberarBloqueEnBitmap(int bloqueAOcupar){
-	guardarDatos(rutaBitmap, bloqueAOcupar, sizeof(char), "0");
+int liberarBloqueEnBitmap(int bloqueALiberar){
+	guardarDatos(rutaBitmap, bloqueALiberar, sizeof(char), "0");
 }
 
 
