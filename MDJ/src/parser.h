@@ -5,7 +5,7 @@
 
 
 typedef struct{
-	t_list* bloques;
+	char** bloques;
 	int tamanio;
 }Metadata;
 
