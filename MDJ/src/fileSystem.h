@@ -16,7 +16,6 @@
 int crearArchivoFS(char* rutaArchivo, char* datosTotales);
 int borrarArchivoFS(char* rutaArchivo);
 
-extern int TAMANIO_BLOQUES;
 extern t_log* logger;
 
 #endif /*FILESYSTEM_H_*/

@@ -34,7 +34,7 @@ int crearArchivoFS(char* rutaArchivo, char* datosTotales){
 int borrarArchivoFS(char* rutaArchivo){
 	int error = 0;
 	Metadata* metaData = obtenerMetadata(rutaArchivo);
-	int cantidadDeBloques = metaData->bloques / TAMANIO_BLOQUES; //TODO redondear para arriba siemrpe
+	int cantidadDeBloques = obtenerCantidadBloques(metaData->tamanio);
 	for(int i = 0; i < cantidadDeBloques; i++){
 		int bloque = atoi(metaData->bloques[i]);
 		eliminarBloque(bloque);

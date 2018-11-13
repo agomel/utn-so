@@ -14,11 +14,9 @@
 
 
 char* getPathDeBloque(int bloque);
-
+int obtenerCantidadBloques(int tamanio);
 int obtenerBloque();
-
 int eliminarBloque(int bloque);
-
 int guardarDatosEnBloque(char* rutaBloque, int tamanioAEscribir, int tamanioEscrito, char* datosTotales, int* error);
 t_list* crearArchivoEnBloques(char* datosTotales, int* error);
 
