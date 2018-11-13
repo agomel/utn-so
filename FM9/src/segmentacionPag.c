@@ -17,19 +17,6 @@ static ElementoTablaDTBS* obtenerProcesoPorIdDTB(int idDTB){
 	return list_find(tablaDeProcesos, coincideId);
 }
 
-int cantidadDeLineas(char* texto){
-	int contador = 0;
-	for(int i = 0; i < strlen(texto); i++){
-		if(esUltimoCaracter(texto[i]))
-			break;
-
-		if(texto[i] == '\n')
-			contador++;
-	}
-
-	return contador;
-}
-
 bool compararPorMarco(ElementoTablaPag* elem1, ElementoTablaPag* elem2){
 	return elem1->marco < elem2->marco;
 }
@@ -123,7 +110,7 @@ RespuestaGuardado* guardarDatosSegPag(int idDTB, char* datos, char* nombreArchiv
 	return respuesta;
 }
 
-static RespuestaCargaSegPag* guardarDatosInternaSegPag(char* datos, char* nombreArchivo){
+RespuestaCargaSegPag* guardarDatosInternaSegPag(char* datos, char* nombreArchivo){
 	log_debug(logger, "Guardando en segmentacion paginada");
 
 	RespuestaCargaSegPag* respuesta = malloc(sizeof(RespuestaCargaSegPag));
