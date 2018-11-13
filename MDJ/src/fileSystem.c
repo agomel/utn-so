@@ -33,12 +33,14 @@ int crearArchivoFS(char* rutaArchivo, char* datosTotales){
 
 int borrarArchivoFS(char* rutaArchivo){
 	int error = 0;
-	//liberar bloques y actualizar el bitmap
-	//TODO
-	//borrar archivo con la metadata
+	Metadata* metaData = obtenerMetadata(rutaArchivo);
+	int cantidadDeBloques = metaData->bloques / TAMANIO_BLOQUES; //TODO redondear para arriba siemrpe
+	for(int i = 0; i < cantidadDeBloques; i++){
+		int bloque = atoi(metaData->bloques[i]);
+		eliminarBloque(bloque);
+	}
 	error = eliminarArchivo(rutaArchivo);
 	return error;
-
 }
 
 
