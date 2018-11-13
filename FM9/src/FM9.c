@@ -8,7 +8,7 @@ respuestaDeObtencionDeMemoria* obtenerDatosDeMemoria(int idDTB, char* nombreArch
 		return obtenerDatosSegPura(idDTB, nombreArchivo);
 
 	if(strcmp(modo, "SEG_PAG") == 0)
-		return obtenerDatosSegPura(idDTB, nombreArchivo);//CAMBIAAAAAAAR
+		return obtenerDatosSegPag(idDTB, nombreArchivo);
 
 	if(strcmp(modo, "INV") == 0)
 		return obtenerDatosInvertida(nombreArchivo);//CAMBIAAAAAAAR

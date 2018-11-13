@@ -35,7 +35,7 @@ t_list* tablaDeProcesos;
 void inicializarSegPag();
 RespuestaGuardado* guardarDatosSegPag(int idDTB, char* datos, char* nombreArchivo);
 RespuestaGuardado* nuevoProcesoSegPag(int idDTB, char* datos, char* nombreArchivo);
-respuestaDeObtencionDeMemoria* obtenerDatosSegPag(char* idsSegmentos);
+respuestaDeObtencionDeMemoria* obtenerDatosSegPag(int idDTB, char* idsSegmentos);
 respuestaDeObtencionDeMemoria* obtenerLineaSegPag(int idDTB, char* nombreArchivo, int numeroLinea);
 RespuestaCargaSegPag* guardarDatosInternaSegPag(char* datos, char* nombreArchivo);
 void liberarMemoriaSegPag(char* nombreArchivo);

@@ -155,7 +155,7 @@ RespuestaCargaSegPag* guardarDatosInternaSegPag(char* datos, char* nombreArchivo
 			list_add(elementoSegmento->paginas, elementoPagina);
 			list_add(tablaDePaginas, elementoPagina);
 			int base = storage + posicionMarco * tamanioPagina;
-			if(cantidadPaginas - 1 != i){ //Es la ultima pagina
+			if(cantidadPaginas - 1 == i){ //Es la ultima pagina
 				for (int j = 0;  j < lineasEnLaUltimaPagina; j++) {
 					string_append(&lineas[lineaACargar], "\n");
 					memcpy(base + tamanioLinea * j, lineas[lineaACargar], tamanioLinea); //Guardando de a una linea
@@ -187,26 +187,39 @@ ElementoTablaPag* obtenerPaginasPorId(int pagina){
 }
 
 
-/*respuestaDeObtencionDeMemoria* obtenerDatosSegPag(char* nombreArchivo){
-	int paginaActual;
+respuestaDeObtencionDeMemoria* obtenerDatosSegPag(int idDTB, char* nombreArchivo){
 	respuestaDeObtencionDeMemoria* respuesta = malloc(sizeof(respuestaDeObtencionDeMemoria));
-	ElementoTablaSeg* elemento = obtenerSegmentoPorArchivo(nombreArchivo);
-	ElementoTablaPag* elemPag;
-	respuesta->datos = asignarMemoria(elemento->cantidadLineas * tamanioLinea);
-	for (int i = 0; i < elemento->paginas->elements_count-1; i++) {
-		paginaActual = list_get(elemento->paginas, i);
-		elemPag = obtenerPaginasPorId(paginaActual);
-		memcpy(respuesta->datos + i*tamanioPagina,storage + elemPag->marco, tamanioPagina);
+	ElementoTablaDTBS* proceso = obtenerProcesoPorIdDTB(idDTB);
+	ElementoTablaSeg* segmento = obtenerSegmentoPorArchivo(nombreArchivo, proceso->segmentos);
+	ElementoTablaPag* pagina;
+	int tamanioSegmento = segmento->cantidadLineas * tamanioLinea;
+	char* archivo = string_new();
+	int paginaActual;
+	for(int i=0; i < segmento->paginas->elements_count; i++){
+		paginaActual = list_get(segmento->paginas, i);
+		pagina = obtenerPaginasPorId(paginaActual);
+
+		int desplazamiento = storage + pagina->marco * tamanioPagina;
+		int hastaLinea;
+		if(segmento->paginas->elements_count - 1 == i) //Es la ultima pagina
+			hastaLinea = tamanioSegmento % tamanioPagina;
+		else
+			hastaLinea = tamanioPagina / tamanioLinea;
+
+		for (int j = 0;  j < hastaLinea; j++) {
+			char* lineaConBasura = malloc(tamanioLinea);
+			memcpy(lineaConBasura, desplazamiento + j * tamanioLinea, tamanioLinea);
+			char** lineaSinBasura = string_split(lineaConBasura, "\n");
+			string_append_with_format(&archivo, "%s\n", lineaSinBasura[0]);
+			freeLineasBasura(lineaSinBasura, lineaConBasura);
+		}
 	}
-	int lineasRestantes = elemento->cantidadLineas - (elemento->cantidadLineas % (elemento->paginas->elements_count * tamanioPagina));
-	int tamanioDelSegmento = (elemento->cantidadLineas - lineasRestantes) * tamanioLinea;
-	elemPag = obtenerPaginasPorId(list_get(elemento->paginas, elemento->paginas->elements_count-1));
-	memcpy(respuesta->datos + tamanioDelSegmento, storage + elemPag->marco, lineasRestantes*tamanioLinea);
-	respuesta->cantidadDeLineas = elemento->cantidadLineas;
-
+	agregarBarraCero(archivo);
+	respuesta->datos = malloc(strlen(archivo) + 1);
+	memcpy(respuesta->datos, archivo, strlen(archivo) + 1);
+	respuesta->cantidadDeLineas = segmento->cantidadLineas;
 	return respuesta;
-}*/
-
+}
 
 respuestaDeObtencionDeMemoria* obtenerLineaSegPag(int idDTB, char* nombreArchivo, int numeroLinea){
 	respuestaDeObtencionDeMemoria* respuesta = malloc(sizeof(respuestaDeObtencionDeMemoria));
