@@ -17,6 +17,17 @@ static ElementoTablaDTBS* obtenerProcesoPorIdDTB(int idDTB){
 	return list_find(tablaDeProcesos, coincideId);
 }
 
+static ElementoTablaSeg* obtenerSegmentoPorArchivo(char* nombreArchivo, t_list* tablaSegmentos){
+	bool coincideNombre(ElementoTablaSeg* elemento){
+		if(strcmp(elemento->nombreArchivo, nombreArchivo) == 0)
+			return true;
+
+		return false;
+	}
+
+	return list_find(tablaSegmentos, coincideNombre);
+}
+
 bool compararPorMarco(ElementoTablaPag* elem1, ElementoTablaPag* elem2){
 	return elem1->marco < elem2->marco;
 }
@@ -72,6 +83,13 @@ static void freeRespuestaCargaSegPag(RespuestaCargaSegPag* respuesta){
 	free(respuesta->elementoTabla->nombreArchivo);
 	free(respuesta->elementoTabla);
 	free(respuesta);
+}
+
+static void freeLineasBasura(char** lineaSinBasura, char* lineaConBasura){
+	free(lineaConBasura);
+	free(lineaSinBasura[0]);
+	free(lineaSinBasura[1]);
+	free(lineaSinBasura);
 }
 
 RespuestaGuardado* nuevoProcesoSegPag(int idDTB, char* datos, char* nombreArchivo){
@@ -158,16 +176,6 @@ RespuestaCargaSegPag* guardarDatosInternaSegPag(char* datos, char* nombreArchivo
 	return respuesta;
 }
 
-ElementoTablaSeg* obtenerPorNombreArchivoPaginada(char* nombreArchivo){
-	bool coincideNombre(ElementoTablaSeg* elemento){
-		if(strcmp(elemento->nombreArchivo, nombreArchivo) == 0){
-			return true;
-		}
-		return false;
-	}
-	return list_find(tablaDeSegmentos, coincideNombre);
-}
-
 ElementoTablaPag* obtenerPaginasPorId(int pagina){
 	bool coincideLaPagina(int elemento){
 		if(elemento == pagina){
@@ -178,10 +186,11 @@ ElementoTablaPag* obtenerPaginasPorId(int pagina){
 	return list_find(tablaDePaginas, coincideLaPagina);
 }
 
-respuestaDeObtencionDeMemoria* obtenerDatosSegPag(char* nombreArchivo){
+
+/*respuestaDeObtencionDeMemoria* obtenerDatosSegPag(char* nombreArchivo){
 	int paginaActual;
 	respuestaDeObtencionDeMemoria* respuesta = malloc(sizeof(respuestaDeObtencionDeMemoria));
-	ElementoTablaSeg* elemento = obtenerPorNombreArchivoPaginada(nombreArchivo);
+	ElementoTablaSeg* elemento = obtenerSegmentoPorArchivo(nombreArchivo);
 	ElementoTablaPag* elemPag;
 	respuesta->datos = asignarMemoria(elemento->cantidadLineas * tamanioLinea);
 	for (int i = 0; i < elemento->paginas->elements_count-1; i++) {
@@ -196,36 +205,41 @@ respuestaDeObtencionDeMemoria* obtenerDatosSegPag(char* nombreArchivo){
 	respuesta->cantidadDeLineas = elemento->cantidadLineas;
 
 	return respuesta;
-}
+}*/
 
-respuestaDeObtencionDeMemoria* obtenerLineaSegPag(char* nombreArchivo, int numeroLinea){
+
+respuestaDeObtencionDeMemoria* obtenerLineaSegPag(int idDTB, char* nombreArchivo, int numeroLinea){
 	respuestaDeObtencionDeMemoria* respuesta = malloc(sizeof(respuestaDeObtencionDeMemoria));
-	ElementoTablaSeg* elemento = obtenerPorNombreArchivoPaginada(nombreArchivo);
-	if(numeroLinea < elemento->cantidadLineas){
-		int cantidadDeLineasPorPagina = tamanioPagina / tamanioLinea;
-		int paginaDondeSeEncuentraLaLinea = numeroLinea / cantidadDeLineasPorPagina;
-		int lineaDentroDeLaPagina = numeroLinea % cantidadDeLineasPorPagina;
-		if(lineaDentroDeLaPagina != 0)
-			paginaDondeSeEncuentraLaLinea++;
-		ElementoTablaPag* elemPag = obtenerPaginasPorId(paginaDondeSeEncuentraLaLinea);
-		int desplazamiento = lineaDentroDeLaPagina * tamanioLinea;
-		char* lineaConBasura = asignarMemoria(tamanioLinea);
-		memcpy(lineaConBasura, storage + elemPag->marco + desplazamiento, tamanioLinea);
-		char** lineaSinBasura = string_split(lineaConBasura, "\n");
-		respuesta->cantidadDeLineas = 1;
-		respuesta->datos = malloc(strlen(lineaSinBasura[0])+1);
-		respuesta->pudoObtener = 0;
-		memcpy(respuesta->datos, lineaSinBasura[0], strlen(lineaSinBasura[0])+1);
-	}else{
-		log_error(logger, "El DTB no posee la linea %d", numeroLinea);
-		respuesta->pudoObtener = 1;
-	}
+		ElementoTablaDTBS* proceso = obtenerProcesoPorIdDTB(idDTB);
+		ElementoTablaSeg* segmento = obtenerSegmentoPorArchivo(nombreArchivo, proceso->segmentos);
+
+		if(numeroLinea < segmento->cantidadLineas){
+			int cantidadDeLineasPorPagina = tamanioPagina / tamanioLinea;
+			int paginaDondeSeEncuentraLaLinea = numeroLinea / cantidadDeLineasPorPagina;
+			int lineaDentroDeLaPagina = numeroLinea % cantidadDeLineasPorPagina;
+			if(lineaDentroDeLaPagina != 0)
+				paginaDondeSeEncuentraLaLinea++;
+			ElementoTablaPag* pagina = obtenerPaginasPorId(paginaDondeSeEncuentraLaLinea);
+			int desplazamiento = lineaDentroDeLaPagina * tamanioLinea;
+			char* lineaConBasura = asignarMemoria(tamanioLinea);
+			memcpy(lineaConBasura, storage + pagina->marco + desplazamiento, tamanioLinea);
+			log_debug(logger, "En obtener: Linea con basura: %s", lineaConBasura);
+			char** lineaSinBasura = string_split(lineaConBasura, "\n");
+			respuesta->cantidadDeLineas = 1;
+			respuesta->datos = malloc(strlen(lineaSinBasura[0])+1);
+			respuesta->pudoObtener = 0;
+			memcpy(respuesta->datos, lineaSinBasura[0], strlen(lineaSinBasura[0])+1);
+			freeLineasBasura(lineaSinBasura, lineaConBasura);
+		}else{
+			log_error(logger, "El DTB no posee la linea %d", numeroLinea);
+			respuesta->pudoObtener = 1;
+		}
 	return respuesta;
 }
 
-void liberarMemoriaSegPag(char* nombreArchivo){
+/*void liberarMemoriaSegPag(char* nombreArchivo){
 	//Primero libero en la tabla de paginas
-	ElementoTablaSeg* elemento = obtenerPorNombreArchivoPaginada(nombreArchivo);
+	ElementoTablaSeg* elemento = obtenerSegmentoPorArchivo(nombreArchivo);
 	for (int i = 0; i < elemento->paginas->elements_count; ++i) {
 		bool coincidePagina(ElementoTablaPag* elemeComparador){
 			return elemeComparador->idPag == list_get(elemento->paginas, i);
@@ -247,5 +261,5 @@ void liberarMemoriaSegPag(char* nombreArchivo){
 
 		list_remove_and_destroy_by_condition(tablaDeSegmentos, coincideNombre, destruirElemento);
 	log_info(logger, "liberando memoria");
-}
+}*/
 
