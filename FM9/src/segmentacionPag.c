@@ -186,7 +186,6 @@ ElementoTablaPag* obtenerPaginasPorId(int pagina){
 	return list_find(tablaDePaginas, coincideLaPagina);
 }
 
-
 respuestaDeObtencionDeMemoria* obtenerDatosSegPag(int idDTB, char* nombreArchivo){
 	respuestaDeObtencionDeMemoria* respuesta = malloc(sizeof(respuestaDeObtencionDeMemoria));
 	ElementoTablaDTBS* proceso = obtenerProcesoPorIdDTB(idDTB);
@@ -250,29 +249,32 @@ respuestaDeObtencionDeMemoria* obtenerLineaSegPag(int idDTB, char* nombreArchivo
 	return respuesta;
 }
 
-/*void liberarMemoriaSegPag(char* nombreArchivo){
+void liberarMemoriaSegPag(int idDTB, char* nombreArchivo){
+	ElementoTablaDTBS* proceso = obtenerProcesoPorIdDTB(idDTB);
 	//Primero libero en la tabla de paginas
-	ElementoTablaSeg* elemento = obtenerSegmentoPorArchivo(nombreArchivo);
-	for (int i = 0; i < elemento->paginas->elements_count; ++i) {
+	ElementoTablaSeg* segmento = obtenerSegmentoPorArchivo(nombreArchivo, proceso->segmentos);
+	for (int i = 0; i < segmento->paginas->elements_count; ++i) {
 		bool coincidePagina(ElementoTablaPag* elemeComparador){
-			return elemeComparador->idPag == list_get(elemento->paginas, i);
+			return elemeComparador->idPag == list_get(segmento->paginas, i);
 		}
 		list_remove_and_destroy_by_condition(tablaDePaginas, coincidePagina, free);
 	}
+	list_destroy(segmento->paginas);
 	//Ahora libero en la tabla de segmentos
 	bool coincideNombre(ElementoTablaSeg* elemento){
-			if(strcmp(elemento->nombreArchivo, nombreArchivo) == 0){
-				return true;
-			}
-			return false;
+		if(strcmp(elemento->nombreArchivo, nombreArchivo) == 0){
+			return true;
 		}
+		return false;
+	}
 
-		void destruirElemento(ElementoTablaSeg* elemento){
-			free(elemento->nombreArchivo);
-			free(elemento);
-		}
+	void destruirElemento(ElementoTablaSeg* elemento){
+		free(elemento->nombreArchivo);
+		free(elemento);
+	}
 
-		list_remove_and_destroy_by_condition(tablaDeSegmentos, coincideNombre, destruirElemento);
+	list_remove_and_destroy_by_condition(tablaDeSegmentos, coincideNombre, destruirElemento);
+	list_remove_and_destroy_by_condition(proceso->segmentos, coincideNombre, destruirElemento);
+
 	log_info(logger, "liberando memoria");
-}*/
-
+}

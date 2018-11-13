@@ -52,7 +52,7 @@ void liberarMemoria(int idDTB, char* nombreArchivo){
 		liberarMemoriaSegPura(idDTB, nombreArchivo);
 
 	if(strcmp(modo, "SEG_PAG") == 0)
-		liberarMemoriaSegPura(idDTB, nombreArchivo); //CAMBIAAAAAAAAR
+		liberarMemoriaSegPura(idDTB, nombreArchivo);
 
 	if(strcmp(modo, "INV") == 0)
 		liberarMemoriaSegPura(idDTB, nombreArchivo); //CAMBIAAAAAAAAR
