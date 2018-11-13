@@ -35,6 +35,13 @@ sem_t semProductores;
 t_log* logger;
 t_config* configuracion;
 
-int identificarse(int emisor, char header);
+void entenderMensaje(int emisor, char header);
 
+int identificarse(int emisor, char header);
+void crearSelect(int servidor);
+void levantarMetadata();
+
+void obtenerPuntoMontaje(char* primerMontaje);
+void crearPuntosDeMontaje();
+void init();
 #endif /*MDJ_H_*/

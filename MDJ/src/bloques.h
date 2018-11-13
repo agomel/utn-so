@@ -13,8 +13,15 @@
 #include "operacionesArchivos.h"
 
 
+char* getPathDeBloque(int bloque);
+
 int obtenerBloque();
+
 int eliminarBloque(int bloque);
+
+int guardarDatosEnBloque(char* rutaBloque, int tamanioAEscribir, int tamanioEscrito, char* datosTotales, int* error);
+t_list* crearArchivoEnBloques(char* datosTotales, int* error);
+
 
 extern char* PUNTO_MONTAJE_ARCHIVOS;
 extern char* PUNTO_MONTAJE_METADATA;

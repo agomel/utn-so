@@ -1,5 +1,14 @@
 #include "bloques.h"
 
+int obtenerCantidadBloques(int tamanio){
+	int enteros = tamanio / CANTIDAD_BLOQUES;
+	int resto = tamanio % CANTIDAD_BLOQUES;
+	if(resto > 0){
+		enteros ++;
+	}
+	return enteros;
+}
+
 char* getPathDeBloque(int bloque){
 	char* rutaArchivo = concatenar(PUNTO_MONTAJE_BLOQUES, intToString(bloque));
 	concatenarATexto(&rutaArchivo, ".bin");

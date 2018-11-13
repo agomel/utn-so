@@ -8,3 +8,12 @@ Metadata* obtenerMetadata(char* path){
 	config_destroy(configuracion);
 	return metadata;
 }
+
+void freeMetadata(Metadata* metadata){
+	int cantidadBloques = obtenerCantidadBloques(metadata->tamanio);
+	for(int i = 0; i < cantidadBloques; i++){
+		free(metadata->bloques[i]);
+	}
+	free(metadata->bloques);
+	free(metadata);
+}
