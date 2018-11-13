@@ -6,6 +6,28 @@ void inicializarSegPag(){
 	idSegmento = 0;
 	tablaDePaginas = list_create();
 	idPagina = 0;
+	tablaDeProcesos = list_create();
+}
+
+static ElementoTablaDTBS* obtenerProcesoPorIdDTB(int idDTB){
+	bool coincideId(ElementoTablaDTBS* elemento){
+		return elemento->idDTB == idDTB;
+	}
+
+	return list_find(tablaDeProcesos, coincideId);
+}
+
+int cantidadDeLineas(char* texto){
+	int contador = 0;
+	for(int i = 0; i < strlen(texto); i++){
+		if(esUltimoCaracter(texto[i]))
+			break;
+
+		if(texto[i] == '\n')
+			contador++;
+	}
+
+	return contador;
 }
 
 bool compararPorMarco(ElementoTablaPag* elem1, ElementoTablaPag* elem2){
@@ -41,50 +63,81 @@ int obtenerMarcoLibre(){
 	return 0;
 }
 
-int guardarDatosSegPag(int idDTB, char* datos, char* nombreArchivo){
-	log_debug(logger, "Guardando en paginacion pura");
-	int respuesta = 1;
-	int tamanioSegmento = strlen(datos) + 1;
-	int cantidadPaginas = tamanioSegmento / tamanioPagina;
-	int cantidadLineas = tamanioSegmento / tamanioLinea; //Limite
+ElementoTablaSeg* crearElemTablaSegPag(nombreArchivo, cantLineas){
+	ElementoTablaSeg* elemento = malloc(sizeof(ElementoTablaSeg));
+	elemento->cantidadLineas = cantLineas;
+	elemento->id = idSegmento;
+	elemento->nombreArchivo = nombreArchivo;
+	elemento->paginas = list_create();
+	idSegmento++;
+}
 
-	if(tamanioSegmento % tamanioPagina != 0)
+static void freeRespuestaCargaSegPag(RespuestaCargaSegPag* respuesta){
+	free(respuesta->elementoTabla->nombreArchivo);
+	free(respuesta->elementoTabla);
+	free(respuesta);
+}
+
+RespuestaGuardado* guardarDatosSegPag(int idDTB, char* datos, char* nombreArchivo){
+	ElementoTablaDTBS* proceso = obtenerProcesoPorIdDTB(idDTB);
+	RespuestaCargaSegPag* cargaEnMemoria = guardarDatosInternaSegPag(datos, nombreArchivo);
+	RespuestaGuardado* respuesta = malloc(sizeof(RespuestaGuardado));
+	if(cargaEnMemoria->resultado == 0){
+		list_add(proceso->segmentos, cargaEnMemoria->elementoTabla);
+		respuesta->pudoGuardar = 0;
+		respuesta->pesoArchivo = cargaEnMemoria->pesoArchivo;
+		freeRespuestaCargaSegPag(cargaEnMemoria);
+	}else{
+		respuesta->pudoGuardar = cargaEnMemoria->resultado;
+	}
+	return respuesta;
+}
+
+static RespuestaCargaSegPag* guardarDatosInternaSegPag(char* datos, char* nombreArchivo){
+	log_debug(logger, "Guardando en segmentacion paginada");
+
+	RespuestaCargaSegPag* respuesta = malloc(sizeof(RespuestaCargaSegPag));
+	respuesta->resultado = 1;
+	int totalLineas = cantidadDeLineas(datos);
+	char** lineas = string_split(datos, "\n");
+	int tamanioSegmento = totalLineas * tamanioLinea;
+	int cantidadPaginas = tamanioSegmento / tamanioPagina;
+	int lineasEnLaUltimaPagina = tamanioSegmento % tamanioPagina;
+	if(lineasEnLaUltimaPagina != 0)
 		cantidadPaginas++;
 
 	if((cantidadMarcosTotales - tablaDePaginas->elements_count) >= cantidadPaginas){
-		respuesta = 0; //No hay error
-		ElementoTablaSeg* elementoSegmento = malloc(sizeof(ElementoTablaSeg));
-		elementoSegmento->cantidadLineas = cantidadLineas;
-		elementoSegmento->paginas = list_create();
-		elementoSegmento->id = idSegmento;
-		elementoSegmento->nombreArchivo = asignarMemoria(strlen(nombreArchivo) + 1);
-		elementoSegmento->nombreArchivo = nombreArchivo;
-		idSegmento++;
-
+		respuesta->resultado = 0; //No hay error
+		ElementoTablaSeg* elementoSegmento = crearElemTablaSegPag(nombreArchivo, totalLineas);
+		int lineaACargar = 0;
 		for(int i = 0; i++; i < cantidadPaginas){
 			char* textoAGuardar;
 			int posicionMarco = obtenerMarcoLibre();
-
-			int desplazamiento = i*tamanioLinea;
-
-			if(cantidadPaginas - 1 == i){ //Es la ultima pagina
-				textoAGuardar = string_substring(datos, desplazamiento, strlen(datos) - desplazamiento);
-			}else{
-				textoAGuardar = string_substring(datos, desplazamiento, tamanioPagina * tamanioLinea);
-			}
-
-			memcpy(storage + desplazamiento, textoAGuardar, tamanioPagina);
-
-			list_add(elementoSegmento->paginas, idPagina); //Agrego la pagina a la lista de ese segmento
-			ElementoTablaPag* elementoPag = malloc(sizeof(ElementoTablaPag));
-			elementoPag->idPag = idPagina;
-			elementoPag->marco = posicionMarco;
-			list_add(tablaDePaginas, elementoPag);
+			ElementoTablaPag* elementoPagina = malloc(sizeof(ElementoTablaPag));
+			elementoPagina->idPag = idPagina;
 			idPagina++;
+			elementoPagina->marco = posicionMarco;
+			list_add(elementoSegmento->paginas, elementoPagina);
+			list_add(tablaDePaginas, elementoPagina);
+			int base = storage + posicionMarco * tamanioPagina;
+			if(cantidadPaginas - 1 != i){ //Es la ultima pagina
+				for (int j = 0;  j < lineasEnLaUltimaPagina; j++) {
+					string_append(&lineas[lineaACargar], "\n");
+					memcpy(base + tamanioLinea * j, lineas[lineaACargar], tamanioLinea); //Guardando de a una linea
+					lineaACargar++;
+				}
+			}else{
+				for(int j = 0; j < (tamanioPagina/tamanioLinea); j++){
+					string_append(&lineas[lineaACargar], "\n");
+					memcpy(base + tamanioLinea * j, lineas[lineaACargar], tamanioLinea); //Guardando de a una linea
+					lineaACargar++;
+				}
+			}
 		}
-		list_add(tablaDeSegmentos, elementoSegmento);
+		log_debug(logger, "Datos guardados");
+		respuesta->elementoTabla = elementoSegmento;
+		respuesta->pesoArchivo = cantidadPaginas * tamanioPagina;
 	}
-
 	return respuesta;
 }
 

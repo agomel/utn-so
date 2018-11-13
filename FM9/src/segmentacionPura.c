@@ -16,6 +16,7 @@ static void freeLineasBasura(char** lineaSinBasura, char* lineaConBasura);
 ElementoTablaProcesos* crearElemTablaProcesos(int idDTB, int tablaSegmentos){
 	ElementoTablaProcesos* elemento = malloc(sizeof(ElementoTablaProcesos));
 	elemento->idDTB = idDTB;
+	elemento->tablaSegmentos = list_create();
 	elemento->tablaSegmentos = tablaSegmentos;
 	return elemento;
 }
@@ -87,7 +88,7 @@ RespuestaGuardado* guardarDatosSegPura(int idDTB, char* datos, char* nombreArchi
 }
 
 static RespuestaCargaSegPura* guardarDatosInternaSegPura(char* datos, char* nombreArchivo){
-	log_debug(logger, "Guardando en paginacion pura");
+	log_debug(logger, "Guardando en segmentacion pura");
 	int rompio = 1;
 
 	RespuestaCargaSegPura* respuesta = malloc(sizeof(RespuestaCargaSegPura));
