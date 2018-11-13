@@ -30,7 +30,7 @@ RespuestaGuardado* cargarNuevoDTB(int idDTB, char* datos, char* nombreArchivo){
 		return nuevoProcesoSegPura(idDTB, datos, nombreArchivo);
 
 	if(strcmp(modo, "SEG_PAG") == 0)
-		return nuevoProcesoSegPura(idDTB, datos, nombreArchivo); //CAMBIAAAAAAAR
+		return nuevoProcesoSegPag(idDTB, datos, nombreArchivo); //CAMBIAAAAAAAR
 
 	if(strcmp(modo, "INV") == 0)
 		return nuevoProcesoSegPura(idDTB, datos, nombreArchivo); //CAMBIAAAAAAAR

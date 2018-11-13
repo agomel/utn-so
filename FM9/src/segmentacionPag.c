@@ -63,19 +63,49 @@ int obtenerMarcoLibre(){
 	return 0;
 }
 
-ElementoTablaSeg* crearElemTablaSegPag(nombreArchivo, cantLineas){
+ElementoTablaSeg* crearElemTablaSegPag(char* nombreArchivo, int cantLineas){
 	ElementoTablaSeg* elemento = malloc(sizeof(ElementoTablaSeg));
 	elemento->cantidadLineas = cantLineas;
 	elemento->id = idSegmento;
 	elemento->nombreArchivo = nombreArchivo;
 	elemento->paginas = list_create();
 	idSegmento++;
+	return elemento;
+}
+
+ElementoTablaDTBS* crearElemTablaDTBS(int idDTB, t_list* tablaSegmentos){
+	ElementoTablaDTBS* elemento = malloc(sizeof(ElementoTablaDTBS));
+	elemento->idDTB = idDTB;
+	elemento->segmentos = list_create();
+	elemento->segmentos = tablaSegmentos;
+	return elemento;
 }
 
 static void freeRespuestaCargaSegPag(RespuestaCargaSegPag* respuesta){
 	free(respuesta->elementoTabla->nombreArchivo);
 	free(respuesta->elementoTabla);
 	free(respuesta);
+}
+
+RespuestaGuardado* nuevoProcesoSegPag(int idDTB, char* datos, char* nombreArchivo){
+	RespuestaCargaSegPag* cargaEnMemoria = guardarDatosInternaSegPag(datos, nombreArchivo);
+	RespuestaGuardado* respuesta = malloc(sizeof(RespuestaGuardado));
+
+	if(cargaEnMemoria->resultado == 0){ //No rompio
+		t_list* tablaSegmentos = list_create();
+		list_add(tablaSegmentos, cargaEnMemoria->elementoTabla);
+		list_add(tablaDeSegmentos, cargaEnMemoria->elementoTabla);
+		ElementoTablaDTBS* elementoTablaDTBS = crearElemTablaDTBS(idDTB, tablaSegmentos);
+		list_add(tablaDeProcesos, elementoTablaDTBS);
+		log_info(logger, "Agregado proceso %d a tabla de procesos", idDTB);
+		respuesta->pudoGuardar = 0;
+		respuesta->pesoArchivo = cargaEnMemoria->pesoArchivo;
+		freeRespuestaCargaSegPag(cargaEnMemoria);
+	}else{
+		log_error(logger, "No se pudo agregar proceso %d a tabla de procesos", idDTB);
+		respuesta->pudoGuardar = cargaEnMemoria->resultado;
+	}
+	return respuesta;
 }
 
 RespuestaGuardado* guardarDatosSegPag(int idDTB, char* datos, char* nombreArchivo){
@@ -150,6 +180,7 @@ ElementoTablaSeg* obtenerPorNombreArchivoPaginada(char* nombreArchivo){
 	}
 	return list_find(tablaDeSegmentos, coincideNombre);
 }
+
 ElementoTablaPag* obtenerPaginasPorId(int pagina){
 	bool coincideLaPagina(int elemento){
 		if(elemento == pagina){
