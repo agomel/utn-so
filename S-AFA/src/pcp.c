@@ -22,7 +22,11 @@ DTB* planificarPorVRR(){
 	if(listaVRR->elements_count > 0){
 		DTB* dtb = list_get(listaVRR, 0);
 		list_destroy(listaVRR);
-		dtb->quantum = quantum;
+		if(dtb->quantum == 0){
+			log_error(logger,"No deberia llegar aca");
+			cambiarEstado(dtb->id, READY);
+			return planificarPorVRR();
+		}
 		return dtb;
 	}else{
 		return planificarPorRR();
@@ -67,7 +71,7 @@ void planificadorACortoPlazo(){
 }
 
 void desbloquearDTB(int idDTB){
-	if(!strcmp(algoritmo, "VRR")){
+	if(!strcmp(algoritmo, "VRR") && obtenerDTBDeCola(idDTB)->quantum != 0){
 		cambiarEstado(idDTB, READY_PRIORIDAD);
 		signalSem(&cantidadTotalREADY);
 	}else{
