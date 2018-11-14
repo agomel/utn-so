@@ -1,14 +1,12 @@
 #include "pruebas.h"
 void crearArchivitos(){
-	for(int i = 0; i<7; i++){
+	for(int i = 0; i < 5; i++){
 		char* rutaArchivito= concatenar("PruebaBOAF", intToString(i));
 		concatenarATexto(&rutaArchivito,".bin");
 		char* completa = generarPathAbsoluto(rutaArchivito);
 		int archivoExiste = validarArchivo(completa);
 		if(archivoExiste != 0){
-			crearArchivoFS(completa, "concentrar\nconcentrar\nconcentrar\nconcentrar"
-					"\nconcentrar\nconcentrar\nconcentrar\nconcentrar\nconcentrar"
-					"\nconcentrar\nconcentrar\nconcentrar\n");
+			crearArchivoFS(completa, "concentrar\nconcentrar\nconcentrar\n");
 		}
 		free(completa);
 		free(rutaArchivito);
@@ -30,8 +28,9 @@ void crearArchivoGral(char* rutaArchivo, char* datos){
 void crearArchivoDePruebas(){
 	crearArchivitos();
 
-	crearArchivoGral("pruebaGralBOAF1.bin", "abrir PruebaBOAF0.bin\nabrir PruebaBOAF1.bin\nabrir PruebaBOAF2.bin\nabrir PruebaBOAF3.bin\nabrir PruebaBOAF4.bin\nabrir PruebaBOAF5.bin\nabrir PruebaBOAF6.bin\n");
+	crearArchivoGral("PGB1.bin", "abrir PruebaBOAF0.bin\nabrir PruebaBOAF1.bin\nabrir PruebaBOAF2.bin\nabrir PruebaBOAF3.bin\nabrir PruebaBOAF4.bin");
 
-	crearArchivoGral("pruebaGralBOAF2.bin", "abrir PruebaBOAF0.bin\nabrir PruebaBOAF1.bin\n");
+	crearArchivoGral("PGB2.bin", "abrir PruebaBOAF0.bin\nabrir PruebaBOAF1.bin\n");
 
+	crearArchivoGral("hola", "conentrar\nwait a\nsignal a\nborrar PGB1.bin\n");
 }
