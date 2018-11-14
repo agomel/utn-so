@@ -161,8 +161,6 @@ char* deserializarStringSinElInt(int emisor, int tamanioMensaje){
 char* deserializarStringSinElIntDAM(int emisor, int tamanioMensaje){
 	char* mensaje = asignarMemoria(tamanioMensaje);
 	recibirMensaje(emisor, mensaje, tamanioMensaje);
-	mensaje[tamanioMensaje] = '\0';
-	printf("Recibi %s de parte de %d \n" , mensaje, emisor);
 	return mensaje;
 }
 int deserializarInt(int emisor){

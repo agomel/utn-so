@@ -32,5 +32,5 @@ void crearArchivoDePruebas(){
 
 	crearArchivoGral("PGB2.bin", "abrir PruebaBOAF0.bin\nabrir PruebaBOAF1.bin\n");
 
-	crearArchivoGral("hola", "conentrar\nwait a\nsignal a\nborrar PGB1.bin\n");
+	crearArchivoGral("hola", "concentrar\nwait a\nsignal a\nborrar PGB1.bin\n");
 }

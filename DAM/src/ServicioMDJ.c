@@ -49,7 +49,7 @@ char* obtenerDatosDeMDJ(char* path){
 		desplazamiento = desplazamiento + tamanioARecibir;
 		tamanioRecibido += tamanioARecibir;
 	}
-
+	log_info(logger, "recibi %s", escriptorio);
 	return escriptorio;
 }
 
