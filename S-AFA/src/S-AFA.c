@@ -84,7 +84,6 @@ void entenderMensaje(int emisor, char header){
 
 			operacionDelDiego(idDTB);
 			desbloquearDTB(idDTB);
-
 			break;
 
 		}
@@ -109,11 +108,14 @@ void entenderMensaje(int emisor, char header){
 			break;
 
 		case GUARDADO_CON_EXITO_EN_MDJ:
-			log_info(logger, "Recibi guardado con exito en MDJ");
-			dtb = deserializarDTB(emisor);
+		case BORRADO_CON_EXITO_EN_MDJ:
+		case CREADO_CON_EXITO_EN_MDJ:
+			idDTB = deserializarInt(emisor);
+			path = deserializarString(emisor);
+			log_info(logger, "Recibi %s con exito en MDJ para idDTB %d y path %s", traducirHeaderExito(header), idDTB, path);
 			operacionDelDiego(idDTB);
-			desbloquearDTB(dtb->id);
-
+			desbloquearDTB(idDTB);
+			free(path);
 			break;
 		case ERROR:
 			log_info(logger, "Recibi un error");
@@ -122,6 +124,7 @@ void entenderMensaje(int emisor, char header){
 			operacionDelDiego(idDTB);
 			int error = deserializarInt(emisor);
 			manejarErrores(idDTB, path, error);
+			free(path);
 			break;
 
 		case BLOQUEAR_DTB:
