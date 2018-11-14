@@ -150,6 +150,7 @@ void init(){
 
 	initBitmap();
 	verificarExistenciaDeBitmap();
+	crearArchivoDePruebas();
 
 	inicializarMutex(&mutexOperaciones);
 	colaOperaciones = queue_create();

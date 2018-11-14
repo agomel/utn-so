@@ -3,7 +3,7 @@
 
 #include "operacionesArchivos.h"
 
-extern char* TAMANIO_BLOQUES;
+extern int TAMANIO_BLOQUES;
 
 typedef struct{
 	char** bloques;
