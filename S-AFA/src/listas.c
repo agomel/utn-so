@@ -175,3 +175,8 @@ void liberarCPU(int idSocket, int idDTB){
 	signalMutex(&mutexEjecutandoCPU);
 	signalSem(&gradoMultiprocesamiento);
 }
+
+int estaEnExit(int idDtb){
+	DTB* dtb = obtenerDTBDeCola(idDtb);
+	return dtb->estado == EXIT;
+}
