@@ -150,7 +150,7 @@ void entenderMensaje(int emisor, char header){
 		case TERMINO_QUANTUM:
 			log_info(logger, "Recibi termino quantum");
 			dtb = deserializarDTB(emisor);
-			if(estaEnExit(dtb->id)){
+			if(!estaEnExit(dtb->id)){
 				if(!strcmp(algoritmo, "VRR")){
 					cambiarEstadoGuardandoNuevoDTB(dtb, READY_PRIORIDAD);
 				}else{
