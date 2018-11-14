@@ -85,7 +85,7 @@ void entenderMensaje(int emisor, char header){
 				free(datos);
 				free(nombreArchivo);
 
-				log_debug(logger, "Enviando %d al guardar los datos", respuestaDeCarga);
+				log_debug(logger, "Enviando %d al guardar los datos", respuestaDeCarga->pudoGuardar);
 				enviarYSerializarIntSinHeader(socketDAM, respuestaDeCarga->pudoGuardar);
 				if(respuestaDeCarga->pudoGuardar == 0)
 					enviarYSerializarIntSinHeader(socketDAM, respuestaDeCarga->pesoArchivo);
@@ -104,7 +104,7 @@ void entenderMensaje(int emisor, char header){
 				free(datos);
 				free(nombreArchivo);
 
-				log_debug(logger, "Enviando %d al cargar nuevo DTB", respuestaDeCarga);
+				log_debug(logger, "Enviando %d al cargar nuevo DTB", respuestaDeCarga->pudoGuardar);
 				enviarYSerializarIntSinHeader(socketDAM, respuestaDeCarga->pudoGuardar);
 				if(respuestaDeCarga->pudoGuardar == 0)
 					enviarYSerializarIntSinHeader(socketDAM, respuestaDeCarga->pesoArchivo);
@@ -120,11 +120,10 @@ void entenderMensaje(int emisor, char header){
 				respuestaDeObtencionDeMemoria* respuestaDeObtener = obtenerDatosDeMemoria(idDTB, nombreArchivo);
 
 				int desplazamiento = 0;
-				int tamanioBuffer = sizeof(int) + sizeof(int) + strlen(respuestaDeObtener->datos) + 1;
+				int tamanioBuffer = sizeof(int) + strlen(respuestaDeObtener->datos) + 1;
 				void* buffer = asignarMemoria(tamanioBuffer);
-				concatenarInt(buffer, &desplazamiento, respuestaDeObtener->cantidadDeLineas);
 				concatenarString(buffer, &desplazamiento, respuestaDeObtener->datos);
-				log_info(logger, "Datos obtenidos: %s ", respuestaDeObtener->datos);
+				log_info(logger, "Datos enviados: %s ", respuestaDeObtener->datos);
 				enviarMensaje(socketDAM, buffer, tamanioBuffer);
 				free(buffer);
 				freeRespuestaObtencion(respuestaDeObtener);

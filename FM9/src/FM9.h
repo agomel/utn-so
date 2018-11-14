@@ -16,6 +16,7 @@
 #include <biblioteca/traductor.h>
 #include <commons/string.h>
 #include "manejoLineas.h"
+#include <biblioteca/serializacion.h>
 
 typedef struct{
 	int pudoGuardar;

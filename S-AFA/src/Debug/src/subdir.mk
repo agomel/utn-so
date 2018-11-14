@@ -4,25 +4,31 @@
 
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS += \
-../src/FM9.c \
-../src/manejoLineas.c \
-../src/paginasInvertidas.c \
-../src/segmentacionPag.c \
-../src/segmentacionPura.c 
+../src/S-AFA.c \
+../src/consola.c \
+../src/gestorDeDTBs.c \
+../src/listas.c \
+../src/pcp.c \
+../src/planificador.c \
+../src/plp.c 
 
 OBJS += \
-./src/FM9.o \
-./src/manejoLineas.o \
-./src/paginasInvertidas.o \
-./src/segmentacionPag.o \
-./src/segmentacionPura.o 
+./src/S-AFA.o \
+./src/consola.o \
+./src/gestorDeDTBs.o \
+./src/listas.o \
+./src/pcp.o \
+./src/planificador.o \
+./src/plp.o 
 
 C_DEPS += \
-./src/FM9.d \
-./src/manejoLineas.d \
-./src/paginasInvertidas.d \
-./src/segmentacionPag.d \
-./src/segmentacionPura.d 
+./src/S-AFA.d \
+./src/consola.d \
+./src/gestorDeDTBs.d \
+./src/listas.d \
+./src/pcp.d \
+./src/planificador.d \
+./src/plp.d 
 
 
 # Each subdirectory must supply rules for building sources it contributes

@@ -49,13 +49,11 @@ void entenderMensaje(int emisor, char header){
 				log_info(logger, "Guardar datos...");
 				path = deserializarString(emisor);
 				offset = deserializarInt(emisor);
-				size = deserializarInt(emisor);
-				datos = deserializarStringSinElInt(emisor, size);
-				agregarBarraCero(datos);
-				size -= 1; //NO quiero que me guarde el \0
-
+				datos = deserializarString(emisor);
+				size = strlen(datos); //NO quiero que me guarde el \0
 				estadoDeOperacion = guardarDatosFIFA(path, offset, size, datos);
 
+				log_debug(logger, "Enviando %d al guardar datos", estadoDeOperacion);
 				enviarYSerializarIntSinHeader(emisor, estadoDeOperacion);
 
 				free(path);
