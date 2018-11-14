@@ -22,6 +22,7 @@ DTB* planificarPorVRR(){
 	if(listaVRR->elements_count > 0){
 		DTB* dtb = list_get(listaVRR, 0);
 		list_destroy(listaVRR);
+		dtb->quantum = quantum;
 		return dtb;
 	}else{
 		return planificarPorRR();
@@ -57,7 +58,7 @@ void planificadorACortoPlazo(){
 		}else{
 			cambiarEstado(dtb->id, EXECUTE);
 		}
-		printf("enviando a ejecutar dtb con id %d \n", dtb->id);
+		printf("enviando a ejecutar dtb con id %d y quantum %d\n", dtb->id, dtb->quantum);
 
 		int socketCPU = obtenerCPUDisponibleYOcupar(dtb->id);
 		log_debug(logger, "enviando a socket %d header %c", socketCPU, ENVIAR_DTB);
