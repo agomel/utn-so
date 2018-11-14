@@ -154,6 +154,7 @@ respuestaDeObtencionDeMemoria* obtenerDatosSegPura(int idDTB, char* nombreArchiv
 		freeLineasBasura(lineaSinBasura, lineaConBasura);
 	}
 
+	realloc(archivo, strlen(archivo) + 1);
 	agregarBarraCero(archivo);
 	respuesta->datos = malloc(strlen(archivo) + 1);
 	memcpy(respuesta->datos, archivo, strlen(archivo) + 1);
