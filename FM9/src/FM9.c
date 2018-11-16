@@ -58,6 +58,17 @@ void liberarMemoria(int idDTB, char* nombreArchivo){
 		liberarMemoriaSegPura(idDTB, nombreArchivo); //CAMBIAAAAAAAAR
 }
 
+void liberarDTBDeMemoria(int idDTB){
+	if(strcmp(modo, "SEG_PURA") == 0)
+		liberarDTBDeMemoriaSegPura(idDTB);//PROBAR
+
+	if(strcmp(modo, "SEG_PAG") == 0)
+		liberarDTBDeMemoriaSegPag(idDTB);//PROBAR
+
+	if(strcmp(modo, "INV") == 0)
+		liberarDTBDeMemoriaSegPura(idDTB); //CAMBIAAAAAAAAR
+}
+
 int asignarDatos(int idDTB, char* nombreArchivo, int numeroLinea, char* datos){
 	if(strcmp(modo, "SEG_PURA") == 0)
 		return asignarDatosSegPura(idDTB, nombreArchivo, numeroLinea, datos);
@@ -158,6 +169,14 @@ void entenderMensaje(int emisor, char header){
 				char* nombreArchivo = deserializarString(emisor);
 				log_debug(logger, "Liberando memoria para archivo %s", nombreArchivo);
 				liberarMemoria(idDTB, nombreArchivo);
+
+				break;
+			}
+
+			case LIBERAR_DTB_MEMORIA: {
+				int idDTB = deserializarInt(emisor);
+				log_debug(logger, "Liberando el dtb %d de memoria por pasar a EXIT", idDTB);
+				liberarDTBDeMemoria(idDTB);
 
 				break;
 			}

@@ -36,6 +36,7 @@ RespuestaGuardado* nuevoProcesoSegPura(int idDTB, char* datos, char* nombreArchi
 respuestaDeObtencionDeMemoria* obtenerDatosSegPura(int idDTB, char* nombreArchivo);
 respuestaDeObtencionDeMemoria* obtenerLineaSegPura(int idDTB, char* nombreArchivo, int numeroLinea);
 void liberarMemoriaSegPura(int idDTB, char* nombreArchivo);
+void liberarDTBDeMemoriaSegPura(int idDTB);
 int asignarDatosSegPura(int IdDTB, char* nombreArchivo, int numeroLinea, char* datos);
 
 #endif /* SEGMENTACIONPURA_H_ */

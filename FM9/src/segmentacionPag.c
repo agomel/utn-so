@@ -262,8 +262,6 @@ respuestaDeObtencionDeMemoria* obtenerLineaSegPag(int idDTB, char* nombreArchivo
 		if(numeroLinea < (segmento->cantidadLineas)){
 			int paginaDondeSeEncuentraLaLinea = numeroLinea / tamanioPagina;
 			int lineaDentroDeLaPagina = numeroLinea % tamanioPagina;
-			if((lineaDentroDeLaPagina != 0) && (numeroLinea >= tamanioPagina))
-				paginaDondeSeEncuentraLaLinea++;
 			ElementoTablaPag* pagina = list_get(segmento->paginas, paginaDondeSeEncuentraLaLinea);
 			int desplazamientoPagina = pagina->marco * tamanioPagina * tamanioLinea; //Porque el tamanioPagina esta en lineas
 			int desplazamientoLinea = lineaDentroDeLaPagina * tamanioLinea;
@@ -362,3 +360,23 @@ void liberarMemoriaSegPag(int idDTB, char* nombreArchivo){
 	log_info(logger, "liberando memoria");
 }
 
+void liberarDTBDeMemoriaSegPag(int idDTB){
+	log_info(logger, "Liberando de la memoria el DTB");
+	ElementoTablaDTBS* proceso = obtenerProcesoPorIdDTB(idDTB);
+	for (int i = 0; i < proceso->segmentos->elements_count; ++i) {
+		ElementoTablaSegPag* segmento = list_get(proceso->segmentos, i);
+		liberarMemoriaSegPag(idDTB, segmento->nombreArchivo);
+	}
+	bool coincideIdDTB(ElementoTablaDTBS* elemento){
+			if(elemento->idDTB == idDTB){
+				return true;
+			}
+			return false;
+		}
+
+		void destruirElemento(ElementoTablaDTBS* elemento){
+			list_destroy(elemento->segmentos);
+			free(elemento);
+		}
+	list_remove_and_destroy_by_condition(tablaDeProcesos, coincideIdDTB, destruirElemento);
+}

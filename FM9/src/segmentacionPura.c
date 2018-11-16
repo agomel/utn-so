@@ -230,6 +230,27 @@ void liberarMemoriaSegPura(int idDTB, char* nombreArchivo){
 	log_info(logger, "liberando memoria");
 }
 
+void liberarDTBDeMemoriaSegPura(int idDTB){
+	log_info(logger, "Liberando de la memoria el DTB");
+	ElementoTablaProcesos* proceso = obtenerProcesoPorIdDTB(idDTB);
+	for (int i = 0; i < proceso->tablaSegmentos->elements_count; ++i) {
+		ElementoTablaSegPura* segmento = list_get(proceso->tablaSegmentos, i);
+		liberarMemoriaSegPura(idDTB, segmento->nombreArchivo);
+	}
+	bool coincideIdDTB(ElementoTablaProcesos* elemento){
+			if(elemento->idDTB == idDTB){
+				return true;
+			}
+			return false;
+		}
+
+		void destruirElemento(ElementoTablaProcesos* elemento){
+			list_destroy(elemento->tablaSegmentos);
+			free(elemento);
+		}
+	list_remove_and_destroy_by_condition(tablaDeProcesos, coincideIdDTB, destruirElemento);
+}
+
 int asignarDatosSegPura(int IdDTB, char* nombreArchivo, int numeroLinea, char* datos){
 	numeroLinea--;
 	ElementoTablaProcesos* proceso = obtenerProcesoPorIdDTB(IdDTB);

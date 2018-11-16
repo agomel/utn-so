@@ -50,6 +50,7 @@ int entenderLinea(char* lineaAEjecutar, DTB* dtbRecibido, char mensajeEntendido,
 		dtbRecibido->programCounter--;
 		serializarYEnviarDTB(socketSAFA, *dtbRecibido, logger, PASAR_A_EXIT);
 		enviarYSerializarIntSinHeader(socketSAFA, sentencias);
+		enviarYSerializarInt(socketFM9, dtbRecibido->id, LIBERAR_DTB_MEMORIA);
 	}else if(lineaAEjecutar[0] == ERROR_O_ACCESO_INVALIDO){
 		//Hubo error en FM9
 		dtbRecibido->programCounter--;
@@ -60,6 +61,7 @@ int entenderLinea(char* lineaAEjecutar, DTB* dtbRecibido, char mensajeEntendido,
 		log_info(logger, "Pasar DTB a EXIT");
 		serializarYEnviarDTB(socketSAFA, *dtbRecibido, logger, PASAR_A_EXIT);
 		enviarYSerializarIntSinHeader(socketSAFA, sentencias);
+		enviarYSerializarInt(socketFM9, dtbRecibido->id, LIBERAR_DTB_MEMORIA);
 	}else if(lineaAEjecutar[0] != '#'){
 		sentencias++;
 		mensajeEntendido = entendiendoLinea(lineaAEjecutar, dtbRecibido);
@@ -70,6 +72,7 @@ int entenderLinea(char* lineaAEjecutar, DTB* dtbRecibido, char mensajeEntendido,
 		dtbRecibido->programCounter--;
 		serializarYEnviarDTB(socketSAFA, *dtbRecibido, logger, PASAR_A_EXIT);
 		enviarYSerializarIntSinHeader(socketSAFA, sentencias);
+		enviarYSerializarInt(socketFM9, dtbRecibido->id, LIBERAR_DTB_MEMORIA);
 		}else{
 			continuar = 1;
 		}

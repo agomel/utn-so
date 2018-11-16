@@ -37,6 +37,7 @@ RespuestaGuardado* nuevoProcesoSegPag(int idDTB, char* datos, char* nombreArchiv
 respuestaDeObtencionDeMemoria* obtenerDatosSegPag(int idDTB, char* idsSegmentos);
 respuestaDeObtencionDeMemoria* obtenerLineaSegPag(int idDTB, char* nombreArchivo, int numeroLinea);
 void liberarMemoriaSegPag(int idDTB, char* nombreArchivo);
+void liberarDTBDeMemoriaSegPag(int idDTB);
 ElementoTablaPag* obtenerPaginasPorId(int pagina);
 
 #endif /* SEGMENTACIONPAG_H_ */
