@@ -106,7 +106,10 @@ static RespuestaCargaSegPura* guardarDatosInternaSegPura(char* datos, char* nomb
 		int base = storage + posicionDondeGuardar;
 		for(int i = 0; i<totalLineas; i++){
 			string_append(&lineas[i], "\n");
-			memcpy(base + tamanioLinea * i, lineas[i], tamanioLinea); //Guardando de a una linea
+			char* textoAEscribir = asignarMemoria(tamanioLinea);
+			memcpy(textoAEscribir, lineas[i], strlen(lineas[i]) + 1);
+			memcpy(base + tamanioLinea * i, textoAEscribir, tamanioLinea); //Guardando de a una linea
+			free(textoAEscribir);
 		}
 		idSegmento++;
 		rompio = 0;
@@ -157,11 +160,11 @@ respuestaDeObtencionDeMemoria* obtenerDatosSegPura(int idDTB, char* nombreArchiv
 		string_append_with_format(&archivo, "%s\n", lineaSinBasura[0]);
 		freeLineasBasura(lineaSinBasura, lineaConBasura);
 	}
-
 	agregarBarraCero(archivo);
 	respuesta->datos = malloc(strlen(archivo) + 1);
 	memcpy(respuesta->datos, archivo, strlen(archivo) + 1);
 	respuesta->cantidadDeLineas = cantidadLineas;
+	free(archivo);
 
 	return respuesta;
 }
@@ -194,7 +197,7 @@ respuestaDeObtencionDeMemoria* obtenerLineaSegPura(int idDTB, char* nombreArchiv
 		agregarBarraCero(respuesta->datos);
 		freeLineasBasura(lineaSinBasura, lineaConBasura);
 	}else{
-		log_error(logger, "El DTB no posee la linea %d", numeroLinea);
+		log_error(logger, "Es fin de archivo");
 		respuesta->pudoObtener = 1;
 	}
 

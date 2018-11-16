@@ -142,6 +142,7 @@ void entenderMensaje(int emisor, char header){
 					enviarYSerializarStringSinHeader(emisor, respuesta->datos);
 					freeRespuestaObtencion(respuesta);
 				}else{
+					log_info(logger, "Es fin de archivo");
 					char* rta = malloc(2);
 					memcpy(rta, "v", 1);
 					enviarYSerializarStringSinHeader(emisor, rta);

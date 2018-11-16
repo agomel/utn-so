@@ -57,9 +57,8 @@ void entenderMensaje(int emisor, char header){
 				log_info(logger, "Guardar datos...");
 				path = deserializarString(emisor);
 				offset = deserializarInt(emisor);
-				size = deserializarInt(emisor);
-				datos = deserializarStringSinElInt(emisor, size);
-				size -= 1; //NO quiero que me guarde el \0
+				datos = deserializarString(emisor);
+				size = strlen(datos); //NO quiero que me guarde el \0
 				char* rutaCompleta = asignarMemoria(strlen(PUNTO_MONTAJE_ARCHIVOS) + 1);
 				memcpy(rutaCompleta, PUNTO_MONTAJE_ARCHIVOS, strlen(PUNTO_MONTAJE_ARCHIVOS) + 1);
 				string_append(&rutaCompleta, path);
