@@ -157,12 +157,12 @@ static RespuestaCargaSegPag* guardarDatosInternaSegPag(char* datos, char* nombre
 	char** lineas = string_split(datos, "\n");
 	int tamanioSegmento = totalLineas * tamanioLinea;
 	int cantidadPaginas = 1;
-	if(totalLineas > tamanioPagina)
-		cantidadPaginas = totalLineas / tamanioPagina;
-
 	int lineasEnLaUltimaPagina = totalLineas % tamanioPagina;
-	if(lineasEnLaUltimaPagina != 0)
-		cantidadPaginas++;
+	if(totalLineas > tamanioPagina){
+		cantidadPaginas = totalLineas / tamanioPagina;
+		if(lineasEnLaUltimaPagina != 0)
+				cantidadPaginas++;
+	}
 
 	if((cantidadMarcosTotales - tablaDePaginas->elements_count) >= cantidadPaginas){
 		respuesta->resultado = 0; //No hay error
@@ -180,7 +180,7 @@ static RespuestaCargaSegPag* guardarDatosInternaSegPag(char* datos, char* nombre
 			elementoPagina->marco = posicionMarco;
 			list_add(elementoSegmento->paginas, elementoPagina);
 			list_add(tablaDePaginas, elementoPagina);
-			int base = storage + posicionMarco * tamanioPagina * tamanioLinea;
+			int base = storage + posicionMarco * (tamanioPagina * tamanioLinea); //Porque el tamanioPagina esta en lineas
 			if(cantidadPaginas - 1 == i){ //Es la ultima pagina
 				for (int j = 0;  j < lineasEnLaUltimaPagina; j++) {
 					string_append(&lineas[lineaACargar], "\n");
@@ -262,13 +262,14 @@ respuestaDeObtencionDeMemoria* obtenerLineaSegPag(int idDTB, char* nombreArchivo
 		if(numeroLinea < (segmento->cantidadLineas)){
 			int paginaDondeSeEncuentraLaLinea = numeroLinea / tamanioPagina;
 			int lineaDentroDeLaPagina = numeroLinea % tamanioPagina;
-			if(lineaDentroDeLaPagina != 0 && numeroLinea > tamanioPagina);
+			if((lineaDentroDeLaPagina != 0) && (numeroLinea >= tamanioPagina))
 				paginaDondeSeEncuentraLaLinea++;
 			ElementoTablaPag* pagina = list_get(segmento->paginas, paginaDondeSeEncuentraLaLinea);
-			int desplazamiento = lineaDentroDeLaPagina * tamanioLinea;
+			int desplazamientoPagina = pagina->marco * tamanioPagina * tamanioLinea; //Porque el tamanioPagina esta en lineas
+			int desplazamientoLinea = lineaDentroDeLaPagina * tamanioLinea;
 			char* lineaConBasura = asignarMemoria(tamanioLinea);
-			memcpy(lineaConBasura, storage + pagina->marco + desplazamiento, tamanioLinea);
-			log_debug(logger, "En obtener: Linea con basura: %s", lineaConBasura);
+			memcpy(lineaConBasura, storage + desplazamientoPagina + desplazamientoLinea, tamanioLinea);
+			log_debug(logger, "En obtener: Linea: %s", lineaConBasura);
 			char** lineaSinBasura = string_split(lineaConBasura, "\n");
 			respuesta->cantidadDeLineas = 1;
 			respuesta->datos = malloc(strlen(lineaSinBasura[0])+1);
@@ -290,12 +291,14 @@ int asignarDatosSegPag(int IdDTB, char* nombreArchivo, int numeroLinea, char* da
 	if(numeroLinea < (segmento->cantidadLineas)){
 		int paginaDondeSeEncuentraLaLinea = numeroLinea / tamanioPagina;
 		int lineaDentroDeLaPagina = numeroLinea % tamanioPagina;
-		if(lineaDentroDeLaPagina != 0)
+		if((lineaDentroDeLaPagina != 0) && (numeroLinea < tamanioPagina))
 			paginaDondeSeEncuentraLaLinea++;
+
 		ElementoTablaPag* pagina = list_get(segmento->paginas, paginaDondeSeEncuentraLaLinea);
-		int desplazamiento = lineaDentroDeLaPagina * tamanioLinea;
+		int desplazamientoPagina = pagina->marco * tamanioPagina * tamanioLinea; //Porque el tamanioPagina esta en lineas
+		int desplazamientoLinea = lineaDentroDeLaPagina * tamanioLinea;
 		char* lineaConBasura = asignarMemoria(tamanioLinea);
-		memcpy(lineaConBasura, storage + pagina->marco + desplazamiento, tamanioLinea);
+		memcpy(lineaConBasura, storage + desplazamientoPagina + desplazamientoLinea, tamanioLinea);
 		log_debug(logger, "En asignar: Linea: %s", lineaConBasura);
 		char** lineaSinBasura = string_split(lineaConBasura, "\n");
 		char* lineaPosta = malloc(strlen(lineaSinBasura[0]));
@@ -306,7 +309,11 @@ int asignarDatosSegPag(int IdDTB, char* nombreArchivo, int numeroLinea, char* da
 			log_debug("Linea resultante de la asignación: %s", lineaPosta);
 			char* lineaAGuardar = malloc(tamanioLinea);
 			memcpy(lineaAGuardar, lineaPosta, strlen(lineaPosta) + 1);
-			memcpy(storage + pagina->marco + desplazamiento, lineaAGuardar, tamanioLinea);
+			memcpy(storage + desplazamientoPagina + desplazamientoLinea, lineaAGuardar, tamanioLinea);
+
+			respuestaDeObtencionDeMemoria* rta = obtenerLineaSegPag(IdDTB, nombreArchivo, numeroLinea);
+			log_debug(logger, "ESTA LINEA SE TRAE: %s", rta->datos);
+
 			freeLineasBasura(lineaSinBasura, lineaConBasura);
 			free(lineaPosta);
 			free(lineaAGuardar);

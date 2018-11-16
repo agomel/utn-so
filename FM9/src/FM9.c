@@ -63,7 +63,7 @@ int asignarDatos(int idDTB, char* nombreArchivo, int numeroLinea, char* datos){
 		return asignarDatosSegPura(idDTB, nombreArchivo, numeroLinea, datos);
 
 	if(strcmp(modo, "SEG_PAG") == 0)
-		return asignarDatosSegPura(idDTB, nombreArchivo, numeroLinea, datos); //CAMBIAAAAAAAAAR
+		return asignarDatosSegPag(idDTB, nombreArchivo, numeroLinea, datos);
 
 	if(strcmp(modo, "INV") == 0)
 		return asignarDatosSegPura(idDTB, nombreArchivo, numeroLinea, datos); //CAMBIAAAAAAAAAAAR
@@ -135,6 +135,7 @@ void entenderMensaje(int emisor, char header){
 				int idDTB = deserializarInt(emisor);
 				char* nombreArchivo = deserializarString(emisor);
 				int numeroLinea = deserializarInt(emisor);
+				log_debug(logger, "Se pide linea %d para escriptorio %s", numeroLinea, nombreArchivo);
 				respuestaDeObtencionDeMemoria* respuesta = obtenerLinea(idDTB, nombreArchivo, numeroLinea);
 
 				if(respuesta->pudoObtener == 0){
