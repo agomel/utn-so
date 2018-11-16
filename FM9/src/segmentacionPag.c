@@ -1,8 +1,9 @@
 #include "segmentacionPag.h"
 #include "stdbool.h"
 
+static RespuestaCargaSegPag* guardarDatosInternaSegPag(char* datos, char* nombreArchivo);
+
 void inicializarSegPag(){
-	tablaDeSegmentos = list_create();
 	idSegmento = 0;
 	tablaDePaginas = list_create();
 	idPagina = 0;
@@ -17,8 +18,8 @@ static ElementoTablaDTBS* obtenerProcesoPorIdDTB(int idDTB){
 	return list_find(tablaDeProcesos, coincideId);
 }
 
-static ElementoTablaSeg* obtenerSegmentoPorArchivo(char* nombreArchivo, t_list* tablaSegmentos){
-	bool coincideNombre(ElementoTablaSeg* elemento){
+static ElementoTablaSegPag* obtenerSegmentoPorArchivo(char* nombreArchivo, t_list* tablaSegmentos){
+	bool coincideNombre(ElementoTablaSegPag* elemento){
 		if(strcmp(elemento->nombreArchivo, nombreArchivo) == 0)
 			return true;
 
@@ -56,16 +57,23 @@ int obtenerMarcoLibre(){
 		}
 
 		ElementoTablaPag* ultimoElemento = list_get(tablaDePaginas, tablaDePaginas->elements_count -1);
-		return ultimoElemento->marco + 1;
+		int ultimoMarco = ultimoElemento->marco;
+		if((ultimoMarco + 1) < cantidadMarcosTotales){
+			return ultimoMarco + 1;
+		}else{
+			log_error(logger, "No hay marcos libres");
+			return -1;
+		}
 	}
 	return 0;
 }
 
-ElementoTablaSeg* crearElemTablaSegPag(char* nombreArchivo, int cantLineas){
-	ElementoTablaSeg* elemento = malloc(sizeof(ElementoTablaSeg));
+ElementoTablaSegPag* crearElemTablaSegPag(char* nombreArchivo, int cantLineas){
+	ElementoTablaSegPag* elemento = malloc(sizeof(ElementoTablaSegPag));
 	elemento->cantidadLineas = cantLineas;
 	elemento->id = idSegmento;
-	elemento->nombreArchivo = nombreArchivo;
+	elemento->nombreArchivo = malloc(strlen(nombreArchivo) + 1);
+	memcpy(elemento->nombreArchivo, nombreArchivo, strlen(nombreArchivo) + 1);
 	elemento->paginas = list_create();
 	idSegmento++;
 	return elemento;
@@ -74,7 +82,6 @@ ElementoTablaSeg* crearElemTablaSegPag(char* nombreArchivo, int cantLineas){
 ElementoTablaDTBS* crearElemTablaDTBS(int idDTB, t_list* tablaSegmentos){
 	ElementoTablaDTBS* elemento = malloc(sizeof(ElementoTablaDTBS));
 	elemento->idDTB = idDTB;
-	elemento->segmentos = list_create();
 	elemento->segmentos = tablaSegmentos;
 	return elemento;
 }
@@ -92,14 +99,25 @@ static void freeLineasBasura(char** lineaSinBasura, char* lineaConBasura){
 	free(lineaSinBasura);
 }
 
+static void copiarElemSegPag(ElementoTablaSegPag* de, ElementoTablaSegPag* hasta){
+	int tamanioArchivo = strlen(de->nombreArchivo);
+	hasta->nombreArchivo = malloc(tamanioArchivo + 1);
+	memcpy(hasta->nombreArchivo, de->nombreArchivo, tamanioArchivo + 1);
+	hasta->nombreArchivo[tamanioArchivo] = '\0';
+	hasta->id = de->id;
+	hasta->paginas = de->paginas;
+	hasta->cantidadLineas = de->cantidadLineas;
+}
+
 RespuestaGuardado* nuevoProcesoSegPag(int idDTB, char* datos, char* nombreArchivo){
 	RespuestaCargaSegPag* cargaEnMemoria = guardarDatosInternaSegPag(datos, nombreArchivo);
 	RespuestaGuardado* respuesta = malloc(sizeof(RespuestaGuardado));
 
 	if(cargaEnMemoria->resultado == 0){ //No rompio
 		t_list* tablaSegmentos = list_create();
-		list_add(tablaSegmentos, cargaEnMemoria->elementoTabla);
-		list_add(tablaDeSegmentos, cargaEnMemoria->elementoTabla);
+		ElementoTablaSegPag* nuevoRegistro = malloc(sizeof(ElementoTablaSegPag));
+		copiarElemSegPag(cargaEnMemoria->elementoTabla, nuevoRegistro);
+		list_add(tablaSegmentos, nuevoRegistro);
 		ElementoTablaDTBS* elementoTablaDTBS = crearElemTablaDTBS(idDTB, tablaSegmentos);
 		list_add(tablaDeProcesos, elementoTablaDTBS);
 		log_info(logger, "Agregado proceso %d a tabla de procesos", idDTB);
@@ -118,7 +136,9 @@ RespuestaGuardado* guardarDatosSegPag(int idDTB, char* datos, char* nombreArchiv
 	RespuestaCargaSegPag* cargaEnMemoria = guardarDatosInternaSegPag(datos, nombreArchivo);
 	RespuestaGuardado* respuesta = malloc(sizeof(RespuestaGuardado));
 	if(cargaEnMemoria->resultado == 0){
-		list_add(proceso->segmentos, cargaEnMemoria->elementoTabla);
+		ElementoTablaSegPag* nuevoRegistro = malloc(sizeof(ElementoTablaSegPag));
+		copiarElemSegPag(cargaEnMemoria->elementoTabla, nuevoRegistro);
+		list_add(proceso->segmentos, nuevoRegistro);
 		respuesta->pudoGuardar = 0;
 		respuesta->pesoArchivo = cargaEnMemoria->pesoArchivo;
 		freeRespuestaCargaSegPag(cargaEnMemoria);
@@ -128,7 +148,7 @@ RespuestaGuardado* guardarDatosSegPag(int idDTB, char* datos, char* nombreArchiv
 	return respuesta;
 }
 
-RespuestaCargaSegPag* guardarDatosInternaSegPag(char* datos, char* nombreArchivo){
+static RespuestaCargaSegPag* guardarDatosInternaSegPag(char* datos, char* nombreArchivo){
 	log_debug(logger, "Guardando en segmentacion paginada");
 
 	RespuestaCargaSegPag* respuesta = malloc(sizeof(RespuestaCargaSegPag));
@@ -136,35 +156,47 @@ RespuestaCargaSegPag* guardarDatosInternaSegPag(char* datos, char* nombreArchivo
 	int totalLineas = cantidadDeLineas(datos);
 	char** lineas = string_split(datos, "\n");
 	int tamanioSegmento = totalLineas * tamanioLinea;
-	int cantidadPaginas = tamanioSegmento / tamanioPagina;
-	int lineasEnLaUltimaPagina = tamanioSegmento % tamanioPagina;
+	int cantidadPaginas = 1;
+	if(totalLineas > tamanioPagina)
+		cantidadPaginas = totalLineas / tamanioPagina;
+
+	int lineasEnLaUltimaPagina = totalLineas % tamanioPagina;
 	if(lineasEnLaUltimaPagina != 0)
 		cantidadPaginas++;
 
 	if((cantidadMarcosTotales - tablaDePaginas->elements_count) >= cantidadPaginas){
 		respuesta->resultado = 0; //No hay error
-		ElementoTablaSeg* elementoSegmento = crearElemTablaSegPag(nombreArchivo, totalLineas);
+		ElementoTablaSegPag* elementoSegmento = crearElemTablaSegPag(nombreArchivo, totalLineas);
 		int lineaACargar = 0;
-		for(int i = 0; i++; i < cantidadPaginas){
+		for(int i = 0; i < cantidadPaginas; i++){
 			char* textoAGuardar;
 			int posicionMarco = obtenerMarcoLibre();
+			if(posicionMarco == -1)
+				respuesta->resultado = -1; //	BUSCAR CODIGO ERROR CUANDO NO HAY MARCOS LIBRES
+
 			ElementoTablaPag* elementoPagina = malloc(sizeof(ElementoTablaPag));
 			elementoPagina->idPag = idPagina;
 			idPagina++;
 			elementoPagina->marco = posicionMarco;
 			list_add(elementoSegmento->paginas, elementoPagina);
 			list_add(tablaDePaginas, elementoPagina);
-			int base = storage + posicionMarco * tamanioPagina;
+			int base = storage + posicionMarco * tamanioPagina * tamanioLinea;
 			if(cantidadPaginas - 1 == i){ //Es la ultima pagina
 				for (int j = 0;  j < lineasEnLaUltimaPagina; j++) {
 					string_append(&lineas[lineaACargar], "\n");
-					memcpy(base + tamanioLinea * j, lineas[lineaACargar], tamanioLinea); //Guardando de a una linea
+					char* textoAEscribir = malloc(tamanioLinea);
+					memcpy(textoAEscribir, lineas[lineaACargar], strlen(lineas[lineaACargar]) + 1);
+					memcpy(base + tamanioLinea * j, textoAEscribir, tamanioLinea); //Guardando de a una linea
+					free(textoAEscribir);
 					lineaACargar++;
 				}
 			}else{
-				for(int j = 0; j < (tamanioPagina/tamanioLinea); j++){
+				for(int j = 0; j < (tamanioPagina); j++){
 					string_append(&lineas[lineaACargar], "\n");
-					memcpy(base + tamanioLinea * j, lineas[lineaACargar], tamanioLinea); //Guardando de a una linea
+					char* textoAEscribir = malloc(tamanioLinea);
+					memcpy(textoAEscribir, lineas[lineaACargar], strlen(lineas[lineaACargar]) + 1);
+					memcpy(base + tamanioLinea * j, textoAEscribir, tamanioLinea); //Guardando de a una linea
+					free(textoAEscribir);
 					lineaACargar++;
 				}
 			}
@@ -173,6 +205,8 @@ RespuestaCargaSegPag* guardarDatosInternaSegPag(char* datos, char* nombreArchivo
 		respuesta->elementoTabla = elementoSegmento;
 		respuesta->pesoArchivo = cantidadPaginas * tamanioPagina;
 	}
+
+	freeLineas(lineas);
 	return respuesta;
 }
 
@@ -189,7 +223,7 @@ ElementoTablaPag* obtenerPaginasPorId(int pagina){
 respuestaDeObtencionDeMemoria* obtenerDatosSegPag(int idDTB, char* nombreArchivo){
 	respuestaDeObtencionDeMemoria* respuesta = malloc(sizeof(respuestaDeObtencionDeMemoria));
 	ElementoTablaDTBS* proceso = obtenerProcesoPorIdDTB(idDTB);
-	ElementoTablaSeg* segmento = obtenerSegmentoPorArchivo(nombreArchivo, proceso->segmentos);
+	ElementoTablaSegPag* segmento = obtenerSegmentoPorArchivo(nombreArchivo, proceso->segmentos);
 	ElementoTablaPag* pagina;
 	int tamanioSegmento = segmento->cantidadLineas * tamanioLinea;
 	char* archivo = string_new();
@@ -222,16 +256,15 @@ respuestaDeObtencionDeMemoria* obtenerDatosSegPag(int idDTB, char* nombreArchivo
 
 respuestaDeObtencionDeMemoria* obtenerLineaSegPag(int idDTB, char* nombreArchivo, int numeroLinea){
 	respuestaDeObtencionDeMemoria* respuesta = malloc(sizeof(respuestaDeObtencionDeMemoria));
-		ElementoTablaDTBS* proceso = obtenerProcesoPorIdDTB(idDTB);
-		ElementoTablaSeg* segmento = obtenerSegmentoPorArchivo(nombreArchivo, proceso->segmentos);
+	ElementoTablaDTBS* proceso = obtenerProcesoPorIdDTB(idDTB);
+	ElementoTablaSegPag* segmento = obtenerSegmentoPorArchivo(nombreArchivo, proceso->segmentos);
 
-		if(numeroLinea < segmento->cantidadLineas){
-			int cantidadDeLineasPorPagina = tamanioPagina / tamanioLinea;
-			int paginaDondeSeEncuentraLaLinea = numeroLinea / cantidadDeLineasPorPagina;
-			int lineaDentroDeLaPagina = numeroLinea % cantidadDeLineasPorPagina;
-			if(lineaDentroDeLaPagina != 0)
+		if(numeroLinea < (segmento->cantidadLineas)){
+			int paginaDondeSeEncuentraLaLinea = numeroLinea / tamanioPagina;
+			int lineaDentroDeLaPagina = numeroLinea % tamanioPagina;
+			if(lineaDentroDeLaPagina != 0 && numeroLinea > tamanioPagina);
 				paginaDondeSeEncuentraLaLinea++;
-			ElementoTablaPag* pagina = obtenerPaginasPorId(paginaDondeSeEncuentraLaLinea);
+			ElementoTablaPag* pagina = list_get(segmento->paginas, paginaDondeSeEncuentraLaLinea);
 			int desplazamiento = lineaDentroDeLaPagina * tamanioLinea;
 			char* lineaConBasura = asignarMemoria(tamanioLinea);
 			memcpy(lineaConBasura, storage + pagina->marco + desplazamiento, tamanioLinea);
@@ -242,6 +275,7 @@ respuestaDeObtencionDeMemoria* obtenerLineaSegPag(int idDTB, char* nombreArchivo
 			respuesta->pudoObtener = 0;
 			memcpy(respuesta->datos, lineaSinBasura[0], strlen(lineaSinBasura[0])+1);
 			freeLineasBasura(lineaSinBasura, lineaConBasura);
+			agregarBarraCero(respuesta->datos);
 		}else{
 			log_error(logger, "El DTB no posee la linea %d", numeroLinea);
 			respuesta->pudoObtener = 1;
@@ -249,10 +283,53 @@ respuestaDeObtencionDeMemoria* obtenerLineaSegPag(int idDTB, char* nombreArchivo
 	return respuesta;
 }
 
+int asignarDatosSegPag(int IdDTB, char* nombreArchivo, int numeroLinea, char* datos){
+	numeroLinea--;
+	ElementoTablaDTBS* proceso = obtenerProcesoPorIdDTB(IdDTB);
+	ElementoTablaSegPag* segmento = obtenerSegmentoPorArchivo(nombreArchivo, proceso->segmentos);
+	if(numeroLinea < (segmento->cantidadLineas)){
+		int paginaDondeSeEncuentraLaLinea = numeroLinea / tamanioPagina;
+		int lineaDentroDeLaPagina = numeroLinea % tamanioPagina;
+		if(lineaDentroDeLaPagina != 0)
+			paginaDondeSeEncuentraLaLinea++;
+		ElementoTablaPag* pagina = list_get(segmento->paginas, paginaDondeSeEncuentraLaLinea);
+		int desplazamiento = lineaDentroDeLaPagina * tamanioLinea;
+		char* lineaConBasura = asignarMemoria(tamanioLinea);
+		memcpy(lineaConBasura, storage + pagina->marco + desplazamiento, tamanioLinea);
+		log_debug(logger, "En asignar: Linea: %s", lineaConBasura);
+		char** lineaSinBasura = string_split(lineaConBasura, "\n");
+		char* lineaPosta = malloc(strlen(lineaSinBasura[0]));
+		memcpy(lineaPosta, lineaSinBasura[0], strlen(lineaSinBasura[0]));
+		if((strlen(lineaSinBasura[0]) + strlen(datos) + 2) < tamanioLinea){ //Lo que ya estaba, los datos nuevos, el /n y el espacio en el medio
+			//Se puede escribir
+			string_append_with_format(&lineaPosta, " %s\n", datos);
+			log_debug("Linea resultante de la asignación: %s", lineaPosta);
+			char* lineaAGuardar = malloc(tamanioLinea);
+			memcpy(lineaAGuardar, lineaPosta, strlen(lineaPosta) + 1);
+			memcpy(storage + pagina->marco + desplazamiento, lineaAGuardar, tamanioLinea);
+			freeLineasBasura(lineaSinBasura, lineaConBasura);
+			free(lineaPosta);
+			free(lineaAGuardar);
+			log_debug(logger, "Asignados datos con exito");
+			return 0;
+
+		}else{
+			log_error(logger, "No hay suficiente espacio en la linea %d del archivo %s", (numeroLinea+1), nombreArchivo);
+
+			freeLineasBasura(lineaSinBasura, lineaConBasura);
+			free(lineaPosta);
+			return 20002;
+		}
+	}else {
+		log_error(logger, "El DTB no posee la linea %d", numeroLinea);
+		return 30000; //error que corresponda
+	}
+}
+
 void liberarMemoriaSegPag(int idDTB, char* nombreArchivo){
 	ElementoTablaDTBS* proceso = obtenerProcesoPorIdDTB(idDTB);
 	//Primero libero en la tabla de paginas
-	ElementoTablaSeg* segmento = obtenerSegmentoPorArchivo(nombreArchivo, proceso->segmentos);
+	ElementoTablaSegPag* segmento = obtenerSegmentoPorArchivo(nombreArchivo, proceso->segmentos);
 	for (int i = 0; i < segmento->paginas->elements_count; ++i) {
 		bool coincidePagina(ElementoTablaPag* elemeComparador){
 			return elemeComparador->idPag == list_get(segmento->paginas, i);
@@ -261,20 +338,20 @@ void liberarMemoriaSegPag(int idDTB, char* nombreArchivo){
 	}
 	list_destroy(segmento->paginas);
 	//Ahora libero en la tabla de segmentos
-	bool coincideNombre(ElementoTablaSeg* elemento){
+	bool coincideNombre(ElementoTablaSegPag* elemento){
 		if(strcmp(elemento->nombreArchivo, nombreArchivo) == 0){
 			return true;
 		}
 		return false;
 	}
 
-	void destruirElemento(ElementoTablaSeg* elemento){
+	void destruirElemento(ElementoTablaSegPag* elemento){
 		free(elemento->nombreArchivo);
 		free(elemento);
 	}
 
-	list_remove_and_destroy_by_condition(tablaDeSegmentos, coincideNombre, destruirElemento);
 	list_remove_and_destroy_by_condition(proceso->segmentos, coincideNombre, destruirElemento);
 
 	log_info(logger, "liberando memoria");
 }
+

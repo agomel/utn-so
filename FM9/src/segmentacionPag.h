@@ -8,7 +8,7 @@ typedef struct{
 	t_list* paginas;
 	int cantidadLineas;
 	char* nombreArchivo;
-}ElementoTablaSeg;
+}ElementoTablaSegPag;
 
 typedef struct{
 	int idPag;
@@ -22,13 +22,12 @@ typedef struct{
 
 typedef struct{
 	int resultado;
-	ElementoTablaSeg* elementoTabla;
+	ElementoTablaSegPag* elementoTabla;
 	int pesoArchivo;
 }RespuestaCargaSegPag;
 
 int idSegmento;
 int idPagina;
-t_list* tablaDeSegmentos;
 t_list* tablaDePaginas;
 t_list* tablaDeProcesos;
 
@@ -37,7 +36,6 @@ RespuestaGuardado* guardarDatosSegPag(int idDTB, char* datos, char* nombreArchiv
 RespuestaGuardado* nuevoProcesoSegPag(int idDTB, char* datos, char* nombreArchivo);
 respuestaDeObtencionDeMemoria* obtenerDatosSegPag(int idDTB, char* idsSegmentos);
 respuestaDeObtencionDeMemoria* obtenerLineaSegPag(int idDTB, char* nombreArchivo, int numeroLinea);
-RespuestaCargaSegPag* guardarDatosInternaSegPag(char* datos, char* nombreArchivo);
 void liberarMemoriaSegPag(int idDTB, char* nombreArchivo);
 ElementoTablaPag* obtenerPaginasPorId(int pagina);
 
