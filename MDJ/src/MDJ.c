@@ -52,7 +52,6 @@ void entenderMensaje(int emisor, char header){
 				datos = deserializarString(emisor);
 				size = strlen(datos); //NO quiero que me guarde el \0
 				estadoDeOperacion = guardarDatosFIFA(path, offset, size, datos);
-
 				log_debug(logger, "Enviando %d al guardar datos", estadoDeOperacion);
 				enviarYSerializarIntSinHeader(emisor, estadoDeOperacion);
 

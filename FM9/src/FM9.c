@@ -8,10 +8,10 @@ respuestaDeObtencionDeMemoria* obtenerDatosDeMemoria(int idDTB, char* nombreArch
 		return obtenerDatosSegPura(idDTB, nombreArchivo);
 
 	if(strcmp(modo, "SEG_PAG") == 0)
-		return obtenerDatosSegPag(nombreArchivo);
+		return obtenerDatosSegPag(idDTB, nombreArchivo);
 
 	if(strcmp(modo, "INV") == 0)
-		return obtenerDatosInvertida(nombreArchivo);
+		return obtenerDatosInvertida(nombreArchivo);//CAMBIAAAAAAAR
 }
 
 RespuestaGuardado* cargarDatosEnMemoria(int idDTB, char* datos, char* nombreArchivo){
@@ -19,7 +19,7 @@ RespuestaGuardado* cargarDatosEnMemoria(int idDTB, char* datos, char* nombreArch
 		return guardarDatosSegPura(idDTB, datos, nombreArchivo);
 
 	if(strcmp(modo, "SEG_PAG") == 0)
-		return guardarDatosSegPura(idDTB, datos, nombreArchivo); //CAMBIAAAAAAAR
+		return guardarDatosSegPag(idDTB, datos, nombreArchivo);
 
 	if(strcmp(modo, "INV") == 0)
 		return guardarDatosSegPura(idDTB, datos, nombreArchivo); //CAMBIAAAAAAAR
@@ -30,7 +30,7 @@ RespuestaGuardado* cargarNuevoDTB(int idDTB, char* datos, char* nombreArchivo){
 		return nuevoProcesoSegPura(idDTB, datos, nombreArchivo);
 
 	if(strcmp(modo, "SEG_PAG") == 0)
-		return nuevoProcesoSegPura(idDTB, datos, nombreArchivo); //CAMBIAAAAAAAR
+		return nuevoProcesoSegPag(idDTB, datos, nombreArchivo);
 
 	if(strcmp(modo, "INV") == 0)
 		return nuevoProcesoSegPura(idDTB, datos, nombreArchivo); //CAMBIAAAAAAAR
@@ -41,7 +41,7 @@ respuestaDeObtencionDeMemoria* obtenerLinea(int idDTB, char* nombreArchivo, int 
 		return obtenerLineaSegPura(idDTB, nombreArchivo, numeroLinea);
 
 	if(strcmp(modo, "SEG_PAG") == 0)
-		return obtenerLineaSegPag(nombreArchivo, numeroLinea);
+		return obtenerLineaSegPag(idDTB, nombreArchivo, numeroLinea);
 
 	if(strcmp(modo, "INV") == 0)
 		return obtenerLineaSegPura(idDTB, nombreArchivo, numeroLinea); //CAMBIAAAAAAAAR
@@ -52,7 +52,7 @@ void liberarMemoria(int idDTB, char* nombreArchivo){
 		liberarMemoriaSegPura(idDTB, nombreArchivo);
 
 	if(strcmp(modo, "SEG_PAG") == 0)
-		liberarMemoriaSegPura(idDTB, nombreArchivo); //CAMBIAAAAAAAAR
+		liberarMemoriaSegPag(idDTB, nombreArchivo);
 
 	if(strcmp(modo, "INV") == 0)
 		liberarMemoriaSegPura(idDTB, nombreArchivo); //CAMBIAAAAAAAAR
@@ -63,7 +63,7 @@ int asignarDatos(int idDTB, char* nombreArchivo, int numeroLinea, char* datos){
 		return asignarDatosSegPura(idDTB, nombreArchivo, numeroLinea, datos);
 
 	if(strcmp(modo, "SEG_PAG") == 0)
-		return asignarDatosSegPura(idDTB, nombreArchivo, numeroLinea, datos); //CAMBIAAAAAAAAAR
+		return asignarDatosSegPag(idDTB, nombreArchivo, numeroLinea, datos);
 
 	if(strcmp(modo, "INV") == 0)
 		return asignarDatosSegPura(idDTB, nombreArchivo, numeroLinea, datos); //CAMBIAAAAAAAAAAAR
@@ -135,12 +135,14 @@ void entenderMensaje(int emisor, char header){
 				int idDTB = deserializarInt(emisor);
 				char* nombreArchivo = deserializarString(emisor);
 				int numeroLinea = deserializarInt(emisor);
+				log_debug(logger, "Se pide linea %d para escriptorio %s", numeroLinea, nombreArchivo);
 				respuestaDeObtencionDeMemoria* respuesta = obtenerLinea(idDTB, nombreArchivo, numeroLinea);
 
 				if(respuesta->pudoObtener == 0){
 					enviarYSerializarStringSinHeader(emisor, respuesta->datos);
 					freeRespuestaObtencion(respuesta);
 				}else{
+					log_info(logger, "Es fin de archivo");
 					char* rta = malloc(2);
 					memcpy(rta, "v", 1);
 					enviarYSerializarStringSinHeader(emisor, rta);
@@ -200,6 +202,16 @@ int identificarse(int emisor, char header){
 	}else{
 		return 0;
 	}
+}
+
+void freeLineas(char** lineas){
+	int contador = 0;
+	while(lineas[contador] != NULL){
+		free(lineas[contador]);
+		contador++;
+	}
+
+	free(lineas);
 }
 
 void crearSelect(int servidor){

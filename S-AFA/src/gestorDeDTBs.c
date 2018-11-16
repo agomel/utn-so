@@ -145,7 +145,7 @@ int mostrarMetricasConDTBEXIT(int idDTB){
 	Historial* historial = list_find(listaHistorialExit, obtenerPorId);
 	signalMutex(&mutexHistorialExit);
 	log_info(logger, "-------------------------------------------");
-	log_info(logger, "Cantidad de sentencias ejecutadas que espero el DTB con id %d en EXIT : %d sentencias", idDTB, cantidadSentencias(historial));
+	log_info(logger, "Cantidad de sentencias ejecutadas que espero el DTB con id %d para llegar a EXIT : %d sentencias", idDTB, cantidadSentencias(historial));
 
 	return cantidadSentencias(historial);
 }
@@ -176,16 +176,12 @@ void mostrarSentenciasDeTodos(){
 	}
 
 
-	waitMutex(&mutexSentenciasTotales);
-	int totales = sentenciasTotales;
-	signalMutex(&mutexSentenciasTotales);
-
 	waitMutex(&mutexListaDTBs);
 	int hayDTBs = listaDeTodosLosDTBs->elements_count;
 	signalMutex(&mutexListaDTBs);
 	if(hayDTBs){
 		log_info(logger, "-------------------------------------------");
-		log_info(logger, "La cantidad de sentencias ejecutadas prom. para que un DTB termine en la cola EXIT es %d", totales / sentenciasTotalesExit);
+		log_info(logger, "La cantidad de sentencias ejecutadas prom. para que un DTB termine en la cola EXIT es %d", sentenciasTotalesExit / cantidadHistorialExit);
 	}else{
 		log_info(logger, "No hay metricas para mostrar");
 	}
