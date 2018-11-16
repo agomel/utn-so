@@ -51,14 +51,23 @@ void entenderMensaje(int emisor, char header){
 				log_info(logger, "Guardar datos...");
 				path = deserializarString(emisor);
 				offset = deserializarInt(emisor);
+<<<<<<< HEAD
 				size = deserializarInt(emisor);
 				datos = deserializarStringSinElInt(emisor, size);
 				agregarBarraCero(datos);
 				size -= 1; //NO quiero que me guarde el \0
 				char* rutaCompleta = concatenar(PUNTO_MONTAJE_ARCHIVOS, path);
+=======
+				datos = deserializarString(emisor);
+				size = strlen(datos); //NO quiero que me guarde el \0
+				char* rutaCompleta = asignarMemoria(strlen(PUNTO_MONTAJE_ARCHIVOS) + 1);
+				memcpy(rutaCompleta, PUNTO_MONTAJE_ARCHIVOS, strlen(PUNTO_MONTAJE_ARCHIVOS) + 1);
+				string_append(&rutaCompleta, path);
+>>>>>>> arreglosNano
 
 				estadoDeOperacion = guardarDatos(rutaCompleta, offset, size, datos);
 
+				log_debug(logger, "Enviando %d al guardar datos", estadoDeOperacion);
 				enviarYSerializarIntSinHeader(emisor, estadoDeOperacion);
 
 				free(rutaCompleta);

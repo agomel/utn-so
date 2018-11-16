@@ -16,6 +16,7 @@ static void freeLineasBasura(char** lineaSinBasura, char* lineaConBasura);
 ElementoTablaProcesos* crearElemTablaProcesos(int idDTB, int tablaSegmentos){
 	ElementoTablaProcesos* elemento = malloc(sizeof(ElementoTablaProcesos));
 	elemento->idDTB = idDTB;
+	elemento->tablaSegmentos = list_create();
 	elemento->tablaSegmentos = tablaSegmentos;
 	return elemento;
 }
@@ -38,8 +39,10 @@ void agregarASegmentoOcupado(int base, int limite){
 }
 
 static void copiarElemSegPura(ElementoTablaSegPura* de, ElementoTablaSegPura* hasta){
-	hasta->nombreArchivo = malloc(strlen(de->nombreArchivo) + 1);
+	int tamanioArchivo = strlen(de->nombreArchivo);
+	hasta->nombreArchivo = malloc(tamanioArchivo + 1);
 	memcpy(hasta->nombreArchivo, de->nombreArchivo, strlen(de->nombreArchivo) +1);
+	hasta->nombreArchivo[tamanioArchivo] = '\0';
 	hasta->base = de->base;
 	hasta->id = de->id;
 	hasta->limite = de->limite;
@@ -80,14 +83,14 @@ RespuestaGuardado* guardarDatosSegPura(int idDTB, char* datos, char* nombreArchi
 		respuesta->pesoArchivo = cargaEnMemoria->pesoArchivo;
 		freeRespuestaCargaSegPura(cargaEnMemoria);
 	}else{
-		respuesta->pudoGuardar = 0;
+		respuesta->pudoGuardar = cargaEnMemoria->resultado;
 	}
 
 	return respuesta;
 }
 
 static RespuestaCargaSegPura* guardarDatosInternaSegPura(char* datos, char* nombreArchivo){
-	log_debug(logger, "Guardando en paginacion pura");
+	log_debug(logger, "Guardando en segmentacion pura");
 	int rompio = 1;
 
 	RespuestaCargaSegPura* respuesta = malloc(sizeof(RespuestaCargaSegPura));
@@ -103,13 +106,17 @@ static RespuestaCargaSegPura* guardarDatosInternaSegPura(char* datos, char* nomb
 		int base = storage + posicionDondeGuardar;
 		for(int i = 0; i<totalLineas; i++){
 			string_append(&lineas[i], "\n");
-			memcpy(base + tamanioLinea * i, lineas[i], tamanioLinea); //Guardando de a una linea
+			char* textoAEscribir = asignarMemoria(tamanioLinea);
+			memcpy(textoAEscribir, lineas[i], strlen(lineas[i]) + 1);
+			memcpy(base + tamanioLinea * i, textoAEscribir, tamanioLinea); //Guardando de a una linea
+			free(textoAEscribir);
 		}
 		idSegmento++;
 		rompio = 0;
 		log_debug(logger, "Datos guardados");
 		}
 
+	freeLineas(lineas);
 	respuesta->resultado = rompio;
 	return respuesta;
 }
@@ -153,10 +160,11 @@ respuestaDeObtencionDeMemoria* obtenerDatosSegPura(int idDTB, char* nombreArchiv
 		string_append_with_format(&archivo, "%s\n", lineaSinBasura[0]);
 		freeLineasBasura(lineaSinBasura, lineaConBasura);
 	}
-
-	respuesta->datos = malloc(strlen(archivo));
-	memcpy(respuesta->datos, archivo, strlen(archivo));
+	agregarBarraCero(archivo);
+	respuesta->datos = malloc(strlen(archivo) + 1);
+	memcpy(respuesta->datos, archivo, strlen(archivo) + 1);
 	respuesta->cantidadDeLineas = cantidadLineas;
+	free(archivo);
 
 	return respuesta;
 }
@@ -186,9 +194,10 @@ respuestaDeObtencionDeMemoria* obtenerLineaSegPura(int idDTB, char* nombreArchiv
 		respuesta->datos = malloc(strlen(lineaSinBasura[0])+1);
 		respuesta->pudoObtener = 0;
 		memcpy(respuesta->datos, lineaSinBasura[0], strlen(lineaSinBasura[0])+1);
+		agregarBarraCero(respuesta->datos);
 		freeLineasBasura(lineaSinBasura, lineaConBasura);
 	}else{
-		log_error(logger, "El DTB no posee la linea %d", numeroLinea);
+		log_error(logger, "Es fin de archivo");
 		respuesta->pudoObtener = 1;
 	}
 
@@ -225,29 +234,35 @@ int asignarDatosSegPura(int IdDTB, char* nombreArchivo, int numeroLinea, char* d
 	numeroLinea--;
 	ElementoTablaProcesos* proceso = obtenerProcesoPorIdDTB(IdDTB);
 	ElementoTablaSegPura* segmento = obtenerSegmentoPorArchivo(nombreArchivo, proceso->tablaSegmentos);
-	int desplazamiento = segmento->base + numeroLinea * tamanioLinea;
-	char* lineaConBasura = malloc(tamanioLinea);
-	memcpy(lineaConBasura, storage + desplazamiento, tamanioLinea);
-	char** lineaSinBasura = string_split(lineaConBasura, "\n");
-	char* lineaPosta = malloc(strlen(lineaSinBasura[0]));
-	memcpy(lineaPosta, lineaSinBasura[0], strlen(lineaSinBasura[0]));
-	if((strlen(lineaSinBasura[0]) + strlen(datos) + 2) < tamanioLinea){ //Lo que ya estaba, los datos nuevos, el /n y el espacio en el medio
-		//Se puede escribir
-		string_append_with_format(&lineaPosta, " %s\n", datos);
-		log_debug("Linea resultante de la asignación: %s", lineaPosta);
-		memcpy(storage + desplazamiento, lineaPosta, tamanioLinea);
-		freeLineasBasura(lineaSinBasura, lineaConBasura);
-		free(lineaPosta);
-		respuestaDeObtencionDeMemoria* lineaObtenida = obtenerLineaSegPura(IdDTB, nombreArchivo, numeroLinea);
-		log_debug(logger, "Asignados datos con exito");
-		return 0;
+	if(numeroLinea < (segmento->limite / tamanioLinea)){
+		int desplazamiento = segmento->base + numeroLinea * tamanioLinea;
+		char* lineaConBasura = malloc(tamanioLinea);
+		memcpy(lineaConBasura, storage + desplazamiento, tamanioLinea);
+		char** lineaSinBasura = string_split(lineaConBasura, "\n");
+		char* lineaPosta = malloc(strlen(lineaSinBasura[0]));
+		memcpy(lineaPosta, lineaSinBasura[0], strlen(lineaSinBasura[0]));
+		if((strlen(lineaSinBasura[0]) + strlen(datos) + 2) < tamanioLinea){ //Lo que ya estaba, los datos nuevos, el /n y el espacio en el medio
+			//Se puede escribir
+			string_append_with_format(&lineaPosta, " %s\n", datos);
+			log_debug("Linea resultante de la asignación: %s", lineaPosta);
+			char* lineaAGuardar = malloc(tamanioLinea);
+			memcpy(lineaAGuardar, lineaPosta, strlen(lineaPosta) + 1);
+			memcpy(storage + desplazamiento, lineaAGuardar, tamanioLinea);
+			freeLineasBasura(lineaSinBasura, lineaConBasura);
+			free(lineaPosta);
+			free(lineaAGuardar);
+			log_debug(logger, "Asignados datos con exito");
+			return 0;
 
+		}else{
+			log_error(logger, "No hay suficiente espacio en la linea %d del archivo %s", (numeroLinea+1), nombreArchivo);
+
+			freeLineasBasura(lineaSinBasura, lineaConBasura);
+			free(lineaPosta);
+			return 20002;
+		}
 	}else{
-		log_error(logger, "No hay suficiente espacio en la linea %d del archivo %s", (numeroLinea+1), nombreArchivo);
-
-		freeLineasBasura(lineaSinBasura, lineaConBasura);
-		free(lineaPosta);
-		return 20002;
+		log_error(logger, "El DTB no posee la linea %d", numeroLinea);
 	}
 }
 

@@ -32,7 +32,7 @@ int crearArchivo(char* rutaArchivo, int cantidadDeBytes){
 	FILE* archivo;
 	int creacionDeArchivo = crearArchivoSinBarraN(rutaArchivo);
 	if(creacionDeArchivo == 0){
-		char* datos = asignarMemoria(cantidadDeBytes) + 1;
+		char* datos = asignarMemoria(cantidadDeBytes);
 		for(int i = 0; i < cantidadDeBytes; i++){
 			datos[i] = '\n';
 		}

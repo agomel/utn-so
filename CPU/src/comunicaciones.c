@@ -42,14 +42,17 @@ void tratarDummy(DTB* dtbRecibido){
 int entenderLinea(char* lineaAEjecutar, DTB* dtbRecibido, char mensajeEntendido, int fifo){
 	int continuar = 0;
 	pedirCosasDelFM9(dtbRecibido);
+	dtbRecibido->programCounter++;
 	lineaAEjecutar = deserializarString(socketFM9);
 	if(lineaAEjecutar[0] == FIN_ARCHIVO){
 		//Fin de archivo
 		log_info(logger, "Pasar DTB a EXIT");
+		dtbRecibido->programCounter--;
 		serializarYEnviarDTB(socketSAFA, *dtbRecibido, logger, PASAR_A_EXIT);
 		enviarYSerializarIntSinHeader(socketSAFA, sentencias);
 	}else if(lineaAEjecutar[0] == ERROR_O_ACCESO_INVALIDO){
 		//Hubo error en FM9
+		dtbRecibido->programCounter--;
 		if(!fifo){
 			dtbRecibido->quantum--;
 			sentencias++;
@@ -64,13 +67,13 @@ int entenderLinea(char* lineaAEjecutar, DTB* dtbRecibido, char mensajeEntendido,
 			//NADA
 		}else if(mensajeEntendido == 'a'){
 		log_info(logger, "Pasar DTB a EXIT");
+		dtbRecibido->programCounter--;
 		serializarYEnviarDTB(socketSAFA, *dtbRecibido, logger, PASAR_A_EXIT);
 		enviarYSerializarIntSinHeader(socketSAFA, sentencias);
 		}else{
 			continuar = 1;
 		}
 	}
-	dtbRecibido->programCounter++;
 	if(!fifo){
 		dtbRecibido->quantum--;
 	}

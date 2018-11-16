@@ -47,4 +47,20 @@ char* traducirModulo(char modulo){
 	}
 }
 
+char* traducirHeaderExito(char header){
+	switch(header){
+		case GUARDADO_CON_EXITO_EN_MDJ:
+			return "Guardado";
+			break;
+		case BORRADO_CON_EXITO_EN_MDJ:
+			return "Borrado";
+			break;
+		case CREADO_CON_EXITO_EN_MDJ:
+			return "Creado";
+			break;
+		default:
+			return "El header no es uno de exito";
+			break;
+	}
+}
 

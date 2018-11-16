@@ -55,7 +55,7 @@ void pasarDTBAExit(int idDTB){
 	if(!dtb){
 		log_error(logger,"NO existe ese dtb");
 	}else if(dtb->estado == EXIT){
-		log_info(logger, "El DTB: %d ya se encontraba en EXIT", idDTB);
+		log_error(logger, "El DTB: %d ya se encontraba en EXIT", idDTB);
 	}else{
 		cambiarEstado(idDTB, EXIT);
 		finalizarHistorialDeListaExit(idDTB);

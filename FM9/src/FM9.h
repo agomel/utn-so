@@ -16,6 +16,7 @@
 #include <biblioteca/traductor.h>
 #include <commons/string.h>
 #include "manejoLineas.h"
+#include <biblioteca/serializacion.h>
 
 typedef struct{
 	int pudoGuardar;
@@ -45,5 +46,7 @@ sem_t semOperaciones;
 t_config* configuracion;
 
 void entenderMensaje(int emisor, char header);
+
+void freeLineas(char** lineas);
 
 #endif /*FM9_H_*/
