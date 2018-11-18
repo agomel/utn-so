@@ -148,7 +148,7 @@ void init(){
 	levantarMetadata();
 
 	initBitmap();
-	verificarExistenciaDeBitmap();
+
 	crearArchivoDePruebas();
 
 	inicializarMutex(&mutexOperaciones);
