@@ -5,9 +5,6 @@
 #include "comandos.h"
 #include "operacionesArchivos.h"
 #include <commons/bitarray.h>
-#include <sys/mman.h>
-#include <errno.h>
-
 void verificarExistenciaDeBitmap();
 
 int obtenerBloqueLibreBitmap();
@@ -18,7 +15,7 @@ int liberarBloqueEnBitmap(int bloqueALiberar);
 void initBitmap();
 
 char* rutaBitmap;
-t_bitarray* bitmap;
+t_bitarray* bitarray;
 
 extern t_log* logger;
 extern char* PUNTO_MONTAJE_METADATA;

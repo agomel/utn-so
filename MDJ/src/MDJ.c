@@ -149,12 +149,6 @@ void init(){
 
 	initBitmap();
 
-	int bloqueLibre = obtenerBloqueLibreBitmap();
-	bloqueLibre = obtenerBloqueLibreBitmap();
-	ocuparBloqueEnBitmap(bloqueLibre);
-	bloqueLibre = obtenerBloqueLibreBitmap();
-
-
 	crearArchivoDePruebas();
 
 	inicializarMutex(&mutexOperaciones);
