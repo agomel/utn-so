@@ -173,6 +173,8 @@ int main(void) {
 
 	printf("hay %d bloques libres\n", cantidadTotalDeBloquesLibres());
 
+	/*
+
 	//usleep(RETARDO*1000);//tiempo en milisegundos
 	borrarArchivoFIFA("PruebaBOAF0.bin");
 
@@ -183,6 +185,9 @@ int main(void) {
 
 	guardarDatosFIFA("PruebaBOAF1.bin", 3, 5, "GATOOOOOO");
 	printf("hay %d bloques libres\n", cantidadTotalDeBloquesLibres());
+
+	*/
+
 	while(1);
 
 	return 0;
