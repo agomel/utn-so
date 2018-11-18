@@ -72,6 +72,7 @@ char* byteToBit(char byte){
 	for(int i = 0; i < CHAR_BIT; i++)
 	    bits[i] = '0' + ((byte & (1 << i)) > 0);
 
+	printf("%s\n", bits);
 	return bits;
 }
 

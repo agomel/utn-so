@@ -152,7 +152,7 @@ void init(){
 
 	initBitmap();
 
-	crearArchivoDePruebas();
+	//crearArchivoDePruebas();
 
 	inicializarMutex(&mutexOperaciones);
 	colaOperaciones = queue_create();
@@ -161,6 +161,7 @@ void init(){
 
 	crearHiloQueMuereSolo(consolita, NULL);
 }
+
 int main(void) {
 	init();
 
@@ -169,6 +170,18 @@ int main(void) {
 	//config_destroy(configuracion);
 
 	crearSelect(servidor);
+
+	//int a = bitarray_get_max_bit(bitarray);
+	//printf("la cant de bloques es %d\n", a);
+
+	printf("cant libre ees %d \n", cantidadTotalDeBloquesLibres());
+
+	usleep(RETARDO*1000);//tiempo en milisegundos
+
+	printf("cant libre ees %d \n", cantidadTotalDeBloquesLibres());
+
+	int b = obtenerBloqueLibreBitmap();
+	printf("el proximo bloque libre es %d\n", b);
 
 	//leerBitmap();
 	//escribirBitmap("1100");
