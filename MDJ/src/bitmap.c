@@ -75,11 +75,13 @@ int obtenerBloqueLibreBitmap(){
 int ocuparBloqueEnBitmap(int bloqueAOcupar){
 	t_bitarray* bitmap = leerBitmap();
 	bitarray_set_bit(bitmap, bloqueAOcupar);
+	escribirBitmap(bitmap->bitarray);
 	bitarray_destroy(bitmap);
 }
 int liberarBloqueEnBitmap(int bloqueALiberar){
 	t_bitarray* bitmap = leerBitmap();
 	bitarray_clean_bit(bitmap, bloqueALiberar);
+	escribirBitmap(bitmap->bitarray);
 	bitarray_destroy(bitmap);
 }
 
