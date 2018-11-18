@@ -68,3 +68,8 @@ t_list* crearArchivoEnBloques(char* datosTotales, int* error){
 	}
 	return bloques;
  }
+
+char* obtenerDatosDeBloque(int bloque, int offset, int size){
+	char* rutaBloque = getPathDeBloque(bloque);
+	return obtenerDatos(rutaBloque, offset, size);
+}

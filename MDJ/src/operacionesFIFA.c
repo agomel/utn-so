@@ -27,7 +27,7 @@ int crearArchivoFIFA(char* rutaArchivo, int cantidadDeBytes){
 char* obtenerDatosFIFA(char* rutaArchivo, int offset, int size){
 	char* rutaCompleta = generarPathAbsoluto(rutaArchivo);
 
-	char* datos = obtenerDatos(rutaCompleta, offset, size);
+	char* datos = obtenerDatosFS(rutaCompleta, offset, size);
 
 	free(rutaCompleta);
 	return datos;
