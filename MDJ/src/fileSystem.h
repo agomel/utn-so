@@ -18,6 +18,7 @@ int borrarArchivoFS(char* rutaArchivo);
 char* obtenerDatosFS(char* rutaArchivo, int offset, int size);
 int guardarDatosFS(char* rutaArchivo, int offset, int size, char* datos);
 
+extern int TAMANIO_BLOQUES;
 extern t_log* logger;
 
 #endif /*FILESYSTEM_H_*/

@@ -17,9 +17,9 @@ char* getPathDeBloque(int bloque);
 int obtenerCantidadBloques(int tamanio);
 int obtenerBloque();
 int eliminarBloque(int bloque);
-int guardarDatosEnBloque(char* rutaBloque, int tamanioAEscribir, int tamanioEscrito, char* datosTotales, int* error);
-t_list* crearArchivoEnBloques(char* datosTotales, int* error);
 char* obtenerDatosDeBloque(int bloque, int offset, int size);
+int guardarDatosEnBloque(int bloque, int offset, int size, char* datos);
+t_list* crearArchivoEnBloques(char* datosTotales);
 
 extern char* PUNTO_MONTAJE_ARCHIVOS;
 extern char* PUNTO_MONTAJE_METADATA;

@@ -1,8 +1,8 @@
 #include "bloques.h"
 
 int obtenerCantidadBloques(int tamanio){
-	int enteros = tamanio / CANTIDAD_BLOQUES;
-	int resto = tamanio % CANTIDAD_BLOQUES;
+	int enteros = tamanio / TAMANIO_BLOQUES;
+	int resto = tamanio % TAMANIO_BLOQUES;
 	if(resto > 0){
 		enteros ++;
 	}
@@ -17,7 +17,13 @@ char* getPathDeBloque(int bloque){
 
 int obtenerBloque(){
 	int bloque = obtenerBloqueLibreBitmap();
+
 	ocuparBloqueEnBitmap(bloque);
+
+	char* rutaBloque = getPathDeBloque(bloque);
+	crearArchivo(rutaBloque);
+	free(rutaBloque);
+
 	return bloque;
 }
 
@@ -34,42 +40,42 @@ int eliminarBloque(int bloque){
 	return error;
 }
 
-int guardarDatosEnBloque(char* rutaBloque, int tamanioAEscribir, int tamanioEscrito, char* datosTotales, int* error){
-	int creacionDeArchivo = crearArchivo(rutaBloque);
-	if(creacionDeArchivo == 0){
-		char* textoAEscribir = asignarMemoria(tamanioAEscribir);
-		strncpy(textoAEscribir, datosTotales + tamanioEscrito, tamanioAEscribir);
-		*error = guardarDatos(rutaBloque, 0, tamanioAEscribir, textoAEscribir);
-		return tamanioAEscribir;
-	}else{
-		*error = PATH_INEXISTENTE;
-		return 0;
-	}
+char* obtenerDatosDeBloque(int bloque, int offset, int size){
+	char* rutaBloque = getPathDeBloque(bloque);
+	char* datosDelBloque = obtenerDatos(rutaBloque, offset, size);
+	free(rutaBloque);
+	return datosDelBloque;
 }
-t_list* crearArchivoEnBloques(char* datosTotales, int* error){
+
+int guardarDatosEnBloque(int bloque, int offset, int size, char* datos){
+	char* rutaBloque = getPathDeBloque(bloque);
+	return guardarDatos(rutaBloque, offset, size, datos);
+}
+
+t_list* crearArchivoEnBloques(char* datosTotales){
 	t_list* bloques = list_create();
-	int tamanioTotal = strlen(datosTotales) + 1;
+	int tamanioTotal = strlen(datosTotales);
 	int tamanioEscrito = 0;
-	while(tamanioTotal > tamanioEscrito){
-		int tamanioAEscribir;
-		if(tamanioTotal - tamanioEscrito < TAMANIO_BLOQUES){
-			//Datos a guardar no alcanzan tamanio de bloque
-			tamanioAEscribir = tamanioTotal - tamanioEscrito;
+	int tamanioAEscribir;
+
+	while(tamanioTotal > 0){
+		if(tamanioTotal < TAMANIO_BLOQUES){
+			//Datos a guardar no superan el tamanio de bloque
+			tamanioAEscribir = tamanioTotal;
 		}else{
 			//Datos a guardar superan el de un bloque
 			tamanioAEscribir = TAMANIO_BLOQUES;
 		}
 
 		int bloqueAEscribir = obtenerBloque();
-		char* rutaBloque = getPathDeBloque(bloqueAEscribir);
 		list_add(bloques, bloqueAEscribir);
-		tamanioEscrito += guardarDatosEnBloque(rutaBloque, tamanioAEscribir, tamanioEscrito, datosTotales, error);
 
+		guardarDatosEnBloque(bloqueAEscribir, 0, tamanioAEscribir, (datosTotales + tamanioEscrito));
+
+		tamanioEscrito += tamanioAEscribir;
+		tamanioTotal -= tamanioAEscribir;
 	}
+
 	return bloques;
  }
 
-char* obtenerDatosDeBloque(int bloque, int offset, int size){
-	char* rutaBloque = getPathDeBloque(bloque);
-	return obtenerDatos(rutaBloque, offset, size);
-}
