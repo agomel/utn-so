@@ -17,27 +17,15 @@ char* getPathDeBloque(int bloque){
 
 int obtenerBloque(){
 	int bloque = obtenerBloqueLibreBitmap();
-
 	ocuparBloqueEnBitmap(bloque);
-
 	char* rutaBloque = getPathDeBloque(bloque);
 	crearArchivo(rutaBloque);
 	free(rutaBloque);
-
 	return bloque;
 }
 
 int eliminarBloque(int bloque){
-	int error = 0;
-	char* rutaArchivoDeBloque = getPathDeBloque(bloque);
-
-	error = eliminarArchivo(rutaArchivoDeBloque);
-	if(error == 0){
-		error = liberarBloqueEnBitmap(bloque);
-	}
-
-	free(rutaArchivoDeBloque);
-	return error;
+	return liberarBloqueEnBitmap(bloque);
 }
 
 char* obtenerDatosDeBloque(int bloque, int offset, int size){

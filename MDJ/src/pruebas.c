@@ -7,8 +7,8 @@ void crearArchivitos(){
 		int archivoExiste = validarArchivo(completa);
 		if(archivoExiste != 0){
 			crearArchivoFS(completa, "concentrar\nconcentrar\nconcentrar\nconcentrar"
-					"\nconcentrar\nconcentrar\nconcentrar\n"
-					"concentrar\nconcentrar\nconcentrar\nconcentrar\nconcentrar\n");
+					"\nconcentrar\nconcentrar\nconcentrar\nconcentrar\nconcentrar"
+					"\nconcentrar\nconcentrar\nconcentrar\n");
 		}
 		free(completa);
 		free(rutaArchivito);
@@ -26,6 +26,7 @@ void crearArchivoGral(char* rutaArchivo, char* datos){
 	}
 	free(rutaCompleta);
 }
+
 void crearArchivoDePruebas(){
 	crearArchivitos();
 

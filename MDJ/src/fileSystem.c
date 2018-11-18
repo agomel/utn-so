@@ -77,6 +77,7 @@ char* obtenerDatosFS(char* rutaArchivo, int offset, int size){
 	freeMetadata(metaData);
 	return datosTotales;
 }
+
 int guardarDatosFS(char* rutaArchivo, int offset, int size, char* datos){
 	int error = 0;
 

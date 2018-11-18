@@ -152,7 +152,7 @@ void init(){
 
 	initBitmap();
 
-	//crearArchivoDePruebas();
+	crearArchivoDePruebas();
 
 	inicializarMutex(&mutexOperaciones);
 	colaOperaciones = queue_create();
@@ -171,28 +171,18 @@ int main(void) {
 
 	crearSelect(servidor);
 
-	//int a = bitarray_get_max_bit(bitarray);
-	//printf("la cant de bloques es %d\n", a);
+	printf("hay %d bloques libres\n", cantidadTotalDeBloquesLibres());
 
-	printf("cant libre ees %d \n", cantidadTotalDeBloquesLibres());
+	//usleep(RETARDO*1000);//tiempo en milisegundos
+	borrarArchivoFIFA("PruebaBOAF0.bin");
 
-	usleep(RETARDO*1000);//tiempo en milisegundos
 
-	printf("cant libre ees %d \n", cantidadTotalDeBloquesLibres());
+	printf("hay %d bloques libres\n", cantidadTotalDeBloquesLibres());
+	//usleep(RETARDO*1000);//tiempo en milisegundos
 
-	int b = obtenerBloqueLibreBitmap();
-	printf("el proximo bloque libre es %d\n", b);
 
-	//leerBitmap();
-	//escribirBitmap("1100");
-	//leerBitmap();
-	//int a = cantidadTotalDeBloquesLibres();
-	//printf("hay %d bloques libres\n", a);
-	//int b = cantidadBloquesBitmapEnBytes();
-	//printf("hay %d bloques libres\n", b);
-	//crearArchivoFIFA("pruebaAGO.test", 10);
-	//guardarDatosFIFA("pruebaAGO.test", 20, 10, "sssssssssssssssssssssssss");
-
+	guardarDatosFIFA("PruebaBOAF1.bin", 3, 5, "GATOOOOOO");
+	printf("hay %d bloques libres\n", cantidadTotalDeBloquesLibres());
 	while(1);
 
 	return 0;

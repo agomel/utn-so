@@ -19,7 +19,7 @@ t_bitarray* crearBitarray(){
 
 void persistirBitMap(){
 	char* bitArray = asignarMemoria(0);
-	for(int i = 0; i < CANTIDAD_BLOQUES; i++){
+	for(int i = 0; i < bitarray_get_max_bit(bitArray); i++){
 		concatenarATexto(&bitArray, intToString(bitarray_test_bit(bitarray, i)));
 	}
 
@@ -53,12 +53,14 @@ int cantidadTotalDeBloquesLibres(){
 
 int ocuparBloqueEnBitmap(int bloqueAOcupar){
 	bitarray_set_bit(bitarray, bloqueAOcupar);
-	//persistirBitMap();
+	persistirBitMap();
+	return 0;
 }
 
 int liberarBloqueEnBitmap(int bloqueALiberar){
 	bitarray_clean_bit(bitarray, bloqueALiberar);
-	//persistirBitMap();
+	persistirBitMap();
+	return 0;
 }
 
 int obtenerBloqueLibreBitmap(){
