@@ -36,7 +36,7 @@ char* obtenerDatosFIFA(char* rutaArchivo, int offset, int size){
 int guardarDatosFIFA(char* rutaArchivo, int offset, int tamanioMensaje, char* datos){
 	char* rutaCompleta = generarPathAbsoluto(rutaArchivo);
 
-	int estadoDeGuardado = guardarDatos(rutaArchivo, offset, tamanioMensaje, datos);
+	int estadoDeGuardado = guardarDatosFS(rutaCompleta, offset, tamanioMensaje, datos);
 
 	free(rutaCompleta);
 	return estadoDeGuardado;

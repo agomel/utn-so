@@ -16,6 +16,7 @@
 int crearArchivoFS(char* rutaArchivo, char* datosTotales);
 int borrarArchivoFS(char* rutaArchivo);
 char* obtenerDatosFS(char* rutaArchivo, int offset, int size);
+int guardarDatosFS(char* rutaArchivo, int offset, int size, char* datos);
 
 extern t_log* logger;
 

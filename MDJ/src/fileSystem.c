@@ -70,4 +70,12 @@ char* obtenerDatosFS(char* rutaArchivo, int offset, int size){
 
 	return datosTotales;
 }
+int guardarDatosFS(char* rutaArchivo, int offset, int size, char* datos){
+	Metadata* metaData = obtenerMetadata(rutaArchivo);
+	int posicionDelBloque = offset / CANTIDAD_BLOQUES;
+	int offsetEnBloque = offset % CANTIDAD_BLOQUES;
 
+
+
+
+}
