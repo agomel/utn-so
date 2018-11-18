@@ -170,6 +170,16 @@ int main(void) {
 
 	crearSelect(servidor);
 
+	//leerBitmap();
+	//escribirBitmap("1100");
+	//leerBitmap();
+	//int a = cantidadTotalDeBloquesLibres();
+	//printf("hay %d bloques libres\n", a);
+	//int b = cantidadBloquesBitmapEnBytes();
+	//printf("hay %d bloques libres\n", b);
+	//crearArchivoFIFA("pruebaAGO.test", 10);
+	//guardarDatosFIFA("pruebaAGO.test", 20, 10, "sssssssssssssssssssssssss");
+
 	while(1);
 
 	return 0;

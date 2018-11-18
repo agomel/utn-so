@@ -8,95 +8,63 @@ int cantidadBloquesBitmapEnBytes(){
 	return total;
 }
 
-t_bitarray* crearBitarray(char* bytearray){
-	return bitarray_create_with_mode(bytearray, cantidadBloquesBitmapEnBytes(), LSB_FIRST);
-}
+t_bitarray* crearBitarray(){
+	unsigned char byteArray [cantidadBloquesBitmapEnBytes() + 1];
 
-t_bitarray* leerBitmap(){
-	unsigned char byteArray[cantidadBloquesBitmapEnBytes() + 1];
-	FILE *ptr;
-
-	ptr = fopen(rutaBitmap,"rb");  // r for read, b for binary
-
-	fread(byteArray,sizeof(byteArray),1,ptr);
+	FILE* archivoBitMap = fopen(rutaBitmap, "rb");
+	fread(byteArray, sizeof(byteArray), 1, archivoBitMap);
 	agregarBarraCero(byteArray);
 
-	return crearBitarray(byteArray);
+	return bitarray_create_with_mode(byteArray, cantidadBloquesBitmapEnBytes(), LSB_FIRST);
 }
 
-void escribirBitmap(char* bits){
-	FILE *write_ptr;
-
-	write_ptr = fopen(rutaBitmap,"wb");  // w for write, b for binary
-
-	fwrite(bits,sizeof(bits),1,write_ptr);
-}
-
-int validarExistenciaDeBitmap(){
-	FILE* archivo = fopen(rutaBitmap, "rb");
-	if(archivo == NULL || archivo < 0){
-		return PATH_INEXISTENTE;
+void persistirBitMap(){
+	char* bitArray = asignarMemoria(0);
+	for(int i = 0; i < bitarray->size; i++){
+		concatenarATexto(&bitArray, intToString(bitarray_test_bit(bitarray, i)));
 	}
-	fclose(archivo);
-	return 0;
-}
 
+	FILE* archivoBitMap = fopen(rutaBitmap, "wb");  // w for write, b for binary
 
-void verificarExistenciaDeBitmap(){
+	fwrite(bitArray, bitarray->size, 1, archivoBitMap);
 
-	int archivoExiste = validarExistenciaDeBitmap();
-	if(archivoExiste != 0){
-		//El bitmap no existe
-		char* datos = asignarMemoria(CANTIDAD_BLOQUES) + 1;
-		for(int i = 0; i<CANTIDAD_BLOQUES; i++){
-			datos[i] = '0';
-		}
-		//TODO esto esta mal esta escribiendo todo el bitmap
-
-		escribirBitmap(datos);
-		log_info(logger, "creado bitmap para %d bloques", CANTIDAD_BLOQUES);
-	}
-}
-
-int obtenerBloqueLibreBitmap(){
-	t_bitarray* bitmap = leerBitmap();
-	int posicion;
-	for(int i = 0; i < bitmap->size; i++){
-		if(!bitarray_test_bit(bitmap, i)){
-			posicion = i;
-			break;
-		}
-	}
-	bitarray_destroy(bitmap);
-	return posicion;
-}
-
-int ocuparBloqueEnBitmap(int bloqueAOcupar){
-	t_bitarray* bitmap = leerBitmap();
-	bitarray_set_bit(bitmap, bloqueAOcupar);
-	escribirBitmap(bitmap->bitarray);
-	bitarray_destroy(bitmap);
-}
-
-int liberarBloqueEnBitmap(int bloqueALiberar){
-	t_bitarray* bitmap = leerBitmap();
-	bitarray_clean_bit(bitmap, bloqueALiberar);
-	escribirBitmap(bitmap->bitarray);
-	bitarray_destroy(bitmap);
+	fclose(archivoBitMap);
 }
 
 void initBitmap(){
 	rutaBitmap =concatenar(PUNTO_MONTAJE_METADATA, "Bitmap.bin");
+	bitarray = crearBitarray();
 }
 
 int cantidadTotalDeBloquesLibres(){
-	t_bitarray* bitmap = leerBitmap();
 	int cantidadLibre = 0;
-	for(int i = 0; i < bitmap->size; i++){
-		if(bitarray_test_bit(bitmap, i) == 0){
+	for(int i = 0; i < bitarray_get_max_bit(bitarray); i++){
+		if(bitarray_test_bit(bitarray, i) == 0){
 			cantidadLibre++;
 		}
 	}
-	bitarray_destroy(bitmap);
 	return cantidadLibre;
 }
+
+int ocuparBloqueEnBitmap(int bloqueAOcupar){
+	bitarray_set_bit(bitarray, bloqueAOcupar);
+	persistirBitMap();
+}
+
+int liberarBloqueEnBitmap(int bloqueALiberar){
+	bitarray_clean_bit(bitarray, bloqueALiberar);
+	persistirBitMap();
+}
+
+int obtenerBloqueLibreBitmap(){
+	int posicion;
+	for(int i = 0; i < bitarray_get_max_bit(bitarray); i++){
+		if(!bitarray_test_bit(bitarray, i)){
+			posicion = i;
+			break;
+		}
+	}
+	return posicion;
+}
+
+

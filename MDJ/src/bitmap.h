@@ -6,12 +6,13 @@
 #include "operacionesArchivos.h"
 #include <commons/bitarray.h>
 
-void verificarExistenciaDeBitmap();
-int obtenerBloqueLibreBitmap();
-int ocuparBloqueEnBitmap(int bloqueAOcupar);
-int liberarBloqueEnBitmap(int bloqueALiberar);
+t_bitarray* crearBitarray();
+void persistirBitMap();
 void initBitmap();
 int cantidadTotalDeBloquesLibres();
+int ocuparBloqueEnBitmap(int bloqueAOcupar);
+int liberarBloqueEnBitmap(int bloqueALiberar);
+int obtenerBloqueLibreBitmap();
 
 char* rutaBitmap;
 t_bitarray* bitarray;
