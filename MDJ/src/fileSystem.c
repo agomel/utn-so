@@ -43,5 +43,31 @@ int borrarArchivoFS(char* rutaArchivo){
 	return error;
 }
 
+char* obtenerDatosFS(char* rutaArchivo, int offset, int size){
+	Metadata* metaData = obtenerMetadata(rutaArchivo);
+	int posicionDelBloque = offset / CANTIDAD_BLOQUES;
+	int offsetEnBloque = offset % CANTIDAD_BLOQUES;
+	int sizeALeerEnBloque;
 
+	char* datosTotales;
+
+	while(size > 0){
+		if(size > (CANTIDAD_BLOQUES - offsetEnBloque)){
+			sizeALeerEnBloque = CANTIDAD_BLOQUES - offsetEnBloque;
+		}else{
+			sizeALeerEnBloque = size;
+		}
+
+		int bloque = atoi(metaData->bloques[posicionDelBloque]);
+		char * datos = obtenerDatosDeBloque(bloque, offsetEnBloque, sizeALeerEnBloque);
+		concatenarATexto(datosTotales, datos);
+
+		free(datos);
+		posicionDelBloque++;
+		offsetEnBloque = 0;
+		size = size - sizeALeerEnBloque;
+	}
+
+	return datosTotales;
+}
 
