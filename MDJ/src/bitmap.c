@@ -71,13 +71,13 @@ int obtenerBloqueLibreBitmap(){
 	return posicion;
 }
 
-
 int ocuparBloqueEnBitmap(int bloqueAOcupar){
 	t_bitarray* bitmap = leerBitmap();
 	bitarray_set_bit(bitmap, bloqueAOcupar);
 	escribirBitmap(bitmap->bitarray);
 	bitarray_destroy(bitmap);
 }
+
 int liberarBloqueEnBitmap(int bloqueALiberar){
 	t_bitarray* bitmap = leerBitmap();
 	bitarray_clean_bit(bitmap, bloqueALiberar);
@@ -87,4 +87,16 @@ int liberarBloqueEnBitmap(int bloqueALiberar){
 
 void initBitmap(){
 	rutaBitmap =concatenar(PUNTO_MONTAJE_METADATA, "Bitmap.bin");
+}
+
+int cantidadTotalDeBloquesLibres(){
+	t_bitarray* bitmap = leerBitmap();
+	int cantidadLibre = 0;
+	for(int i = 0; i < bitmap->size; i++){
+		if(bitarray_test_bit(bitmap, i) == 0){
+			cantidadLibre++;
+		}
+	}
+	bitarray_destroy(bitmap);
+	return cantidadLibre;
 }

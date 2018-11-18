@@ -13,6 +13,7 @@
 #include "parser.h"
 
 
+int haySuficienteEspacio(int tamanioAGuardar);
 int crearArchivoFS(char* rutaArchivo, char* datosTotales);
 int borrarArchivoFS(char* rutaArchivo);
 char* obtenerDatosFS(char* rutaArchivo, int offset, int size);

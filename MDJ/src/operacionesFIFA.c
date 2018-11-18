@@ -20,6 +20,7 @@ int crearArchivoFIFA(char* rutaArchivo, int cantidadDeBytes){
 	}
 	int estadoCrearArchivoFS = crearArchivoFS(rutaCompleta, datos);
 
+	free(datos);
 	free(rutaCompleta);
 	return estadoCrearArchivoFS;
 }

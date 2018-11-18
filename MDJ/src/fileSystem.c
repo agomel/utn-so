@@ -1,33 +1,39 @@
 #include "fileSystem.h"
 
-int crearArchivoFS(char* rutaArchivo, char* datosTotales){
-	int error = 0;
-	t_list* bloques = crearArchivoEnBloques(datosTotales);
-	char* texto = concatenar("TAMANIO=", intToString(strlen(datosTotales) + 1));
-	concatenarATexto(&texto, "\nBLOQUES=[");
-
-	for(int i = 0; i< bloques->elements_count; i++){
-		concatenarATexto(&texto, intToString(list_get(bloques, i)));
-
-		if(i == bloques->elements_count -1){
-			concatenarATexto(&texto, "]\n");
-		}else{
-			concatenarATexto(&texto, ",");
-		}
-
+int haySuficienteEspacio(int tamanioAGuardar){
+	if((cantidadTotalDeBloquesLibres() * TAMANIO_BLOQUES) > tamanioAGuardar){
+		return 0;
+	}else{
+		return ESPACIO_INSUFICIENTE_EN_MDJ;
 	}
+}
 
+int crearArchivoFS(char* rutaArchivo, char* datosTotales){
+	int error = haySuficienteEspacio(strlen(datosTotales));
 	if(error == 0){
+		t_list* bloques = crearArchivoEnBloques(datosTotales);
+		char* texto = concatenar("TAMANIO=", intToString(strlen(datosTotales) + 1));
+		concatenarATexto(&texto, "\nBLOQUES=[");
+
+		for(int i = 0; i< bloques->elements_count; i++){
+			concatenarATexto(&texto, intToString(list_get(bloques, i)));
+
+			if(i == bloques->elements_count -1){
+				concatenarATexto(&texto, "]\n");
+			}else{
+				concatenarATexto(&texto, ",");
+			}
+
+		}
 		error = crearArchivo(rutaArchivo);
 		if(error == 0){
 			error = guardarDatos(rutaArchivo, 0, strlen(texto), texto);
-		}else{
-			error = ESPACIO_INSUFICIENTE_EN_MDJ;
 		}
+
+		list_destroy(bloques);
+		free(texto);
 	}
 
-	list_destroy(bloques);
-	free(texto);
 	return error;
 }
 
