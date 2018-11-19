@@ -246,15 +246,21 @@ void crearSelect(int servidor){
 	realizarNuestroSelect(select);
 }
 
-void inicializar(char* modo){
-	if(strcmp(modo, "SEG_PURA") == 0)
+void inicializar(char* modo, t_config* configuracion){
+	if(strcmp(modo, "SEG_PURA") == 0){
+		log_info(logger, "Utilizando segmentacion pura");
 		return inicializarSegPura();
+	}
 
-	if(strcmp(modo, "SEG_PAG") == 0)
-		return inicializarSegPag();
+	if(strcmp(modo, "SEG_PAG") == 0){
+		log_info(logger, "Utilizando segmentacion paginada");
+		return inicializarSegPag(configuracion);
+	}
 
-	if(strcmp(modo, "INV") == 0)
+	if(strcmp(modo, "INV") == 0){
+		log_info(logger, "Utilizando paginas invertidas");
 		return inicializarSegPura(); //CAMBIAAAR
+	}
 }
 
 void init(){
@@ -262,17 +268,16 @@ void init(){
 
 	tamanioLinea = config_get_int_value(configuracion, "MAX_LINEA");
 	tamanioMemoria = config_get_int_value(configuracion, "TAMANIO");
-	tamanioPagina = config_get_int_value(configuracion, "TAM_PAGINA");
 	storage = asignarMemoria(tamanioMemoria);
 	char* punteroAModo = config_get_string_value(configuracion, "MODO");
 	modo = asignarMemoria(strlen(punteroAModo) + 1);
 	memcpy(modo, punteroAModo, strlen(punteroAModo) + 1);
-	cantidadMarcosTotales = tamanioMemoria / tamanioPagina;
+	logger = crearLogger(ARCHIVO_LOG, "FM9");
 
-	inicializar(modo);
+	inicializar(modo, configuracion);
 
 	offset = 0;
-	logger = crearLogger(ARCHIVO_LOG, "FM9");
+
 
 	colaOperaciones = queue_create();
 	inicializarMutex(&mutexOperaciones);

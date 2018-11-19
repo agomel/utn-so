@@ -31,7 +31,7 @@ int idPagina;
 t_list* tablaDePaginas;
 t_list* tablaDeProcesos;
 
-void inicializarSegPag();
+void inicializarSegPag(t_config* configuracion);
 RespuestaGuardado* guardarDatosSegPag(int idDTB, char* datos, char* nombreArchivo);
 RespuestaGuardado* nuevoProcesoSegPag(int idDTB, char* datos, char* nombreArchivo);
 respuestaDeObtencionDeMemoria* obtenerDatosSegPag(int idDTB, char* idsSegmentos);
