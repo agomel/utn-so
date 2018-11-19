@@ -12,7 +12,7 @@ int crearArchivoFS(char* rutaArchivo, char* datosTotales){
 	int error = haySuficienteEspacio(strlen(datosTotales));
 	if(error == 0){
 		t_list* bloques = crearArchivoEnBloques(datosTotales);
-		char* texto = concatenar("TAMANIO=", intToString(strlen(datosTotales) + 1));
+		char* texto = concatenar("TAMANIO=", intToString(strlen(datosTotales)));
 		concatenarATexto(&texto, "\nBLOQUES=[");
 
 		for(int i = 0; i< bloques->elements_count; i++){
@@ -56,8 +56,14 @@ char* obtenerDatosFS(char* rutaArchivo, int offset, int size){
 	int offsetEnBloque = offset % TAMANIO_BLOQUES;
 	int sizeALeerEnBloque;
 
-	char* datosTotales = asignarMemoria(0);//esto es para que el concatenar a texto funcione
+	char* datosTotales = asignarMemoria(size + 1);
 
+	int desplazamiento = 0;
+
+	if(size == -1)
+		size = metaData->tamanio;
+
+	datosTotales[size] = '\0';
 	while(size > 0){
 		if(size > (TAMANIO_BLOQUES - offsetEnBloque)){
 			sizeALeerEnBloque = TAMANIO_BLOQUES - offsetEnBloque;
@@ -67,7 +73,8 @@ char* obtenerDatosFS(char* rutaArchivo, int offset, int size){
 
 		int bloque = atoi(metaData->bloques[posicionDelBloque]);
 		char * datos = obtenerDatosDeBloque(bloque, offsetEnBloque, sizeALeerEnBloque);
-		concatenarATexto(&datosTotales, datos);
+		memcpy(datosTotales + desplazamiento, datos, sizeALeerEnBloque);
+		desplazamiento += sizeALeerEnBloque;
 
 		free(datos);
 		posicionDelBloque++;
@@ -83,15 +90,18 @@ int guardarDatosFS(char* rutaArchivo, int offset, int size, char* datos){
 
 	char* datosAGuardar = asignarMemoria(size);
 	memcpy(datosAGuardar, datos, size);
+	datosAGuardar[size] = '\0';
 
 	Metadata* metaData = obtenerMetadata(rutaArchivo);
 	char* datosRestantes = obtenerDatosFS(rutaArchivo, 0, metaData->tamanio);
 
-	char* datosPrincipio = asignarMemoria(offset);
+	char* datosPrincipio = asignarMemoria(offset + 1);
 	memcpy(datosPrincipio, datosRestantes, offset);
+	datosPrincipio[offset] = '\0';
 
-	char* datosFin = asignarMemoria((metaData->tamanio - offset));
+	char* datosFin = asignarMemoria((metaData->tamanio - offset) + 1);
 	memcpy(datosFin, (datosRestantes + offset), (metaData->tamanio - offset));
+	datosFin[(metaData->tamanio - offset)] = '\0';
 
 	char* datosTotales = concatenar(datosPrincipio, datosAGuardar);
 	concatenarATexto(&datosTotales, datosFin);

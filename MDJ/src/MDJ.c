@@ -151,9 +151,7 @@ void init(){
 	levantarMetadata();
 
 	initBitmap();
-
 	crearArchivoDePruebas();
-	//borrarArchivoFIFA("pruebaGralBOAF2.bin");
 
 	inicializarMutex(&mutexOperaciones);
 	colaOperaciones = queue_create();
@@ -172,22 +170,6 @@ int main(void) {
 
 	crearSelect(servidor);
 
-	printf("hay %d bloques libres\n", cantidadTotalDeBloquesLibres());
-
-	/*
-
-	//usleep(RETARDO*1000);//tiempo en milisegundos
-	borrarArchivoFIFA("PruebaBOAF0.bin");
-
-
-	printf("hay %d bloques libres\n", cantidadTotalDeBloquesLibres());
-	//usleep(RETARDO*1000);//tiempo en milisegundos
-
-
-	guardarDatosFIFA("PruebaBOAF1.bin", 3, 5, "GATOOOOOO");
-	printf("hay %d bloques libres\n", cantidadTotalDeBloquesLibres());
-
-	*/
 
 	while(1);
 
