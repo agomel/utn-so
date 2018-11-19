@@ -4,6 +4,7 @@ static void cargarTabla();
 static int obtenerMarcoLibreInvertida();
 static ElementoTablaInvertida* obtenerElementoPorIdDTB(int idDTB);
 static ElementoTablaInvertida* obtenerElementoPorMarco(int marco);
+static t_list* filtrarPorDTBYArchivo(int idDTB, char* nombreArchivo);
 
 void inicializarInvertida(t_config* configuracion){
 	tablaPaginasInvertidas = list_create();
@@ -51,7 +52,7 @@ respuestaDeObtencionDeMemoria* obtenerDatosInvertida(int idDTB, char* nombreArch
 		return respuesta;
 }
 
-t_list* filtrarPorDTBYArchivo(int idDTB, char* nombreArchivo){
+static t_list* filtrarPorDTBYArchivo(int idDTB, char* nombreArchivo){
 	bool coincidenIdyArchivo(ElementoTablaInvertida* elemento){
 		return elemento->idDTB == idDTB && (strcmp(elemento->nombreArchivo, nombreArchivo) == 0);
 	}
@@ -83,7 +84,6 @@ respuestaDeObtencionDeMemoria* obtenerLineaInvertida(int idDTB, char* nombreArch
 		log_debug(logger, "Linea completa: %s", lineaConBasura);
 		char** lineaSinBasura = string_split(lineaConBasura, "\n");
 		log_debug(logger, "Linea limpia: %s", lineaSinBasura[0]);
-		respuesta->cantidadDeLineas = 1;
 		respuesta->datos = string_new();
 		respuesta->pudoObtener = 0;
 		string_append(&respuesta->datos, lineaSinBasura[0]);

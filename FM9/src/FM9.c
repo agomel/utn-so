@@ -11,7 +11,7 @@ respuestaDeObtencionDeMemoria* obtenerDatosDeMemoria(int idDTB, char* nombreArch
 		return obtenerDatosSegPag(idDTB, nombreArchivo);
 
 	if(strcmp(modo, "INV") == 0)
-		return obtenerDatosInvertida(nombreArchivo);//CAMBIAAAAAAAR
+		return obtenerDatosInvertida(idDTB, nombreArchivo);
 }
 
 RespuestaGuardado* cargarDatosEnMemoria(int idDTB, char* datos, char* nombreArchivo){
@@ -234,12 +234,15 @@ int identificarse(int emisor, char header){
 
 void freeLineas(char** lineas){
 	int contador = 0;
-	while(lineas[contador][0] == '\n'){
+	int entro = 0;
+	while(lineas[contador] != NULL && lineas[contador][0] != '\n'){
+		entro = 1;
 		free(lineas[contador]);
 		contador++;
 	}
 
-	free(lineas);
+	if(entro)
+		free(lineas);
 }
 
 void crearSelect(int servidor){

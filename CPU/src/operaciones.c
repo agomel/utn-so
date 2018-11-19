@@ -141,10 +141,10 @@ char cerrar(char* lineaEjecutando, DTB* dtbRecibido){
 		void* buffer;
 		int desplazamiento = 0;
 		int tamanioBuffer = sizeof(char) + sizeof(int) + strlen(pathRecibido) + 1 + sizeof(int);
+		buffer = asignarMemoria(tamanioBuffer);
 		concatenarChar(buffer, &desplazamiento, LIBERAR_MEMORIA);
 		concatenarInt(buffer, &desplazamiento, dtbRecibido->id);
 		concatenarString(buffer, &desplazamiento, pathRecibido);
-		buffer = asignarMemoria(tamanioBuffer);
 
 		enviarMensaje(socketFM9, buffer, tamanioBuffer);
 		free(buffer);

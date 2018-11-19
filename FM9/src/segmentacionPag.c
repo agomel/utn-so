@@ -187,8 +187,13 @@ static RespuestaCargaSegPag* guardarDatosInternaSegPag(char* datos, char* nombre
 			int base = storage + posicionMarco * (tamanioPagina * tamanioLinea); //Porque el tamanioPagina esta en lineas
 			if(cantidadPaginas - 1 == i){ //Es la ultima pagina
 				for (int j = 0;  j < lineasEnLaUltimaPagina; j++) {
-					if(lineas[lineaACargar]==NULL)
+					if(lineas[lineaACargar]==NULL){
 						lineas[lineaACargar] = string_new();
+						if(lineaACargar != (totalLineas - 1)){ //No es ultima linea
+							lineas[lineaACargar + 1] = malloc(sizeof(char));
+							lineas[lineaACargar + 1] = NULL;
+						}
+					}
 					string_append(&lineas[lineaACargar], "\n");
 					char* textoAEscribir = malloc(tamanioLinea);
 					memcpy(textoAEscribir, lineas[lineaACargar], strlen(lineas[lineaACargar]) + 1);
@@ -198,6 +203,11 @@ static RespuestaCargaSegPag* guardarDatosInternaSegPag(char* datos, char* nombre
 				}
 			}else{
 				for(int j = 0; j < (tamanioPagina); j++){
+					if(lineas[lineaACargar]==NULL){
+						lineas[lineaACargar] = string_new();
+						lineas[lineaACargar + 1] = malloc(sizeof(char));
+						lineas[lineaACargar + 1] = NULL;
+					}
 					string_append(&lineas[lineaACargar], "\n");
 					char* textoAEscribir = malloc(tamanioLinea);
 					memcpy(textoAEscribir, lineas[lineaACargar], strlen(lineas[lineaACargar]) + 1);
@@ -258,6 +268,7 @@ respuestaDeObtencionDeMemoria* obtenerDatosSegPag(int idDTB, char* nombreArchivo
 		}
 		respuesta->datos = malloc(strlen(archivo) + 1);
 		memcpy(respuesta->datos, archivo, strlen(archivo) + 1);
+		free(archivo);
 		respuesta->pudoObtener = 0;
 
 	}else{
@@ -303,7 +314,7 @@ int asignarDatosSegPag(int IdDTB, char* nombreArchivo, int numeroLinea, char* da
 	numeroLinea--;
 	ElementoTablaDTBS* proceso = obtenerProcesoPorIdDTB(IdDTB);
 	ElementoTablaSegPag* segmento = obtenerSegmentoPorArchivo(nombreArchivo, proceso->segmentos);
-	if(numeroLinea < (segmento->cantidadLineas)){
+	if(numeroLinea < (segmento->cantidadLineas - 1)){
 		int paginaDondeSeEncuentraLaLinea = numeroLinea / tamanioPagina;
 		int lineaDentroDeLaPagina = numeroLinea % tamanioPagina;
 		if((lineaDentroDeLaPagina != 0) && (numeroLinea < tamanioPagina))
@@ -315,21 +326,22 @@ int asignarDatosSegPag(int IdDTB, char* nombreArchivo, int numeroLinea, char* da
 		char* lineaConBasura = asignarMemoria(tamanioLinea);
 		memcpy(lineaConBasura, storage + desplazamientoPagina + desplazamientoLinea, tamanioLinea);
 		log_debug(logger, "En asignar: Linea: %s", lineaConBasura);
-		if(lineaConBasura[0] == '\n'){
-			log_error(logger, "No se puede escribir en la ultima linea del archivo.");
-			return 2000; //ERROR
-		}
 		char** lineaSinBasura = string_split(lineaConBasura, "\n");
-		char* lineaPosta = malloc(strlen(lineaSinBasura[0]));
-		memcpy(lineaPosta, lineaSinBasura[0], strlen(lineaSinBasura[0]));
+		char* lineaPosta;
+		if(lineaSinBasura[0] == NULL)
+			lineaPosta = string_new();
+		else{
+			lineaPosta = malloc(strlen(lineaSinBasura[0]));
+			memcpy(lineaPosta, lineaSinBasura[0], strlen(lineaSinBasura[0]));
+		}
 		if((strlen(lineaPosta) + strlen(datos) + 2) < tamanioLinea){ //Lo que ya estaba, los datos nuevos, el /n y el espacio en el medio
 			//Se puede escribir
 			string_append_with_format(&lineaPosta, " %s\n", datos);
 			log_debug("Linea resultante de la asignación: %s", lineaPosta);
 			char* lineaAGuardar = malloc(tamanioLinea);
 			memcpy(lineaAGuardar, lineaPosta, strlen(lineaPosta) + 1);
+			string_trim(&lineaAGuardar);
 			memcpy(storage + desplazamientoPagina + desplazamientoLinea, lineaAGuardar, tamanioLinea);
-
 			freeLineasBasura(lineaSinBasura, lineaConBasura);
 			free(lineaPosta);
 			free(lineaAGuardar);
@@ -337,11 +349,15 @@ int asignarDatosSegPag(int IdDTB, char* nombreArchivo, int numeroLinea, char* da
 			return 0;
 
 		}else{
-			log_error(logger, "No hay suficiente espacio en la linea %d del archivo %s", (numeroLinea+1), nombreArchivo);
-
 			freeLineasBasura(lineaSinBasura, lineaConBasura);
 			free(lineaPosta);
-			return 20002; //ERROR
+			if(segmento->cantidadLineas - 1 == numeroLinea){
+				log_error(logger, "No se puede escribir en la ultima linea del archivo.");
+				return 2000; //ERROR
+			}else{
+				log_error(logger, "No hay suficiente espacio en la linea %d del archivo %s", (numeroLinea+1), nombreArchivo);
+				return 20002; //ERROR
+			}
 		}
 	}else {
 		log_error(logger, "El DTB no posee la linea %d", numeroLinea);
