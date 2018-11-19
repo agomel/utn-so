@@ -2,6 +2,7 @@
 #include "stdbool.h"
 
 static RespuestaCargaSegPag* guardarDatosInternaSegPag(char* datos, char* nombreArchivo);
+static int obtenerMarcoLibre();
 
 void inicializarSegPag(t_config* configuracion){
 	idSegmento = 0;
@@ -35,7 +36,7 @@ bool compararPorMarco(ElementoTablaPag* elem1, ElementoTablaPag* elem2){
 	return elem1->marco < elem2->marco;
 }
 
-int obtenerMarcoLibre(){
+static int obtenerMarcoLibre(){
 	if(tablaDePaginas->elements_count >= 1){
 
 		if(tablaDePaginas->elements_count > 1)

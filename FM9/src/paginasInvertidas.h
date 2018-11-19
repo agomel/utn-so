@@ -10,8 +10,11 @@ typedef struct{
 	char* nombreArchivo;
 }ElementoTablaInvertida;
 
+t_list* tablaPaginasInvertidas;
+int idPagina;
+int idMarco;
 
-
+void inicializarInvertida(t_config* configuracion);
 int guardarDatosInvertida(int idDTB, char* datos, char* nombreArchivo);
 respuestaDeObtencionDeMemoria* obtenerDatosInvertida(char* ids);
 
