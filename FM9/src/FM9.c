@@ -22,7 +22,7 @@ RespuestaGuardado* cargarDatosEnMemoria(int idDTB, char* datos, char* nombreArch
 		return guardarDatosSegPag(idDTB, datos, nombreArchivo);
 
 	if(strcmp(modo, "INV") == 0)
-		return guardarDatosSegPura(idDTB, datos, nombreArchivo); //CAMBIAAAAAAAR
+		return guardarDatosInvertida(idDTB, datos, nombreArchivo);
 }
 
 RespuestaGuardado* cargarNuevoDTB(int idDTB, char* datos, char* nombreArchivo){
@@ -33,7 +33,7 @@ RespuestaGuardado* cargarNuevoDTB(int idDTB, char* datos, char* nombreArchivo){
 		return nuevoProcesoSegPag(idDTB, datos, nombreArchivo);
 
 	if(strcmp(modo, "INV") == 0)
-		return nuevoProcesoSegPura(idDTB, datos, nombreArchivo); //CAMBIAAAAAAAR
+		return guardarDatosInvertida(idDTB, datos, nombreArchivo);
 }
 
 respuestaDeObtencionDeMemoria* obtenerLinea(int idDTB, char* nombreArchivo, int numeroLinea){
@@ -44,7 +44,7 @@ respuestaDeObtencionDeMemoria* obtenerLinea(int idDTB, char* nombreArchivo, int 
 		return obtenerLineaSegPag(idDTB, nombreArchivo, numeroLinea);
 
 	if(strcmp(modo, "INV") == 0)
-		return obtenerLineaSegPura(idDTB, nombreArchivo, numeroLinea); //CAMBIAAAAAAAAR
+		return obtenerLineaInvertida(idDTB, nombreArchivo, numeroLinea);
 }
 
 void liberarMemoria(int idDTB, char* nombreArchivo){

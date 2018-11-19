@@ -83,6 +83,5 @@ char* bytesToBits(char* bytes){
 		memcpy(bits + desplazamiento, byteToBit(bytes[i]), CHAR_BIT);
 		desplazamiento += CHAR_BIT;
 	}
-	agregarBarraCero(bits);
 	return bits;
 }

@@ -10,13 +10,20 @@ typedef struct{
 	char* nombreArchivo;
 }ElementoTablaInvertida;
 
+typedef struct{
+	int resultado;
+	int pesoArchivo;
+}RespuestaCargaInvertida;
+
 t_list* tablaPaginasInvertidas;
 int idPagina;
 int idMarco;
 
 void inicializarInvertida(t_config* configuracion);
-int guardarDatosInvertida(int idDTB, char* datos, char* nombreArchivo);
-respuestaDeObtencionDeMemoria* obtenerDatosInvertida(char* ids);
+RespuestaGuardado* guardarDatosInvertida(int idDTB, char* datos, char* nombreArchivo);
+respuestaDeObtencionDeMemoria* obtenerDatosInvertida(int idDTB, char* nombreArchivo);
+respuestaDeObtencionDeMemoria* obtenerLineaInvertida(int idDTB, char* nombreArchivo, int numeroLinea);
+
 
 
 #endif /* PAGINASINVERTIDAS_H_ */
