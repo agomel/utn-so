@@ -56,13 +56,13 @@ char* obtenerDatosFS(char* rutaArchivo, int offset, int size){
 	int offsetEnBloque = offset % TAMANIO_BLOQUES;
 	int sizeALeerEnBloque;
 
-	char* datosTotales = asignarMemoria(size + 1);
 
 	int desplazamiento = 0;
 
 	if(size == -1)
 		size = metaData->tamanio;
 
+	char* datosTotales = asignarMemoria(size + 1);
 	datosTotales[size] = '\0';
 	while(size > 0){
 		if(size > (TAMANIO_BLOQUES - offsetEnBloque)){
@@ -82,6 +82,7 @@ char* obtenerDatosFS(char* rutaArchivo, int offset, int size){
 		size = size - sizeALeerEnBloque;
 	}
 	freeMetadata(metaData);
+	log_info(logger, "datos obtenidos son %s", datosTotales);
 	return datosTotales;
 }
 
