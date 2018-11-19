@@ -151,7 +151,7 @@ void init(){
 	levantarMetadata();
 
 	initBitmap();
-	crearArchivoDePruebas();
+	//crearArchivoDePruebas();
 
 	inicializarMutex(&mutexOperaciones);
 	colaOperaciones = queue_create();

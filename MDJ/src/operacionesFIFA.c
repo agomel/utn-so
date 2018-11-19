@@ -14,10 +14,11 @@ int validarArchivoFIFA(char* rutaArchivo){
 int crearArchivoFIFA(char* rutaArchivo, int cantidadDeBytes){
 	char* rutaCompleta = generarPathAbsoluto(rutaArchivo);
 
-	char* datos = asignarMemoria(cantidadDeBytes) + 1;
+	char* datos = asignarMemoria(cantidadDeBytes + 1);
 	for(int i = 0; i < cantidadDeBytes; i++){
 		datos[i] = '\n';
 	}
+	datos[cantidadDeBytes] = '\0';
 	int estadoCrearArchivoFS = crearArchivoFS(rutaCompleta, datos);
 
 	free(datos);
