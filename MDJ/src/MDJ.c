@@ -153,6 +153,7 @@ void init(){
 	initBitmap();
 
 	crearArchivoDePruebas();
+	//borrarArchivoFIFA("pruebaGralBOAF2.bin");
 
 	inicializarMutex(&mutexOperaciones);
 	colaOperaciones = queue_create();

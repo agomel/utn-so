@@ -18,14 +18,9 @@ t_bitarray* crearBitarray(){
 }
 
 void persistirBitMap(){
-	char* bitArray = asignarMemoria(0);
-	for(int i = 0; i < bitarray_get_max_bit(bitArray); i++){
-		concatenarATexto(&bitArray, intToString(bitarray_test_bit(bitarray, i)));
-	}
-
 	FILE* archivoBitMap = fopen(rutaBitmap, "wb");  // w for write, b for binary
 
-	fwrite(bitArray, bitarray_get_max_bit(bitArray), 1, archivoBitMap);
+	fwrite(bitarray->bitarray, cantidadBloquesBitmapEnBytes(), 1, archivoBitMap);
 
 	fclose(archivoBitMap);
 }
@@ -35,10 +30,6 @@ void initBitmap(){
 	bitarray = crearBitarray();
 	printf("INIT- la cant de bloques %d \n", bitarray_get_max_bit(bitarray));
 	printf("INIT- cant libres es %d \n", cantidadTotalDeBloquesLibres());
-	for(int i = 0; i < bitarray_get_max_bit(bitarray); i++){
-		printf("%d", bitarray_test_bit(bitarray, i));
-	}
-	printf("\n");
 }
 
 int cantidadTotalDeBloquesLibres(){
@@ -50,16 +41,26 @@ int cantidadTotalDeBloquesLibres(){
 	}
 	return cantidadLibre;
 }
+void printearBitmap(){
+	for(int i = 0; i < bitarray_get_max_bit(bitarray); i++){
+		printf("%d", bitarray_test_bit(bitarray, i));
+	}
+	printf("\n");
+}
 
 int ocuparBloqueEnBitmap(int bloqueAOcupar){
 	bitarray_set_bit(bitarray, bloqueAOcupar);
+	log_info(logger, "ocupado bloque %d", bloqueAOcupar);
 	persistirBitMap();
+	printearBitmap();
 	return 0;
 }
 
 int liberarBloqueEnBitmap(int bloqueALiberar){
 	bitarray_clean_bit(bitarray, bloqueALiberar);
+	log_info(logger, "liberado bloque %d", bloqueALiberar);
 	persistirBitMap();
+	printearBitmap();
 	return 0;
 }
 
@@ -71,6 +72,8 @@ int obtenerBloqueLibreBitmap(){
 			break;
 		}
 	}
+	log_info(logger, "bloque obtenido %d", posicion);
+	printearBitmap();
 	return posicion;
 }
 
