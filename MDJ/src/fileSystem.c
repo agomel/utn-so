@@ -82,7 +82,6 @@ char* obtenerDatosFS(char* rutaArchivo, int offset, int size){
 		size = size - sizeALeerEnBloque;
 	}
 	freeMetadata(metaData);
-	log_info(logger, "datos obtenidos son %s", datosTotales);
 	return datosTotales;
 }
 
