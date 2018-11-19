@@ -12,10 +12,7 @@ void consolita(){
 
 	//escuchar la consola
 	while(1){
-
-		char* mensajeReadLine = asignarMemoria(strlen(MONTAJE_ACTUAL) + 1);
-		memcpy(mensajeReadLine, MONTAJE_ACTUAL, strlen(MONTAJE_ACTUAL) +1);
-		string_append(&mensajeReadLine, "$ ");
+		char* mensajeReadLine = concatenar(MONTAJE_ACTUAL, "$ ");
 		char* texto = asignarMemoria(strlen(MONTAJE_ACTUAL) + 1);
 		texto = readline(mensajeReadLine);
 		free(mensajeReadLine);

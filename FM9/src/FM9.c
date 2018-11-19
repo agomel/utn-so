@@ -152,8 +152,17 @@ void entenderMensaje(int emisor, char header){
 				if(respuesta->pudoObtener == 0){
 					enviarYSerializarStringSinHeader(emisor, respuesta->datos);
 					freeRespuestaObtencion(respuesta);
-				}else{
+				}else if(respuesta->pudoObtener == 3){
+					//END OF FILE
 					log_info(logger, "Es fin de archivo");
+					char* rta = string_new();
+					string_append(&rta, "v"); //"v" = FIN_ARCHIVO
+					enviarYSerializarStringSinHeader(emisor, rta);
+					free(rta);
+					free(respuesta); //Porque no hay que hacer el free de respuesta->datos
+
+				}else{
+					log_error(logger, "Error al obtener linea");
 					char* rta = malloc(2);
 					memcpy(rta, "v", 1);
 					enviarYSerializarStringSinHeader(emisor, rta);
@@ -225,7 +234,7 @@ int identificarse(int emisor, char header){
 
 void freeLineas(char** lineas){
 	int contador = 0;
-	while(lineas[contador] != NULL){
+	while(lineas[contador][0] == '\n'){
 		free(lineas[contador]);
 		contador++;
 	}

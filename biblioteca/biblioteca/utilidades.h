@@ -11,6 +11,7 @@
 #include "logger.h"
 #include <commons/string.h>
 #include <commons/collections/list.h>
+#include <commons/bitarray.h>
 
 #define ARCHIVO_CONFIGURACION "configuraciones/configuracion.txt"
 #define ARCHIVO_LOG "log.txt"

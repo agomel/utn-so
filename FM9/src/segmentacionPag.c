@@ -185,6 +185,8 @@ static RespuestaCargaSegPag* guardarDatosInternaSegPag(char* datos, char* nombre
 			int base = storage + posicionMarco * (tamanioPagina * tamanioLinea); //Porque el tamanioPagina esta en lineas
 			if(cantidadPaginas - 1 == i){ //Es la ultima pagina
 				for (int j = 0;  j < lineasEnLaUltimaPagina; j++) {
+					if(lineas[lineaACargar]==NULL)
+						lineas[lineaACargar] = string_new();
 					string_append(&lineas[lineaACargar], "\n");
 					char* textoAEscribir = malloc(tamanioLinea);
 					memcpy(textoAEscribir, lineas[lineaACargar], strlen(lineas[lineaACargar]) + 1);
@@ -265,17 +267,21 @@ respuestaDeObtencionDeMemoria* obtenerLineaSegPag(int idDTB, char* nombreArchivo
 			int desplazamientoLinea = lineaDentroDeLaPagina * tamanioLinea;
 			char* lineaConBasura = asignarMemoria(tamanioLinea);
 			memcpy(lineaConBasura, storage + desplazamientoPagina + desplazamientoLinea, tamanioLinea);
-			log_debug(logger, "En obtener: Linea: %s", lineaConBasura);
-			char** lineaSinBasura = string_split(lineaConBasura, "\n");
-			respuesta->cantidadDeLineas = 1;
-			respuesta->datos = malloc(strlen(lineaSinBasura[0])+1);
-			respuesta->pudoObtener = 0;
-			memcpy(respuesta->datos, lineaSinBasura[0], strlen(lineaSinBasura[0])+1);
-			freeLineasBasura(lineaSinBasura, lineaConBasura);
-			agregarBarraCero(respuesta->datos);
+			if(lineaConBasura[0]=='\n'){ //FIN DE ARCHIVO
+				respuesta->pudoObtener = 3;
+			}else{
+				log_debug(logger, "En obtener: Linea: %s", lineaConBasura);
+				char** lineaSinBasura = string_split(lineaConBasura, "\n");
+				respuesta->cantidadDeLineas = 1;
+				respuesta->datos = malloc(strlen(lineaSinBasura[0])+1);
+				respuesta->pudoObtener = 0;
+				memcpy(respuesta->datos, lineaSinBasura[0], strlen(lineaSinBasura[0])+1);
+				freeLineasBasura(lineaSinBasura, lineaConBasura);
+				agregarBarraCero(respuesta->datos);
+			}
 		}else{
 			log_error(logger, "El DTB no posee la linea %d", numeroLinea);
-			respuesta->pudoObtener = 1;
+			respuesta->pudoObtener = 1; //ERROR
 		}
 	return respuesta;
 }

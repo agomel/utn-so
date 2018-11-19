@@ -7,13 +7,14 @@
 #include <biblioteca/socket.h>
 #include <biblioteca/select.h>
 #include <biblioteca/hilos.h>
-#include "operaciones.h"
 #include <commons/collections/queue.h>
 #include <biblioteca/semaforos.h>
 #include <biblioteca/nuestroSelect.h>
 #include <biblioteca/traductor.h>
-#include "guardado.h"
 #include "consola.h"
+#include "bitmap.h"
+#include "fileSystem.h"
+#include "operacionesFIFA.h"
 
 int RETARDO;
 char* PUNTO_MONTAJE;
@@ -34,6 +35,13 @@ sem_t semProductores;
 t_log* logger;
 t_config* configuracion;
 
-int identificarse(int emisor, char header);
+void entenderMensaje(int emisor, char header);
 
+int identificarse(int emisor, char header);
+void crearSelect(int servidor);
+void levantarMetadata();
+
+void obtenerPuntoMontaje(char* primerMontaje);
+void crearPuntosDeMontaje();
+void init();
 #endif /*MDJ_H_*/

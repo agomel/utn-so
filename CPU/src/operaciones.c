@@ -140,8 +140,9 @@ char cerrar(char* lineaEjecutando, DTB* dtbRecibido){
 		//Esta abierto
 		void* buffer;
 		int desplazamiento = 0;
-		int tamanioBuffer = sizeof(char) + sizeof(int) + strlen(pathRecibido) + 1;
+		int tamanioBuffer = sizeof(char) + sizeof(int) + strlen(pathRecibido) + 1 + sizeof(int);
 		concatenarChar(buffer, &desplazamiento, LIBERAR_MEMORIA);
+		concatenarInt(buffer, &desplazamiento, dtbRecibido->id);
 		concatenarString(buffer, &desplazamiento, pathRecibido);
 		buffer = asignarMemoria(tamanioBuffer);
 
@@ -161,10 +162,10 @@ char cerrar(char* lineaEjecutando, DTB* dtbRecibido){
 char crear(char* lineaEjecutando, DTB* dtbRecibido){
 	bloquearDTB(dtbRecibido);
 	char* parametros = string_substring_from(lineaEjecutando, 6);
-	char** pathYCantLineas = string_n_split(parametros, 2, ' ');
+	char** pathYCantLineas = string_n_split(parametros, 2, " ");
 	char* path = pathYCantLineas[0];
-	int cantidadDeLineas = pathYCantLineas[1];
-	enviarySerializarPathyTamanioArchivo(socketDIEGO, path, cantidadDeLineas);
+	int cantidadDeLineas = atoi(pathYCantLineas[1]);
+	enviarySerializarPathyTamanioArchivo(socketDIEGO, path, cantidadDeLineas, dtbRecibido->id);
 	return 'b';
 }
 
@@ -173,7 +174,18 @@ char borrar(char* lineaEjecutando, DTB* dtbRecibido){
 
 	char* pathRecibido = asignarMemoria(strlen(lineaEjecutando)-5);
 	pathRecibido = string_substring_from(lineaEjecutando, 6);
-	enviarYSerializarString(socketDIEGO, pathRecibido, BORRAR_ARCHIVO);
+
+	void* buffer;
+	int desplazamiento = 0;
+	int tamanioBuffer = sizeof(char) + (strlen(pathRecibido)+1) + sizeof(int)*2;
+	buffer = asignarMemoria(tamanioBuffer);
+
+	concatenarChar(buffer, &desplazamiento, BORRAR_ARCHIVO);
+	concatenarInt(buffer, &desplazamiento, dtbRecibido->id);
+	concatenarString(buffer, &desplazamiento, pathRecibido);
+	enviarMensaje(socketDIEGO, buffer, tamanioBuffer);
+
+	free(buffer);
 	free(pathRecibido);
 	return 'b';
 }

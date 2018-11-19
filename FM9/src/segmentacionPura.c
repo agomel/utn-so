@@ -105,6 +105,8 @@ static RespuestaCargaSegPura* guardarDatosInternaSegPura(char* datos, char* nomb
 		agregarASegmentoOcupado(posicionDondeGuardar, tamanioSegmento);
 		int base = storage + posicionDondeGuardar;
 		for(int i = 0; i<totalLineas; i++){
+			if(lineas[i]==NULL)
+				lineas[i] = string_new();
 			string_append(&lineas[i], "\n");
 			char* textoAEscribir = asignarMemoria(tamanioLinea);
 			memcpy(textoAEscribir, lineas[i], strlen(lineas[i]) + 1);
@@ -188,17 +190,21 @@ respuestaDeObtencionDeMemoria* obtenerLineaSegPura(int idDTB, char* nombreArchiv
 		int desplazamiento = segmento->base + numeroLinea * tamanioLinea;
 		char* lineaConBasura = malloc(tamanioLinea);
 		memcpy(lineaConBasura, storage + desplazamiento, tamanioLinea);
-		log_debug(logger, "En obtener: Linea con basura: %s", lineaConBasura);
-		char** lineaSinBasura = string_split(lineaConBasura, "\n");
-		respuesta->cantidadDeLineas = 1;
-		respuesta->datos = malloc(strlen(lineaSinBasura[0])+1);
-		respuesta->pudoObtener = 0;
-		memcpy(respuesta->datos, lineaSinBasura[0], strlen(lineaSinBasura[0])+1);
-		agregarBarraCero(respuesta->datos);
-		freeLineasBasura(lineaSinBasura, lineaConBasura);
+		if(lineaConBasura[0]=='\n'){ //FIN DE ARCHIVO
+			respuesta->pudoObtener = 3;
+		}else{
+			log_debug(logger, "En obtener: Linea con basura: %s", lineaConBasura);
+			char** lineaSinBasura = string_split(lineaConBasura, "\n");
+			respuesta->cantidadDeLineas = 1;
+			respuesta->datos = malloc(strlen(lineaSinBasura[0])+1);
+			respuesta->pudoObtener = 0;
+			memcpy(respuesta->datos, lineaSinBasura[0], strlen(lineaSinBasura[0])+1);
+			agregarBarraCero(respuesta->datos);
+			freeLineasBasura(lineaSinBasura, lineaConBasura);
+		}
 	}else{
-		log_error(logger, "Es fin de archivo");
-		respuesta->pudoObtener = 1;
+		log_error(logger, "El DTB no posee la linea %d", numeroLinea);
+		respuesta->pudoObtener = 1; //ERRORRRR
 	}
 
 	return respuesta;
