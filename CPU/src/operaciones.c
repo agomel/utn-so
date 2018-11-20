@@ -151,6 +151,7 @@ char cerrar(char* lineaEjecutando, DTB* dtbRecibido){
 
 		eliminarArchivo(pathRecibido, dtbRecibido);
 		free(pathRecibido);
+		char seLiberoLamem = deserializarChar(socketFM9);
 		return 'b';
 	}else{
 		//No esta abierto ese archivo
