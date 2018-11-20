@@ -19,8 +19,10 @@ int cantidadDeLineas(char* texto){
 
 void freeLineasBasura(char** lineaSinBasura, char* lineaConBasura){
 	free(lineaConBasura);
-	free(lineaSinBasura[0]);
-	free(lineaSinBasura[1]);
+	if(lineaSinBasura[0] != NULL){
+		free(lineaSinBasura[0]);
+		free(lineaSinBasura[1]);
+	}
 	free(lineaSinBasura);
 }
 

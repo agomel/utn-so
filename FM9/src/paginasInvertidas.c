@@ -100,7 +100,7 @@ RespuestaGuardado* guardarDatosInvertida(int idDTB, char* datos, char* nombreArc
 
 	RespuestaGuardado* respuesta = malloc(sizeof(RespuestaCargaInvertida));
 	int totalLineas = cantidadDeLineas(datos);
-	char** lineas = string_split(datos, "\n");
+	char** lineas = dividirPorLineas(datos);
 	int cantidadPaginas = 1;
 	int lineasEnLaUltimaPagina = totalLineas % tamanioPagina;
 	if(totalLineas > tamanioPagina){
