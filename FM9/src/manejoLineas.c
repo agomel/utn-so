@@ -53,9 +53,8 @@ char** dividirPorLineas(char* datos){
 
 			if(*caracter == '\n')
 				resto = string_substring_from(resto, 1);
-
-
 		}
+
 		if(linea[0] == '\n')
 			vector[i] = NULL;
 		else
@@ -65,5 +64,5 @@ char** dividirPorLineas(char* datos){
 		free(caracter);
 	}
 
-	return vector;
+return vector;
 }
