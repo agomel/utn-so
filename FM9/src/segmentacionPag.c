@@ -397,3 +397,15 @@ void liberarDTBDeMemoriaSegPag(int idDTB){
 		}
 	list_remove_and_destroy_by_condition(tablaDeProcesos, coincideIdDTB, destruirElemento);
 }
+
+void dumpSegPag(int idDTB){
+	ElementoTablaDTBS* proceso = obtenerProcesoPorIdDTB(idDTB);
+	int cantidadDeSegmentos = proceso->segmentos->elements_count;
+	log_info(logger, "El DTB con id %d, tiene %d archivos abiertos en memoria", idDTB, cantidadDeSegmentos);
+	for (int i = 0; i < cantidadDeSegmentos; ++i) {
+		ElementoTablaSegPag* segmento = list_get(proceso->segmentos, i);
+		respuestaDeObtencionDeMemoria* respuesta = obtenerDatosSegPag(idDTB, segmento->nombreArchivo);
+		log_info(logger, "El archivo %d tiene estos datos guardados: %s", (i+1), respuesta->datos);
+		freeRespuestaObtencion(respuesta);
+	}
+}
