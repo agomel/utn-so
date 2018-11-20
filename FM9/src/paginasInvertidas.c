@@ -15,13 +15,6 @@ void inicializarInvertida(t_config* configuracion){
 	cargarTabla();
 }
 
-static void freeLineasBasura(char** lineaSinBasura, char* lineaConBasura){
-	free(lineaConBasura);
-	free(lineaSinBasura[0]);
-	free(lineaSinBasura[1]);
-	free(lineaSinBasura);
-}
-
 respuestaDeObtencionDeMemoria* obtenerDatosInvertida(int idDTB, char* nombreArchivo){
 	respuestaDeObtencionDeMemoria* respuesta = malloc(sizeof(respuestaDeObtencionDeMemoria));
 	t_list* marcosConEseArchivo = filtrarPorDTBYArchivo(idDTB, nombreArchivo);

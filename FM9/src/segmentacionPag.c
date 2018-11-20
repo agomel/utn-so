@@ -95,13 +95,6 @@ static void freeRespuestaCargaSegPag(RespuestaCargaSegPag* respuesta){
 	free(respuesta);
 }
 
-static void freeLineasBasura(char** lineaSinBasura, char* lineaConBasura){
-	free(lineaConBasura);
-	free(lineaSinBasura[0]);
-	free(lineaSinBasura[1]);
-	free(lineaSinBasura);
-}
-
 static void copiarElemSegPag(ElementoTablaSegPag* de, ElementoTablaSegPag* hasta){
 	int tamanioArchivo = strlen(de->nombreArchivo);
 	hasta->nombreArchivo = malloc(tamanioArchivo + 1);

@@ -46,6 +46,4 @@ t_config* configuracion;
 
 void entenderMensaje(int emisor, char header);
 
-void freeLineas(char** lineas);
-
 #endif /*FM9_H_*/

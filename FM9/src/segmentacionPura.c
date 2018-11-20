@@ -11,7 +11,6 @@ static ElementoTablaProcesos* obtenerProcesoPorIdDTB(int idDTB);
 static void freeRespuestaCargaSegPura(RespuestaCargaSegPura* respuesta);
 static RespuestaCargaSegPura* guardarDatosInternaSegPura(char* datos, char* nombreArchivo);
 static int dondeEntro(int tamanioAGuardar);
-static void freeLineasBasura(char** lineaSinBasura, char* lineaConBasura);
 
 ElementoTablaProcesos* crearElemTablaProcesos(int idDTB, int tablaSegmentos){
 	ElementoTablaProcesos* elemento = malloc(sizeof(ElementoTablaProcesos));
@@ -95,7 +94,7 @@ static RespuestaCargaSegPura* guardarDatosInternaSegPura(char* datos, char* nomb
 
 	RespuestaCargaSegPura* respuesta = malloc(sizeof(RespuestaCargaSegPura));
 	int totalLineas = cantidadDeLineas(datos);
-	char** lineas = string_split(datos, "\n");
+	char** lineas = dividirPorLineas(datos);
 
 	int tamanioSegmento = totalLineas * tamanioLinea;
 	int posicionDondeGuardar = dondeEntro(tamanioSegmento);
@@ -106,13 +105,9 @@ static RespuestaCargaSegPura* guardarDatosInternaSegPura(char* datos, char* nomb
 		agregarASegmentoOcupado(posicionDondeGuardar, tamanioSegmento);
 		int base = storage + posicionDondeGuardar;
 		for(int i = 0; i<totalLineas; i++){
-			if(lineas[i]==NULL){
+			if(lineas[i]==NULL)
 				lineas[i] = string_new();
-				if(i != (totalLineas - 1)){ //No es ultima linea
-					lineas[i + 1] = malloc(sizeof(char));
-					lineas[i + 1] = NULL;
-				}
-			}
+
 			string_append(&lineas[i], "\n");
 			char* textoAEscribir = asignarMemoria(tamanioLinea);
 			memcpy(textoAEscribir, lineas[i], strlen(lineas[i]) + 1);
@@ -182,13 +177,6 @@ respuestaDeObtencionDeMemoria* obtenerDatosSegPura(int idDTB, char* nombreArchiv
 		respuesta->pudoObtener = 12444; //ERROR
 	}
 		return respuesta;
-}
-
-static void freeLineasBasura(char** lineaSinBasura, char* lineaConBasura){
-	free(lineaConBasura);
-	free(lineaSinBasura[0]);
-	free(lineaSinBasura[1]);
-	free(lineaSinBasura);
 }
 
 respuestaDeObtencionDeMemoria* obtenerLineaSegPura(int idDTB, char* nombreArchivo, int numeroLinea){

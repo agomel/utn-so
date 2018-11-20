@@ -234,19 +234,6 @@ int identificarse(int emisor, char header){
 	}
 }
 
-void freeLineas(char** lineas){
-	int contador = 0;
-	int entro = 0;
-	while(lineas[contador] != NULL && lineas[contador][0] != '\n'){
-		entro = 1;
-		free(lineas[contador]);
-		contador++;
-	}
-
-	if(entro)
-		free(lineas);
-}
-
 void crearSelect(int servidor){
 	Select* select = asignarMemoria(sizeof(Select));
 	select->colaOperaciones = colaOperaciones;
