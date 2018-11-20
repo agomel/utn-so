@@ -40,6 +40,7 @@ void escuchar(int socketSAFA){
 								continuar2 = entenderLinea(lineaAEjecutar, dtbRecibido, mensajeEntendido, 1);
 							}
 						}
+						log_info(logger, "Terminada operacion");
 					}
 					freeDTB(dtbRecibido);
 					break;
