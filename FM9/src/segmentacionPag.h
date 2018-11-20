@@ -38,5 +38,6 @@ respuestaDeObtencionDeMemoria* obtenerDatosSegPag(int idDTB, char* idsSegmentos)
 respuestaDeObtencionDeMemoria* obtenerLineaSegPag(int idDTB, char* nombreArchivo, int numeroLinea);
 void liberarMemoriaSegPag(int idDTB, char* nombreArchivo);
 void liberarDTBDeMemoriaSegPag(int idDTB);
+void dumpSegPag(int idDTB);
 
 #endif /* SEGMENTACIONPAG_H_ */
