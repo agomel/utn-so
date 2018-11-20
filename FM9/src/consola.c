@@ -39,10 +39,7 @@ void dumpSegPura(int idDTB){
 	}
 }
 
-void dumpSegPag(idDTB){
+void dumpSegPag(int idDTB){
 
 }
 
-void dumpInvertida(idDTB){
-
-}

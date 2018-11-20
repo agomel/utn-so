@@ -243,7 +243,7 @@ respuestaDeObtencionDeMemoria* obtenerDatosSegPag(int idDTB, char* nombreArchivo
 			for (int j = 0;  j < hastaLinea; j++) {
 				char* lineaConBasura = malloc(tamanioLinea);
 				memcpy(lineaConBasura, desplazamiento + j * tamanioLinea, tamanioLinea);
-				if(lineaConBasura[0] == '\n'){ //Ultima linea archivo
+				if(lineaConBasura[0] == '\n'){
 					string_append(&archivo, "\n");
 					free(lineaConBasura);
 				}else{
@@ -283,15 +283,15 @@ respuestaDeObtencionDeMemoria* obtenerLineaSegPag(int idDTB, char* nombreArchivo
 				respuesta->pudoObtener = 3;
 				free(lineaConBasura);
 			}else{
-				log_debug(logger, "En obtener: Linea: %s", lineaConBasura);
 				char** lineaSinBasura = string_split(lineaConBasura, "\n");
 				respuesta->datos = string_new();
 				respuesta->pudoObtener = 0;
 				string_append(&respuesta->datos, lineaSinBasura[0]);
+				log_debug(logger, "Linea: %s", lineaSinBasura[0]);
 				freeLineasBasura(lineaSinBasura, lineaConBasura);
 			}
 		}else{
-			log_error(logger, "El DTB no posee la linea %d", numeroLinea);
+			log_error(logger, "El archivo no posee la linea %d", numeroLinea);
 			respuesta->pudoObtener = 1; //ERROR
 		}
 	return respuesta;
@@ -309,7 +309,6 @@ int asignarDatosSegPag(int IdDTB, char* nombreArchivo, int numeroLinea, char* da
 		int desplazamientoLinea = lineaDentroDeLaPagina * tamanioLinea;
 		char* lineaConBasura = asignarMemoria(tamanioLinea);
 		memcpy(lineaConBasura, storage + desplazamientoPagina + desplazamientoLinea, tamanioLinea);
-		log_debug(logger, "En asignar: Linea: %s", lineaConBasura);
 		char** lineaSinBasura = string_split(lineaConBasura, "\n");
 		char* lineaPosta;
 		if(lineaSinBasura[0] == NULL)
@@ -375,7 +374,7 @@ void liberarMemoriaSegPag(int idDTB, char* nombreArchivo){
 
 	list_remove_and_destroy_by_condition(proceso->segmentos, coincideNombre, destruirElemento);
 
-	log_info(logger, "liberando memoria");
+	log_info(logger, "Borrado archivo %s de memoria", nombreArchivo);
 }
 
 void liberarDTBDeMemoriaSegPag(int idDTB){
