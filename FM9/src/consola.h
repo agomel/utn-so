@@ -17,7 +17,6 @@
 #include <readline/readline.h>
 
 void consola();
-void dumpSegPura(int idDTB);
 void dumpSegPag(int idDTB);
 void dumpInvertida(int idDTB);
 #endif /*CONSOLA_H_*/

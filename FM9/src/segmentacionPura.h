@@ -37,7 +37,7 @@ respuestaDeObtencionDeMemoria* obtenerDatosSegPura(int idDTB, char* nombreArchiv
 respuestaDeObtencionDeMemoria* obtenerLineaSegPura(int idDTB, char* nombreArchivo, int numeroLinea);
 void liberarMemoriaSegPura(int idDTB, char* nombreArchivo);
 void liberarDTBDeMemoriaSegPura(int idDTB);
-ElementoTablaProcesos* obtenerProcesoPorIdDTB(int idDTB);
+void dumpSegPura(int idDTB);
 int asignarDatosSegPura(int IdDTB, char* nombreArchivo, int numeroLinea, char* datos);
 
 #endif /* SEGMENTACIONPURA_H_ */
