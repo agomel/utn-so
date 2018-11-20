@@ -40,6 +40,8 @@ t_log* logger;
 char* modo;
 t_queue* colaOperaciones;
 pthread_mutex_t mutexOperaciones;
+pthread_mutex_t mutexListaSegmentos;
+pthread_mutex_t mutexListaProcesos;
 sem_t semProductores;
 sem_t semOperaciones;
 t_config* configuracion;

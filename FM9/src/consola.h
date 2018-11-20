@@ -14,4 +14,5 @@
 #include <readline/readline.h>
 
 void consola();
+
 #endif /*CONSOLA_H_*/
