@@ -11,14 +11,19 @@ void inicializarSegPag(t_config* configuracion){
 	tablaDeProcesos = list_create();
 	tamanioPagina = config_get_int_value(configuracion, "TAM_PAGINA");
 	cantidadMarcosTotales = tamanioMemoria / tamanioPagina;
+	inicializarMutex(&mutexListaPaginas);
+	inicializarMutex(&mutexListaSegmentos);
+	inicializarMutex(&mutexListaProcesos);
 }
 
 static ElementoTablaDTBS* obtenerProcesoPorIdDTB(int idDTB){
 	bool coincideId(ElementoTablaDTBS* elemento){
 		return elemento->idDTB == idDTB;
 	}
-
-	return list_find(tablaDeProcesos, coincideId);
+	waitMutex(&mutexListaProcesos);
+	ElementoTablaDTBS* proc =  list_find(tablaDeProcesos, coincideId);
+	signalMutex(&mutexListaProcesos);
+	return proc;
 }
 
 static ElementoTablaSegPag* obtenerSegmentoPorArchivo(char* nombreArchivo, t_list* tablaSegmentos){
@@ -28,8 +33,10 @@ static ElementoTablaSegPag* obtenerSegmentoPorArchivo(char* nombreArchivo, t_lis
 
 		return false;
 	}
-
-	return list_find(tablaSegmentos, coincideNombre);
+	waitMutex(&mutexListaSegmentos);
+	ElementoTablaSegPag* seg = list_find(tablaSegmentos, coincideNombre);
+	signalMutex(&mutexListaSegmentos);
+	return seg;
 }
 
 bool compararPorMarco(ElementoTablaPag* elem1, ElementoTablaPag* elem2){
@@ -39,13 +46,16 @@ bool compararPorMarco(ElementoTablaPag* elem1, ElementoTablaPag* elem2){
 static int obtenerMarcoLibre(){
 	if(tablaDePaginas->elements_count >= 1){
 
-		if(tablaDePaginas->elements_count > 1)
+		if(tablaDePaginas->elements_count > 1){
+			waitMutex(&mutexListaPaginas);
 			list_sort(tablaDePaginas, compararPorMarco);
-
+			signalMutex(&mutexListaPaginas);}
+		waitMutex(&mutexListaPaginas);
 		ElementoTablaPag* primerElemento = list_get(tablaDePaginas, 0);
+		signalMutex(&mutexListaPaginas);
 		if(primerElemento->marco != 0)
 			return 0;
-
+		waitMutex(&mutexListaPaginas);
 		for(int i = 0; i < tablaDePaginas->elements_count - 1; i++){
 			ElementoTablaPag* elem1 = list_get(tablaDePaginas, i);
 			ElementoTablaPag* elem2 = list_get(tablaDePaginas, i+1);
@@ -60,6 +70,7 @@ static int obtenerMarcoLibre(){
 		}
 
 		ElementoTablaPag* ultimoElemento = list_get(tablaDePaginas, tablaDePaginas->elements_count -1);
+		signalMutex(&mutexListaPaginas);
 		int ultimoMarco = ultimoElemento->marco;
 		if((ultimoMarco + 1) < cantidadMarcosTotales){
 			return ultimoMarco + 1;
@@ -113,16 +124,21 @@ RespuestaGuardado* nuevoProcesoSegPag(int idDTB, char* datos, char* nombreArchiv
 		t_list* tablaSegmentos = list_create();
 		ElementoTablaSegPag* nuevoRegistro = malloc(sizeof(ElementoTablaSegPag));
 		copiarElemSegPag(cargaEnMemoria->elementoTabla, nuevoRegistro);
+		waitMutex(&mutexListaSegmentos);
 		list_add(tablaSegmentos, nuevoRegistro);
 		ElementoTablaDTBS* elementoTablaDTBS = crearElemTablaDTBS(idDTB, tablaSegmentos);
+		signalMutex(&mutexListaSegmentos);
+		waitMutex(&mutexListaProcesos);
 		list_add(tablaDeProcesos, elementoTablaDTBS);
+		signalMutex(&mutexListaProcesos);
 		log_info(logger, "Agregado proceso %d a tabla de procesos", idDTB);
 		respuesta->pudoGuardar = 0;
 		respuesta->pesoArchivo = cargaEnMemoria->pesoArchivo;
 		freeRespuestaCargaSegPag(cargaEnMemoria);
 	}else{
 		log_error(logger, "No se pudo agregar proceso %d a tabla de procesos", idDTB);
-		respuesta->pudoGuardar = cargaEnMemoria->resultado;log_error(logger, "No se puede escribir en la ultima linea del archivo.");
+		respuesta->pudoGuardar = cargaEnMemoria->resultado;
+		log_error(logger, "No se puede escribir en la ultima linea del archivo.");
 		return 2000; //Error que corresponda
 	}
 	return respuesta;
@@ -135,7 +151,9 @@ RespuestaGuardado* guardarDatosSegPag(int idDTB, char* datos, char* nombreArchiv
 	if(cargaEnMemoria->resultado == 0){
 		ElementoTablaSegPag* nuevoRegistro = malloc(sizeof(ElementoTablaSegPag));
 		copiarElemSegPag(cargaEnMemoria->elementoTabla, nuevoRegistro);
+		waitMutex(&mutexListaSegmentos);
 		list_add(proceso->segmentos, nuevoRegistro);
+		signalMutex(&mutexListaSegmentos);
 		respuesta->pudoGuardar = 0;
 		respuesta->pesoArchivo = cargaEnMemoria->pesoArchivo;
 		freeRespuestaCargaSegPag(cargaEnMemoria);
@@ -155,11 +173,8 @@ static RespuestaCargaSegPag* guardarDatosInternaSegPag(char* datos, char* nombre
 	int tamanioSegmento = totalLineas * tamanioLinea;
 	int cantidadPaginas = 1;
 	int lineasEnLaUltimaPagina = totalLineas % tamanioPagina;
-	if(totalLineas > tamanioPagina){
+	if(totalLineas > tamanioPagina)
 		cantidadPaginas = totalLineas / tamanioPagina;
-		if(lineasEnLaUltimaPagina != 0)
-				cantidadPaginas++;
-	}
 
 	if((cantidadMarcosTotales - tablaDePaginas->elements_count) >= cantidadPaginas){
 		respuesta->resultado = 0; //No hay error
@@ -175,8 +190,12 @@ static RespuestaCargaSegPag* guardarDatosInternaSegPag(char* datos, char* nombre
 			elementoPagina->idPag = idPagina;
 			idPagina++;
 			elementoPagina->marco = posicionMarco;
+			waitMutex(&mutexListaSegmentos);
 			list_add(elementoSegmento->paginas, elementoPagina);
+			signalMutex(&mutexListaSegmentos);
+			waitMutex(&mutexListaPaginas);
 			list_add(tablaDePaginas, elementoPagina);
+			signalMutex(&mutexListaPaginas);
 			int base = storage + posicionMarco * (tamanioPagina * tamanioLinea); //Porque el tamanioPagina esta en lineas
 			if(cantidadPaginas - 1 == i){ //Es la ultima pagina
 				for (int j = 0;  j < lineasEnLaUltimaPagina; j++) {
@@ -220,7 +239,10 @@ ElementoTablaPag* obtenerPaginasPorId(int pagina){
 		}
 		return false;
 	}
-	return list_find(tablaDePaginas, coincideLaPagina);
+	waitMutex(&mutexListaPaginas);
+	ElementoTablaPag* pag = list_find(tablaDePaginas, coincideLaPagina);
+	signalMutex(&mutexListaPaginas);
+	return pag;
 }
 
 respuestaDeObtencionDeMemoria* obtenerDatosSegPag(int idDTB, char* nombreArchivo){
@@ -230,6 +252,7 @@ respuestaDeObtencionDeMemoria* obtenerDatosSegPag(int idDTB, char* nombreArchivo
 	if(segmento != NULL){
 		ElementoTablaPag* pagina;
 		char* archivo = string_new();
+		waitMutex(&mutexListaPaginas);
 		for(int i=0; i < segmento->paginas->elements_count; i++){
 			pagina = list_get(segmento->paginas, i);
 
@@ -252,7 +275,7 @@ respuestaDeObtencionDeMemoria* obtenerDatosSegPag(int idDTB, char* nombreArchivo
 					freeLineasBasura(lineaSinBasura, lineaConBasura);
 				}
 			}
-		}
+		}signalMutex(&mutexListaPaginas);
 		respuesta->datos = malloc(strlen(archivo) + 1);
 		memcpy(respuesta->datos, archivo, strlen(archivo) + 1);
 		free(archivo);
@@ -274,7 +297,9 @@ respuestaDeObtencionDeMemoria* obtenerLineaSegPag(int idDTB, char* nombreArchivo
 		if(numeroLinea < (segmento->cantidadLineas)){
 			int paginaDondeSeEncuentraLaLinea = numeroLinea / tamanioPagina;
 			int lineaDentroDeLaPagina = numeroLinea % tamanioPagina;
+			waitMutex(&mutexListaPaginas);
 			ElementoTablaPag* pagina = list_get(segmento->paginas, paginaDondeSeEncuentraLaLinea);
+			signalMutex(&mutexListaPaginas);
 			int desplazamientoPagina = pagina->marco * tamanioPagina * tamanioLinea; //Porque el tamanioPagina esta en lineas
 			int desplazamientoLinea = lineaDentroDeLaPagina * tamanioLinea;
 			char* lineaConBasura = asignarMemoria(tamanioLinea);
@@ -304,7 +329,9 @@ int asignarDatosSegPag(int IdDTB, char* nombreArchivo, int numeroLinea, char* da
 	if(numeroLinea < (segmento->cantidadLineas - 1)){
 		int paginaDondeSeEncuentraLaLinea = numeroLinea / tamanioPagina;
 		int lineaDentroDeLaPagina = numeroLinea % tamanioPagina;
+		waitMutex(&mutexListaPaginas);
 		ElementoTablaPag* pagina = list_get(segmento->paginas, paginaDondeSeEncuentraLaLinea);
+		signalMutex(&mutexListaPaginas);
 		int desplazamientoPagina = pagina->marco * tamanioPagina * tamanioLinea; //Porque el tamanioPagina esta en lineas
 		int desplazamientoLinea = lineaDentroDeLaPagina * tamanioLinea;
 		char* lineaConBasura = asignarMemoria(tamanioLinea);
@@ -352,6 +379,7 @@ void liberarMemoriaSegPag(int idDTB, char* nombreArchivo){
 	ElementoTablaDTBS* proceso = obtenerProcesoPorIdDTB(idDTB);
 	//Primero libero en la tabla de paginas
 	ElementoTablaSegPag* segmento = obtenerSegmentoPorArchivo(nombreArchivo, proceso->segmentos);
+	waitMutex(&mutexListaPaginas);
 	for (int i = 0; i < segmento->paginas->elements_count; ++i) {
 		bool coincidePagina(ElementoTablaPag* elemeComparador){
 			return elemeComparador->idPag == list_get(segmento->paginas, i);
@@ -359,6 +387,7 @@ void liberarMemoriaSegPag(int idDTB, char* nombreArchivo){
 		list_remove_and_destroy_by_condition(tablaDePaginas, coincidePagina, free);
 	}
 	list_destroy(segmento->paginas);
+	signalMutex(&mutexListaPaginas);
 	//Ahora libero en la tabla de segmentos
 	bool coincideNombre(ElementoTablaSegPag* elemento){
 		if(strcmp(elemento->nombreArchivo, nombreArchivo) == 0){
@@ -371,8 +400,9 @@ void liberarMemoriaSegPag(int idDTB, char* nombreArchivo){
 		free(elemento->nombreArchivo);
 		free(elemento);
 	}
-
+	waitMutex(&mutexListaSegmentos);
 	list_remove_and_destroy_by_condition(proceso->segmentos, coincideNombre, destruirElemento);
+	signalMutex(&mutexListaSegmentos);
 
 	log_info(logger, "Borrado archivo %s de memoria", nombreArchivo);
 }
@@ -380,10 +410,12 @@ void liberarMemoriaSegPag(int idDTB, char* nombreArchivo){
 void liberarDTBDeMemoriaSegPag(int idDTB){
 	log_info(logger, "Liberando de la memoria el DTB");
 	ElementoTablaDTBS* proceso = obtenerProcesoPorIdDTB(idDTB);
+	waitMutex(&mutexListaSegmentos);
 	for (int i = 0; i < proceso->segmentos->elements_count; ++i) {
 		ElementoTablaSegPag* segmento = list_get(proceso->segmentos, i);
 		liberarMemoriaSegPag(idDTB, segmento->nombreArchivo);
 	}
+	signalMutex(&mutexListaSegmentos);
 	bool coincideIdDTB(ElementoTablaDTBS* elemento){
 			if(elemento->idDTB == idDTB){
 				return true;
@@ -395,15 +427,21 @@ void liberarDTBDeMemoriaSegPag(int idDTB){
 			list_destroy(elemento->segmentos);
 			free(elemento);
 		}
+		waitMutex(&mutexListaProcesos);
 	list_remove_and_destroy_by_condition(tablaDeProcesos, coincideIdDTB, destruirElemento);
+	signalMutex(&mutexListaProcesos);
 }
 
 void dumpSegPag(int idDTB){
 	ElementoTablaDTBS* proceso = obtenerProcesoPorIdDTB(idDTB);
+	waitMutex(&mutexListaSegmentos);
 	int cantidadDeSegmentos = proceso->segmentos->elements_count;
+	signalMutex(&mutexListaSegmentos);
 	log_info(logger, "El DTB con id %d, tiene %d archivos abiertos en memoria", idDTB, cantidadDeSegmentos);
 	for (int i = 0; i < cantidadDeSegmentos; ++i) {
+		waitMutex(&mutexListaSegmentos);
 		ElementoTablaSegPag* segmento = list_get(proceso->segmentos, i);
+		signalMutex(&mutexListaSegmentos);
 		respuestaDeObtencionDeMemoria* respuesta = obtenerDatosSegPag(idDTB, segmento->nombreArchivo);
 		log_info(logger, "El archivo %d tiene estos datos guardados: %s", (i+1), respuesta->datos);
 		freeRespuestaObtencion(respuesta);
