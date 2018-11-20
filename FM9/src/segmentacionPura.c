@@ -137,8 +137,9 @@ static ElementoTablaProcesos* obtenerProcesoPorIdDTB(int idDTB){
 		return elemento->idDTB == idDTB;
 	}
 	waitMutex(&mutexListaProcesos);
-	return list_find(tablaDeProcesos, coincideId);
+	ElementoTablaProcesos* proceso = list_find(tablaDeProcesos, coincideId);
 	signalMutex(&mutexListaProcesos);
+	return proceso;
 }
 
 static ElementoTablaSegPura* obtenerSegmentoPorArchivo(char* nombreArchivo, t_list* tablaSegmentos){
@@ -149,8 +150,9 @@ static ElementoTablaSegPura* obtenerSegmentoPorArchivo(char* nombreArchivo, t_li
 		return false;
 	}
 	waitMutex(&mutexListaSegmentos);
-	return list_find(tablaSegmentos, coincideNombre);
+	ElementoTablaSegPura* segmento = list_find(tablaSegmentos, coincideNombre);
 	signalMutex(&mutexListaSegmentos);
+	return segmento;
 }
 
 static void freeRespuestaCargaSegPura(RespuestaCargaSegPura* respuesta){
