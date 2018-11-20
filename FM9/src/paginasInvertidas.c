@@ -12,6 +12,7 @@ void inicializarInvertida(t_config* configuracion){
 	idMarco = 0;
 	tamanioPagina = config_get_int_value(configuracion, "TAM_PAGINA");
 	cantidadMarcosTotales = tamanioMemoria / tamanioPagina;
+	cargarTabla();
 }
 
 static void freeLineasBasura(char** lineaSinBasura, char* lineaConBasura){
@@ -129,8 +130,13 @@ RespuestaGuardado* guardarDatosInvertida(int idDTB, char* datos, char* nombreArc
 		int base = storage + marcoAUtilizar * (tamanioPagina * tamanioLinea); //Porque el tamanioPagina esta en lineas
 		if(cantidadPaginas - 1 == i){ //Es la ultima pagina
 			for (int j = 0;  j < lineasEnLaUltimaPagina; j++) {
-				if(lineas[lineaACargar]==NULL)
+				if(lineas[lineaACargar]==NULL){
 					lineas[lineaACargar] = string_new();
+					if(lineaACargar != (totalLineas - 1)){ //No es ultima linea
+						lineas[lineaACargar + 1] = malloc(sizeof(char));
+						lineas[lineaACargar + 1] = NULL;
+					}
+				}
 				string_append(&lineas[lineaACargar], "\n");
 				char* textoAEscribir = malloc(tamanioLinea);
 				memcpy(textoAEscribir, lineas[lineaACargar], strlen(lineas[lineaACargar]) + 1);
@@ -140,6 +146,13 @@ RespuestaGuardado* guardarDatosInvertida(int idDTB, char* datos, char* nombreArc
 			}
 		}else{
 			for(int j = 0; j < (tamanioPagina); j++){
+				if(lineas[lineaACargar]==NULL){
+					lineas[lineaACargar] = string_new();
+					if(lineaACargar != (totalLineas - 1)){ //No es ultima linea
+						lineas[lineaACargar + 1] = malloc(sizeof(char));
+						lineas[lineaACargar + 1] = NULL;
+					}
+				}
 				string_append(&lineas[lineaACargar], "\n");
 				char* textoAEscribir = malloc(tamanioLinea);
 				memcpy(textoAEscribir, lineas[lineaACargar], strlen(lineas[lineaACargar]) + 1);
@@ -193,6 +206,7 @@ static ElementoTablaInvertida* crearElementoTablaInvertida(){
 	elemento->idDTB = NULL;
 	elemento->nombreArchivo = NULL;
 	elemento->pagina = -1;
+	return elemento;
 }
 
 static void cargarTabla(){
