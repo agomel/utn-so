@@ -45,6 +45,24 @@ void terminarOperacionDeCPU(int emisor, DTB* dtb){
 	liberarCPU(emisor, dtb->id);
 }
 
+void despedirACPUs(){
+	waitMutex(&mutexSocketsCPus);
+	for(int i = 0; i < socketsCPUs->elements_count; i++){
+		SocketCPU* socketCPU = list_get(socketsCPUs, i);
+		enviarYSerializarCharSinHeader(socketCPU->socket, FINALIZARME);
+	}
+	signalMutex(&mutexSocketsCPus);
+}
+void despedirACpusMenos(int emisor){
+	waitMutex(&mutexSocketsCPus);
+	for(int i = 0; i < socketsCPUs->elements_count; i++){
+		SocketCPU* socketCPU = list_get(socketsCPUs, i);
+		if(socketCPU->socket != emisor)
+		enviarYSerializarCharSinHeader(socketCPU->socket, FINALIZARME);
+	}
+	signalMutex(&mutexSocketsCPus);
+}
+
 void entenderMensaje(int emisor, char header){
 	int idDTB;
 	DTB* dtb;
@@ -174,8 +192,16 @@ void entenderMensaje(int emisor, char header){
 			enviarYSerializarCharSinHeader(emisor, asignado);
 			log_info(logger, "Enviando a CPU que continue");
 			break;
+		case FINALIZARME:
+			despedirACPUs();
+			exit(1);
+			break;
 
-
+		case CHAUCHI_CPU:
+			despedirACpusMenos(emisor);
+			enviarYSerializarCharSinHeader(socketDAM, FINALIZARME);
+			exit(1);
+			break;
 		default:
 			log_error(logger, "Header desconocido del emisor %d y header %c", emisor, header);
 	}
@@ -215,7 +241,14 @@ void crearSelect(int servidor){
 	select->semProductores = &semProductores;
 	realizarNuestroSelect(select);
 }
+void despedida(){
+	log_info(logger, "chauuuuu :)");
+	enviarYSerializarCharSinHeader(socketDAM, FINALIZARME);
+	despedirACPUs();
+	raise(SIGTERM);
+}
 int main(void) {
+	signal(SIGINT, despedida);
 	inicializarSAFA();
 	configuracion = config_create(ARCHIVO_CONFIGURACION);
 	retardo = config_get_int_value(configuracion, "RETARDO_PLANIF");

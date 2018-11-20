@@ -23,7 +23,7 @@ char entendiendoLinea(char* lineaEjecutando, DTB* dtbRecibido){
 
 	}else if(string_starts_with(lineaEjecutando, "signal")){
 		log_info(logger, "Ejecutando instruccion signal");
-		return signal(lineaEjecutando, dtbRecibido);
+		return signalion(lineaEjecutando, dtbRecibido);
 
 	}else if(string_starts_with(lineaEjecutando, "flush")){
 		log_info(logger, "Ejecutando instruccion flush");

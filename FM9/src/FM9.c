@@ -204,7 +204,9 @@ void entenderMensaje(int emisor, char header){
 
 				break;
 			}
-
+			case FINALIZARME:
+				exit(1);
+				break;
 			default:
 				log_error(logger, "Header desconocido");
 				break;
@@ -294,7 +296,14 @@ void init(){
 	inicializarSem(&semProductores, 0);
 }
 
+void despedida(){
+	log_info(logger, "chauuuuu :)");
+	enviarYSerializarCharSinHeader(socketDAM, FINALIZARME);
+	raise(SIGTERM);
+}
+
 int main(void) {
+	signal(SIGINT, despedida);
 	init();
 	direccionServidor direccionFM9 = levantarDeConfiguracion(NULL, "PUERTO", configuracion);
 	int servidor = crearServidor(direccionFM9.puerto, INADDR_ANY);

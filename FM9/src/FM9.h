@@ -17,6 +17,7 @@
 #include <commons/string.h>
 #include "manejoLineas.h"
 #include <biblioteca/serializacion.h>
+#include <signal.h>
 
 typedef struct{
 	int pudoGuardar;

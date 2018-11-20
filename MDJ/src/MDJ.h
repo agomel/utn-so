@@ -15,6 +15,7 @@
 #include "bitmap.h"
 #include "fileSystem.h"
 #include "operacionesFIFA.h"
+#include <signal.h>
 
 int RETARDO;
 char* PUNTO_MONTAJE;
@@ -40,6 +41,7 @@ void entenderMensaje(int emisor, char header);
 int identificarse(int emisor, char header);
 void crearSelect(int servidor);
 void levantarMetadata();
+int socketDAM;
 
 void obtenerPuntoMontaje(char* primerMontaje);
 void crearPuntosDeMontaje();

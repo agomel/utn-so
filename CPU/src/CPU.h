@@ -10,6 +10,7 @@
 #include "operaciones.h"
 #include "parser.h"
 #include "comunicaciones.h"
+#include "signal.h"
 
 int socketDIEGO;
 int socketFM9;

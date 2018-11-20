@@ -80,6 +80,16 @@ void entenderMensaje(int emisor, char header){
 			}
 			break;
 		}
+		case FINALIZARME:{
+			if(emisor != socketFM9)
+			enviarYSerializarCharSinHeader(socketFM9, FINALIZARME);
+			if(emisor != socketMDJ)
+			enviarYSerializarCharSinHeader(socketMDJ, FINALIZARME);
+			if(emisor != socketSAFA)
+			enviarYSerializarCharSinHeader(socketSAFA, FINALIZARME);
+			exit(1);
+			break;
+		}
 
 		default: {
 			log_error(logger, "Header desconocido");
@@ -111,8 +121,17 @@ void crearSelect(int servidor){
 	select->semProductores = &semProductores;
 	realizarNuestroSelect(select);
 }
+void despedida(){
 
+	log_info(logger, "chauuuuu :)");
+	enviarYSerializarCharSinHeader(socketFM9, FINALIZARME);
+	enviarYSerializarCharSinHeader(socketMDJ, FINALIZARME);
+	enviarYSerializarCharSinHeader(socketSAFA, FINALIZARME);
+	raise(SIGTERM);
+}
 int main(void) {
+
+	signal(SIGINT, despedida);
 	inicializarDAM();
 
 	direccionServidor direccionDAM = levantarDeConfiguracion(NULL, "PUERTO", configuracion);

@@ -85,7 +85,7 @@ char wait(char* lineaEjecutando, DTB* dtbRecibido){
 	}
 }
 
-char signal(char* lineaEjecutando, DTB* dtbRecibido){
+char signalion(char* lineaEjecutando, DTB* dtbRecibido){
 	char* recursoRecibido = asignarMemoria(strlen(lineaEjecutando)-6);
 	recursoRecibido = string_substring_from(lineaEjecutando, 7);
 	enviarYSerializarString(socketSAFA, recursoRecibido, LIBERAR_RECURSO);
