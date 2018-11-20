@@ -40,12 +40,9 @@ void consolita(){
 			exit(200);
 		}
 		else{
-			printf("No te entiendo man \n");
+			printf("Comando incorrecto\n");
 		}
 
 		free(texto);
 	}
 }
-
-
-

@@ -7,7 +7,6 @@ void inicializarSegPura(){
 	idSegmento = 0;
 }
 
-static ElementoTablaProcesos* obtenerProcesoPorIdDTB(int idDTB);
 static void freeRespuestaCargaSegPura(RespuestaCargaSegPura* respuesta);
 static RespuestaCargaSegPura* guardarDatosInternaSegPura(char* datos, char* nombreArchivo);
 static int dondeEntro(int tamanioAGuardar);
@@ -124,7 +123,7 @@ static RespuestaCargaSegPura* guardarDatosInternaSegPura(char* datos, char* nomb
 	return respuesta;
 }
 
-static ElementoTablaProcesos* obtenerProcesoPorIdDTB(int idDTB){
+ElementoTablaProcesos* obtenerProcesoPorIdDTB(int idDTB){
 	bool coincideId(ElementoTablaProcesos* elemento){
 		return elemento->idDTB == idDTB;
 	}
