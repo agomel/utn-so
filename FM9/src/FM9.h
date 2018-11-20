@@ -42,6 +42,7 @@ t_queue* colaOperaciones;
 pthread_mutex_t mutexOperaciones;
 pthread_mutex_t mutexListaSegmentos;
 pthread_mutex_t mutexListaProcesos;
+pthread_mutex_t mutexListaPaginas;
 sem_t semProductores;
 sem_t semOperaciones;
 t_config* configuracion;
