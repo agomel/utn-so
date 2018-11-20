@@ -45,6 +45,9 @@ void escuchar(int socketSAFA){
 					freeDTB(dtbRecibido);
 					break;
 				}
+				case FINALIZARME:
+					exit(1);
+					break;
 				default:
 					log_error(logger, "Header desconocido %c del SAFA", header);
 					break;
@@ -52,8 +55,14 @@ void escuchar(int socketSAFA){
 	}
 }
 
-
+void despedida(){
+	log_info(logger, "chauuuuu :)");
+	enviarYSerializarCharSinHeader(socketSAFA, CHAUCHI_CPU);
+	sleep(2);
+	raise(SIGTERM);
+}
 int main(void) {
+	signal(SIGINT, despedida);
 	logger = crearLogger(ARCHIVO_LOG, "CPU");
 
 	t_config* configuracion = config_create(ARCHIVO_CONFIGURACION);

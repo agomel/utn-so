@@ -12,6 +12,7 @@
 #include <biblioteca/nuestroSelect.h>
 #include "ServicioFM9.h"
 #include <biblioteca/traductor.h>
+#include <signal.h>
 
 int transferSize;
 

@@ -12,6 +12,7 @@
 #include <biblioteca/logger.h>
 #include <biblioteca/nuestroSelect.h>
 #include <biblioteca/traductor.h>
+#include <signal.h>
 
 int socketDAM;
 pthread_mutex_t mutexDummy;

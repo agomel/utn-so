@@ -72,6 +72,10 @@ void entenderMensaje(int emisor, char header){
 				free(path);
 				break;
 			}
+			case FINALIZARME:
+				persistirBitMap();
+				exit(1);
+				break;
 		default:
 			log_error(logger, "Header desconocido");
 	}
@@ -82,8 +86,10 @@ int identificarse(int emisor, char header){
 	if(header == IDENTIFICARSE){
 		char identificado = deserializarChar(emisor);
 		log_debug(logger, "Handshake de: %s", traducirModulo(identificado));
-		if(identificado == DAM)
+		if(identificado == DAM){
 			return 1;
+			socketDAM = emisor;
+		}
 	}
 	log_error(logger, "Conexion rechazada");
 	return 0;
@@ -133,7 +139,13 @@ void crearPuntosDeMontaje(){
 	PUNTO_MONTAJE_BLOQUES = concatenar(PUNTO_MONTAJE, "Bloques/");
 
 }
+void despedida(){
+	log_info(logger, "chauuuuu :)");
+	enviarYSerializarCharSinHeader(socketDAM, FINALIZARME);
+	raise(SIGTERM);
+}
 void init(){
+	signal(SIGINT, despedida);
 	configuracion = config_create(ARCHIVO_CONFIGURACION);
 	RETARDO = config_get_int_value(configuracion, "RETARDO");
 	char* punteroPuntoMontaje = config_get_string_value(configuracion, "PUNTO_MONTAJE");
