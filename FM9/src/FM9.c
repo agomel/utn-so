@@ -178,6 +178,7 @@ void entenderMensaje(int emisor, char header){
 				char* nombreArchivo = deserializarString(emisor);
 				log_debug(logger, "Liberando memoria para archivo %s", nombreArchivo);
 				liberarMemoria(idDTB, nombreArchivo);
+				enviarYSerializarCharSinHeader(socketCPU, 'a');
 
 				break;
 			}
@@ -186,6 +187,7 @@ void entenderMensaje(int emisor, char header){
 				int idDTB = deserializarInt(emisor);
 				log_debug(logger, "Liberando el dtb %d de memoria por pasar a EXIT", idDTB);
 				liberarDTBDeMemoria(idDTB);
+				enviarYSerializarCharSinHeader(socketCPU, 'a');
 
 				break;
 			}
