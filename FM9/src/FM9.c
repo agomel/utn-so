@@ -2,6 +2,7 @@
 #include "segmentacionPura.h"
 #include "segmentacionPag.h"
 #include "paginasInvertidas.h"
+#include "consola.h"
 
 respuestaDeObtencionDeMemoria* obtenerDatosDeMemoria(int idDTB, char* nombreArchivo){
 	if(strcmp(modo, "SEG_PURA") == 0)
@@ -293,9 +294,9 @@ int main(void) {
 	crearSelect(servidor);
 	config_destroy(configuracion);
 
-	while(1);
+	pthread_t hiloConsola = crearHilo(&consola, NULL);
+	esperarHilo(hiloConsola);
 
-	free(storage);
-	queue_destroy(colaOperaciones);
+
 	return 0;
 }

@@ -88,9 +88,6 @@ void entenderMensaje(int emisor, char header){
 
 		}
 
-
-
-
 		case DUMMY:
 			log_info(logger, "Desbloqueo el DUMMY");
 			dtb = deserializarDTB(emisor);
@@ -99,6 +96,7 @@ void entenderMensaje(int emisor, char header){
 			enviarYSerializarCharSinHeader(emisor, CONTINUAR_CON_EJECUCION);
 			log_info(logger, "Mando a CPU que continue con su ejecucion");
 			break;
+
 		case DESBLOQUEAR_DTB:
 			log_info(logger, "Recibi Desbloquear DTB");
 			dtb = deserializarDTB(emisor);
@@ -117,6 +115,7 @@ void entenderMensaje(int emisor, char header){
 			desbloquearDTB(idDTB);
 			free(path);
 			break;
+
 		case ERROR:
 			log_info(logger, "Recibi un error");
 			idDTB = deserializarInt(emisor);
@@ -161,6 +160,7 @@ void entenderMensaje(int emisor, char header){
 
 			terminarOperacionDeCPU(emisor, dtb);
 			break;
+
 		case LIBERAR_RECURSO:
 			log_info(logger, "Recibi liberar recurso");
 			recurso = deserializarString(emisor);
@@ -168,6 +168,7 @@ void entenderMensaje(int emisor, char header){
 			enviarYSerializarCharSinHeader(emisor, asignado);
 			log_info(logger, "Enviando a CPU que continue");
 			break;
+
 		case RETENCION_DE_RECURSO:
 			log_info(logger, "Recibi retener recurso");
 			recurso = deserializarString(emisor);
@@ -176,7 +177,6 @@ void entenderMensaje(int emisor, char header){
 			enviarYSerializarCharSinHeader(emisor, asignado);
 			log_info(logger, "Enviando a CPU que continue");
 			break;
-
 
 		default:
 			log_error(logger, "Header desconocido del emisor %d y header %c", emisor, header);
@@ -221,7 +221,6 @@ int main(void) {
 	inicializarSAFA();
 	configuracion = config_create(ARCHIVO_CONFIGURACION);
 	retardo = config_get_int_value(configuracion, "RETARDO_PLANIF");
-
 
 	direccionServidor direccionSAFA = levantarDeConfiguracion(NULL, "PUERTO", configuracion);
 	int servidor = crearServidor(direccionSAFA.puerto, INADDR_ANY);

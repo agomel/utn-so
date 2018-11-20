@@ -307,17 +307,26 @@ RespuestaGuardado* guardarDatosInvertida(int idDTB, char* datos, char* nombreArc
 
 void dumpInvertida(int idDTB){
 	log_info(logger, "Dump de DTB: %d", idDTB);
+	char* dump = string_new();
+
 	for(int i=0; i<tablaDeArchivos->elements_count; i++){
+		waitMutex(&mutexArchivos);
 		ElementoArchivos* elemento = list_get(tablaDeArchivos, i);
+		signal(&mutexArchivos);
+
+
 		if(elemento->idDTB == idDTB){
 			int cantidadPaginas = elemento->cantidadLineas / tamanioPagina;
 			respuestaDeObtencionDeMemoria* datos = obtenerDatosInvertida(idDTB, elemento->nombreArchivo);
 
-			log_info(logger, "Abierto archivo: %s \n"
+			string_append_with_format(dump, "Abierto archivo: %s \n"
 							">>> Ocupa %d lineas \n"
 							">>> Su contenido es: %s", elemento->nombreArchivo, cantidadPaginas, datos->datos);
 		}
 	}
+
+	log_info("aaaa %s", dump);
+	free(dump);
 }
 
 static ElementoTablaInvertida* obtenerElementoPorMarco(int marco){

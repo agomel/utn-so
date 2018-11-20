@@ -1,7 +1,6 @@
 #include "consola.h"
 
 void consola(){
-
 	//escuchar la consola
 	while(1){
 		char* mensaje = readline("");
