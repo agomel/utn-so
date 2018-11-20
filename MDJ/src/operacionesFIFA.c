@@ -1,6 +1,9 @@
 #include "operacionesFIFA.h"
 
 char* generarPathAbsoluto(char* path){
+	if(strlen(path) > 0 && path[0] == '/'){
+		memcpy(path, path + 1, strlen(path));
+	}
 	return concatenar(PUNTO_MONTAJE_ARCHIVOS, path);
 }
 
