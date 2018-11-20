@@ -5,9 +5,11 @@ static int obtenerMarcoLibreInvertida();
 static ElementoTablaInvertida* obtenerElementoPorIdDTB(int idDTB);
 static ElementoTablaInvertida* obtenerElementoPorMarco(int marco);
 static t_list* filtrarPorDTBYArchivo(int idDTB, char* nombreArchivo);
+static int cantidadDeLineasArchivo(int idDTB, char* nombreArchivo);
 
 void inicializarInvertida(t_config* configuracion){
 	tablaPaginasInvertidas = list_create();
+	tablaDeArchivos = list_create();
 	idPagina = 0;
 	idMarco = 0;
 	tamanioPagina = config_get_int_value(configuracion, "TAM_PAGINA");
@@ -18,32 +20,52 @@ void inicializarInvertida(t_config* configuracion){
 respuestaDeObtencionDeMemoria* obtenerDatosInvertida(int idDTB, char* nombreArchivo){
 	respuestaDeObtencionDeMemoria* respuesta = malloc(sizeof(respuestaDeObtencionDeMemoria));
 	t_list* marcosConEseArchivo = filtrarPorDTBYArchivo(idDTB, nombreArchivo);
-
+	int cantidadLineas = cantidadDeLineasArchivo(idDTB, nombreArchivo);
+	if(cantidadLineas != -1){
 		char* archivo = string_new();
 		for(int i=0; i < marcosConEseArchivo->elements_count; i++){
 			ElementoTablaInvertida* pagina = list_get(marcosConEseArchivo, i);
 
 			int desplazamiento = storage + pagina->marco * (tamanioPagina * tamanioLinea); //porque el tamanio de pag esta en lineas
-			int numeroLinea = 0;
-			int finPagina = 0;
+			int hastaLinea;
+			if(marcosConEseArchivo->elements_count - 1 == i) //Es la ultima pagina
+				hastaLinea = cantidadLineas % tamanioPagina;
+			else
+				hastaLinea = tamanioPagina;
 
-			while(numeroLinea < tamanioPagina && !finPagina){
+			for (int j = 0;  j < hastaLinea; j++) {
 				char* lineaConBasura = malloc(tamanioLinea);
-				memcpy(lineaConBasura, desplazamiento + numeroLinea * tamanioLinea, tamanioLinea);
-				if(lineaConBasura[0] == '\n'){ //Ultima linea archivo
-					finPagina = 1;
-					string_append(&archivo, "\n");
-					free(lineaConBasura);
-				}else{
+				memcpy(lineaConBasura, desplazamiento + j * tamanioLinea, tamanioLinea);
+				if(lineaConBasura[0] != '\n'){
 					char** lineaSinBasura = string_split(lineaConBasura, "\n");
-					string_append_with_format(&archivo, "%s\n", lineaSinBasura[0]);
+					string_append(&archivo, lineaSinBasura[0]);
 					freeLineasBasura(lineaSinBasura, lineaConBasura);
+				}else{
+					free(lineaConBasura);
 				}
+				string_append(&archivo, "\n");
 			}
 		}
 		respuesta->datos = malloc(strlen(archivo) + 1);
 		memcpy(respuesta->datos, archivo, strlen(archivo) + 1);
 		return respuesta;
+	}else{
+		log_error(logger, "El archivo %s no se encuentra abierto", nombreArchivo);
+		return 534354; //ERROR
+	}
+
+}
+
+static int cantidadDeLineasArchivo(int idDTB, char* nombreArchivo){
+	bool coincidenIdyArchivo(ElementoArchivos* elemento){
+		return elemento->idDTB == idDTB && (strcmp(elemento->nombreArchivo, nombreArchivo) == 0);
+	}
+
+	ElementoArchivos* elemento = list_find(tablaDeArchivos, nombreArchivo);
+	if(elemento != NULL)
+		return elemento->cantidadLineas;
+	else
+		return -1;
 }
 
 static t_list* filtrarPorDTBYArchivo(int idDTB, char* nombreArchivo){
@@ -95,12 +117,20 @@ static void cargarElemento(ElementoTablaInvertida* elemento, int pagina, char* n
 	memcpy(elemento->nombreArchivo, nombreArchivo, strlen(nombreArchivo) + 1);
 }
 
+static ElementoArchivos* crearElementoArchivos(int idDTB, char* nombreArchivo, int lineas){
+	ElementoArchivos* elemento = malloc(sizeof(ElementoArchivos));
+	elemento->idDTB = idDTB;
+	elemento->nombreArchivo = malloc(strlen(nombreArchivo) + 1);
+	elemento->nombreArchivo = nombreArchivo;
+	elemento->cantidadLineas = lineas;
+}
+
 RespuestaGuardado* guardarDatosInvertida(int idDTB, char* datos, char* nombreArchivo){
 	log_debug(logger, "Guardando en paginas invertidas");
 
 	RespuestaGuardado* respuesta = malloc(sizeof(RespuestaCargaInvertida));
 	int totalLineas = cantidadDeLineas(datos);
-	char** lineas = string_split(datos, "\n");
+	char** lineas = dividirPorLineas(datos);
 	int cantidadPaginas = 1;
 	int lineasEnLaUltimaPagina = totalLineas % tamanioPagina;
 	if(totalLineas > tamanioPagina){
@@ -117,8 +147,12 @@ RespuestaGuardado* guardarDatosInvertida(int idDTB, char* datos, char* nombreArc
 			respuesta->pudoGuardar = -1; //ERROR NO HAY MARCOS LIBRES
 		else
 			respuesta->pudoGuardar = 0; //No hay error
+
 		ElementoTablaInvertida* elementoInvertida = obtenerElementoPorMarco(marcoAUtilizar);
 		cargarElemento(elementoInvertida, idPagina, nombreArchivo, idDTB);
+		ElementoArchivos* elementoArchivo = crearElementoArchivos(idDTB, nombreArchivo, totalLineas);
+		list_add(tablaDeArchivos, elementoArchivo);
+
 		idPagina++;
 		int base = storage + marcoAUtilizar * (tamanioPagina * tamanioLinea); //Porque el tamanioPagina esta en lineas
 		if(cantidadPaginas - 1 == i){ //Es la ultima pagina

@@ -243,7 +243,7 @@ respuestaDeObtencionDeMemoria* obtenerDatosSegPag(int idDTB, char* nombreArchivo
 			for (int j = 0;  j < hastaLinea; j++) {
 				char* lineaConBasura = malloc(tamanioLinea);
 				memcpy(lineaConBasura, desplazamiento + j * tamanioLinea, tamanioLinea);
-				if(lineaConBasura[0] == '\n'){ //Ultima linea archivo
+				if(lineaConBasura[0] == '\n'){
 					string_append(&archivo, "\n");
 					free(lineaConBasura);
 				}else{

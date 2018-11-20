@@ -15,7 +15,15 @@ typedef struct{
 	int pesoArchivo;
 }RespuestaCargaInvertida;
 
+typedef struct{
+	int idDTB;
+	int cantidadLineas;
+	char* nombreArchivo;
+}ElementoArchivos;
+
+
 t_list* tablaPaginasInvertidas;
+t_list* tablaDeArchivos;
 int idPagina;
 int idMarco;
 
