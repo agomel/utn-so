@@ -304,8 +304,6 @@ int asignarDatosSegPag(int IdDTB, char* nombreArchivo, int numeroLinea, char* da
 	if(numeroLinea < (segmento->cantidadLineas - 1)){
 		int paginaDondeSeEncuentraLaLinea = numeroLinea / tamanioPagina;
 		int lineaDentroDeLaPagina = numeroLinea % tamanioPagina;
-		if((lineaDentroDeLaPagina != 0) && (numeroLinea < tamanioPagina))
-			paginaDondeSeEncuentraLaLinea++;
 		ElementoTablaPag* pagina = list_get(segmento->paginas, paginaDondeSeEncuentraLaLinea);
 		int desplazamientoPagina = pagina->marco * tamanioPagina * tamanioLinea; //Porque el tamanioPagina esta en lineas
 		int desplazamientoLinea = lineaDentroDeLaPagina * tamanioLinea;
