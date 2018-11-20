@@ -55,7 +55,7 @@ void liberarMemoria(int idDTB, char* nombreArchivo){
 		liberarMemoriaSegPag(idDTB, nombreArchivo);
 
 	if(strcmp(modo, "INV") == 0)
-		liberarMemoriaSegPura(idDTB, nombreArchivo);
+		liberarMemoriaInvertida(idDTB, nombreArchivo);
 }
 
 void liberarDTBDeMemoria(int idDTB){
@@ -66,7 +66,7 @@ void liberarDTBDeMemoria(int idDTB){
 		liberarDTBDeMemoriaSegPag(idDTB);//PROBAR
 
 	if(strcmp(modo, "INV") == 0)
-		liberarDTBDeMemoriaSegPura(idDTB); //CAMBIAAAAAAAAR
+		liberarDTBDeMemoriaInvertida(idDTB);
 }
 
 int asignarDatos(int idDTB, char* nombreArchivo, int numeroLinea, char* datos){
@@ -260,7 +260,7 @@ void inicializar(char* modo, t_config* configuracion){
 
 	if(strcmp(modo, "INV") == 0){
 		log_info(logger, "Utilizando paginas invertidas");
-		return inicializarSegPura(); //CAMBIAAAR
+		return inicializarInvertida(configuracion);
 	}
 }
 

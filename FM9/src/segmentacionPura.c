@@ -195,11 +195,11 @@ respuestaDeObtencionDeMemoria* obtenerLineaSegPura(int idDTB, char* nombreArchiv
 			respuesta->pudoObtener = 3;
 			free(lineaConBasura);
 		}else{
-			log_debug(logger, "En obtener: Linea con basura: %s", lineaConBasura);
 			char** lineaSinBasura = string_split(lineaConBasura, "\n");
 			respuesta->datos = string_new();
 			respuesta->pudoObtener = 0;
 			string_append(&respuesta->datos, lineaSinBasura[0]);
+			log_debug(logger, "Linea: %s", lineaSinBasura[0]);
 			freeLineasBasura(lineaSinBasura, lineaConBasura);
 		}
 	}else{

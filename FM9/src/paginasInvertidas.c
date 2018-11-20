@@ -104,7 +104,7 @@ int asignarDatosInvertida(int idDTB, char* nombreArchivo, int numeroLinea, char*
 			}
 		}
 	}else {
-		log_error(logger, "El archivo no posee la linea %d", numeroLinea);
+		log_error(logger, "El archivo no posee la linea %d", numeroLinea + 1);
 		return 30000; //ERROR
 	}
 }
@@ -114,7 +114,7 @@ static int cantidadDeLineasArchivo(int idDTB, char* nombreArchivo){
 		return elemento->idDTB == idDTB && (strcmp(elemento->nombreArchivo, nombreArchivo) == 0);
 	}
 
-	ElementoArchivos* elemento = list_find(tablaDeArchivos, nombreArchivo);
+	ElementoArchivos* elemento = list_find(tablaDeArchivos, coincidenIdyArchivo);
 	if(elemento != NULL)
 		return elemento->cantidadLineas;
 	else
@@ -136,7 +136,7 @@ static t_list* filtrarPorDTBYArchivo(int idDTB, char* nombreArchivo){
 }
 
 void liberarMemoriaInvertida(int idDTB, char* nombreArchivo){
-	void liberar(ElementoTablaInvertida* elemento){
+	void liberarMarcos(ElementoTablaInvertida* elemento){
 		if(elemento->idDTB == idDTB && (strcmp(elemento->nombreArchivo, nombreArchivo) == 0)){
 			elemento->idDTB = NULL;
 			elemento->pagina = -1;
@@ -144,7 +144,18 @@ void liberarMemoriaInvertida(int idDTB, char* nombreArchivo){
 		}
 	}
 
-	list_iterate(tablaPaginasInvertidas, liberar);
+	bool coincideIdYNombre(ElementoArchivos* elemento){
+		return elemento->idDTB == idDTB && (strcmp(elemento->nombreArchivo, nombreArchivo));
+	}
+
+	void destruir(ElementoArchivos* elemento){
+		free(elemento->nombreArchivo);
+		free(elemento);
+	}
+
+	list_remove_and_destroy_by_condition(tablaDeArchivos, coincideIdYNombre, destruir);
+
+	list_iterate(tablaPaginasInvertidas, liberarMarcos);
 
 	log_info(logger, "Borrado archivo %s de memoria", nombreArchivo);
 }
@@ -157,6 +168,18 @@ void liberarDTBDeMemoriaInvertida(int idDTB){
 			free(elemento->nombreArchivo);
 		}
 	}
+
+	bool coincideId(ElementoArchivos* elemento){
+			return elemento->idDTB == idDTB;
+		}
+
+		void destruir(ElementoArchivos* elemento){
+			free(elemento->nombreArchivo);
+			free(elemento);
+		}
+
+		list_remove_and_destroy_by_condition(tablaDeArchivos, coincideId, destruir);
+
 
 	list_iterate(tablaPaginasInvertidas, liberar);
 
@@ -178,9 +201,8 @@ respuestaDeObtencionDeMemoria* obtenerLineaInvertida(int idDTB, char* nombreArch
 		respuesta->pudoObtener = 3;
 		free(lineaConBasura);
 	}else{
-		log_debug(logger, "Linea completa: %s", lineaConBasura);
 		char** lineaSinBasura = string_split(lineaConBasura, "\n");
-		log_debug(logger, "Linea limpia: %s", lineaSinBasura[0]);
+		log_debug(logger, "Linea: %s", lineaSinBasura[0]);
 		respuesta->datos = string_new();
 		respuesta->pudoObtener = 0;
 		string_append(&respuesta->datos, lineaSinBasura[0]);
@@ -201,8 +223,8 @@ static void cargarElemento(ElementoTablaInvertida* elemento, int pagina, char* n
 static ElementoArchivos* crearElementoArchivos(int idDTB, char* nombreArchivo, int lineas){
 	ElementoArchivos* elemento = malloc(sizeof(ElementoArchivos));
 	elemento->idDTB = idDTB;
-	elemento->nombreArchivo = malloc(strlen(nombreArchivo) + 1);
-	elemento->nombreArchivo = nombreArchivo;
+	elemento->nombreArchivo = string_new();
+	string_append(&elemento->nombreArchivo, nombreArchivo);
 	elemento->cantidadLineas = lineas;
 }
 
@@ -219,6 +241,8 @@ RespuestaGuardado* guardarDatosInvertida(int idDTB, char* datos, char* nombreArc
 		if(lineasEnLaUltimaPagina != 0)
 				cantidadPaginas++;
 	}
+	ElementoArchivos* elementoArchivo = crearElementoArchivos(idDTB, nombreArchivo, totalLineas);
+	list_add(tablaDeArchivos, elementoArchivo);
 
 	int lineaACargar = 0;
 	for(int i = 0; i < cantidadPaginas; i++){
@@ -231,8 +255,6 @@ RespuestaGuardado* guardarDatosInvertida(int idDTB, char* datos, char* nombreArc
 
 		ElementoTablaInvertida* elementoInvertida = obtenerElementoPorMarco(marcoAUtilizar);
 		cargarElemento(elementoInvertida, idPagina, nombreArchivo, idDTB);
-		ElementoArchivos* elementoArchivo = crearElementoArchivos(idDTB, nombreArchivo, totalLineas);
-		list_add(tablaDeArchivos, elementoArchivo);
 
 		idPagina++;
 		int base = storage + marcoAUtilizar * (tamanioPagina * tamanioLinea); //Porque el tamanioPagina esta en lineas
