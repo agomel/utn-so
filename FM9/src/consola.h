@@ -9,6 +9,9 @@
 #include <unistd.h>
 #include <commons/string.h>
 #include "FM9.h"
+#include "segmentacionPura.h"
+#include "segmentacionPag.h"
+#include "paginasInvertidas.h"
 #include <biblioteca/dtb.h>
 #include <biblioteca/traductor.h>
 #include <readline/readline.h>
