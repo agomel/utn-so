@@ -55,7 +55,7 @@ void liberarMemoria(int idDTB, char* nombreArchivo){
 		liberarMemoriaSegPag(idDTB, nombreArchivo);
 
 	if(strcmp(modo, "INV") == 0)
-		liberarMemoriaSegPura(idDTB, nombreArchivo); //CAMBIAAAAAAAAR
+		liberarMemoriaSegPura(idDTB, nombreArchivo);
 }
 
 void liberarDTBDeMemoria(int idDTB){
@@ -77,7 +77,7 @@ int asignarDatos(int idDTB, char* nombreArchivo, int numeroLinea, char* datos){
 		return asignarDatosSegPag(idDTB, nombreArchivo, numeroLinea, datos);
 
 	if(strcmp(modo, "INV") == 0)
-		return asignarDatosSegPura(idDTB, nombreArchivo, numeroLinea, datos); //CAMBIAAAAAAAAAAAR
+		return asignarDatosInvertida(idDTB, nombreArchivo, numeroLinea, datos);
 }
 
 void freeRespuestaObtencion(respuestaDeObtencionDeMemoria* respuesta){

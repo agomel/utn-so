@@ -31,7 +31,9 @@ void inicializarInvertida(t_config* configuracion);
 RespuestaGuardado* guardarDatosInvertida(int idDTB, char* datos, char* nombreArchivo);
 respuestaDeObtencionDeMemoria* obtenerDatosInvertida(int idDTB, char* nombreArchivo);
 respuestaDeObtencionDeMemoria* obtenerLineaInvertida(int idDTB, char* nombreArchivo, int numeroLinea);
-
+int asignarDatosInvertida(int IdDTB, char* nombreArchivo, int numeroLinea, char* datos);
+void liberarMemoriaInvertida(int idDTB, char* nombreArchivo);
+void liberarDTBDeMemoriaInvertida(int idDTB);
 
 
 #endif /* PAGINASINVERTIDAS_H_ */

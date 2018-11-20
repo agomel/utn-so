@@ -233,7 +233,8 @@ void liberarMemoriaSegPura(int idDTB, char* nombreArchivo){
 	}
 
 	list_remove_and_destroy_by_condition(segmentosOcupados, coincideBase, free);
-	log_info(logger, "liberando memoria");
+
+	log_info(logger, "Borrado archivo %s de memoria", nombreArchivo);
 }
 
 void liberarDTBDeMemoriaSegPura(int idDTB){
@@ -306,7 +307,7 @@ int asignarDatosSegPura(int IdDTB, char* nombreArchivo, int numeroLinea, char* d
 	}else{
 
 
-		log_error(logger, "El DTB no posee la linea %d", numeroLinea);
+		log_error(logger, "El archivo no posee la linea %d", numeroLinea);
 		return 3000; //ERROR
 	}
 }

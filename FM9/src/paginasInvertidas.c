@@ -56,6 +56,59 @@ respuestaDeObtencionDeMemoria* obtenerDatosInvertida(int idDTB, char* nombreArch
 
 }
 
+int asignarDatosInvertida(int idDTB, char* nombreArchivo, int numeroLinea, char* datos){
+	numeroLinea--;
+	int cantidadLineas = cantidadDeLineasArchivo(idDTB, nombreArchivo);
+	t_list* marcosParaEseArchivo = filtrarPorDTBYArchivo(idDTB, nombreArchivo);
+
+	if(numeroLinea < (cantidadLineas - 1)){
+		int paginaDondeSeEncuentraLaLinea = numeroLinea / tamanioPagina;
+		int lineaDentroDeLaPagina = numeroLinea % tamanioPagina;
+		ElementoTablaInvertida* elementoTabla = list_get(marcosParaEseArchivo, paginaDondeSeEncuentraLaLinea);
+		int desplazamientoMarco = elementoTabla->marco * tamanioPagina * tamanioLinea; //Porque el tamanioPagina esta en lineas
+		int desplazamientoLinea = lineaDentroDeLaPagina * tamanioLinea;
+		char* lineaConBasura = asignarMemoria(tamanioLinea);
+		memcpy(lineaConBasura, storage + desplazamientoMarco + desplazamientoLinea, tamanioLinea);
+		log_debug(logger, "En asignar: Linea: %s", lineaConBasura);
+		char** lineaSinBasura = string_split(lineaConBasura, "\n");
+		char* lineaPosta;
+		if(lineaSinBasura[0] == NULL)
+			lineaPosta = string_new();
+		else{
+			lineaPosta = malloc(strlen(lineaSinBasura[0]));
+			memcpy(lineaPosta, lineaSinBasura[0], strlen(lineaSinBasura[0]));
+		}
+		if((strlen(lineaPosta) + strlen(datos) + 2) < tamanioLinea){ //Lo que ya estaba, los datos nuevos, el /n y el espacio en el medio
+			//Se puede escribir
+			string_append_with_format(&lineaPosta, " %s\n", datos);
+			log_debug("Linea resultante de la asignación: %s", lineaPosta);
+			char* lineaAGuardar = malloc(tamanioLinea);
+			memcpy(lineaAGuardar, lineaPosta, strlen(lineaPosta) + 1);
+			string_trim(&lineaAGuardar);
+			memcpy(storage + desplazamientoMarco + desplazamientoLinea, lineaAGuardar, tamanioLinea);
+			freeLineasBasura(lineaSinBasura, lineaConBasura);
+			free(lineaPosta);
+			free(lineaAGuardar);
+			log_debug(logger, "Asignados datos con exito");
+			return 0;
+
+		}else{
+			freeLineasBasura(lineaSinBasura, lineaConBasura);
+			free(lineaPosta);
+			if(cantidadLineas - 1 == numeroLinea){
+				log_error(logger, "No se puede escribir en la ultima linea del archivo.");
+				return 2000; //ERROR
+			}else{
+				log_error(logger, "No hay suficiente espacio en la linea %d del archivo %s", (numeroLinea+1), nombreArchivo);
+				return 20002; //ERROR
+			}
+		}
+	}else {
+		log_error(logger, "El archivo no posee la linea %d", numeroLinea);
+		return 30000; //ERROR
+	}
+}
+
 static int cantidadDeLineasArchivo(int idDTB, char* nombreArchivo){
 	bool coincidenIdyArchivo(ElementoArchivos* elemento){
 		return elemento->idDTB == idDTB && (strcmp(elemento->nombreArchivo, nombreArchivo) == 0);
@@ -80,6 +133,34 @@ static t_list* filtrarPorDTBYArchivo(int idDTB, char* nombreArchivo){
 	t_list* lista = list_filter(tablaPaginasInvertidas, coincidenIdyArchivo);
 	list_sort(lista, compararPorPagina);
 	return lista;
+}
+
+void liberarMemoriaInvertida(int idDTB, char* nombreArchivo){
+	void liberar(ElementoTablaInvertida* elemento){
+		if(elemento->idDTB == idDTB && (strcmp(elemento->nombreArchivo, nombreArchivo) == 0)){
+			elemento->idDTB = NULL;
+			elemento->pagina = -1;
+			free(elemento->nombreArchivo);
+		}
+	}
+
+	list_iterate(tablaPaginasInvertidas, liberar);
+
+	log_info(logger, "Borrado archivo %s de memoria", nombreArchivo);
+}
+
+void liberarDTBDeMemoriaInvertida(int idDTB){
+	void liberar(ElementoTablaInvertida* elemento){
+		if(elemento->idDTB == idDTB){
+			elemento->idDTB = NULL;
+			elemento->pagina = -1;
+			free(elemento->nombreArchivo);
+		}
+	}
+
+	list_iterate(tablaPaginasInvertidas, liberar);
+
+	log_info(logger, "Borrado DTB %d de memoria por pasar a EXIT", idDTB);
 }
 
 respuestaDeObtencionDeMemoria* obtenerLineaInvertida(int idDTB, char* nombreArchivo, int numeroLinea){
