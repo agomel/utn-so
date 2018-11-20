@@ -151,7 +151,7 @@ static RespuestaCargaSegPag* guardarDatosInternaSegPag(char* datos, char* nombre
 	RespuestaCargaSegPag* respuesta = malloc(sizeof(RespuestaCargaSegPag));
 	respuesta->resultado = 1;
 	int totalLineas = cantidadDeLineas(datos);
-	char** lineas = string_split(datos, "\n");
+	char** lineas = dividirPorLineas(datos);
 	int tamanioSegmento = totalLineas * tamanioLinea;
 	int cantidadPaginas = 1;
 	int lineasEnLaUltimaPagina = totalLineas % tamanioPagina;
@@ -306,7 +306,6 @@ int asignarDatosSegPag(int IdDTB, char* nombreArchivo, int numeroLinea, char* da
 		int lineaDentroDeLaPagina = numeroLinea % tamanioPagina;
 		if((lineaDentroDeLaPagina != 0) && (numeroLinea < tamanioPagina))
 			paginaDondeSeEncuentraLaLinea++;
-
 		ElementoTablaPag* pagina = list_get(segmento->paginas, paginaDondeSeEncuentraLaLinea);
 		int desplazamientoPagina = pagina->marco * tamanioPagina * tamanioLinea; //Porque el tamanioPagina esta en lineas
 		int desplazamientoLinea = lineaDentroDeLaPagina * tamanioLinea;
