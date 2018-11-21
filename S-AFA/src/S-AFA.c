@@ -45,6 +45,24 @@ void terminarOperacionDeCPU(int emisor, DTB* dtb){
 	liberarCPU(emisor, dtb->id);
 }
 
+void despedirACPUs(){
+	waitMutex(&mutexSocketsCPus);
+	for(int i = 0; i < socketsCPUs->elements_count; i++){
+		SocketCPU* socketCPU = list_get(socketsCPUs, i);
+		enviarYSerializarCharSinHeader(socketCPU->socket, FINALIZARME);
+	}
+	signalMutex(&mutexSocketsCPus);
+}
+void despedirACpusMenos(int emisor){
+	waitMutex(&mutexSocketsCPus);
+	for(int i = 0; i < socketsCPUs->elements_count; i++){
+		SocketCPU* socketCPU = list_get(socketsCPUs, i);
+		if(socketCPU->socket != emisor)
+		enviarYSerializarCharSinHeader(socketCPU->socket, FINALIZARME);
+	}
+	signalMutex(&mutexSocketsCPus);
+}
+
 void entenderMensaje(int emisor, char header){
 	int idDTB;
 	DTB* dtb;
@@ -65,6 +83,7 @@ void entenderMensaje(int emisor, char header){
 			log_info(logger, "Recibi cargado con exito en memoria del DAM");
 			idDTB = deserializarInt(emisor);
 			path = deserializarString(emisor);
+			int pesoArchivo = deserializarInt(emisor);
 			dtb = obtenerDTBDeCola(idDTB);
 
 			bool compararPath(char* pathDeLista){
@@ -76,19 +95,16 @@ void entenderMensaje(int emisor, char header){
 			}
 
 			if(!list_any_satisfy(dtb->listaDeArchivos, compararPath)){
-				log_info(logger, "Agrego path a la lista de archivos del DTB");
+				log_info(logger, "Agrego path a la lista de archivos del DTB con peso: %d", pesoArchivo);
 				list_add(dtb->listaDeArchivos, path);
+				dtb->tamanioArchivosAbiertos += pesoArchivo;
 			}
 
 			operacionDelDiego(idDTB);
 			desbloquearDTB(idDTB);
-
 			break;
 
 		}
-
-
-
 
 		case DUMMY:
 			log_info(logger, "Desbloqueo el DUMMY");
@@ -98,6 +114,7 @@ void entenderMensaje(int emisor, char header){
 			enviarYSerializarCharSinHeader(emisor, CONTINUAR_CON_EJECUCION);
 			log_info(logger, "Mando a CPU que continue con su ejecucion");
 			break;
+
 		case DESBLOQUEAR_DTB:
 			log_info(logger, "Recibi Desbloquear DTB");
 			dtb = deserializarDTB(emisor);
@@ -107,12 +124,19 @@ void entenderMensaje(int emisor, char header){
 			break;
 
 		case GUARDADO_CON_EXITO_EN_MDJ:
-			log_info(logger, "Recibi guardado con exito en MDJ");
-			dtb = deserializarDTB(emisor);
+		case BORRADO_CON_EXITO_EN_MDJ:
+		case CREADO_CON_EXITO_EN_MDJ:
+			idDTB = deserializarInt(emisor);
+			path = deserializarString(emisor);
+			log_info(logger, "Recibi %s con exito en MDJ para idDTB %d y path %s", traducirHeaderExito(header), idDTB, path);
 			operacionDelDiego(idDTB);
-			desbloquearDTB(dtb->id);
+			DTB* dtb = obtenerDTBDeCola(idDTB);
+			if(dtb->estado != EXIT)
+			desbloquearDTB(idDTB);
 
+			free(path);
 			break;
+
 		case ERROR:
 			log_info(logger, "Recibi un error");
 			idDTB = deserializarInt(emisor);
@@ -120,12 +144,14 @@ void entenderMensaje(int emisor, char header){
 			operacionDelDiego(idDTB);
 			int error = deserializarInt(emisor);
 			manejarErrores(idDTB, path, error);
+			free(path);
 			break;
 
 		case BLOQUEAR_DTB:
 			log_info(logger, "Recibi bloquear DTB");
 			dtb = deserializarDTB(emisor);
 			cambiarEstadoGuardandoNuevoDTB(dtb, BLOCKED);
+			liberarCPU(emisor, dtb->id);
 
 			 historial = crearHistorial(dtb->id);
 			 agregarHistorialAListaTiempoRespuesta(historial);
@@ -145,15 +171,18 @@ void entenderMensaje(int emisor, char header){
 		case TERMINO_QUANTUM:
 			log_info(logger, "Recibi termino quantum");
 			dtb = deserializarDTB(emisor);
-			if(!strcmp(algoritmo, "VRR")){
-				cambiarEstadoGuardandoNuevoDTB(dtb, READY_PRIORIDAD);
-			}else{
-				cambiarEstadoGuardandoNuevoDTB(dtb, READY);
+			if(!estaEnExit(dtb->id)){
+				if(!strcmp(algoritmo, "VRR") && dtb->quantum != 0){
+					cambiarEstadoGuardandoNuevoDTB(dtb, READY_PRIORIDAD);
+				}else{
+					cambiarEstadoGuardandoNuevoDTB(dtb, READY);
+				}
+				signalSem(&cantidadTotalREADY);
 			}
-			signalSem(&cantidadTotalREADY);
 
 			terminarOperacionDeCPU(emisor, dtb);
 			break;
+
 		case LIBERAR_RECURSO:
 			log_info(logger, "Recibi liberar recurso");
 			recurso = deserializarString(emisor);
@@ -161,6 +190,7 @@ void entenderMensaje(int emisor, char header){
 			enviarYSerializarCharSinHeader(emisor, asignado);
 			log_info(logger, "Enviando a CPU que continue");
 			break;
+
 		case RETENCION_DE_RECURSO:
 			log_info(logger, "Recibi retener recurso");
 			recurso = deserializarString(emisor);
@@ -169,8 +199,16 @@ void entenderMensaje(int emisor, char header){
 			enviarYSerializarCharSinHeader(emisor, asignado);
 			log_info(logger, "Enviando a CPU que continue");
 			break;
+		case FINALIZARME:
+			despedirACPUs();
+			exit(1);
+			break;
 
-
+		case CHAUCHI_CPU:
+			despedirACpusMenos(emisor);
+			enviarYSerializarCharSinHeader(socketDAM, FINALIZARME);
+			exit(1);
+			break;
 		default:
 			log_error(logger, "Header desconocido del emisor %d y header %c", emisor, header);
 	}
@@ -197,6 +235,7 @@ void inicializarSAFA(){
 	recursos = dictionary_create();
 	inicializarMutex(&mutexEsperandoRecursos);
 	esperandoRecursos = list_create();
+	inicializarSem(&bloqueadoDummy, 1);
 }
 void crearSelect(int servidor){
 	Select* select = asignarMemoria(sizeof(Select));
@@ -210,11 +249,17 @@ void crearSelect(int servidor){
 	select->semProductores = &semProductores;
 	realizarNuestroSelect(select);
 }
+void despedida(){
+	log_info(logger, "chauuuuu :)");
+	enviarYSerializarCharSinHeader(socketDAM, FINALIZARME);
+	despedirACPUs();
+	raise(SIGTERM);
+}
 int main(void) {
+	signal(SIGINT, despedida);
 	inicializarSAFA();
-	t_config* configuracion = config_create(ARCHIVO_CONFIGURACION);
+	configuracion = config_create(ARCHIVO_CONFIGURACION);
 	retardo = config_get_int_value(configuracion, "RETARDO_PLANIF");
-
 
 	direccionServidor direccionSAFA = levantarDeConfiguracion(NULL, "PUERTO", configuracion);
 	int servidor = crearServidor(direccionSAFA.puerto, INADDR_ANY);

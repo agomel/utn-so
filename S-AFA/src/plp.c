@@ -4,6 +4,7 @@ void planificadorALargoPlazo() {
 	int a = 1;
 	while (a) {
 		waitSem(&semCantidadEnNew);
+		waitSem(&bloqueadoDummy);
 		log_info(logger, "Hay procesos en la cola new");
 
 		DTB* dtb = obtenerPrimerDTBEnNew();
@@ -55,7 +56,7 @@ void pasarDTBAExit(int idDTB){
 	if(!dtb){
 		log_error(logger,"NO existe ese dtb");
 	}else if(dtb->estado == EXIT){
-		log_info(logger, "El DTB: %d ya se encontraba en EXIT", idDTB);
+		log_error(logger, "El DTB: %d ya se encontraba en EXIT", idDTB);
 	}else{
 		cambiarEstado(idDTB, EXIT);
 		finalizarHistorialDeListaExit(idDTB);
@@ -75,43 +76,32 @@ void pasarDTBAExitGuardandoNuevo(DTB* dtb) {
 void manejarErrores(int idDTB, char* path, int error){
 	pasarDTBAExit(idDTB);
 	switch(error){
-		case 10001:
+		case PATH_INEXISTENTE:
 			log_error(logger, "path inexistente de archivo %s", path);
 			break;
 
-		case 10002:
-		case 20003:
+		case ESPACIO_INSUFICIENTE_EN_FM9:
 			log_error(logger, "espacio insuficiente en FM9 para archivo %s", path);
 			break;
 
-		case 20001:
-		case 30001:
-		case 40001:
+		case EL_ARCHIVO_NO_SE_ENCUENTRA_ABIERTO:
 			log_error(logger, "El archivo no se encuentra abierto %s", path);
 			break;
 
-		case 20002:
-		case 30002:
-		case 40002:
+		case FALLO_DE_SEGMENTO_MEMORIA:
 			log_error(logger, "Fallo de segmento/memoria en path %s", path);
 			break;
-		case 30003:
+		case ESPACIO_INSUFICIENTE_EN_MDJ:
 			log_error(logger, "Espacio insuficiente en MDJ para archivo %s", path);
 			break;
-		case 30004:
+		case EL_ARCHIVO_NO_EXISTE_EN_MDJ:
 			log_error(logger, "El archivo no existe en MDJ, fue borrado previamente MDJ path: %s", path);
 			break;
-		case 50001:
+		case ARCHIVO_YA_EXISTENTE:
 			log_error(logger, "Archivo ya existente: %s", path);
 			break;
-		case 50002:
-			log_error(logger, "Espacio insuficiente en path: %s", path);
-			break;
-		case 60001:
-			log_error(logger, "El archivo no existe en path: %s", path);
-			break;
 		default:
-			log_error(logger, "No reconozco el error, pero te termino el dtb");
+			log_error(logger, "No reconozco el error, pero te termino el dtb. Numero de error: %d", error);
 	}
 }
 

@@ -8,23 +8,36 @@ typedef struct{
 	t_list* paginas;
 	int cantidadLineas;
 	char* nombreArchivo;
-}ElementoTablaSeg;
+}ElementoTablaSegPag;
 
 typedef struct{
 	int idPag;
 	int marco;
 }ElementoTablaPag;
 
+typedef struct{
+	int idDTB;
+	t_list* segmentos;
+}ElementoTablaDTBS;
+
+typedef struct{
+	int resultado;
+	ElementoTablaSegPag* elementoTabla;
+	int pesoArchivo;
+}RespuestaCargaSegPag;
+
 int idSegmento;
 int idPagina;
-t_list* tablaDeSegmentos;
 t_list* tablaDePaginas;
+t_list* tablaDeProcesos;
 
-void inicializarSegPag();
-int guardarDatosSegPag(int idDTB, char* datos, char* nombreArchivo);
-respuestaDeObtencionDeMemoria* obtenerDatosSegPag(char* idsSegmentos);
-respuestaDeObtencionDeMemoria* obtenerLineaSegPag(char* nombreArchivo, int numeroLinea);
-void liberarMemoriaSegPag(char* nombreArchivo);
-ElementoTablaPag* obtenerPaginasPorId(int pagina);
+void inicializarSegPag(t_config* configuracion);
+RespuestaGuardado* guardarDatosSegPag(int idDTB, char* datos, char* nombreArchivo);
+RespuestaGuardado* nuevoProcesoSegPag(int idDTB, char* datos, char* nombreArchivo);
+respuestaDeObtencionDeMemoria* obtenerDatosSegPag(int idDTB, char* idsSegmentos);
+respuestaDeObtencionDeMemoria* obtenerLineaSegPag(int idDTB, char* nombreArchivo, int numeroLinea);
+void liberarMemoriaSegPag(int idDTB, char* nombreArchivo);
+void liberarDTBDeMemoriaSegPag(int idDTB);
+void dumpSegPag(int idDTB);
 
 #endif /* SEGMENTACIONPAG_H_ */

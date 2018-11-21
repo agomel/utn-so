@@ -78,6 +78,7 @@ int recibirMensaje(int socketEmisor, void* buffer, int bytesMaximos){
 	if (bytesRecibidos == 0) {
 		// conexión cerrada
 		printf("conexion cerrada\n");
+		exit(1);
 	} else {
 		perror("error en el recv");
 	}

@@ -12,6 +12,7 @@
 #include <biblioteca/nuestroSelect.h>
 #include "ServicioFM9.h"
 #include <biblioteca/traductor.h>
+#include <signal.h>
 
 int transferSize;
 
@@ -25,7 +26,7 @@ pthread_mutex_t mutexColaOperaciones;
 sem_t semHayEnColaOperaciones;
 sem_t semProductores;
 
-t_config* configuraciones;
+t_config* configuracion;
 
 t_log* logger;
 

@@ -1,6 +1,7 @@
 #include "ServicioMDJ.h"
 
 int validarArchivoMDJ(char* path){
+
 	int tamanioMensaje = sizeof(char) + sizeof(int) + strlen(path)+1;
 	void* buffer = asignarMemoria(tamanioMensaje);
 	int desplazamiento = 0;
@@ -17,15 +18,23 @@ int validarArchivoMDJ(char* path){
 }
 
 char* obtenerDatosDeMDJ(char* path){
-	enviarYSerializarCharSinHeader(socketMDJ, OBTENER_DATOS);
-	enviarYSerializarStringSinHeader(socketMDJ, path);
-	enviarYSerializarIntSinHeader(socketMDJ, 0);
-	enviarYSerializarIntSinHeader(socketMDJ, -1);
+	int tamanioMensaje = sizeof(char) + strlen(path)+1 + sizeof(int)*3;
+	void* buffer = asignarMemoria(tamanioMensaje);
+	int desplazamiento = 0;
+
+	concatenarChar(buffer, &desplazamiento, OBTENER_DATOS);
+	concatenarString(buffer, &desplazamiento, path);
+	concatenarInt(buffer, &desplazamiento, 0); //Offset
+	concatenarInt(buffer, &desplazamiento, -1);//Size
+
+	enviarMensaje(socketMDJ, buffer, tamanioMensaje);
+
 	int tamanioARecibirTotal = deserializarInt(socketMDJ);
+	printf("tamanio a recibir llego como %d\n", tamanioARecibirTotal);
 	int tamanioRecibido = 0;
 	char* escriptorio;
 	escriptorio = asignarMemoria(tamanioARecibirTotal);
-	int desplazamiento = 0;
+	desplazamiento = 0;
 	int tamanioARecibir;
 
 	while(tamanioRecibido< tamanioARecibirTotal){
@@ -34,18 +43,18 @@ char* obtenerDatosDeMDJ(char* path){
 		}else{
 			tamanioARecibir = tamanioARecibirTotal - tamanioRecibido;
 		}
-		char* parteRecibida = deserializarStringSinElInt(socketMDJ, tamanioARecibir);
+		char* parteRecibida = deserializarStringSinElIntDAM(socketMDJ, tamanioARecibir);
 		memcpy(escriptorio + desplazamiento, parteRecibida, tamanioARecibir);
 		free(parteRecibida);
 		desplazamiento = desplazamiento + tamanioARecibir;
 		tamanioRecibido += tamanioARecibir;
 	}
-
+	log_info(logger, "recibi %s", escriptorio);
 	return escriptorio;
 }
 
 int crearArchivoEnMDJ(int destino, char* path, int cantidadDeLineas){
-	enviarySerializarPathyTamanioArchivo(destino, path, cantidadDeLineas);
+	enviarySerializarPathyTamanioArchivo(destino, path, cantidadDeLineas, NULL);
 	return deserializarInt(socketMDJ);
 }
 int borrarArchivoEnMDJ(char* path){
@@ -58,9 +67,16 @@ int borrarArchivoEnMDJ(char* path){
 	return deserializarInt(socketMDJ);
 }
 int guardarDatosEnMDJ(char* datos, char* path){
-	int cantidadTotal = (sizeof(datos)+1) ;
-	enviarYSerializarCharSinHeader(socketMDJ, GUARDAR_DATOS);
-	enviarYSerializarStringSinHeader(socketMDJ, datos);
+	void* buffer = asignarMemoria(sizeof(char) + sizeof(int)*3 + strlen(path) + 1 + strlen(datos) + 1);
+	int desplazamiento = 0;
+	concatenarChar(buffer, &desplazamiento, GUARDAR_DATOS);
+	concatenarString(buffer, &desplazamiento, path);
+	concatenarInt(buffer, &desplazamiento, 0);
+	concatenarString(buffer, &desplazamiento, datos);
+
+	enviarMensaje(socketMDJ, buffer, desplazamiento);
+	free(buffer);
+
 	return deserializarInt(socketMDJ);
 }
 

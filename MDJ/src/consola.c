@@ -4,14 +4,17 @@
 void consolita(){
 
 	//ir al punto de montaje
-	char* puntoDeMontaje = concatenar(".", PUNTO_MONTAJE);
-	cd(puntoDeMontaje);
-	free(puntoDeMontaje);
+	char* montajeActual = asignarMemoria(sizeof(char) + 1); //No hace falta hacer el malloc para todo, se hace el realloc en la funcion
+	memcpy(montajeActual, ".", sizeof(char) + 1);
+	string_append(&montajeActual, MONTAJE_ACTUAL);
+	cd(montajeActual);
+	free(montajeActual);
 
 	//escuchar la consola
 	while(1){
-		char* mensajeReadLine = concatenar(PUNTO_MONTAJE, "$ ");
-		char* texto = readline(mensajeReadLine);
+		char* mensajeReadLine = concatenar(MONTAJE_ACTUAL, "$ ");
+		char* texto = asignarMemoria(strlen(MONTAJE_ACTUAL) + 1);
+		texto = readline(mensajeReadLine);
 		free(mensajeReadLine);
 
 		//get comando
@@ -33,11 +36,13 @@ void consolita(){
 		}
 		else if(strcmp(comando, "cat") == 0){
 			cat(parametro);
-		}else{
-			printf("No te entiendo man \n");
+		}else if(strcmp(comando, "exit") == 0){
+			exit(200);
 		}
+		else{
+			printf("Comando incorrecto\n");
+		}
+
+		free(texto);
 	}
 }
-
-
-

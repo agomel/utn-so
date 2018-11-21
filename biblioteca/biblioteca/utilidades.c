@@ -54,3 +54,34 @@ char* nombreEstado(char estado){
 	break;
 	}
 }
+
+char* concatenar(char* str1, char* str2){
+	char* concatenado = asignarMemoria(strlen(str1) + 1);
+	memcpy(concatenado, str1, strlen(str1) + 1);
+	string_append(&concatenado, str2);
+	return concatenado;
+}
+
+void concatenarATexto(char** texto, char* adicional){
+	string_append(texto, adicional);
+}
+
+
+char* byteToBit(char byte){
+	char* bits = asignarMemoria(CHAR_BIT);
+	for(int i = 0; i < CHAR_BIT; i++)
+	    bits[i] = '0' + ((byte & (1 << i)) > 0);
+
+	printf("%s\n", bits);
+	return bits;
+}
+
+char* bytesToBits(char* bytes){
+	char* bits = asignarMemoria(CHAR_BIT * strlen(bytes) + 1);
+	int desplazamiento = 0;
+	for(int i = 0; i < strlen(bytes); i++){
+		memcpy(bits + desplazamiento, byteToBit(bytes[i]), CHAR_BIT);
+		desplazamiento += CHAR_BIT;
+	}
+	return bits;
+}

@@ -1,14 +1,4 @@
 #include "serializacion.h"
-
-
-char* concatenar(char* str1, char* str2){
-	char* resultado = asignarMemoria(strlen(str1) + strlen(str2)+1);
-	memcpy(resultado, str1, strlen(str1));
-	memcpy(resultado + strlen(str1), str2, strlen(str2)+1);
-	return resultado;
-}
-
-
 void handshake(int servidor, char modulo){
 	int tamanioMensaje = sizeof(char)*2;
 	void* mensaje = asignarMemoria(tamanioMensaje);
@@ -36,13 +26,19 @@ void enviarYSerializarString(int destino, char* texto,char operacion){
 	free(mensaje);
 }
 
-void enviarySerializarPathyTamanioArchivo(int destino ,char* path, int tamanioArchivo){
-	void* buffer = asignarMemoria(sizeof(char) + sizeof(int) + (strlen(path)+1) + sizeof(int));
+void enviarySerializarPathyTamanioArchivo(int destino ,char* path, int tamanioArchivo, int idDTB){
+	int tamanioBuffer = sizeof(char) + sizeof(int) + strlen(path) + 1 + sizeof(int);
+	if(idDTB != NULL)
+		tamanioBuffer += sizeof(int);
+
+	void* buffer = asignarMemoria(tamanioBuffer);
 	int desplazamiento = 0;
 	concatenarChar(buffer, &desplazamiento, CREAR_ARCHIVO);
+	if(idDTB != NULL)
+		concatenarInt(buffer, &desplazamiento, idDTB);
 	concatenarString(buffer, &desplazamiento, path);
 	concatenarInt(buffer, &desplazamiento, tamanioArchivo);
-	enviarMensaje(destino, buffer, desplazamiento);
+	enviarMensaje(destino, buffer, tamanioBuffer);
 	free(buffer);
 }
 
@@ -148,19 +144,25 @@ void concatenarVoid(void* buffer, int* desplazamiento, void* mensaje, int tamani
 
 char* deserializarString(int emisor){
 	int tamanioMensaje = deserializarInt(emisor);
-	char* mensaje = asignarMemoria(tamanioMensaje);
+	char* mensaje = asignarMemoria(tamanioMensaje + 1);
 	recibirMensaje(emisor, mensaje, tamanioMensaje);
+	mensaje[tamanioMensaje - 1] = '\0';
 	printf("Recibi %s de parte de %d \n" , mensaje, emisor);
 	return mensaje;
 }
 
 char* deserializarStringSinElInt(int emisor, int tamanioMensaje){
-	char* mensaje = asignarMemoria(tamanioMensaje);
+	char* mensaje = asignarMemoria(tamanioMensaje + 1);
 	recibirMensaje(emisor, mensaje, tamanioMensaje);
+	mensaje[tamanioMensaje] = '\0';
 	printf("Recibi %s de parte de %d \n" , mensaje, emisor);
 	return mensaje;
 }
-
+char* deserializarStringSinElIntDAM(int emisor, int tamanioMensaje){
+	char* mensaje = asignarMemoria(tamanioMensaje);
+	recibirMensaje(emisor, mensaje, tamanioMensaje);
+	return mensaje;
+}
 int deserializarInt(int emisor){
 	int mensaje;
 	recibirMensaje(emisor, &mensaje, sizeof(int));

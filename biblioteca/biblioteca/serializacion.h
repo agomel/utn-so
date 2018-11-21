@@ -37,6 +37,7 @@ void concatenarInt(void* buffer, int* desplazamiento, int numero);
 void concatenarString(void* buffer, int* desplazamiento, char* mensaje);
 void concatenarListaInt(void* buffer, int* desplazamiento, t_list* listaArchivos);
 void concatenarDiccionario(void* buffer, int* desplazamiento, t_dictionary* diccionario);
+void enviarySerializarPathyTamanioArchivo(int destino ,char* path, int tamanioArchivo, int idDTB);
 
 voidDeserealizado deserializarVoid(int emisor);
 

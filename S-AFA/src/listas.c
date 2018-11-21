@@ -85,21 +85,42 @@ t_list* filtrarListaPorEstado(char estado){
 	return lista;
 }
 
+t_list* filtrarListaPorDTBsConArchivosAbiertos(){
+	bool tieneArchivosAbiertos(DTB* dtb){
+		return (dtb->tamanioArchivosAbiertos > 0);
+	}
+	waitMutex(&mutexListaDTBs);
+	t_list* lista = list_filter(listaDeTodosLosDTBs, tieneArchivosAbiertos);
+	signalMutex(&mutexListaDTBs);
+	return lista;
+}
+
+DTB* obtenerDTBConArchivoMasGrande(){
+	bool tieneArchivoMasGrande(DTB* dtb1, DTB* dtb2){
+		return (dtb1->tamanioArchivosAbiertos > dtb2->tamanioArchivosAbiertos);
+	}
+	t_list* lista = filtrarListaPorEstado(READY);
+	list_sorted(lista, tieneArchivoMasGrande);
+	DTB* dtb = list_get(lista, 0);
+	list_destroy(lista);
+	return dtb;
+}
 void agregarDTBALista(DTB* dtb){
 	waitMutex(&mutexListaDTBs);
 	list_add(listaDeTodosLosDTBs, dtb);
 	signalMutex(&mutexListaDTBs);
 }
 
-void pasarDTBAlFinalDeLista(int idDTB){
+void pasarDTBAlFinalDeListaDesdeNew(int idDTB){
 	DTB* dtb = obtenerDTBDeColaRemoviendolo(idDTB);
+	dtb->estado = MANDADO_A_DUMIZZAR;
 	agregarDTBALista(dtb);
 }
 
 DTB* obtenerPrimerDTBEnNew(){
 	t_list* lista = filtrarListaPorEstado(NEW);
 	DTB* dtb = list_get(lista, 0);
-	pasarDTBAlFinalDeLista(dtb->id);
+	pasarDTBAlFinalDeListaDesdeNew(dtb->id);
 	return dtb;
 }
 
@@ -111,10 +132,11 @@ DTB* removerDTBPorIndice(int indice){
 	return dtb;
 }
 
-cambiarEstadoDummy(char estado){
+void cambiarEstadoDummy(char estado){
 	DTB* dummy = obtenerDummyDeColaRemoviendolo();
 	dummy->estado = estado;
 	agregarDTBALista(dummy);
+	signalSem(&bloqueadoDummy);
 }
 
 int obtenerCPUDisponibleYOcupar(int id){
@@ -153,4 +175,9 @@ void liberarCPU(int idSocket, int idDTB){
 	dictionary_remove(ejecutandoCPU, intToString(idDTB));
 	signalMutex(&mutexEjecutandoCPU);
 	signalSem(&gradoMultiprocesamiento);
+}
+
+int estaEnExit(int idDtb){
+	DTB* dtb = obtenerDTBDeCola(idDtb);
+	return dtb->estado == EXIT;
 }

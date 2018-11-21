@@ -22,10 +22,21 @@ DTB* planificarPorVRR(){
 	if(listaVRR->elements_count > 0){
 		DTB* dtb = list_get(listaVRR, 0);
 		list_destroy(listaVRR);
+		if(dtb->quantum == 0){
+			log_error(logger,"No deberia llegar aca");
+			cambiarEstado(dtb->id, READY);
+			return planificarPorVRR();
+		}
 		return dtb;
 	}else{
 		return planificarPorRR();
 	}
+}
+
+DTB* planificarPorBOAF(){
+	DTB* dtb = obtenerDTBConArchivoMasGrande();
+	dtb->quantum = -1;
+	return dtb;
 }
 
 DTB* seleccionarDTB(){
@@ -35,6 +46,8 @@ DTB* seleccionarDTB(){
 		return planificarPorRR();
 	}else if(!strcmp(algoritmo, "VRR")){
 		return planificarPorVRR();
+	}else if(!strcmp(algoritmo, "BOAF")){
+		return planificarPorBOAF();
 	}
 }
 void planificadorACortoPlazo(){
@@ -45,11 +58,11 @@ void planificadorACortoPlazo(){
 		DTB* dtb = seleccionarDTB();
 		if(dtb->flag == 0){
 			cambiarEstadoDummy(EXECUTE);
-			log_info(logger, "Pasado Dummy a ejecutar con scriptorio %s", dtb->escriptorio);
+			log_info(logger, "Pasado Dummy a ejecutar con escriptorio %s", dtb->escriptorio);
 		}else{
 			cambiarEstado(dtb->id, EXECUTE);
 		}
-		printf("enviando a ejecutar dtb con id %d \n", dtb->id);
+		printf("enviando a ejecutar dtb con id %d y quantum %d\n", dtb->id, dtb->quantum);
 
 		int socketCPU = obtenerCPUDisponibleYOcupar(dtb->id);
 		log_debug(logger, "enviando a socket %d header %c", socketCPU, ENVIAR_DTB);
@@ -58,7 +71,7 @@ void planificadorACortoPlazo(){
 }
 
 void desbloquearDTB(int idDTB){
-	if(!strcmp(algoritmo, "VRR")){
+	if(!strcmp(algoritmo, "VRR") && obtenerDTBDeCola(idDTB)->quantum != 0){
 		cambiarEstado(idDTB, READY_PRIORIDAD);
 		signalSem(&cantidadTotalREADY);
 	}else{

@@ -5,6 +5,7 @@
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS += \
 ../src/FM9.c \
+../src/consola.c \
 ../src/manejoLineas.c \
 ../src/paginasInvertidas.c \
 ../src/segmentacionPag.c \
@@ -12,6 +13,7 @@ C_SRCS += \
 
 OBJS += \
 ./src/FM9.o \
+./src/consola.o \
 ./src/manejoLineas.o \
 ./src/paginasInvertidas.o \
 ./src/segmentacionPag.o \
@@ -19,6 +21,7 @@ OBJS += \
 
 C_DEPS += \
 ./src/FM9.d \
+./src/consola.d \
 ./src/manejoLineas.d \
 ./src/paginasInvertidas.d \
 ./src/segmentacionPag.d \

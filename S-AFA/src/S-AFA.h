@@ -12,9 +12,12 @@
 #include <biblioteca/logger.h>
 #include <biblioteca/nuestroSelect.h>
 #include <biblioteca/traductor.h>
+#include <signal.h>
 
 int socketDAM;
 pthread_mutex_t mutexDummy;
+
+sem_t bloqueadoDummy;
 int socketDAM;
 int conectadoCPU;
 int conectadoDAM;
@@ -28,7 +31,7 @@ pthread_mutex_t mutexCpusAFinalizarDTBs;
 t_dictionary* cpusAFinalizarDTBs;
 t_dictionary* recursos;
 pthread_mutex_t mutexRecursos;
-
+t_config* configuracion;
 
 t_list* esperandoRecursos;
 pthread_mutex_t mutexEsperandoRecursos;

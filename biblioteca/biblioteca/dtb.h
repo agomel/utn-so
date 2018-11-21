@@ -17,6 +17,7 @@ typedef struct{
 	t_list* listaDeArchivos;
 	int quantum;
 	char estado;
+	int tamanioArchivosAbiertos;
 }DTB;
 
 DTB crearDTB (char* parametro);

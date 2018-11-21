@@ -5,5 +5,5 @@
 
 char* traducirEstado(char estado);
 char* traducirModulo(char modulo);
-
+char* traducirHeaderExito(char header);
 #endif /* TRADUCTOR_H_*/
