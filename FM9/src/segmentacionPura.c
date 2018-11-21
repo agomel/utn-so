@@ -164,9 +164,7 @@ static void freeRespuestaCargaSegPura(RespuestaCargaSegPura* respuesta){
 respuestaDeObtencionDeMemoria* obtenerDatosSegPura(int idDTB, char* nombreArchivo){
 	respuestaDeObtencionDeMemoria* respuesta = malloc(sizeof(respuestaDeObtencionDeMemoria));
 	ElementoTablaProcesos* proceso = obtenerProcesoPorIdDTB(idDTB);
-	waitMutex(&mutexListaSegmentos);
 	ElementoTablaSegPura* segmento = obtenerSegmentoPorArchivo(nombreArchivo, proceso->tablaSegmentos);
-	signalMutex(&mutexListaSegmentos);
 	if(segmento != NULL){
 		int cantidadLineas = segmento->limite / tamanioLinea;
 		char* archivo = string_new();
@@ -196,9 +194,7 @@ respuestaDeObtencionDeMemoria* obtenerDatosSegPura(int idDTB, char* nombreArchiv
 respuestaDeObtencionDeMemoria* obtenerLineaSegPura(int idDTB, char* nombreArchivo, int numeroLinea){
 	respuestaDeObtencionDeMemoria* respuesta = malloc(sizeof(respuestaDeObtencionDeMemoria));
 	ElementoTablaProcesos* proceso = obtenerProcesoPorIdDTB(idDTB);
-	waitMutex(&mutexListaSegmentos);
 	ElementoTablaSegPura* segmento = obtenerSegmentoPorArchivo(nombreArchivo, proceso->tablaSegmentos);
-	signalMutex(&mutexListaSegmentos);
 	int cantidadLineasDeArchivo = 1;
 	if(segmento->limite > tamanioLinea)
 		cantidadLineasDeArchivo = segmento->limite / tamanioLinea;
@@ -285,9 +281,7 @@ void liberarDTBDeMemoriaSegPura(int idDTB){
 int asignarDatosSegPura(int IdDTB, char* nombreArchivo, int numeroLinea, char* datos){
 	numeroLinea--;
 	ElementoTablaProcesos* proceso = obtenerProcesoPorIdDTB(IdDTB);
-	waitMutex(&mutexListaSegmentos);
 	ElementoTablaSegPura* segmento = obtenerSegmentoPorArchivo(nombreArchivo, proceso->tablaSegmentos);
-	signalMutex(&mutexListaSegmentos);
 	int cantidadLineasSegmento = segmento->limite / tamanioLinea;
 	if(numeroLinea < cantidadLineasSegmento - 1){
 		int desplazamiento = segmento->base + numeroLinea * tamanioLinea;
@@ -384,12 +378,14 @@ void dumpSegPura(int idDTB){
 	ElementoTablaProcesos* proceso = obtenerProcesoPorIdDTB(idDTB);
 	waitMutex(&mutexListaSegmentos);
 	int cantidadDeSegmentos = proceso->tablaSegmentos->elements_count;
+	signalMutex(&mutexListaSegmentos);
 	log_info(logger, "El DTB con id %d, tiene %d archivos abiertos en memoria", idDTB, cantidadDeSegmentos);
 	for (int i = 0; i < cantidadDeSegmentos; ++i) {
+		waitMutex(&mutexListaSegmentos);
 		ElementoTablaSegPura* segmento = list_get(proceso->tablaSegmentos, i);
+		signalMutex(&mutexListaSegmentos);
 		respuestaDeObtencionDeMemoria* respuesta = obtenerDatosSegPura(idDTB, segmento->nombreArchivo);
 		log_info(logger, "El archivo %d tiene estos datos guardados: %s", (i+1), respuesta->datos);
 		freeRespuestaObtencion(respuesta);
 	}
-	signalMutex(&mutexListaSegmentos);
 }
