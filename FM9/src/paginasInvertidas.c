@@ -60,7 +60,9 @@ respuestaDeObtencionDeMemoria* obtenerDatosInvertida(int idDTB, char* nombreArch
 
 int asignarDatosInvertida(int idDTB, char* nombreArchivo, int numeroLinea, char* datos){
 	numeroLinea--;
+	waitMutex(&mutexArchivos);
 	int cantidadLineas = cantidadDeLineasArchivo(idDTB, nombreArchivo);
+	signalMutex(&mutexArchivos);
 	t_list* marcosParaEseArchivo = filtrarPorDTBYArchivo(idDTB, nombreArchivo);
 
 	if(numeroLinea < (cantidadLineas - 1)){
@@ -116,9 +118,7 @@ static int cantidadDeLineasArchivo(int idDTB, char* nombreArchivo){
 		return elemento->idDTB == idDTB && (strcmp(elemento->nombreArchivo, nombreArchivo) == 0);
 	}
 
-	waitMutex(&mutexArchivos);
 	ElementoArchivos* elemento = list_find(tablaDeArchivos, coincidenIdyArchivo);
-	signalMutex(&mutexArchivos);
 
 	if(elemento != NULL)
 		return elemento->cantidadLineas;
@@ -138,7 +138,8 @@ static t_list* filtrarPorDTBYArchivo(int idDTB, char* nombreArchivo){
 	waitMutex(&mutexPaginasInvertidas);
 	t_list* lista = list_filter(tablaPaginasInvertidas, coincidenIdyArchivo);
 	list_sort(lista, compararPorPagina);
-	signal(&mutexOperaciones);
+	signalMutex(&mutexPaginasInvertidas);
+
 	return lista;
 }
 
@@ -308,24 +309,22 @@ RespuestaGuardado* guardarDatosInvertida(int idDTB, char* datos, char* nombreArc
 void dumpInvertida(int idDTB){
 	log_info(logger, "Dump de DTB: %d", idDTB);
 	char* dump = string_new();
-
-	for(int i=0; i<tablaDeArchivos->elements_count; i++){
-		waitMutex(&mutexArchivos);
+	waitMutex(&mutexArchivos);
+	for(int i=0; i < (tablaDeArchivos->elements_count); i++){
 		ElementoArchivos* elemento = list_get(tablaDeArchivos, i);
-		signal(&mutexArchivos);
-
 
 		if(elemento->idDTB == idDTB){
-			int cantidadPaginas = elemento->cantidadLineas / tamanioPagina;
+			int cantidadPaginas = elemento->cantidadLineas / tamanioPagina + 1;
 			respuestaDeObtencionDeMemoria* datos = obtenerDatosInvertida(idDTB, elemento->nombreArchivo);
 
-			string_append_with_format(dump, "Abierto archivo: %s \n"
-							">>> Ocupa %d lineas \n"
+			string_append_with_format(&dump, "Abierto archivo: %s \n"
+							">>> Ocupa %d paginas \n"
 							">>> Su contenido es: %s", elemento->nombreArchivo, cantidadPaginas, datos->datos);
+
 		}
 	}
-
-	log_info("aaaa %s", dump);
+	log_info(logger, "- %s", dump);
+	signalMutex(&mutexArchivos);
 	free(dump);
 }
 
