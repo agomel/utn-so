@@ -71,7 +71,7 @@ void entenderMensaje(int emisor, char header){
 		}
 
 		case BORRAR_ARCHIVO: {
-			log_debug(logger, "borrar archivo");
+			log_debug(logger, "borrar archivo %s", path);
 			int borrarArchivo = borrarArchivoEnMDJ(path);
 			if(borrarArchivo != 0){
 				enviarError(idDTB, path, borrarArchivo);
