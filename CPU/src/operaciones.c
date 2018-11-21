@@ -173,8 +173,8 @@ char crear(char* lineaEjecutando, DTB* dtbRecibido){
 char borrar(char* lineaEjecutando, DTB* dtbRecibido){
 	bloquearDTB(dtbRecibido);
 
-	char* pathRecibido = asignarMemoria(strlen(lineaEjecutando)-5);
-	pathRecibido = string_substring_from(lineaEjecutando, 6);
+	char* pathRecibido = asignarMemoria(strlen(lineaEjecutando)-6);
+	pathRecibido = string_substring_from(lineaEjecutando, 7);
 
 	void* buffer;
 	int desplazamiento = 0;
