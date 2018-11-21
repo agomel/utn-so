@@ -1,6 +1,8 @@
 #ifndef S-AFA_H_
 #define S-AFA_H_
 
+#include <stdio.h>
+#include <stdlib.h>
 #include <biblioteca/socket.h>
 #include <biblioteca/hilos.h>
 #include <biblioteca/utilidades.h>
