@@ -99,10 +99,9 @@ DTB* obtenerDTBConArchivoMasGrande(){
 	bool tieneArchivoMasGrande(DTB* dtb1, DTB* dtb2){
 		return (dtb1->tamanioArchivosAbiertos > dtb2->tamanioArchivosAbiertos);
 	}
-	waitMutex(&mutexListaDTBs);
-	t_list* lista = list_sorted(listaDeTodosLosDTBs, tieneArchivoMasGrande);
+	t_list* lista = filtrarListaPorEstado(READY);
+	list_sorted(lista, tieneArchivoMasGrande);
 	DTB* dtb = list_get(lista, 0);
-	signalMutex(&mutexListaDTBs);
 	list_destroy(lista);
 	return dtb;
 }

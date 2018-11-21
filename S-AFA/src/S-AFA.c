@@ -130,7 +130,10 @@ void entenderMensaje(int emisor, char header){
 			path = deserializarString(emisor);
 			log_info(logger, "Recibi %s con exito en MDJ para idDTB %d y path %s", traducirHeaderExito(header), idDTB, path);
 			operacionDelDiego(idDTB);
+			DTB* dtb = obtenerDTBDeCola(idDTB);
+			if(dtb->estado != EXIT)
 			desbloquearDTB(idDTB);
+
 			free(path);
 			break;
 
