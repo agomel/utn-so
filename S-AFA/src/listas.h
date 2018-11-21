@@ -22,7 +22,7 @@ void pasarDTBAlFinalDeLista(int idDTB);
 
 DTB* removerDTBPorIndice(int indice);
 
-cambiarEstadoDummy(char estado);
+void cambiarEstadoDummy(char estado);
 
 int obtenerCPUDisponibleYOcupar(int id);
 

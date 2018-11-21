@@ -16,6 +16,8 @@
 
 int socketDAM;
 pthread_mutex_t mutexDummy;
+
+sem_t bloqueadoDummy;
 int socketDAM;
 int conectadoCPU;
 int conectadoDAM;

@@ -151,6 +151,7 @@ void entenderMensaje(int emisor, char header){
 			log_info(logger, "Recibi bloquear DTB");
 			dtb = deserializarDTB(emisor);
 			cambiarEstadoGuardandoNuevoDTB(dtb, BLOCKED);
+			liberarCPU(emisor, dtb->id);
 
 			 historial = crearHistorial(dtb->id);
 			 agregarHistorialAListaTiempoRespuesta(historial);
@@ -234,6 +235,7 @@ void inicializarSAFA(){
 	recursos = dictionary_create();
 	inicializarMutex(&mutexEsperandoRecursos);
 	esperandoRecursos = list_create();
+	inicializarSem(&bloqueadoDummy, 1);
 }
 void crearSelect(int servidor){
 	Select* select = asignarMemoria(sizeof(Select));

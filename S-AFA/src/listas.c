@@ -111,15 +111,16 @@ void agregarDTBALista(DTB* dtb){
 	signalMutex(&mutexListaDTBs);
 }
 
-void pasarDTBAlFinalDeLista(int idDTB){
+void pasarDTBAlFinalDeListaDesdeNew(int idDTB){
 	DTB* dtb = obtenerDTBDeColaRemoviendolo(idDTB);
+	dtb->estado = MANDADO_A_DUMIZZAR;
 	agregarDTBALista(dtb);
 }
 
 DTB* obtenerPrimerDTBEnNew(){
 	t_list* lista = filtrarListaPorEstado(NEW);
 	DTB* dtb = list_get(lista, 0);
-	pasarDTBAlFinalDeLista(dtb->id);
+	pasarDTBAlFinalDeListaDesdeNew(dtb->id);
 	return dtb;
 }
 
@@ -131,10 +132,11 @@ DTB* removerDTBPorIndice(int indice){
 	return dtb;
 }
 
-cambiarEstadoDummy(char estado){
+void cambiarEstadoDummy(char estado){
 	DTB* dummy = obtenerDummyDeColaRemoviendolo();
 	dummy->estado = estado;
 	agregarDTBALista(dummy);
+	signalSem(&bloqueadoDummy);
 }
 
 int obtenerCPUDisponibleYOcupar(int id){

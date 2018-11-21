@@ -35,7 +35,7 @@ enum COLAS{
 };
 
 enum ESTADO{
-	NEW = 'a', READY = 'b', BLOCKED = 'c', EXIT = 'd', EXECUTE = 'e', READY_PRIORIDAD = 'g'
+	NEW = 'a', READY = 'b', BLOCKED = 'c', EXIT = 'd', EXECUTE = 'e', READY_PRIORIDAD = 'g', MANDADO_A_DUMIZZAR = 'h'
 };
 
 enum ERROR{
