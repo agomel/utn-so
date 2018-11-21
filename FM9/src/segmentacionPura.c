@@ -224,6 +224,7 @@ respuestaDeObtencionDeMemoria* obtenerLineaSegPura(int idDTB, char* nombreArchiv
 
 void liberarMemoriaSegPura(int idDTB, char* nombreArchivo){
 	int base;
+	log_info(logger, "Borrado archivo %s de memoria", nombreArchivo);
 	bool coincideNombre(ElementoTablaSegPura* elemento){
 		if(strcmp(elemento->nombreArchivo, nombreArchivo) == 0){
 			base = elemento->base;
@@ -247,8 +248,6 @@ void liberarMemoriaSegPura(int idDTB, char* nombreArchivo){
 	}
 
 	list_remove_and_destroy_by_condition(segmentosOcupados, coincideBase, free);
-
-	log_info(logger, "Borrado archivo %s de memoria", nombreArchivo);
 }
 
 void liberarDTBDeMemoriaSegPura(int idDTB){
