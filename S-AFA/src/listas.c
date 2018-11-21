@@ -136,7 +136,23 @@ void cambiarEstadoDummy(char estado){
 	DTB* dummy = obtenerDummyDeColaRemoviendolo();
 	dummy->estado = estado;
 	agregarDTBALista(dummy);
-	signalSem(&bloqueadoDummy);
+}
+int dummyCargado(){
+	bool esDummy(DTB* dtb){
+		return dtb->flag == 0;
+	}
+	waitMutex(&mutexListaDTBs);
+	int hayDummy = list_any_satisfy(listaDeTodosLosDTBs, esDummy);
+	signalMutex(&mutexListaDTBs);
+	return hayDummy;
+}
+
+void cambiarEstadoDummyCargandolo(DTB* dummy){
+	if(dummyCargado()){
+		DTB* viejoDummy = obtenerDummyDeColaRemoviendolo();
+		freeDTBSAFA(viejoDummy);
+	}
+	agregarDTBALista(dummy);
 }
 
 int obtenerCPUDisponibleYOcupar(int id){

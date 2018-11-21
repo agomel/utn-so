@@ -111,7 +111,6 @@ void entenderMensaje(int emisor, char header){
 			historial = crearHistorial(dtb->id);
 			agregarHistorialAListaTiempoRespuesta(historial);
 			enviarYSerializarCharSinHeader(emisor, CONTINUAR_CON_EJECUCION);
-			log_info(logger, "Mando a CPU que continue con su ejecucion");
 			break;
 
 		case DESBLOQUEAR_DTB:
@@ -184,7 +183,7 @@ void entenderMensaje(int emisor, char header){
 		case LIBERAR_RECURSO:
 			log_info(logger, "Recibi liberar recurso");
 			recurso = deserializarString(emisor);
-			asignado = liberarRecurso(idDTB, recurso);
+			asignado = liberarRecurso(recurso);
 			enviarYSerializarCharSinHeader(emisor, asignado);
 			break;
 

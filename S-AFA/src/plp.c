@@ -25,7 +25,8 @@ void cargarDummy(DTB dtb) {
 	dtbDummy->programCounter = 0;
 	dtbDummy->listaDeArchivos = list_create();
 	dtbDummy->estado = READY;
-	agregarDTBALista(dtbDummy);
+	cambiarEstadoDummyCargandolo(dtbDummy);
+	signalMutex(&mutexDummy);
 }
 
 void ponerProcesoEnNew(char* escriptorio) {

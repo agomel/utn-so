@@ -277,7 +277,7 @@ int verificarSiExisteRecurso(char* recurso){
 		waitMutex(&mutexRecursos);
 		dictionary_put(recursos, recurso, cantidadRecurso);
 		signalMutex(&mutexRecursos);
-		log_info(logger, "Creado el recurso, no existia");
+		log_info(logger, "Creado el recurso %s, no existia", recurso);
 	}
 	return tieneLaClave;
 }
@@ -287,13 +287,13 @@ char asignarRecurso(int idDTB, char* recurso){
 	int cant = dictionary_get(recursos, recurso);
 	signalMutex(&mutexRecursos);
 	if(cant > 0){
-		log_info(logger, "la cantidad de resursos para el recurso %s es %d", recurso, cant);
+		log_info(logger, "WAIT - la cantidad de resursos para el recurso %s es %d", recurso, cant);
 		cant--;
 		//Borrara el anterios? como le cambio el valor si no es un puntero?
 		waitMutex(&mutexRecursos);
 		dictionary_put(recursos, recurso, cant);
 		signalMutex(&mutexRecursos);
-		log_info(logger, "Le di el recurso al dtb %d", idDTB);
+		log_error(logger, "WAIT  - Le di el recurso al dtb %d", idDTB);
 		return CONTINUAR_CON_EJECUCION;
 	}else{
 		waitMutex(&mutexEsperandoRecursos);
@@ -302,7 +302,7 @@ char asignarRecurso(int idDTB, char* recurso){
 		der->recurso = recurso;
 		list_add(esperandoRecursos, der);
 		signalMutex(&mutexEsperandoRecursos);
-		log_info(logger, "No esta el recurso disponible.. vas a pasar a bloqueado :( DTB: %d", idDTB);
+		log_info(logger, "WAIT  - No esta el recurso disponible.. vas a pasar a bloqueado :( DTB: %d", idDTB);
 		return LIBERAR_DTB_DE_EJECUCION;
 	}
 }
@@ -321,7 +321,7 @@ char liberarRecurso(char* recurso){
 		Historial* historial = crearHistorial(espera->idDTB);
 		agregarHistorialAListaTiempoRespuesta(historial);
 		ponerEnReady(espera->idDTB);
-		log_info(logger, "Se libero el recurso que esperaba el dtb %d y se lo paso a ready", espera->idDTB);
+		log_info(logger, "SIGNAL - Se libero el recurso que esperaba el dtb %d y se lo paso a ready", espera->idDTB);
 	}else{
 		//Le sumo uno a los recursos
 		waitMutex(&mutexRecursos);
@@ -331,7 +331,7 @@ char liberarRecurso(char* recurso){
 		waitMutex(&mutexRecursos);
 		dictionary_put(recursos, recurso, cant);
 		signalMutex(&mutexRecursos);
-		log_info(logger, "Se libero el recurso que no estaba esperando nadie. Ahora del recurso %s hay %d", recurso, cant);
+		log_info(logger, "SIGNAL - Se libero el recurso que no estaba esperando nadie. Ahora del recurso %s hay %d", recurso, cant);
 	}
 	return CONTINUAR_CON_EJECUCION;
 

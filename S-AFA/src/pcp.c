@@ -81,6 +81,6 @@ void desbloquearDTB(int idDTB){
 
 void desbloquearDummy(DTB* dummy){
 	cambiarEstadoDummy(BLOCKED);
-	signalMutex(&mutexDummy);
+	signalSem(&bloqueadoDummy);
 }
 
