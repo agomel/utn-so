@@ -6,7 +6,7 @@ void crearArchivitos(){
 		char* completa = generarPathAbsoluto(rutaArchivito);
 		int archivoExiste = validarArchivo(completa);
 		if(archivoExiste != 0){
-			crearArchivoFS(completa, "concentrar\nconcentrar\nconcentrar\n");
+			crearArchivoFS(completa, "concentrar\nconcentrar\nconcentrar\n\n");
 		}
 		free(completa);
 		free(rutaArchivito);
@@ -28,9 +28,9 @@ void crearArchivoGral(char* rutaArchivo, char* datos){
 void crearArchivoDePruebas(){
 	crearArchivitos();
 
-	crearArchivoGral("PGB1.bin", "abrir PruebaBOAF0.bin\nabrir PruebaBOAF1.bin\nabrir PruebaBOAF2.bin\nabrir PruebaBOAF3.bin\nabrir PruebaBOAF4.bin");
+	crearArchivoGral("PGB1.bin", "abrir PruebaBOAF0.bin\nabrir PruebaBOAF1.bin\nabrir PruebaBOAF2.bin\nabrir PruebaBOAF3.bin\nabrir PruebaBOAF4.bin\n\n");
 
-	crearArchivoGral("PGB2.bin", "abrir PruebaBOAF0.bin\nabrir PruebaBOAF1.bin\n");
+	crearArchivoGral("PGB2.bin", "abrir PruebaBOAF0.bin\nabrir PruebaBOAF1.bin\n\n");
 
-	crearArchivoGral("hola", "concentrar\nwait a\nsignal a\nborrar PGB1.bin\n");
+	crearArchivoGral("hola", "concentrar\nwait a\nsignal a\nborrar PGB1.bin\n\n");
 }
