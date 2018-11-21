@@ -15,6 +15,8 @@ void inicializarInvertida(t_config* configuracion){
 	tamanioPagina = config_get_int_value(configuracion, "TAM_PAGINA");
 	cantidadMarcosTotales = tamanioMemoria / tamanioPagina;
 	cargarTabla();
+	inicializarMutex(&mutexArchivos);
+	inicializarMutex(&mutexPaginasInvertidas);
 }
 
 respuestaDeObtencionDeMemoria* obtenerDatosInvertida(int idDTB, char* nombreArchivo){
@@ -58,7 +60,9 @@ respuestaDeObtencionDeMemoria* obtenerDatosInvertida(int idDTB, char* nombreArch
 
 int asignarDatosInvertida(int idDTB, char* nombreArchivo, int numeroLinea, char* datos){
 	numeroLinea--;
+	waitMutex(&mutexArchivos);
 	int cantidadLineas = cantidadDeLineasArchivo(idDTB, nombreArchivo);
+	signalMutex(&mutexArchivos);
 	t_list* marcosParaEseArchivo = filtrarPorDTBYArchivo(idDTB, nombreArchivo);
 
 	if(numeroLinea < (cantidadLineas - 1)){
@@ -115,6 +119,7 @@ static int cantidadDeLineasArchivo(int idDTB, char* nombreArchivo){
 	}
 
 	ElementoArchivos* elemento = list_find(tablaDeArchivos, coincidenIdyArchivo);
+
 	if(elemento != NULL)
 		return elemento->cantidadLineas;
 	else
@@ -130,8 +135,11 @@ static t_list* filtrarPorDTBYArchivo(int idDTB, char* nombreArchivo){
 		return elem1->pagina < elem2->pagina;
 	}
 
+	waitMutex(&mutexPaginasInvertidas);
 	t_list* lista = list_filter(tablaPaginasInvertidas, coincidenIdyArchivo);
 	list_sort(lista, compararPorPagina);
+	signalMutex(&mutexPaginasInvertidas);
+
 	return lista;
 }
 
@@ -153,9 +161,13 @@ void liberarMemoriaInvertida(int idDTB, char* nombreArchivo){
 		free(elemento);
 	}
 
+	waitMutex(&mutexArchivos);
 	list_remove_and_destroy_by_condition(tablaDeArchivos, coincideIdYNombre, destruir);
+	signalMutex(&mutexArchivos);
 
+	waitMutex(&mutexPaginasInvertidas);
 	list_iterate(tablaPaginasInvertidas, liberarMarcos);
+	signalMutex(&mutexPaginasInvertidas);
 
 	log_info(logger, "Borrado archivo %s de memoria", nombreArchivo);
 }
@@ -178,10 +190,13 @@ void liberarDTBDeMemoriaInvertida(int idDTB){
 			free(elemento);
 		}
 
+		waitMutex(&mutexArchivos);
 		list_remove_and_destroy_by_condition(tablaDeArchivos, coincideId, destruir);
+		signalMutex(&mutexArchivos);
 
-
+	waitMutex(&mutexPaginasInvertidas);
 	list_iterate(tablaPaginasInvertidas, liberar);
+	signalMutex(&mutexPaginasInvertidas);
 
 	log_info(logger, "Borrado DTB %d de memoria por pasar a EXIT", idDTB);
 }
@@ -291,12 +306,38 @@ RespuestaGuardado* guardarDatosInvertida(int idDTB, char* datos, char* nombreArc
 	return respuesta;
 }
 
+void dumpInvertida(int idDTB){
+	log_info(logger, "Dump de DTB: %d", idDTB);
+	char* dump = string_new();
+	waitMutex(&mutexArchivos);
+	for(int i=0; i < (tablaDeArchivos->elements_count); i++){
+		ElementoArchivos* elemento = list_get(tablaDeArchivos, i);
+
+		if(elemento->idDTB == idDTB){
+			int cantidadPaginas = elemento->cantidadLineas / tamanioPagina + 1;
+			respuestaDeObtencionDeMemoria* datos = obtenerDatosInvertida(idDTB, elemento->nombreArchivo);
+
+			string_append_with_format(&dump, "Abierto archivo: %s \n"
+							">>> Ocupa %d paginas \n"
+							">>> Su contenido es: %s", elemento->nombreArchivo, cantidadPaginas, datos->datos);
+
+		}
+	}
+	log_info(logger, "- %s", dump);
+	signalMutex(&mutexArchivos);
+	free(dump);
+}
+
 static ElementoTablaInvertida* obtenerElementoPorMarco(int marco){
 	bool coincideMarco(ElementoTablaInvertida* elemento){
 		return elemento->marco == marco;
 	}
 
-	return list_find(tablaPaginasInvertidas, coincideMarco);
+	waitMutex(&mutexPaginasInvertidas);
+	ElementoTablaInvertida* elemento = list_find(tablaPaginasInvertidas, coincideMarco);
+	signalMutex(&mutexPaginasInvertidas);
+
+	return elemento;
 }
 
 static ElementoTablaInvertida* obtenerElementoPorIdDTB(int idDTB){
@@ -304,7 +345,11 @@ static ElementoTablaInvertida* obtenerElementoPorIdDTB(int idDTB){
 		return elemento->idDTB == idDTB;
 	}
 
-	return list_find(tablaPaginasInvertidas, coincideId);
+	waitMutex(&mutexPaginasInvertidas);
+	ElementoTablaInvertida* elemento = list_find(tablaPaginasInvertidas, coincideId);
+	signalMutex(&mutexPaginasInvertidas);
+
+	return elemento;
 }
 
 static int obtenerMarcoLibreInvertida(){
@@ -312,7 +357,10 @@ static int obtenerMarcoLibreInvertida(){
 		return elemento->pagina == -1;
 	}
 
+	waitMutex(&mutexPaginasInvertidas);
 	ElementoTablaInvertida* elemento = list_find(tablaPaginasInvertidas, marcoEstaLibre);
+	signalMutex(&mutexPaginasInvertidas);
+
 	if(elemento != NULL){
 		return elemento->marco;
 	}else{
@@ -332,8 +380,10 @@ static ElementoTablaInvertida* crearElementoTablaInvertida(){
 }
 
 static void cargarTabla(){
+	waitMutex(&mutexPaginasInvertidas);
 	for(int i=0; i < cantidadMarcosTotales; i++){
 		ElementoTablaInvertida* elemento = crearElementoTablaInvertida();
 		list_add(tablaPaginasInvertidas, elemento);
 	}
+	signalMutex(&mutexPaginasInvertidas);
 }

@@ -2,6 +2,7 @@
 #include "segmentacionPura.h"
 #include "segmentacionPag.h"
 #include "paginasInvertidas.h"
+#include "consola.h"
 
 respuestaDeObtencionDeMemoria* obtenerDatosDeMemoria(int idDTB, char* nombreArchivo){
 	if(strcmp(modo, "SEG_PURA") == 0)
@@ -178,7 +179,7 @@ void entenderMensaje(int emisor, char header){
 				char* nombreArchivo = deserializarString(emisor);
 				log_debug(logger, "Liberando memoria para archivo %s", nombreArchivo);
 				liberarMemoria(idDTB, nombreArchivo);
-				enviarYSerializarCharSinHeader(socketCPU, 'a');
+				enviarYSerializarCharSinHeader(emisor, 'a');
 
 				break;
 			}
@@ -187,7 +188,7 @@ void entenderMensaje(int emisor, char header){
 				int idDTB = deserializarInt(emisor);
 				log_debug(logger, "Liberando el dtb %d de memoria por pasar a EXIT", idDTB);
 				liberarDTBDeMemoria(idDTB);
-				enviarYSerializarCharSinHeader(socketCPU, 'a');
+				enviarYSerializarCharSinHeader(emisor, 'a');
 
 				break;
 			}
@@ -302,9 +303,9 @@ int main(void) {
 	crearSelect(servidor);
 	config_destroy(configuracion);
 
-	while(1);
+	pthread_t hiloConsola = crearHilo(&consola, NULL);
+	esperarHilo(hiloConsola);
 
-	free(storage);
-	queue_destroy(colaOperaciones);
+
 	return 0;
 }

@@ -5,12 +5,14 @@ void inicializarSegPura(){
 	tablaDeProcesos = list_create();
 	segmentosOcupados = list_create();
 	idSegmento = 0;
+	inicializarMutex(&mutexListaProcesos);
+	inicializarMutex(&mutexListaSegmentos);
 }
 
-static ElementoTablaProcesos* obtenerProcesoPorIdDTB(int idDTB);
 static void freeRespuestaCargaSegPura(RespuestaCargaSegPura* respuesta);
 static RespuestaCargaSegPura* guardarDatosInternaSegPura(char* datos, char* nombreArchivo);
 static int dondeEntro(int tamanioAGuardar);
+static ElementoTablaProcesos* obtenerProcesoPorIdDTB(int idDTB);
 
 ElementoTablaProcesos* crearElemTablaProcesos(int idDTB, int tablaSegmentos){
 	ElementoTablaProcesos* elemento = malloc(sizeof(ElementoTablaProcesos));
@@ -55,9 +57,13 @@ RespuestaGuardado* nuevoProcesoSegPura(int idDTB, char* datos, char* nombreArchi
 		t_list* tablaSegmentos = list_create();
 		ElementoTablaSegPura* nuevoRegistro = malloc(sizeof(ElementoTablaSegPura));
 		copiarElemSegPura(cargaEnMemoria->elementoTabla, nuevoRegistro);
+		waitMutex(&mutexListaSegmentos);
 		list_add(tablaSegmentos, nuevoRegistro);
+		signalMutex(&mutexListaSegmentos);
 		ElementoTablaProcesos* elementoTablaProcesos = crearElemTablaProcesos(idDTB, tablaSegmentos);
+		waitMutex(&mutexListaProcesos);
 		list_add(tablaDeProcesos, elementoTablaProcesos);
+		signalMutex(&mutexListaProcesos);
 		log_info(logger, "Agregado proceso %d a tabla de procesos", idDTB);
 		respuesta->pudoGuardar = 0;
 		respuesta->pesoArchivo = cargaEnMemoria->pesoArchivo;
@@ -77,7 +83,9 @@ RespuestaGuardado* guardarDatosSegPura(int idDTB, char* datos, char* nombreArchi
 	if(cargaEnMemoria->resultado == 0){
 		ElementoTablaSegPura* nuevoRegistro = malloc(sizeof(ElementoTablaSegPura));
 		copiarElemSegPura(cargaEnMemoria->elementoTabla, nuevoRegistro);
+		waitMutex(&mutexListaSegmentos);
 		list_add(proceso->tablaSegmentos, nuevoRegistro);
+		signalMutex(&mutexListaSegmentos);
 		respuesta->pudoGuardar = 0;
 		respuesta->pesoArchivo = cargaEnMemoria->pesoArchivo;
 		freeRespuestaCargaSegPura(cargaEnMemoria);
@@ -128,8 +136,10 @@ static ElementoTablaProcesos* obtenerProcesoPorIdDTB(int idDTB){
 	bool coincideId(ElementoTablaProcesos* elemento){
 		return elemento->idDTB == idDTB;
 	}
-
-	return list_find(tablaDeProcesos, coincideId);
+	waitMutex(&mutexListaProcesos);
+	ElementoTablaProcesos* proceso = list_find(tablaDeProcesos, coincideId);
+	signalMutex(&mutexListaProcesos);
+	return proceso;
 }
 
 static ElementoTablaSegPura* obtenerSegmentoPorArchivo(char* nombreArchivo, t_list* tablaSegmentos){
@@ -139,8 +149,10 @@ static ElementoTablaSegPura* obtenerSegmentoPorArchivo(char* nombreArchivo, t_li
 
 		return false;
 	}
-
-	return list_find(tablaSegmentos, coincideNombre);
+	waitMutex(&mutexListaSegmentos);
+	ElementoTablaSegPura* segmento = list_find(tablaSegmentos, coincideNombre);
+	signalMutex(&mutexListaSegmentos);
+	return segmento;
 }
 
 static void freeRespuestaCargaSegPura(RespuestaCargaSegPura* respuesta){
@@ -226,7 +238,9 @@ void liberarMemoriaSegPura(int idDTB, char* nombreArchivo){
 	}
 
 	ElementoTablaProcesos* proceso = obtenerProcesoPorIdDTB(idDTB);
+	waitMutex(&mutexListaSegmentos);
 	list_remove_and_destroy_by_condition(proceso->tablaSegmentos, coincideNombre, destruirElemento);
+	signalMutex(&mutexListaSegmentos);
 
 	bool coincideBase(SegmentoOcupado* segmento){
 		return segmento->base == base;
@@ -241,7 +255,9 @@ void liberarDTBDeMemoriaSegPura(int idDTB){
 	log_info(logger, "Liberando de la memoria el DTB");
 	ElementoTablaProcesos* proceso = obtenerProcesoPorIdDTB(idDTB);
 	for (int i = 0; i < proceso->tablaSegmentos->elements_count; ++i) {
+		waitMutex(&mutexListaSegmentos);
 		ElementoTablaSegPura* segmento = list_get(proceso->tablaSegmentos, i);
+		signalMutex(&mutexListaSegmentos);
 		liberarMemoriaSegPura(idDTB, segmento->nombreArchivo);
 	}
 	bool coincideIdDTB(ElementoTablaProcesos* elemento){
@@ -252,10 +268,14 @@ void liberarDTBDeMemoriaSegPura(int idDTB){
 		}
 
 		void destruirElemento(ElementoTablaProcesos* elemento){
+			waitMutex(&mutexListaSegmentos);
 			list_destroy(elemento->tablaSegmentos);
+			signalMutex(&mutexListaSegmentos);
 			free(elemento);
 		}
+		waitMutex(&mutexListaProcesos);
 	list_remove_and_destroy_by_condition(tablaDeProcesos, coincideIdDTB, destruirElemento);
+	signalMutex(&mutexListaProcesos);
 }
 
 int asignarDatosSegPura(int IdDTB, char* nombreArchivo, int numeroLinea, char* datos){
@@ -335,10 +355,8 @@ static int dondeEntro(int tamanioAGuardar){
 		int posicionInicial = elem1->base + elem1->limite + 1;
 		int tamanioEntreAmbos = (elem2->base - 1) - posicionInicial;
 
-		if(tamanioEntreAmbos >= tamanioAGuardar){
-			//Entra en ese lugar
+		if(tamanioEntreAmbos >= tamanioAGuardar)//Entra en ese lugar
 			return posicionInicial;
-		}
 	}
 
 	SegmentoOcupado* ultimoElemento = list_get(segmentosOcupados, segmentosOcupados->elements_count -1);
@@ -354,4 +372,20 @@ static int dondeEntro(int tamanioAGuardar){
 	}
 
 	return 0;
+}
+
+void dumpSegPura(int idDTB){
+	ElementoTablaProcesos* proceso = obtenerProcesoPorIdDTB(idDTB);
+	waitMutex(&mutexListaSegmentos);
+	int cantidadDeSegmentos = proceso->tablaSegmentos->elements_count;
+	signalMutex(&mutexListaSegmentos);
+	log_info(logger, "El DTB con id %d, tiene %d archivos abiertos en memoria", idDTB, cantidadDeSegmentos);
+	for (int i = 0; i < cantidadDeSegmentos; ++i) {
+		waitMutex(&mutexListaSegmentos);
+		ElementoTablaSegPura* segmento = list_get(proceso->tablaSegmentos, i);
+		signalMutex(&mutexListaSegmentos);
+		respuestaDeObtencionDeMemoria* respuesta = obtenerDatosSegPura(idDTB, segmento->nombreArchivo);
+		log_info(logger, "El archivo %d tiene estos datos guardados: %s", (i+1), respuesta->datos);
+		freeRespuestaObtencion(respuesta);
+	}
 }
