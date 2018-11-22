@@ -1,0 +1,46 @@
+[INFO] 13:14:12:579 CPU/(19901:19901): Iniciando retardo de 1000........
+[INFO] 13:14:13:580 CPU/(19901:19901): Finalizando retardo
+[INFO] 13:14:13:580 CPU/(19901:19901): Recibiendo un dtb
+[INFO] 13:14:13:582 CPU/(19901:19901): Recibi DTB Dummy
+[DEBUG] 13:14:13:582 CPU/(19901:19901): Enviando dtb con id: 1
+[DEBUG] 13:14:13:582 CPU/(19901:19901): esperando que SAFA desbloquee para continuar
+[DEBUG] 13:14:13:883 CPU/(19901:19901): continuo ejecucion
+[INFO] 13:14:13:883 CPU/(19901:19901): Enviando a SAFA que desbloquee dummy
+[DEBUG] 13:14:13:883 CPU/(19901:19901): Enviando dtb con id: 1
+[INFO] 13:14:17:192 CPU/(19901:19901): Iniciando retardo de 1000........
+[INFO] 13:14:18:193 CPU/(19901:19901): Finalizando retardo
+[INFO] 13:14:18:193 CPU/(19901:19901): Recibiendo un dtb
+[INFO] 13:14:18:193 CPU/(19901:19901): Recibi DTB NO Dummy
+[INFO] 13:14:18:194 CPU/(19901:19901): Ejecutando instruccion concentrar
+[INFO] 13:14:18:194 CPU/(19901:19901): Ejecutando una linea del escriptorio porque devuelve continuar en 1
+[INFO] 13:14:18:194 CPU/(19901:19901): Ejecutando instruccion wait
+[INFO] 13:14:18:495 CPU/(19901:19901): Ejecutando una linea del escriptorio porque devuelve continuar en 1
+[INFO] 13:14:18:496 CPU/(19901:19901): Ejecutando instruccion signal
+[INFO] 13:14:18:797 CPU/(19901:19901): Ejecutando una linea del escriptorio porque devuelve continuar en 1
+[INFO] 13:14:18:797 CPU/(19901:19901): Ejecutando instruccion borrar
+[INFO] 13:14:18:797 CPU/(19901:19901): Bloquear DTB
+[DEBUG] 13:14:18:797 CPU/(19901:19901): Enviando dtb con id: 1
+[INFO] 13:14:19:98 CPU/(19901:19901): Ejecutando una linea del escriptorio porque devuelve continuar en 0
+[INFO] 13:14:19:98 CPU/(19901:19901): Terminada operacion
+[INFO] 13:15:36:958 CPU/(19990:19990): Iniciando retardo de 1000........
+[INFO] 13:15:37:959 CPU/(19990:19990): Finalizando retardo
+[INFO] 13:15:37:960 CPU/(19990:19990): Recibiendo un dtb
+[INFO] 13:15:37:960 CPU/(19990:19990): Recibi DTB Dummy
+[DEBUG] 13:15:37:960 CPU/(19990:19990): Enviando dtb con id: 1
+[DEBUG] 13:15:37:960 CPU/(19990:19990): esperando que SAFA desbloquee para continuar
+[DEBUG] 13:15:38:261 CPU/(19990:19990): continuo ejecucion
+[INFO] 13:15:38:261 CPU/(19990:19990): Enviando a SAFA que desbloquee dummy
+[DEBUG] 13:15:38:261 CPU/(19990:19990): Enviando dtb con id: 1
+[INFO] 13:15:41:567 CPU/(19990:19990): Iniciando retardo de 1000........
+[INFO] 13:15:42:567 CPU/(19990:19990): Finalizando retardo
+[INFO] 13:15:42:568 CPU/(19990:19990): Recibiendo un dtb
+[INFO] 13:15:42:568 CPU/(19990:19990): Recibi DTB NO Dummy
+[INFO] 13:15:42:572 CPU/(19990:19990): Ejecutando instruccion concentrar
+[INFO] 13:15:42:572 CPU/(19990:19990): Ejecutando una linea del escriptorio porque devuelve continuar en 1
+[INFO] 13:15:42:572 CPU/(19990:19990): Ejecutando instruccion wait
+[INFO] 13:15:42:873 CPU/(19990:19990): Ejecutando una linea del escriptorio porque devuelve continuar en 1
+[INFO] 13:15:42:874 CPU/(19990:19990): Ejecutando instruccion signal
+[INFO] 13:15:43:175 CPU/(19990:19990): Ejecutando una linea del escriptorio porque devuelve continuar en 1
+[INFO] 13:15:43:176 CPU/(19990:19990): Ejecutando instruccion borrar
+[INFO] 13:15:43:176 CPU/(19990:19990): Bloquear DTB
+[DEBUG] 13:15:43:176 CPU/(19990:19990): Enviando dtb con id: 1

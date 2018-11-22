@@ -1,12 +1,12 @@
 .PHONY: default
 
 default: 
-	cd biblioteca/Debug; export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/home/utnso/workspace/tp-2018-2c-5-fant-sticos/biblioteca/Debug;make
-	cd S-AFA/Debug; export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/home/utnso/workspace/tp-2018-2c-5-fant-sticos/biblioteca/Debug;make
-	cd CPU/Debug; export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/home/utnso/workspace/tp-2018-2c-5-fant-sticos/biblioteca/Debug;make
-	cd DAM/Debug; export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/home/utnso/workspace/tp-2018-2c-5-fant-sticos/biblioteca/Debug;make
-	cd FM9/Debug; export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/home/utnso/workspace/tp-2018-2c-5-fant-sticos/biblioteca/Debug;make
-	cd MDJ/Debug; export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/home/utnso/workspace/tp-2018-2c-5-fant-sticos/biblioteca/Debug;make
+	cd biblioteca/Debug; make
+	cd S-AFA/Debug; make
+	cd CPU/Debug; make
+	cd DAM/Debug; make
+	cd FM9/Debug; make
+	cd MDJ/Debug; make
 
 clean:
 	sudo rm -rf ~/so-commons-library
