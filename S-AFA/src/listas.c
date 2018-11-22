@@ -140,7 +140,6 @@ void cambiarEstadoDummy(char estado){
 }
 
 int obtenerCPUDisponibleYOcupar(int id){
-
 	bool estaDisponible(SocketCPU* socket){
 		return (socket->ocupado == 0);
 	}
@@ -161,7 +160,6 @@ int obtenerCPUDisponibleYOcupar(int id){
 }
 
 void liberarCPU(int idSocket, int idDTB){
-
 	bool obtenerCPU(SocketCPU* socket){
 		return (socket->socket == idSocket);
 	}

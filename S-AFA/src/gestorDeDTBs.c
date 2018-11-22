@@ -287,6 +287,7 @@ char asignarRecurso(int idDTB, char* recurso){
 	int cant = dictionary_get(recursos, recurso);
 	signalMutex(&mutexRecursos);
 	if(cant > 0){
+		log_info(logger, "la cantidad de resursos para el recurso %s es %d", recurso, cant);
 		cant--;
 		//Borrara el anterios? como le cambio el valor si no es un puntero?
 		waitMutex(&mutexRecursos);
@@ -330,7 +331,7 @@ char liberarRecurso(char* recurso){
 		waitMutex(&mutexRecursos);
 		dictionary_put(recursos, recurso, cant);
 		signalMutex(&mutexRecursos);
-		log_info(logger, "Se libero el recurso que no tenia asignado nadie");
+		log_info(logger, "Se libero el recurso que no estaba esperando nadie. Ahora del recurso %s hay %d", recurso, cant);
 	}
 	return CONTINUAR_CON_EJECUCION;
 

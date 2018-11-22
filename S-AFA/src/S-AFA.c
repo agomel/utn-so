@@ -95,7 +95,6 @@ void entenderMensaje(int emisor, char header){
 			}
 
 			if(!list_any_satisfy(dtb->listaDeArchivos, compararPath)){
-				log_info(logger, "Agrego path a la lista de archivos del DTB con peso: %d", pesoArchivo);
 				list_add(dtb->listaDeArchivos, path);
 				dtb->tamanioArchivosAbiertos += pesoArchivo;
 			}
@@ -151,7 +150,6 @@ void entenderMensaje(int emisor, char header){
 			log_info(logger, "Recibi bloquear DTB");
 			dtb = deserializarDTB(emisor);
 			cambiarEstadoGuardandoNuevoDTB(dtb, BLOCKED);
-			liberarCPU(emisor, dtb->id);
 
 			 historial = crearHistorial(dtb->id);
 			 agregarHistorialAListaTiempoRespuesta(historial);
@@ -188,7 +186,6 @@ void entenderMensaje(int emisor, char header){
 			recurso = deserializarString(emisor);
 			asignado = liberarRecurso(idDTB, recurso);
 			enviarYSerializarCharSinHeader(emisor, asignado);
-			log_info(logger, "Enviando a CPU que continue");
 			break;
 
 		case RETENCION_DE_RECURSO:
@@ -197,7 +194,6 @@ void entenderMensaje(int emisor, char header){
 			idDTB = deserializarInt(emisor);
 			asignado = asignarRecurso(idDTB, recurso);
 			enviarYSerializarCharSinHeader(emisor, asignado);
-			log_info(logger, "Enviando a CPU que continue");
 			break;
 		case FINALIZARME:
 			despedirACPUs();
