@@ -173,6 +173,7 @@ static RespuestaCargaSegPag* guardarDatosInternaSegPag(char* datos, char* nombre
 	int tamanioSegmento = totalLineas * tamanioLinea;
 	int cantidadPaginas = 1;
 	int lineasEnLaUltimaPagina = totalLineas % tamanioPagina;
+	if (totalLineas == tamanioPagina) lineasEnLaUltimaPagina = tamanioPagina;
 	if(totalLineas > tamanioPagina){
 		cantidadPaginas = totalLineas / tamanioPagina;
 		if(lineasEnLaUltimaPagina != 0)

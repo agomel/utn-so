@@ -39,6 +39,7 @@ void entenderMensaje(int emisor, char header){
 
 				datos = obtenerDatosFIFA(path, offset, size);
 
+				log_info(logger, "Datos a enviar: %s", datos);
 				enviarYSerializarStringSinHeader(emisor, datos);
 
 				free(path);
