@@ -23,22 +23,22 @@ endif
 # Add inputs and outputs from these tool invocations to the build variables 
 
 # All Target
-all: CPU
+all: S-AFA
 
 dependents:
 	-cd /home/utnso/workspace/tp-2018-2c-5-fant-sticos/biblioteca/Debug && $(MAKE) clean all
 
 # Tool invocations
-CPU: $(OBJS) $(USER_OBJS) /home/utnso/workspace/tp-2018-2c-5-fant-sticos/biblioteca/Debug/libbiblioteca.so
+S-AFA: $(OBJS) $(USER_OBJS) /home/utnso/workspace/tp-2018-2c-5-fant-sticos/biblioteca/Debug/libbiblioteca.so
 	@echo 'Building target: $@'
 	@echo 'Invoking: GCC C Linker'
-	gcc -L"/home/utnso/workspace/tp-2018-2c-5-fant-sticos/biblioteca/Debug" -o "CPU" $(OBJS) $(USER_OBJS) $(LIBS)
+	gcc -L"/home/utnso/workspace/tp-2018-2c-5-fant-sticos/biblioteca/Debug" -o "S-AFA" $(OBJS) $(USER_OBJS) $(LIBS)
 	@echo 'Finished building target: $@'
 	@echo ' '
 
 # Other Targets
 clean:
-	-$(RM) $(EXECUTABLES)$(OBJS)$(C_DEPS) CPU
+	-$(RM) $(EXECUTABLES)$(OBJS)$(C_DEPS) S-AFA
 	-@echo ' '
 
 .PHONY: all clean dependents

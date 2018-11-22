@@ -1,0 +1,5 @@
+[ERROR] 18:29:25:271 DAM/(10132:10221): Header desconocido
+[ERROR] 18:44:33:204 DAM/(10382:10405): Header desconocido
+[ERROR] 18:46:19:902 DAM/(10174:10472): Header desconocido
+[ERROR] 18:50:32:356 DAM/(10535:10600): Header desconocido
+[ERROR] 18:51:54:951 DAM/(10642:10661): Header desconocido
