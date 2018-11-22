@@ -412,12 +412,12 @@ void liberarMemoriaSegPag(int idDTB, char* nombreArchivo){
 void liberarDTBDeMemoriaSegPag(int idDTB){
 	log_info(logger, "Liberando de la memoria el DTB");
 	ElementoTablaDTBS* proceso = obtenerProcesoPorIdDTB(idDTB);
-	waitMutex(&mutexListaSegmentos);
 	for (int i = 0; i < proceso->segmentos->elements_count; ++i) {
+		waitMutex(&mutexListaSegmentos);
 		ElementoTablaSegPag* segmento = list_get(proceso->segmentos, i);
+		signalMutex(&mutexListaSegmentos);
 		liberarMemoriaSegPag(idDTB, segmento->nombreArchivo);
 	}
-	signalMutex(&mutexListaSegmentos);
 	bool coincideIdDTB(ElementoTablaDTBS* elemento){
 			if(elemento->idDTB == idDTB){
 				return true;
