@@ -1,0 +1,153 @@
+[INFO] 00:22:44:680 SAFA/(7485:7485): Algoritmo elegido FIFO
+[DEBUG] 00:23:40:492 SAFA/(7485:7486): Handshake de: DAM
+[DEBUG] 00:23:40:493 SAFA/(7485:7486): Se agrego a las conexiones DAM
+[DEBUG] 00:23:40:502 SAFA/(7485:7527): Escuchando nuevo cliente en 5
+[DEBUG] 00:23:42:941 SAFA/(7485:7486): Handshake de: CPU
+[DEBUG] 00:23:42:941 SAFA/(7485:7486): Se agrego a las conexiones CPU
+[DEBUG] 00:23:42:942 SAFA/(7485:7533): Escuchando nuevo cliente en 7
+[INFO] 00:23:46:856 SAFA/(7485:7488): Comando ejecutar
+[INFO] 00:23:46:856 SAFA/(7485:7536): Hay procesos en la cola new
+[INFO] 00:23:46:856 SAFA/(7485:7536): Cargando Dummy para dtb con scriptorio hola
+[INFO] 00:23:46:856 SAFA/(7485:7537): Pasado Dummy a ejecutar con escriptorio hola
+[DEBUG] 00:23:46:856 SAFA/(7485:7537): enviando a socket 7 header i
+[DEBUG] 00:23:46:856 SAFA/(7485:7537): Enviando dtb con id: 1
+[INFO] 00:23:50:70 SAFA/(7485:7487): Desbloqueo el DUMMY
+[INFO] 00:23:50:71 SAFA/(7485:7487): Mando a CPU que continue con su ejecucion
+[INFO] 00:23:50:71 SAFA/(7485:7487): Terminada operacion
+[INFO] 00:23:50:279 SAFA/(7485:7487): Recibi Desbloquear DTB
+[INFO] 00:23:50:279 SAFA/(7485:7487): Terminada operacion
+[INFO] 00:23:51:280 SAFA/(7485:7487): Recibi cargado con exito en memoria del DAM
+[INFO] 00:23:51:281 SAFA/(7485:7487): Agrego path a la lista de archivos del DTB con peso: 8
+[INFO] 00:23:51:281 SAFA/(7485:7487): Pasado a READY dtb con id: 1, escriptorio: hola, quantum: 0
+[INFO] 00:23:51:281 SAFA/(7485:7487): Terminada operacion
+[INFO] 00:23:51:281 SAFA/(7485:7537): Pasado a EXECUTE dtb con id: 1, escriptorio: hola, quantum: -1
+[DEBUG] 00:23:51:281 SAFA/(7485:7537): enviando a socket 7 header i
+[DEBUG] 00:23:51:281 SAFA/(7485:7537): Enviando dtb con id: 1
+[INFO] 00:23:54:500 SAFA/(7485:7487): Recibi liberar recurso
+[INFO] 00:23:54:500 SAFA/(7485:7487): Creado el recurso, no existia
+[INFO] 00:23:54:500 SAFA/(7485:7487): Se libero el recurso que no tenia asignado nadie
+[INFO] 00:23:54:500 SAFA/(7485:7487): Enviando a CPU que continue
+[INFO] 00:23:54:501 SAFA/(7485:7487): Terminada operacion
+[INFO] 00:23:54:710 SAFA/(7485:7487): Recibi liberar recurso
+[INFO] 00:23:54:710 SAFA/(7485:7487): Se libero el recurso que no tenia asignado nadie
+[INFO] 00:23:54:710 SAFA/(7485:7487): Enviando a CPU que continue
+[INFO] 00:23:54:711 SAFA/(7485:7487): Terminada operacion
+[INFO] 00:23:54:920 SAFA/(7485:7487): Recibi bloquear DTB
+[INFO] 00:23:54:920 SAFA/(7485:7487): Pasado a BLOCKED dtb con id: 1, escriptorio: hola, quantum: -1
+[INFO] 00:23:54:920 SAFA/(7485:7487): Terminada operacion
+[INFO] 00:23:55:130 SAFA/(7485:7487): Recibi Borrado con exito en MDJ para idDTB 1 y path PGB1.bin
+[INFO] 00:23:55:130 SAFA/(7485:7487): Pasado a READY dtb con id: 1, escriptorio: hola, quantum: -1
+[INFO] 00:23:55:130 SAFA/(7485:7487): Terminada operacion
+[INFO] 00:23:55:130 SAFA/(7485:7537): Pasado a EXECUTE dtb con id: 1, escriptorio: hola, quantum: -1
+[DEBUG] 00:23:55:130 SAFA/(7485:7537): enviando a socket 7 header i
+[DEBUG] 00:23:55:130 SAFA/(7485:7537): Enviando dtb con id: 1
+[INFO] 00:23:58:350 SAFA/(7485:7487): Recibi pasar a EXIT
+[INFO] 00:23:58:350 SAFA/(7485:7487): Pasado a EXIT dtb con id: 1, escriptorio: hola, quantum: -1
+[INFO] 00:23:58:350 SAFA/(7485:7487): Terminada operacion
+[INFO] 00:24:06:179 SAFA/(7485:7488): Comando ejecutar
+[INFO] 00:24:06:179 SAFA/(7485:7536): Hay procesos en la cola new
+[INFO] 00:24:06:179 SAFA/(7485:7536): Cargando Dummy para dtb con scriptorio chau
+[INFO] 00:24:06:179 SAFA/(7485:7537): Pasado Dummy a ejecutar con escriptorio chau
+[DEBUG] 00:24:06:179 SAFA/(7485:7537): enviando a socket 7 header i
+[DEBUG] 00:24:06:179 SAFA/(7485:7537): Enviando dtb con id: 2
+[INFO] 00:24:09:389 SAFA/(7485:7487): Desbloqueo el DUMMY
+[INFO] 00:24:09:390 SAFA/(7485:7487): Mando a CPU que continue con su ejecucion
+[INFO] 00:24:09:390 SAFA/(7485:7487): Terminada operacion
+[INFO] 00:24:09:599 SAFA/(7485:7487): Recibi Desbloquear DTB
+[INFO] 00:24:09:600 SAFA/(7485:7487): Terminada operacion
+[INFO] 00:24:10:609 SAFA/(7485:7487): Recibi cargado con exito en memoria del DAM
+[INFO] 00:24:10:610 SAFA/(7485:7487): Agrego path a la lista de archivos del DTB con peso: 4
+[INFO] 00:24:10:610 SAFA/(7485:7487): Pasado a READY dtb con id: 2, escriptorio: chau, quantum: 0
+[INFO] 00:24:10:610 SAFA/(7485:7487): Terminada operacion
+[INFO] 00:24:10:610 SAFA/(7485:7537): Pasado a EXECUTE dtb con id: 2, escriptorio: chau, quantum: -1
+[DEBUG] 00:24:10:610 SAFA/(7485:7537): enviando a socket 7 header i
+[DEBUG] 00:24:10:610 SAFA/(7485:7537): Enviando dtb con id: 2
+[INFO] 00:24:13:829 SAFA/(7485:7487): Recibi liberar recurso
+[INFO] 00:24:13:829 SAFA/(7485:7487): Se libero el recurso que no tenia asignado nadie
+[INFO] 00:24:13:829 SAFA/(7485:7487): Enviando a CPU que continue
+[INFO] 00:24:13:830 SAFA/(7485:7487): Terminada operacion
+[INFO] 00:24:14:39 SAFA/(7485:7487): Recibi liberar recurso
+[INFO] 00:24:14:39 SAFA/(7485:7487): Se libero el recurso que no tenia asignado nadie
+[INFO] 00:24:14:39 SAFA/(7485:7487): Enviando a CPU que continue
+[INFO] 00:24:14:40 SAFA/(7485:7487): Terminada operacion
+[INFO] 00:24:14:249 SAFA/(7485:7487): Recibi bloquear DTB
+[INFO] 00:24:14:249 SAFA/(7485:7487): Pasado a BLOCKED dtb con id: 2, escriptorio: chau, quantum: -1
+[INFO] 00:24:14:250 SAFA/(7485:7487): Terminada operacion
+[INFO] 00:41:53:439 SAFA/(8845:8845): Algoritmo elegido FIFO
+[DEBUG] 00:42:51:838 SAFA/(8845:8846): Handshake de: DAM
+[DEBUG] 00:42:51:838 SAFA/(8845:8846): Se agrego a las conexiones DAM
+[DEBUG] 00:42:51:849 SAFA/(8845:9066): Escuchando nuevo cliente en 5
+[DEBUG] 00:42:54:919 SAFA/(8845:8846): Handshake de: CPU
+[DEBUG] 00:42:54:919 SAFA/(8845:8846): Se agrego a las conexiones CPU
+[DEBUG] 00:42:54:928 SAFA/(8845:9068): Escuchando nuevo cliente en 7
+[INFO] 00:44:43:390 SAFA/(9254:9254): Algoritmo elegido FIFO
+[DEBUG] 00:44:59:974 SAFA/(9254:9255): Handshake de: DAM
+[DEBUG] 00:44:59:974 SAFA/(9254:9255): Se agrego a las conexiones DAM
+[DEBUG] 00:44:59:992 SAFA/(9254:9275): Escuchando nuevo cliente en 7
+[DEBUG] 00:45:01:493 SAFA/(9254:9255): Handshake de: CPU
+[DEBUG] 00:45:01:493 SAFA/(9254:9255): Se agrego a las conexiones CPU
+[DEBUG] 00:45:01:501 SAFA/(9254:9281): Escuchando nuevo cliente en 5
+[INFO] 00:45:06:210 SAFA/(9254:9257): Comando ejecutar
+[INFO] 00:45:06:210 SAFA/(9254:9283): Hay procesos en la cola new
+[INFO] 00:45:06:210 SAFA/(9254:9283): Cargando Dummy para dtb con scriptorio hola
+[INFO] 00:45:06:210 SAFA/(9254:9284): Pasado Dummy a ejecutar con escriptorio hola
+[DEBUG] 00:45:06:210 SAFA/(9254:9284): enviando a socket 5 header i
+[DEBUG] 00:45:06:210 SAFA/(9254:9284): Enviando dtb con id: 1
+[INFO] 00:45:09:431 SAFA/(9254:9256): Desbloqueo el DUMMY
+[INFO] 00:45:09:431 SAFA/(9254:9256): Mando a CPU que continue con su ejecucion
+[INFO] 00:45:09:432 SAFA/(9254:9256): Terminada operacion
+[INFO] 00:45:09:641 SAFA/(9254:9256): Recibi Desbloquear DTB
+[INFO] 00:45:09:641 SAFA/(9254:9256): Terminada operacion
+[INFO] 00:45:10:651 SAFA/(9254:9256): Recibi cargado con exito en memoria del DAM
+[INFO] 00:45:10:652 SAFA/(9254:9256): Pasado a READY dtb con id: 1, escriptorio: hola, quantum: 0
+[INFO] 00:45:10:652 SAFA/(9254:9256): Terminada operacion
+[INFO] 00:45:10:652 SAFA/(9254:9284): Pasado a EXECUTE dtb con id: 1, escriptorio: hola, quantum: -1
+[DEBUG] 00:45:10:652 SAFA/(9254:9284): enviando a socket 5 header i
+[DEBUG] 00:45:10:652 SAFA/(9254:9284): Enviando dtb con id: 1
+[INFO] 00:45:13:871 SAFA/(9254:9256): Recibi liberar recurso
+[INFO] 00:45:13:872 SAFA/(9254:9256): Creado el recurso, no existia
+[INFO] 00:45:13:872 SAFA/(9254:9256): Se libero el recurso que no estaba esperando nadie. Ahora del recurso än hay 2
+[INFO] 00:45:13:872 SAFA/(9254:9256): Terminada operacion
+[INFO] 00:45:14:81 SAFA/(9254:9256): Recibi liberar recurso
+[INFO] 00:45:14:82 SAFA/(9254:9256): Se libero el recurso que no estaba esperando nadie. Ahora del recurso än hay 3
+[INFO] 00:45:14:82 SAFA/(9254:9256): Terminada operacion
+[INFO] 00:45:14:291 SAFA/(9254:9256): Recibi bloquear DTB
+[INFO] 00:45:14:292 SAFA/(9254:9256): Pasado a BLOCKED dtb con id: 1, escriptorio: hola, quantum: -1
+[INFO] 00:45:14:292 SAFA/(9254:9256): Terminada operacion
+[INFO] 00:45:14:502 SAFA/(9254:9256): Recibi Borrado con exito en MDJ para idDTB 1 y path PGB1.bin
+[INFO] 00:45:14:502 SAFA/(9254:9256): Pasado a READY dtb con id: 1, escriptorio: hola, quantum: -1
+[INFO] 00:45:14:502 SAFA/(9254:9256): Terminada operacion
+[INFO] 00:45:14:502 SAFA/(9254:9284): Pasado a EXECUTE dtb con id: 1, escriptorio: hola, quantum: -1
+[DEBUG] 00:45:14:502 SAFA/(9254:9284): enviando a socket 5 header i
+[DEBUG] 00:45:14:502 SAFA/(9254:9284): Enviando dtb con id: 1
+[INFO] 00:45:17:722 SAFA/(9254:9256): Recibi pasar a EXIT
+[INFO] 00:45:17:722 SAFA/(9254:9256): Pasado a EXIT dtb con id: 1, escriptorio: hola, quantum: -1
+[INFO] 00:45:17:722 SAFA/(9254:9256): Terminada operacion
+[INFO] 00:45:21:847 SAFA/(9254:9257): Comando ejecutar
+[INFO] 00:45:21:847 SAFA/(9254:9283): Hay procesos en la cola new
+[INFO] 00:45:21:847 SAFA/(9254:9283): Cargando Dummy para dtb con scriptorio chau
+[INFO] 00:45:21:847 SAFA/(9254:9284): Pasado Dummy a ejecutar con escriptorio chau
+[DEBUG] 00:45:21:847 SAFA/(9254:9284): enviando a socket 5 header i
+[DEBUG] 00:45:21:847 SAFA/(9254:9284): Enviando dtb con id: 2
+[INFO] 00:45:25:62 SAFA/(9254:9256): Desbloqueo el DUMMY
+[INFO] 00:45:25:63 SAFA/(9254:9256): Mando a CPU que continue con su ejecucion
+[INFO] 00:45:25:63 SAFA/(9254:9256): Terminada operacion
+[INFO] 00:45:25:264 SAFA/(9254:9256): Recibi Desbloquear DTB
+[INFO] 00:45:25:264 SAFA/(9254:9256): Terminada operacion
+[INFO] 00:45:26:282 SAFA/(9254:9256): Recibi cargado con exito en memoria del DAM
+[INFO] 00:45:26:283 SAFA/(9254:9256): Pasado a READY dtb con id: 2, escriptorio: chau, quantum: 0
+[INFO] 00:45:26:283 SAFA/(9254:9256): Terminada operacion
+[INFO] 00:45:26:283 SAFA/(9254:9284): Pasado a EXECUTE dtb con id: 2, escriptorio: chau, quantum: -1
+[DEBUG] 00:45:26:283 SAFA/(9254:9284): enviando a socket 5 header i
+[DEBUG] 00:45:26:283 SAFA/(9254:9284): Enviando dtb con id: 2
+[INFO] 00:45:29:503 SAFA/(9254:9256): Recibi retener recurso
+[INFO] 00:45:29:503 SAFA/(9254:9256): Creado el recurso, no existia
+[INFO] 00:45:29:503 SAFA/(9254:9256): la cantidad de resursos para el recurso a es 1
+[INFO] 00:45:29:503 SAFA/(9254:9256): Le di el recurso al dtb 2
+[INFO] 00:45:29:503 SAFA/(9254:9256): Terminada operacion
+[INFO] 00:45:29:713 SAFA/(9254:9256): Recibi liberar recurso
+[INFO] 00:45:29:713 SAFA/(9254:9256): Se libero el recurso que no estaba esperando nadie. Ahora del recurso än hay 4
+[INFO] 00:45:29:713 SAFA/(9254:9256): Terminada operacion
+[INFO] 00:45:29:923 SAFA/(9254:9256): Recibi pasar a EXIT
+[INFO] 00:45:29:923 SAFA/(9254:9256): Pasado a EXIT dtb con id: 2, escriptorio: chau, quantum: -1
+[INFO] 00:45:29:923 SAFA/(9254:9256): Terminada operacion

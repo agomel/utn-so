@@ -436,12 +436,15 @@ void liberarDTBDeMemoriaSegPag(int idDTB){
 }
 
 void dumpSegPag(int idDTB){
+	log_info(logger, "Dump de DTB: %d", idDTB);
 	ElementoTablaDTBS* proceso = obtenerProcesoPorIdDTB(idDTB);
 	waitMutex(&mutexListaSegmentos);
 	int cantidadDeSegmentos = proceso->segmentos->elements_count;
 	signalMutex(&mutexListaSegmentos);
+	log_info(logger, "Dump 1", idDTB);
 	log_info(logger, "El DTB con id %d, tiene %d archivos abiertos en memoria", idDTB, cantidadDeSegmentos);
 	for (int i = 0; i < cantidadDeSegmentos; ++i) {
+		log_info(logger, "Dump 2", idDTB);
 		waitMutex(&mutexListaSegmentos);
 		ElementoTablaSegPag* segmento = list_get(proceso->segmentos, i);
 		signalMutex(&mutexListaSegmentos);

@@ -251,6 +251,7 @@ RespuestaGuardado* guardarDatosInvertida(int idDTB, char* datos, char* nombreArc
 	char** lineas = dividirPorLineas(datos);
 	int cantidadPaginas = 1;
 	int lineasEnLaUltimaPagina = totalLineas % tamanioPagina;
+	if (totalLineas == tamanioPagina) lineasEnLaUltimaPagina = tamanioPagina;
 	if(totalLineas > tamanioPagina){
 		cantidadPaginas = totalLineas / tamanioPagina;
 		if(lineasEnLaUltimaPagina != 0)

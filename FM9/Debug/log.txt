@@ -1,0 +1,124 @@
+[INFO] 00:23:37:202 FM9/(7522:7522): Utilizando paginas invertidas
+[DEBUG] 00:23:40:493 FM9/(7522:7523): Handshake de: DAM
+[DEBUG] 00:23:40:493 FM9/(7522:7523): Se agrego a las conexiones DAM
+[DEBUG] 00:23:40:498 FM9/(7522:7529): Escuchando nuevo cliente en 5
+[DEBUG] 00:23:42:941 FM9/(7522:7523): Handshake de: CPU
+[DEBUG] 00:23:42:941 FM9/(7522:7523): Se agrego a las conexiones CPU
+[DEBUG] 00:23:42:942 FM9/(7522:7534): Escuchando nuevo cliente en 7
+[DEBUG] 00:23:51:79 FM9/(7522:7524): Guardando escriptorio 1 en memoria
+[DEBUG] 00:23:51:79 FM9/(7522:7524): Guardando en paginas invertidas
+[DEBUG] 00:23:51:79 FM9/(7522:7524): Datos guardados
+[DEBUG] 00:23:51:79 FM9/(7522:7524): Enviando 0 al cargar nuevo DTB
+[INFO] 00:23:51:79 FM9/(7522:7524): Terminada operacion
+[DEBUG] 00:23:54:290 FM9/(7522:7524): Trayendo linea escriptorio
+[DEBUG] 00:23:54:290 FM9/(7522:7524): Se pide linea 0 para escriptorio hola
+[DEBUG] 00:23:54:291 FM9/(7522:7524): Linea: concentrar
+[INFO] 00:23:54:291 FM9/(7522:7524): Terminada operacion
+[DEBUG] 00:23:54:291 FM9/(7522:7524): Trayendo linea escriptorio
+[DEBUG] 00:23:54:291 FM9/(7522:7524): Se pide linea 1 para escriptorio hola
+[DEBUG] 00:23:54:291 FM9/(7522:7524): Linea: signal a
+[INFO] 00:23:54:291 FM9/(7522:7524): Terminada operacion
+[DEBUG] 00:23:54:501 FM9/(7522:7524): Trayendo linea escriptorio
+[DEBUG] 00:23:54:501 FM9/(7522:7524): Se pide linea 2 para escriptorio hola
+[DEBUG] 00:23:54:501 FM9/(7522:7524): Linea: signal a
+[INFO] 00:23:54:501 FM9/(7522:7524): Terminada operacion
+[DEBUG] 00:23:54:710 FM9/(7522:7524): Trayendo linea escriptorio
+[DEBUG] 00:23:54:710 FM9/(7522:7524): Se pide linea 3 para escriptorio hola
+[DEBUG] 00:23:54:710 FM9/(7522:7524): Linea: borrar PGB1.bin
+[INFO] 00:23:54:710 FM9/(7522:7524): Terminada operacion
+[DEBUG] 00:23:58:140 FM9/(7522:7524): Trayendo linea escriptorio
+[DEBUG] 00:23:58:140 FM9/(7522:7524): Se pide linea 4 para escriptorio hola
+[INFO] 00:23:58:140 FM9/(7522:7524): Es fin de archivo
+[INFO] 00:23:58:140 FM9/(7522:7524): Terminada operacion
+[DEBUG] 00:23:58:141 FM9/(7522:7524): Liberando el dtb 1 de memoria por pasar a EXIT
+[INFO] 00:23:58:141 FM9/(7522:7524): Borrado DTB 1 de memoria por pasar a EXIT
+[INFO] 00:23:58:141 FM9/(7522:7524): Terminada operacion
+[DEBUG] 00:24:10:400 FM9/(7522:7524): Guardando escriptorio 2 en memoria
+[DEBUG] 00:24:10:400 FM9/(7522:7524): Guardando en paginas invertidas
+[DEBUG] 00:24:10:400 FM9/(7522:7524): Datos guardados
+[DEBUG] 00:24:10:400 FM9/(7522:7524): Enviando 0 al cargar nuevo DTB
+[INFO] 00:24:10:400 FM9/(7522:7524): Terminada operacion
+[DEBUG] 00:24:13:619 FM9/(7522:7524): Trayendo linea escriptorio
+[DEBUG] 00:24:13:620 FM9/(7522:7524): Se pide linea 0 para escriptorio chau
+[DEBUG] 00:24:13:620 FM9/(7522:7524): Linea: concentrar
+[INFO] 00:24:13:620 FM9/(7522:7524): Terminada operacion
+[DEBUG] 00:24:13:620 FM9/(7522:7524): Trayendo linea escriptorio
+[DEBUG] 00:24:13:620 FM9/(7522:7524): Se pide linea 1 para escriptorio chau
+[DEBUG] 00:24:13:620 FM9/(7522:7524): Linea: signal a
+[INFO] 00:24:13:620 FM9/(7522:7524): Terminada operacion
+[DEBUG] 00:24:13:830 FM9/(7522:7524): Trayendo linea escriptorio
+[DEBUG] 00:24:13:830 FM9/(7522:7524): Se pide linea 2 para escriptorio chau
+[DEBUG] 00:24:13:830 FM9/(7522:7524): Linea: signal a
+[INFO] 00:24:13:830 FM9/(7522:7524): Terminada operacion
+[DEBUG] 00:24:14:39 FM9/(7522:7524): Trayendo linea escriptorio
+[DEBUG] 00:24:14:39 FM9/(7522:7524): Se pide linea 3 para escriptorio chau
+[DEBUG] 00:24:14:40 FM9/(7522:7524): Linea: borrar PGB1.bin
+[INFO] 00:24:14:40 FM9/(7522:7524): Terminada operacion
+[INFO] 00:42:24:838 FM9/(9036:9036): Utilizando segmentacion paginada
+[INFO] 00:42:29:922 FM9/(9036:9039): chauuuuu :)
+[INFO] 00:42:47:708 FM9/(9057:9057): Utilizando segmentacion paginada
+[DEBUG] 00:42:51:838 FM9/(9057:9058): Handshake de: DAM
+[DEBUG] 00:42:51:838 FM9/(9057:9058): Se agrego a las conexiones DAM
+[DEBUG] 00:42:51:849 FM9/(9057:9063): Escuchando nuevo cliente en 5
+[DEBUG] 00:42:54:919 FM9/(9057:9058): Handshake de: CPU
+[DEBUG] 00:42:54:919 FM9/(9057:9058): Se agrego a las conexiones CPU
+[DEBUG] 00:42:54:928 FM9/(9057:9069): Escuchando nuevo cliente en 7
+[INFO] 00:44:57:832 FM9/(9270:9270): Utilizando paginas invertidas
+[DEBUG] 00:44:59:974 FM9/(9270:9271): Handshake de: DAM
+[DEBUG] 00:44:59:974 FM9/(9270:9271): Se agrego a las conexiones DAM
+[DEBUG] 00:44:59:993 FM9/(9270:9279): Escuchando nuevo cliente en 5
+[DEBUG] 00:45:01:493 FM9/(9270:9271): Handshake de: CPU
+[DEBUG] 00:45:01:493 FM9/(9270:9271): Se agrego a las conexiones CPU
+[DEBUG] 00:45:01:501 FM9/(9270:9282): Escuchando nuevo cliente en 7
+[DEBUG] 00:45:10:442 FM9/(9270:9272): Guardando escriptorio 1 en memoria
+[DEBUG] 00:45:10:442 FM9/(9270:9272): Guardando en paginas invertidas
+[DEBUG] 00:45:10:442 FM9/(9270:9272): Datos guardados
+[DEBUG] 00:45:10:442 FM9/(9270:9272): Enviando 0 al cargar nuevo DTB
+[INFO] 00:45:10:442 FM9/(9270:9272): Terminada operacion
+[DEBUG] 00:45:13:662 FM9/(9270:9272): Trayendo linea escriptorio
+[DEBUG] 00:45:13:662 FM9/(9270:9272): Se pide linea 0 para escriptorio hola
+[DEBUG] 00:45:13:662 FM9/(9270:9272): Linea: concentrar
+[INFO] 00:45:13:662 FM9/(9270:9272): Terminada operacion
+[DEBUG] 00:45:13:662 FM9/(9270:9272): Trayendo linea escriptorio
+[DEBUG] 00:45:13:662 FM9/(9270:9272): Se pide linea 1 para escriptorio hola
+[DEBUG] 00:45:13:662 FM9/(9270:9272): Linea: signal a
+[INFO] 00:45:13:662 FM9/(9270:9272): Terminada operacion
+[DEBUG] 00:45:13:872 FM9/(9270:9272): Trayendo linea escriptorio
+[DEBUG] 00:45:13:872 FM9/(9270:9272): Se pide linea 2 para escriptorio hola
+[DEBUG] 00:45:13:872 FM9/(9270:9272): Linea: signal a
+[INFO] 00:45:13:872 FM9/(9270:9272): Terminada operacion
+[DEBUG] 00:45:14:82 FM9/(9270:9272): Trayendo linea escriptorio
+[DEBUG] 00:45:14:82 FM9/(9270:9272): Se pide linea 3 para escriptorio hola
+[DEBUG] 00:45:14:82 FM9/(9270:9272): Linea: borrar PGB1.bin
+[INFO] 00:45:14:82 FM9/(9270:9272): Terminada operacion
+[DEBUG] 00:45:17:512 FM9/(9270:9272): Trayendo linea escriptorio
+[DEBUG] 00:45:17:512 FM9/(9270:9272): Se pide linea 4 para escriptorio hola
+[INFO] 00:45:17:512 FM9/(9270:9272): Es fin de archivo
+[INFO] 00:45:17:512 FM9/(9270:9272): Terminada operacion
+[DEBUG] 00:45:17:512 FM9/(9270:9272): Liberando el dtb 1 de memoria por pasar a EXIT
+[INFO] 00:45:17:512 FM9/(9270:9272): Borrado DTB 1 de memoria por pasar a EXIT
+[INFO] 00:45:17:512 FM9/(9270:9272): Terminada operacion
+[DEBUG] 00:45:26:73 FM9/(9270:9272): Guardando escriptorio 2 en memoria
+[DEBUG] 00:45:26:73 FM9/(9270:9272): Guardando en paginas invertidas
+[DEBUG] 00:45:26:73 FM9/(9270:9272): Datos guardados
+[DEBUG] 00:45:26:73 FM9/(9270:9272): Enviando 0 al cargar nuevo DTB
+[INFO] 00:45:26:73 FM9/(9270:9272): Terminada operacion
+[DEBUG] 00:45:29:293 FM9/(9270:9272): Trayendo linea escriptorio
+[DEBUG] 00:45:29:293 FM9/(9270:9272): Se pide linea 0 para escriptorio chau
+[DEBUG] 00:45:29:293 FM9/(9270:9272): Linea: concentrar
+[INFO] 00:45:29:293 FM9/(9270:9272): Terminada operacion
+[DEBUG] 00:45:29:293 FM9/(9270:9272): Trayendo linea escriptorio
+[DEBUG] 00:45:29:293 FM9/(9270:9272): Se pide linea 1 para escriptorio chau
+[DEBUG] 00:45:29:293 FM9/(9270:9272): Linea: wait a
+[INFO] 00:45:29:293 FM9/(9270:9272): Terminada operacion
+[DEBUG] 00:45:29:503 FM9/(9270:9272): Trayendo linea escriptorio
+[DEBUG] 00:45:29:503 FM9/(9270:9272): Se pide linea 2 para escriptorio chau
+[DEBUG] 00:45:29:503 FM9/(9270:9272): Linea: signal a
+[INFO] 00:45:29:503 FM9/(9270:9272): Terminada operacion
+[DEBUG] 00:45:29:713 FM9/(9270:9272): Trayendo linea escriptorio
+[DEBUG] 00:45:29:713 FM9/(9270:9272): Se pide linea 3 para escriptorio chau
+[INFO] 00:45:29:713 FM9/(9270:9272): Es fin de archivo
+[INFO] 00:45:29:713 FM9/(9270:9272): Terminada operacion
+[DEBUG] 00:45:29:713 FM9/(9270:9272): Liberando el dtb 2 de memoria por pasar a EXIT
+[INFO] 00:45:29:713 FM9/(9270:9272): Borrado DTB 2 de memoria por pasar a EXIT
+[INFO] 00:45:29:713 FM9/(9270:9272): Terminada operacion
