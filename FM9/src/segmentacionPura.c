@@ -374,6 +374,7 @@ static int dondeEntro(int tamanioAGuardar){
 }
 
 void dumpSegPura(int idDTB){
+	log_info(logger, "Dump de DTB: %d", idDTB);
 	ElementoTablaProcesos* proceso = obtenerProcesoPorIdDTB(idDTB);
 	waitMutex(&mutexListaSegmentos);
 	int cantidadDeSegmentos = proceso->tablaSegmentos->elements_count;
@@ -384,7 +385,7 @@ void dumpSegPura(int idDTB){
 		ElementoTablaSegPura* segmento = list_get(proceso->tablaSegmentos, i);
 		signalMutex(&mutexListaSegmentos);
 		respuestaDeObtencionDeMemoria* respuesta = obtenerDatosSegPura(idDTB, segmento->nombreArchivo);
-		log_info(logger, "El archivo %d tiene estos datos guardados: %s", (i+1), respuesta->datos);
+		log_info(logger, "El archivo %d tiene estos datos guardados: \n %s", (i+1), respuesta->datos);
 		freeRespuestaObtencion(respuesta);
 	}
 }

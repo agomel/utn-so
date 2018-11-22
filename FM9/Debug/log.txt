@@ -122,3 +122,497 @@
 [DEBUG] 00:45:29:713 FM9/(9270:9272): Liberando el dtb 2 de memoria por pasar a EXIT
 [INFO] 00:45:29:713 FM9/(9270:9272): Borrado DTB 2 de memoria por pasar a EXIT
 [INFO] 00:45:29:713 FM9/(9270:9272): Terminada operacion
+[INFO] 00:48:08:36 FM9/(9654:9654): Utilizando segmentacion pura
+[DEBUG] 00:48:23:662 FM9/(9654:9655): Handshake de: DAM
+[DEBUG] 00:48:23:662 FM9/(9654:9655): Se agrego a las conexiones DAM
+[DEBUG] 00:48:23:675 FM9/(9654:9676): Escuchando nuevo cliente en 5
+[DEBUG] 00:48:25:404 FM9/(9654:9655): Handshake de: CPU
+[DEBUG] 00:48:25:404 FM9/(9654:9655): Se agrego a las conexiones CPU
+[DEBUG] 00:48:25:411 FM9/(9654:9681): Escuchando nuevo cliente en 7
+[DEBUG] 00:48:37:133 FM9/(9654:9656): Guardando escriptorio 1 en memoria
+[DEBUG] 00:48:37:133 FM9/(9654:9656): Guardando en segmentacion pura
+[DEBUG] 00:48:37:133 FM9/(9654:9656): Datos guardados
+[INFO] 00:48:37:133 FM9/(9654:9656): Agregado proceso 1 a tabla de procesos
+[DEBUG] 00:48:37:133 FM9/(9654:9656): Enviando 0 al cargar nuevo DTB
+[INFO] 00:48:37:133 FM9/(9654:9656): Terminada operacion
+[DEBUG] 00:48:40:353 FM9/(9654:9656): Trayendo linea escriptorio
+[DEBUG] 00:48:40:353 FM9/(9654:9656): Se pide linea 0 para escriptorio scripts/checkpoint.escriptorio
+[DEBUG] 00:48:40:353 FM9/(9654:9656): Linea: crear /equipos/equipo1.txt 5
+[INFO] 00:48:40:353 FM9/(9654:9656): Terminada operacion
+[INFO] 00:48:41:970 FM9/(9654:9657): El DTB con id 1, tiene 1 archivos abiertos en memoria
+[INFO] 00:48:41:970 FM9/(9654:9657): El archivo 1 tiene estos datos guardados: crear /equipos/equipo1.txt 5
+abrir /equipos/equipo1.txt
+asignar /equipos/equipo1.txt 1 Rasing
+asignar /equipos/equipo1.txt 1 Jugadores: Centurion
+flush /equipos/equipo1.txt
+close /equipos/equipo1.txt
+
+
+[DEBUG] 00:48:43:783 FM9/(9654:9656): Trayendo linea escriptorio
+[DEBUG] 00:48:43:783 FM9/(9654:9656): Se pide linea 1 para escriptorio scripts/checkpoint.escriptorio
+[DEBUG] 00:48:43:783 FM9/(9654:9656): Linea: abrir /equipos/equipo1.txt
+[INFO] 00:48:43:783 FM9/(9654:9656): Terminada operacion
+[DEBUG] 00:48:45:3 FM9/(9654:9656): Guardando datos en memoria
+[DEBUG] 00:48:45:3 FM9/(9654:9656): Guardando en segmentacion pura
+[DEBUG] 00:48:45:3 FM9/(9654:9656): Datos guardados
+[DEBUG] 00:48:45:3 FM9/(9654:9656): Enviando 0 al guardar los datos
+[INFO] 00:48:45:3 FM9/(9654:9656): Terminada operacion
+[DEBUG] 00:48:48:223 FM9/(9654:9656): Trayendo linea escriptorio
+[DEBUG] 00:48:48:223 FM9/(9654:9656): Se pide linea 2 para escriptorio scripts/checkpoint.escriptorio
+[DEBUG] 00:48:48:223 FM9/(9654:9656): Linea: asignar /equipos/equipo1.txt 1 Rasing
+[INFO] 00:48:48:223 FM9/(9654:9656): Terminada operacion
+[DEBUG] 00:48:48:223 FM9/(9654:9656): Asignando datos en linea Nro 1
+[DEBUG] 00:48:48:223 FM9/(9654:9656): Escribiendo: Rasing. En: /equipos/equipo1.txt 
+[DEBUG] 00:48:48:223 FM9/(9654:9656): Asignados datos con exito
+[INFO] 00:48:48:223 FM9/(9654:9656): Terminada operacion
+[DEBUG] 00:48:48:224 FM9/(9654:9656): Trayendo linea escriptorio
+[DEBUG] 00:48:48:224 FM9/(9654:9656): Se pide linea 3 para escriptorio scripts/checkpoint.escriptorio
+[DEBUG] 00:48:48:224 FM9/(9654:9656): Linea: asignar /equipos/equipo1.txt 1 Jugadores: Centurion
+[INFO] 00:48:48:224 FM9/(9654:9656): Terminada operacion
+[DEBUG] 00:48:48:224 FM9/(9654:9656): Asignando datos en linea Nro 1
+[DEBUG] 00:48:48:224 FM9/(9654:9656): Escribiendo: Jugadores: Centurion. En: /equipos/equipo1.txt 
+[DEBUG] 00:48:48:224 FM9/(9654:9656): Asignados datos con exito
+[INFO] 00:48:48:224 FM9/(9654:9656): Terminada operacion
+[DEBUG] 00:48:48:224 FM9/(9654:9656): Trayendo linea escriptorio
+[DEBUG] 00:48:48:224 FM9/(9654:9656): Se pide linea 4 para escriptorio scripts/checkpoint.escriptorio
+[DEBUG] 00:48:48:224 FM9/(9654:9656): Linea: flush /equipos/equipo1.txt
+[INFO] 00:48:48:224 FM9/(9654:9656): Terminada operacion
+[DEBUG] 00:48:48:433 FM9/(9654:9656): Obteniendo datos de memoria
+[INFO] 00:48:48:433 FM9/(9654:9656): Datos enviados: Rasing Jugadores: Centurion
+
+
+
+
+ 
+[INFO] 00:48:48:433 FM9/(9654:9656): Terminada operacion
+[DEBUG] 00:48:51:654 FM9/(9654:9656): Trayendo linea escriptorio
+[DEBUG] 00:48:51:654 FM9/(9654:9656): Se pide linea 5 para escriptorio scripts/checkpoint.escriptorio
+[DEBUG] 00:48:51:654 FM9/(9654:9656): Linea: close /equipos/equipo1.txt
+[INFO] 00:48:51:654 FM9/(9654:9656): Terminada operacion
+[DEBUG] 00:48:51:654 FM9/(9654:9656): Liberando memoria para archivo /equipos/equipo1.txt
+[INFO] 00:48:51:654 FM9/(9654:9656): Borrado archivo /equipos/equipo1.txt de memoria
+[INFO] 00:48:51:654 FM9/(9654:9656): Terminada operacion
+[DEBUG] 00:48:51:654 FM9/(9654:9656): Trayendo linea escriptorio
+[DEBUG] 00:48:51:654 FM9/(9654:9656): Se pide linea 6 para escriptorio scripts/checkpoint.escriptorio
+[INFO] 00:48:51:654 FM9/(9654:9656): Es fin de archivo
+[INFO] 00:48:51:654 FM9/(9654:9656): Terminada operacion
+[DEBUG] 00:48:51:655 FM9/(9654:9656): Liberando el dtb 1 de memoria por pasar a EXIT
+[INFO] 00:48:51:655 FM9/(9654:9656): Liberando de la memoria el DTB
+[INFO] 00:48:51:655 FM9/(9654:9656): Borrado archivo scripts/checkpoint.escriptorio de memoria
+[INFO] 00:48:51:655 FM9/(9654:9656): Terminada operacion
+[INFO] 00:50:47:103 FM9/(9654:9657): chauuuuu :)
+[INFO] 00:51:20:478 FM9/(9798:9798): Utilizando segmentacion pura
+[DEBUG] 00:51:23:670 FM9/(9798:9799): Handshake de: DAM
+[DEBUG] 00:51:23:670 FM9/(9798:9799): Se agrego a las conexiones DAM
+[DEBUG] 00:51:23:679 FM9/(9798:9803): Escuchando nuevo cliente en 5
+[DEBUG] 00:51:25:400 FM9/(9798:9799): Handshake de: CPU
+[DEBUG] 00:51:25:400 FM9/(9798:9799): Se agrego a las conexiones CPU
+[DEBUG] 00:51:25:407 FM9/(9798:9810): Escuchando nuevo cliente en 7
+[DEBUG] 00:52:10:882 FM9/(9798:9800): Guardando escriptorio 1 en memoria
+[DEBUG] 00:52:10:882 FM9/(9798:9800): Guardando en segmentacion pura
+[DEBUG] 00:52:10:882 FM9/(9798:9800): Datos guardados
+[INFO] 00:52:10:882 FM9/(9798:9800): Agregado proceso 1 a tabla de procesos
+[DEBUG] 00:52:10:882 FM9/(9798:9800): Enviando 0 al cargar nuevo DTB
+[INFO] 00:52:10:882 FM9/(9798:9800): Terminada operacion
+[DEBUG] 00:52:14:102 FM9/(9798:9800): Trayendo linea escriptorio
+[DEBUG] 00:52:14:102 FM9/(9798:9800): Se pide linea 0 para escriptorio scripts/checkpoint.escriptorio
+[DEBUG] 00:52:14:102 FM9/(9798:9800): Linea: crear /equipos/equipo1.txt 5
+[INFO] 00:52:14:102 FM9/(9798:9800): Terminada operacion
+[DEBUG] 00:52:17:532 FM9/(9798:9800): Trayendo linea escriptorio
+[DEBUG] 00:52:17:532 FM9/(9798:9800): Se pide linea 1 para escriptorio scripts/checkpoint.escriptorio
+[DEBUG] 00:52:17:532 FM9/(9798:9800): Linea: abrir /equipos/equipo1.txt
+[INFO] 00:52:17:532 FM9/(9798:9800): Terminada operacion
+[DEBUG] 00:52:18:752 FM9/(9798:9800): Guardando datos en memoria
+[DEBUG] 00:52:18:752 FM9/(9798:9800): Guardando en segmentacion pura
+[DEBUG] 00:52:18:752 FM9/(9798:9800): Datos guardados
+[DEBUG] 00:52:18:752 FM9/(9798:9800): Enviando 0 al guardar los datos
+[INFO] 00:52:18:752 FM9/(9798:9800): Terminada operacion
+[INFO] 00:52:20:751 FM9/(9798:9801): El DTB con id 1, tiene 2 archivos abiertos en memoria
+[INFO] 00:52:20:751 FM9/(9798:9801): El archivo 1 tiene estos datos guardados: crear /equipos/equipo1.txt 5
+abrir /equipos/equipo1.txt
+asignar /equipos/equipo1.txt 1 Rasing
+asignar /equipos/equipo1.txt 1 Jugadores: Centurion
+flush /equipos/equipo1.txt
+close /equipos/equipo1.txt
+
+
+[INFO] 00:52:20:751 FM9/(9798:9801): El archivo 2 tiene estos datos guardados: 
+
+
+
+
+
+[DEBUG] 00:52:21:973 FM9/(9798:9800): Trayendo linea escriptorio
+[DEBUG] 00:52:21:973 FM9/(9798:9800): Se pide linea 2 para escriptorio scripts/checkpoint.escriptorio
+[DEBUG] 00:52:21:973 FM9/(9798:9800): Linea: asignar /equipos/equipo1.txt 1 Rasing
+[INFO] 00:52:21:973 FM9/(9798:9800): Terminada operacion
+[DEBUG] 00:52:21:974 FM9/(9798:9800): Asignando datos en linea Nro 1
+[DEBUG] 00:52:21:974 FM9/(9798:9800): Escribiendo: Rasing. En: /equipos/equipo1.txt 
+[DEBUG] 00:52:21:974 FM9/(9798:9800): Asignados datos con exito
+[INFO] 00:52:21:974 FM9/(9798:9800): Terminada operacion
+[DEBUG] 00:52:21:974 FM9/(9798:9800): Trayendo linea escriptorio
+[DEBUG] 00:52:21:974 FM9/(9798:9800): Se pide linea 3 para escriptorio scripts/checkpoint.escriptorio
+[DEBUG] 00:52:21:974 FM9/(9798:9800): Linea: asignar /equipos/equipo1.txt 1 Jugadores: Centurion
+[INFO] 00:52:21:974 FM9/(9798:9800): Terminada operacion
+[DEBUG] 00:52:21:974 FM9/(9798:9800): Asignando datos en linea Nro 1
+[DEBUG] 00:52:21:974 FM9/(9798:9800): Escribiendo: Jugadores: Centurion. En: /equipos/equipo1.txt 
+[DEBUG] 00:52:21:974 FM9/(9798:9800): Asignados datos con exito
+[INFO] 00:52:21:974 FM9/(9798:9800): Terminada operacion
+[DEBUG] 00:52:21:974 FM9/(9798:9800): Trayendo linea escriptorio
+[DEBUG] 00:52:21:975 FM9/(9798:9800): Se pide linea 4 para escriptorio scripts/checkpoint.escriptorio
+[DEBUG] 00:52:21:975 FM9/(9798:9800): Linea: flush /equipos/equipo1.txt
+[INFO] 00:52:21:975 FM9/(9798:9800): Terminada operacion
+[DEBUG] 00:52:22:183 FM9/(9798:9800): Obteniendo datos de memoria
+[INFO] 00:52:22:183 FM9/(9798:9800): Datos enviados: Rasing Jugadores: Centurion
+
+
+
+
+ 
+[INFO] 00:52:22:183 FM9/(9798:9800): Terminada operacion
+[DEBUG] 00:52:25:403 FM9/(9798:9800): Trayendo linea escriptorio
+[DEBUG] 00:52:25:403 FM9/(9798:9800): Se pide linea 5 para escriptorio scripts/checkpoint.escriptorio
+[DEBUG] 00:52:25:403 FM9/(9798:9800): Linea: close /equipos/equipo1.txt
+[INFO] 00:52:25:403 FM9/(9798:9800): Terminada operacion
+[DEBUG] 00:52:25:403 FM9/(9798:9800): Liberando memoria para archivo /equipos/equipo1.txt
+[INFO] 00:52:25:403 FM9/(9798:9800): Borrado archivo /equipos/equipo1.txt de memoria
+[INFO] 00:52:25:403 FM9/(9798:9800): Terminada operacion
+[DEBUG] 00:52:25:404 FM9/(9798:9800): Trayendo linea escriptorio
+[DEBUG] 00:52:25:404 FM9/(9798:9800): Se pide linea 6 para escriptorio scripts/checkpoint.escriptorio
+[INFO] 00:52:25:404 FM9/(9798:9800): Es fin de archivo
+[INFO] 00:52:25:404 FM9/(9798:9800): Terminada operacion
+[DEBUG] 00:52:25:404 FM9/(9798:9800): Liberando el dtb 1 de memoria por pasar a EXIT
+[INFO] 00:52:25:404 FM9/(9798:9800): Liberando de la memoria el DTB
+[INFO] 00:52:25:404 FM9/(9798:9800): Borrado archivo scripts/checkpoint.escriptorio de memoria
+[INFO] 00:52:25:404 FM9/(9798:9800): Terminada operacion
+[INFO] 00:52:44:234 FM9/(9798:9801): chauuuuu :)
+[INFO] 00:53:57:140 FM9/(9910:9910): Utilizando segmentacion paginada
+[DEBUG] 00:54:01:152 FM9/(9910:9911): Handshake de: DAM
+[DEBUG] 00:54:01:152 FM9/(9910:9911): Se agrego a las conexiones DAM
+[DEBUG] 00:54:01:159 FM9/(9910:9917): Escuchando nuevo cliente en 5
+[DEBUG] 00:54:02:991 FM9/(9910:9911): Handshake de: CPU
+[DEBUG] 00:54:02:991 FM9/(9910:9911): Se agrego a las conexiones CPU
+[DEBUG] 00:54:02:992 FM9/(9910:9922): Escuchando nuevo cliente en 7
+[DEBUG] 00:54:16:490 FM9/(9910:9912): Guardando escriptorio 1 en memoria
+[DEBUG] 00:54:16:491 FM9/(9910:9912): Guardando en segmentacion paginada
+[DEBUG] 00:54:16:491 FM9/(9910:9912): Datos guardados
+[INFO] 00:54:16:491 FM9/(9910:9912): Agregado proceso 1 a tabla de procesos
+[DEBUG] 00:54:16:491 FM9/(9910:9912): Enviando 0 al cargar nuevo DTB
+[INFO] 00:54:16:491 FM9/(9910:9912): Terminada operacion
+[INFO] 00:54:18:470 FM9/(9910:9913): Dump de DTB: 1
+[INFO] 00:54:18:470 FM9/(9910:9913): Dump 1
+[INFO] 00:54:18:470 FM9/(9910:9913): El DTB con id 1, tiene 1 archivos abiertos en memoria
+[INFO] 00:54:18:470 FM9/(9910:9913): Dump 2
+[INFO] 00:54:18:470 FM9/(9910:9913): El archivo 1 tiene estos datos guardados: crear /equipos/equipo1.txt 5
+abrir /equipos/equipo1.txt
+asignar /equipos/equipo1.txt 1 Rasing
+asignar /equipos/equipo1.txt 1 Jugadores: Centurion
+flush /equipos/equipo1.txt
+close /equipos/equipo1.txt
+
+
+[DEBUG] 00:54:19:710 FM9/(9910:9912): Trayendo linea escriptorio
+[DEBUG] 00:54:19:710 FM9/(9910:9912): Se pide linea 0 para escriptorio scripts/checkpoint.escriptorio
+[DEBUG] 00:54:19:710 FM9/(9910:9912): Linea: crear /equipos/equipo1.txt 5
+[INFO] 00:54:19:710 FM9/(9910:9912): Terminada operacion
+[DEBUG] 00:54:23:140 FM9/(9910:9912): Trayendo linea escriptorio
+[DEBUG] 00:54:23:140 FM9/(9910:9912): Se pide linea 1 para escriptorio scripts/checkpoint.escriptorio
+[DEBUG] 00:54:23:140 FM9/(9910:9912): Linea: abrir /equipos/equipo1.txt
+[INFO] 00:54:23:140 FM9/(9910:9912): Terminada operacion
+[DEBUG] 00:54:24:360 FM9/(9910:9912): Guardando datos en memoria
+[DEBUG] 00:54:24:360 FM9/(9910:9912): Guardando en segmentacion paginada
+[DEBUG] 00:54:24:360 FM9/(9910:9912): Datos guardados
+[DEBUG] 00:54:24:360 FM9/(9910:9912): Enviando 0 al guardar los datos
+[INFO] 00:54:24:360 FM9/(9910:9912): Terminada operacion
+[DEBUG] 00:54:27:580 FM9/(9910:9912): Trayendo linea escriptorio
+[DEBUG] 00:54:27:580 FM9/(9910:9912): Se pide linea 2 para escriptorio scripts/checkpoint.escriptorio
+[DEBUG] 00:54:27:580 FM9/(9910:9912): Linea: asignar /equipos/equipo1.txt 1 Rasing
+[INFO] 00:54:27:580 FM9/(9910:9912): Terminada operacion
+[DEBUG] 00:54:27:580 FM9/(9910:9912): Asignando datos en linea Nro 1
+[DEBUG] 00:54:27:580 FM9/(9910:9912): Escribiendo: Rasing. En: /equipos/equipo1.txt 
+[DEBUG] 00:54:27:580 FM9/(9910:9912): Asignados datos con exito
+[INFO] 00:54:27:581 FM9/(9910:9912): Terminada operacion
+[DEBUG] 00:54:27:581 FM9/(9910:9912): Trayendo linea escriptorio
+[DEBUG] 00:54:27:581 FM9/(9910:9912): Se pide linea 3 para escriptorio scripts/checkpoint.escriptorio
+[DEBUG] 00:54:27:581 FM9/(9910:9912): Linea: asignar /equipos/equipo1.txt 1 Jugadores: Centurion
+[INFO] 00:54:27:581 FM9/(9910:9912): Terminada operacion
+[DEBUG] 00:54:27:581 FM9/(9910:9912): Asignando datos en linea Nro 1
+[DEBUG] 00:54:27:581 FM9/(9910:9912): Escribiendo: Jugadores: Centurion. En: /equipos/equipo1.txt 
+[DEBUG] 00:54:27:581 FM9/(9910:9912): Asignados datos con exito
+[INFO] 00:54:27:581 FM9/(9910:9912): Terminada operacion
+[DEBUG] 00:54:27:581 FM9/(9910:9912): Trayendo linea escriptorio
+[DEBUG] 00:54:27:581 FM9/(9910:9912): Se pide linea 4 para escriptorio scripts/checkpoint.escriptorio
+[DEBUG] 00:54:27:581 FM9/(9910:9912): Linea: flush /equipos/equipo1.txt
+[INFO] 00:54:27:581 FM9/(9910:9912): Terminada operacion
+[DEBUG] 00:54:27:790 FM9/(9910:9912): Obteniendo datos de memoria
+[INFO] 00:54:27:790 FM9/(9910:9912): Datos enviados: Rasing Jugadores: Centurion
+
+
+
+
+ 
+[INFO] 00:54:27:790 FM9/(9910:9912): Terminada operacion
+[DEBUG] 00:54:31:10 FM9/(9910:9912): Trayendo linea escriptorio
+[DEBUG] 00:54:31:10 FM9/(9910:9912): Se pide linea 5 para escriptorio scripts/checkpoint.escriptorio
+[DEBUG] 00:54:31:10 FM9/(9910:9912): Linea: close /equipos/equipo1.txt
+[INFO] 00:54:31:10 FM9/(9910:9912): Terminada operacion
+[DEBUG] 00:54:31:11 FM9/(9910:9912): Liberando memoria para archivo /equipos/equipo1.txt
+[INFO] 00:54:31:11 FM9/(9910:9912): Borrado archivo /equipos/equipo1.txt de memoria
+[INFO] 00:54:31:11 FM9/(9910:9912): Terminada operacion
+[DEBUG] 00:54:31:11 FM9/(9910:9912): Trayendo linea escriptorio
+[DEBUG] 00:54:31:11 FM9/(9910:9912): Se pide linea 6 para escriptorio scripts/checkpoint.escriptorio
+[INFO] 00:54:31:11 FM9/(9910:9912): Es fin de archivo
+[INFO] 00:54:31:11 FM9/(9910:9912): Terminada operacion
+[DEBUG] 00:54:31:11 FM9/(9910:9912): Liberando el dtb 1 de memoria por pasar a EXIT
+[INFO] 00:54:31:11 FM9/(9910:9912): Liberando de la memoria el DTB
+[INFO] 00:54:31:11 FM9/(9910:9912): Borrado archivo xy±µpts/checkpoint.escriptorio de memoria
+[INFO] 00:54:31:11 FM9/(9910:9912): Terminada operacion
+[INFO] 00:56:40:601 FM9/(10056:10056): Utilizando segmentacion paginada
+[DEBUG] 00:56:43:583 FM9/(10056:10057): Handshake de: DAM
+[DEBUG] 00:56:43:583 FM9/(10056:10057): Se agrego a las conexiones DAM
+[DEBUG] 00:56:43:611 FM9/(10056:10062): Escuchando nuevo cliente en 5
+[DEBUG] 00:56:45:173 FM9/(10056:10057): Handshake de: CPU
+[DEBUG] 00:56:45:173 FM9/(10056:10057): Se agrego a las conexiones CPU
+[DEBUG] 00:56:45:183 FM9/(10056:10068): Escuchando nuevo cliente en 7
+[DEBUG] 00:56:58:283 FM9/(10056:10058): Guardando escriptorio 1 en memoria
+[DEBUG] 00:56:58:283 FM9/(10056:10058): Guardando en segmentacion paginada
+[DEBUG] 00:56:58:283 FM9/(10056:10058): Datos guardados
+[INFO] 00:56:58:283 FM9/(10056:10058): Agregado proceso 1 a tabla de procesos
+[DEBUG] 00:56:58:283 FM9/(10056:10058): Enviando 0 al cargar nuevo DTB
+[INFO] 00:56:58:283 FM9/(10056:10058): Terminada operacion
+[DEBUG] 00:57:01:503 FM9/(10056:10058): Trayendo linea escriptorio
+[DEBUG] 00:57:01:503 FM9/(10056:10058): Se pide linea 0 para escriptorio scripts/checkpoint.escriptorio
+[DEBUG] 00:57:01:503 FM9/(10056:10058): Linea: crear /equipos/equipo1.txt 5
+[INFO] 00:57:01:503 FM9/(10056:10058): Terminada operacion
+[DEBUG] 00:57:04:933 FM9/(10056:10058): Trayendo linea escriptorio
+[DEBUG] 00:57:04:933 FM9/(10056:10058): Se pide linea 1 para escriptorio scripts/checkpoint.escriptorio
+[DEBUG] 00:57:04:933 FM9/(10056:10058): Linea: abrir /equipos/equipo1.txt
+[INFO] 00:57:04:933 FM9/(10056:10058): Terminada operacion
+[DEBUG] 00:57:06:154 FM9/(10056:10058): Guardando datos en memoria
+[DEBUG] 00:57:06:154 FM9/(10056:10058): Guardando en segmentacion paginada
+[DEBUG] 00:57:06:154 FM9/(10056:10058): Datos guardados
+[DEBUG] 00:57:06:154 FM9/(10056:10058): Enviando 0 al guardar los datos
+[INFO] 00:57:06:154 FM9/(10056:10058): Terminada operacion
+[DEBUG] 00:57:09:374 FM9/(10056:10058): Trayendo linea escriptorio
+[DEBUG] 00:57:09:374 FM9/(10056:10058): Se pide linea 2 para escriptorio scripts/checkpoint.escriptorio
+[DEBUG] 00:57:09:374 FM9/(10056:10058): Linea: asignar /equipos/equipo1.txt 1 Rasing
+[INFO] 00:57:09:374 FM9/(10056:10058): Terminada operacion
+[DEBUG] 00:57:09:375 FM9/(10056:10058): Asignando datos en linea Nro 1
+[DEBUG] 00:57:09:375 FM9/(10056:10058): Escribiendo: Rasing. En: /equipos/equipo1.txt 
+[DEBUG] 00:57:09:375 FM9/(10056:10058): Asignados datos con exito
+[INFO] 00:57:09:375 FM9/(10056:10058): Terminada operacion
+[DEBUG] 00:57:09:375 FM9/(10056:10058): Trayendo linea escriptorio
+[DEBUG] 00:57:09:375 FM9/(10056:10058): Se pide linea 3 para escriptorio scripts/checkpoint.escriptorio
+[DEBUG] 00:57:09:375 FM9/(10056:10058): Linea: asignar /equipos/equipo1.txt 1 Jugadores: Centurion
+[INFO] 00:57:09:375 FM9/(10056:10058): Terminada operacion
+[DEBUG] 00:57:09:375 FM9/(10056:10058): Asignando datos en linea Nro 1
+[DEBUG] 00:57:09:375 FM9/(10056:10058): Escribiendo: Jugadores: Centurion. En: /equipos/equipo1.txt 
+[DEBUG] 00:57:09:375 FM9/(10056:10058): Asignados datos con exito
+[INFO] 00:57:09:375 FM9/(10056:10058): Terminada operacion
+[DEBUG] 00:57:09:375 FM9/(10056:10058): Trayendo linea escriptorio
+[DEBUG] 00:57:09:375 FM9/(10056:10058): Se pide linea 4 para escriptorio scripts/checkpoint.escriptorio
+[DEBUG] 00:57:09:375 FM9/(10056:10058): Linea: flush /equipos/equipo1.txt
+[INFO] 00:57:09:375 FM9/(10056:10058): Terminada operacion
+[DEBUG] 00:57:09:579 FM9/(10056:10058): Obteniendo datos de memoria
+[INFO] 00:57:09:579 FM9/(10056:10058): Datos enviados: Rasing Jugadores: Centurion
+
+
+
+
+ 
+[INFO] 00:57:09:579 FM9/(10056:10058): Terminada operacion
+[DEBUG] 00:57:12:786 FM9/(10056:10058): Trayendo linea escriptorio
+[DEBUG] 00:57:12:786 FM9/(10056:10058): Se pide linea 5 para escriptorio scripts/checkpoint.escriptorio
+[DEBUG] 00:57:12:786 FM9/(10056:10058): Linea: close /equipos/equipo1.txt
+[INFO] 00:57:12:786 FM9/(10056:10058): Terminada operacion
+[DEBUG] 00:57:12:786 FM9/(10056:10058): Liberando memoria para archivo /equipos/equipo1.txt
+[INFO] 00:57:12:786 FM9/(10056:10058): Borrado archivo /equipos/equipo1.txt de memoria
+[INFO] 00:57:12:786 FM9/(10056:10058): Terminada operacion
+[DEBUG] 00:57:12:786 FM9/(10056:10058): Trayendo linea escriptorio
+[DEBUG] 00:57:12:786 FM9/(10056:10058): Se pide linea 6 para escriptorio scripts/checkpoint.escriptorio
+[INFO] 00:57:12:786 FM9/(10056:10058): Es fin de archivo
+[INFO] 00:57:12:786 FM9/(10056:10058): Terminada operacion
+[DEBUG] 00:57:12:786 FM9/(10056:10058): Liberando el dtb 1 de memoria por pasar a EXIT
+[INFO] 00:57:12:786 FM9/(10056:10058): Liberando de la memoria el DTB
+[INFO] 00:57:12:786 FM9/(10056:10058): Borrado archivo hx¡µpts/checkpoint.escriptorio de memoria
+[INFO] 00:57:12:786 FM9/(10056:10058): Terminada operacion
+[DEBUG] 00:58:06:970 FM9/(10056:10058): Guardando escriptorio 2 en memoria
+[DEBUG] 00:58:06:970 FM9/(10056:10058): Guardando en segmentacion paginada
+[DEBUG] 00:58:06:970 FM9/(10056:10058): Datos guardados
+[INFO] 00:58:06:970 FM9/(10056:10058): Agregado proceso 2 a tabla de procesos
+[DEBUG] 00:58:06:970 FM9/(10056:10058): Enviando 0 al cargar nuevo DTB
+[INFO] 00:58:06:970 FM9/(10056:10058): Terminada operacion
+[DEBUG] 00:58:10:190 FM9/(10056:10058): Trayendo linea escriptorio
+[DEBUG] 00:58:10:190 FM9/(10056:10058): Se pide linea 0 para escriptorio hola
+[DEBUG] 00:58:10:190 FM9/(10056:10058): Linea: concentrar
+[INFO] 00:58:10:190 FM9/(10056:10058): Terminada operacion
+[DEBUG] 00:58:10:190 FM9/(10056:10058): Trayendo linea escriptorio
+[DEBUG] 00:58:10:190 FM9/(10056:10058): Se pide linea 1 para escriptorio hola
+[DEBUG] 00:58:10:190 FM9/(10056:10058): Linea: signal a
+[INFO] 00:58:10:190 FM9/(10056:10058): Terminada operacion
+[DEBUG] 00:58:10:400 FM9/(10056:10058): Trayendo linea escriptorio
+[DEBUG] 00:58:10:400 FM9/(10056:10058): Se pide linea 2 para escriptorio hola
+[DEBUG] 00:58:10:400 FM9/(10056:10058): Linea: signal a
+[INFO] 00:58:10:400 FM9/(10056:10058): Terminada operacion
+[DEBUG] 00:58:10:610 FM9/(10056:10058): Trayendo linea escriptorio
+[DEBUG] 00:58:10:610 FM9/(10056:10058): Se pide linea 3 para escriptorio hola
+[DEBUG] 00:58:10:610 FM9/(10056:10058): Linea: borrar PGB1.bin
+[INFO] 00:58:10:610 FM9/(10056:10058): Terminada operacion
+[INFO] 00:58:11:709 FM9/(10056:10059): Dump de DTB: 2
+[INFO] 00:58:11:709 FM9/(10056:10059): DUMP DUMP!!!!!! de DTB: 2
+[INFO] 00:58:11:709 FM9/(10056:10059): Dump 1
+[INFO] 00:58:11:709 FM9/(10056:10059): El DTB con id 2, tiene 1 archivos abiertos en memoria
+[INFO] 00:58:11:709 FM9/(10056:10059): Dump 2
+[INFO] 00:58:11:709 FM9/(10056:10059): El archivo 1 tiene estos datos guardados: concentrar
+signal a
+signal a
+borrar PGB1.bin
+
+
+[DEBUG] 00:58:14:40 FM9/(10056:10058): Trayendo linea escriptorio
+[DEBUG] 00:58:14:40 FM9/(10056:10058): Se pide linea 4 para escriptorio hola
+[INFO] 00:58:14:40 FM9/(10056:10058): Es fin de archivo
+[INFO] 00:58:14:40 FM9/(10056:10058): Terminada operacion
+[DEBUG] 00:58:14:41 FM9/(10056:10058): Liberando el dtb 2 de memoria por pasar a EXIT
+[INFO] 00:58:14:41 FM9/(10056:10058): Liberando de la memoria el DTB
+[INFO] 00:58:14:41 FM9/(10056:10058): Borrado archivo  de memoria
+[INFO] 00:58:14:41 FM9/(10056:10058): Terminada operacion
+[INFO] 00:58:27:91 FM9/(10056:10059): chauuuuu :)
+[INFO] 01:13:30:472 FM9/(10636:10636): Utilizando segmentacion paginada
+[DEBUG] 01:13:33:13 FM9/(10636:10637): Handshake de: DAM
+[DEBUG] 01:13:33:13 FM9/(10636:10637): Se agrego a las conexiones DAM
+[DEBUG] 01:13:33:24 FM9/(10636:10645): Escuchando nuevo cliente en 5
+[DEBUG] 01:13:35:413 FM9/(10636:10637): Handshake de: CPU
+[DEBUG] 01:13:35:413 FM9/(10636:10637): Se agrego a las conexiones CPU
+[DEBUG] 01:13:35:414 FM9/(10636:10655): Escuchando nuevo cliente en 7
+[DEBUG] 01:13:47:530 FM9/(10636:10638): Guardando escriptorio 1 en memoria
+[DEBUG] 01:13:47:530 FM9/(10636:10638): Guardando en segmentacion paginada
+[DEBUG] 01:13:47:530 FM9/(10636:10638): Datos guardados
+[INFO] 01:13:47:530 FM9/(10636:10638): Agregado proceso 1 a tabla de procesos
+[DEBUG] 01:13:47:530 FM9/(10636:10638): Enviando 0 al cargar nuevo DTB
+[INFO] 01:13:47:530 FM9/(10636:10638): Terminada operacion
+[DEBUG] 01:13:50:733 FM9/(10636:10638): Trayendo linea escriptorio
+[DEBUG] 01:13:50:733 FM9/(10636:10638): Se pide linea 0 para escriptorio scripts/checkpoint.escriptorio
+[DEBUG] 01:13:50:733 FM9/(10636:10638): Linea: crear /equipos/equipo1.txt 5
+[INFO] 01:13:50:733 FM9/(10636:10638): Terminada operacion
+[DEBUG] 01:13:54:159 FM9/(10636:10638): Trayendo linea escriptorio
+[DEBUG] 01:13:54:159 FM9/(10636:10638): Se pide linea 1 para escriptorio scripts/checkpoint.escriptorio
+[DEBUG] 01:13:54:159 FM9/(10636:10638): Linea: abrir /equipos/equipo1.txt
+[INFO] 01:13:54:159 FM9/(10636:10638): Terminada operacion
+[DEBUG] 01:13:55:379 FM9/(10636:10638): Guardando datos en memoria
+[DEBUG] 01:13:55:379 FM9/(10636:10638): Guardando en segmentacion paginada
+[DEBUG] 01:13:55:379 FM9/(10636:10638): Datos guardados
+[DEBUG] 01:13:55:379 FM9/(10636:10638): Enviando 0 al guardar los datos
+[INFO] 01:13:55:379 FM9/(10636:10638): Terminada operacion
+[DEBUG] 01:13:58:598 FM9/(10636:10638): Trayendo linea escriptorio
+[DEBUG] 01:13:58:599 FM9/(10636:10638): Se pide linea 2 para escriptorio scripts/checkpoint.escriptorio
+[DEBUG] 01:13:58:599 FM9/(10636:10638): Linea: asignar /equipos/equipo1.txt 1 Rasing
+[INFO] 01:13:58:599 FM9/(10636:10638): Terminada operacion
+[DEBUG] 01:13:58:599 FM9/(10636:10638): Asignando datos en linea Nro 1
+[DEBUG] 01:13:58:599 FM9/(10636:10638): Escribiendo: Rasing. En: /equipos/equipo1.txt 
+[DEBUG] 01:13:58:599 FM9/(10636:10638): Asignados datos con exito
+[INFO] 01:13:58:599 FM9/(10636:10638): Terminada operacion
+[DEBUG] 01:13:58:599 FM9/(10636:10638): Trayendo linea escriptorio
+[DEBUG] 01:13:58:599 FM9/(10636:10638): Se pide linea 3 para escriptorio scripts/checkpoint.escriptorio
+[DEBUG] 01:13:58:599 FM9/(10636:10638): Linea: asignar /equipos/equipo1.txt 1 Jugadores: Centurion
+[INFO] 01:13:58:599 FM9/(10636:10638): Terminada operacion
+[DEBUG] 01:13:58:599 FM9/(10636:10638): Asignando datos en linea Nro 1
+[DEBUG] 01:13:58:599 FM9/(10636:10638): Escribiendo: Jugadores: Centurion. En: /equipos/equipo1.txt 
+[DEBUG] 01:13:58:599 FM9/(10636:10638): Asignados datos con exito
+[INFO] 01:13:58:599 FM9/(10636:10638): Terminada operacion
+[DEBUG] 01:13:58:599 FM9/(10636:10638): Trayendo linea escriptorio
+[DEBUG] 01:13:58:599 FM9/(10636:10638): Se pide linea 4 para escriptorio scripts/checkpoint.escriptorio
+[DEBUG] 01:13:58:599 FM9/(10636:10638): Linea: flush /equipos/equipo1.txt
+[INFO] 01:13:58:599 FM9/(10636:10638): Terminada operacion
+[DEBUG] 01:13:58:809 FM9/(10636:10638): Obteniendo datos de memoria
+[INFO] 01:13:58:809 FM9/(10636:10638): Datos enviados: Rasing Jugadores: Centurion
+
+
+
+
+ 
+[INFO] 01:13:58:809 FM9/(10636:10638): Terminada operacion
+[DEBUG] 01:14:02:28 FM9/(10636:10638): Trayendo linea escriptorio
+[DEBUG] 01:14:02:28 FM9/(10636:10638): Se pide linea 5 para escriptorio scripts/checkpoint.escriptorio
+[DEBUG] 01:14:02:28 FM9/(10636:10638): Linea: close /equipos/equipo1.txt
+[INFO] 01:14:02:28 FM9/(10636:10638): Terminada operacion
+[DEBUG] 01:14:02:28 FM9/(10636:10638): Liberando memoria para archivo /equipos/equipo1.txt
+[INFO] 01:14:02:28 FM9/(10636:10638): Borrado archivo /equipos/equipo1.txt de memoria
+[INFO] 01:14:02:28 FM9/(10636:10638): Terminada operacion
+[DEBUG] 01:14:02:29 FM9/(10636:10638): Trayendo linea escriptorio
+[DEBUG] 01:14:02:29 FM9/(10636:10638): Se pide linea 6 para escriptorio scripts/checkpoint.escriptorio
+[INFO] 01:14:02:29 FM9/(10636:10638): Es fin de archivo
+[INFO] 01:14:02:29 FM9/(10636:10638): Terminada operacion
+[DEBUG] 01:14:02:29 FM9/(10636:10638): Liberando el dtb 1 de memoria por pasar a EXIT
+[INFO] 01:14:02:29 FM9/(10636:10638): Liberando de la memoria el DTB
+[INFO] 01:14:02:29 FM9/(10636:10638): Borrado archivo hx±µpts/checkpoint.escriptorio de memoria
+[INFO] 01:14:02:29 FM9/(10636:10638): Terminada operacion
+[INFO] 01:16:57:638 FM9/(10812:10812): Utilizando segmentacion paginada
+[DEBUG] 01:16:59:429 FM9/(10812:10813): Handshake de: DAM
+[DEBUG] 01:16:59:429 FM9/(10812:10813): Se agrego a las conexiones DAM
+[DEBUG] 01:16:59:456 FM9/(10812:10817): Escuchando nuevo cliente en 5
+[DEBUG] 01:17:00:819 FM9/(10812:10813): Handshake de: CPU
+[DEBUG] 01:17:00:819 FM9/(10812:10813): Se agrego a las conexiones CPU
+[DEBUG] 01:17:00:827 FM9/(10812:10824): Escuchando nuevo cliente en 7
+[DEBUG] 01:17:15:25 FM9/(10812:10814): Guardando escriptorio 1 en memoria
+[DEBUG] 01:17:15:25 FM9/(10812:10814): Guardando en segmentacion paginada
+[DEBUG] 01:17:15:25 FM9/(10812:10814): Datos guardados
+[INFO] 01:17:15:25 FM9/(10812:10814): Agregado proceso 1 a tabla de procesos
+[DEBUG] 01:17:15:25 FM9/(10812:10814): Enviando 0 al cargar nuevo DTB
+[INFO] 01:17:15:25 FM9/(10812:10814): Terminada operacion
+[DEBUG] 01:17:18:244 FM9/(10812:10814): Trayendo linea escriptorio
+[DEBUG] 01:17:18:244 FM9/(10812:10814): Se pide linea 0 para escriptorio scripts/checkpoint.escriptorio
+[DEBUG] 01:17:18:244 FM9/(10812:10814): Linea: crear /equipos/equipo1.txt 5
+[INFO] 01:17:18:244 FM9/(10812:10814): Terminada operacion
+[DEBUG] 01:17:21:674 FM9/(10812:10814): Trayendo linea escriptorio
+[DEBUG] 01:17:21:674 FM9/(10812:10814): Se pide linea 1 para escriptorio scripts/checkpoint.escriptorio
+[DEBUG] 01:17:21:674 FM9/(10812:10814): Linea: abrir /equipos/equipo1.txt
+[INFO] 01:17:21:674 FM9/(10812:10814): Terminada operacion
+[DEBUG] 01:17:22:885 FM9/(10812:10814): Guardando datos en memoria
+[DEBUG] 01:17:22:885 FM9/(10812:10814): Guardando en segmentacion paginada
+[DEBUG] 01:17:22:885 FM9/(10812:10814): Datos guardados
+[DEBUG] 01:17:22:885 FM9/(10812:10814): Enviando 0 al guardar los datos
+[INFO] 01:17:22:885 FM9/(10812:10814): Terminada operacion
+[DEBUG] 01:17:26:104 FM9/(10812:10814): Trayendo linea escriptorio
+[DEBUG] 01:17:26:104 FM9/(10812:10814): Se pide linea 2 para escriptorio scripts/checkpoint.escriptorio
+[DEBUG] 01:17:26:104 FM9/(10812:10814): Linea: asignar /equipos/equipo1.txt 1 Rasing
+[INFO] 01:17:26:104 FM9/(10812:10814): Terminada operacion
+[DEBUG] 01:17:26:104 FM9/(10812:10814): Asignando datos en linea Nro 1
+[DEBUG] 01:17:26:104 FM9/(10812:10814): Escribiendo: Rasing. En: /equipos/equipo1.txt 
+[DEBUG] 01:17:26:104 FM9/(10812:10814): Asignados datos con exito
+[INFO] 01:17:26:104 FM9/(10812:10814): Terminada operacion
+[DEBUG] 01:17:26:104 FM9/(10812:10814): Trayendo linea escriptorio
+[DEBUG] 01:17:26:104 FM9/(10812:10814): Se pide linea 3 para escriptorio scripts/checkpoint.escriptorio
+[DEBUG] 01:17:26:104 FM9/(10812:10814): Linea: asignar /equipos/equipo1.txt 1 Jugadores: Centurion
+[INFO] 01:17:26:104 FM9/(10812:10814): Terminada operacion
+[DEBUG] 01:17:26:104 FM9/(10812:10814): Asignando datos en linea Nro 1
+[DEBUG] 01:17:26:104 FM9/(10812:10814): Escribiendo: Jugadores: Centurion. En: /equipos/equipo1.txt 
+[DEBUG] 01:17:26:105 FM9/(10812:10814): Asignados datos con exito
+[INFO] 01:17:26:105 FM9/(10812:10814): Terminada operacion
+[DEBUG] 01:17:26:105 FM9/(10812:10814): Trayendo linea escriptorio
+[DEBUG] 01:17:26:105 FM9/(10812:10814): Se pide linea 4 para escriptorio scripts/checkpoint.escriptorio
+[DEBUG] 01:17:26:105 FM9/(10812:10814): Linea: flush /equipos/equipo1.txt
+[INFO] 01:17:26:105 FM9/(10812:10814): Terminada operacion
+[DEBUG] 01:17:26:314 FM9/(10812:10814): Obteniendo datos de memoria
+[INFO] 01:17:26:314 FM9/(10812:10814): Datos enviados: Rasing Jugadores: Centurion
+
+
+
+
+ 
+[INFO] 01:17:26:314 FM9/(10812:10814): Terminada operacion
+[DEBUG] 01:17:29:534 FM9/(10812:10814): Trayendo linea escriptorio
+[DEBUG] 01:17:29:534 FM9/(10812:10814): Se pide linea 5 para escriptorio scripts/checkpoint.escriptorio
+[DEBUG] 01:17:29:534 FM9/(10812:10814): Linea: close /equipos/equipo1.txt
+[INFO] 01:17:29:534 FM9/(10812:10814): Terminada operacion
+[DEBUG] 01:17:29:534 FM9/(10812:10814): Liberando memoria para archivo /equipos/equipo1.txt
+[INFO] 01:17:29:534 FM9/(10812:10814): Borrado archivo /equipos/equipo1.txt de memoria
+[INFO] 01:17:29:534 FM9/(10812:10814): Terminada operacion
+[DEBUG] 01:17:29:534 FM9/(10812:10814): Trayendo linea escriptorio
+[DEBUG] 01:17:29:534 FM9/(10812:10814): Se pide linea 6 para escriptorio scripts/checkpoint.escriptorio
+[INFO] 01:17:29:534 FM9/(10812:10814): Es fin de archivo
+[INFO] 01:17:29:534 FM9/(10812:10814): Terminada operacion
+[DEBUG] 01:17:29:534 FM9/(10812:10814): Liberando el dtb 1 de memoria por pasar a EXIT
+[INFO] 01:17:29:534 FM9/(10812:10814): Liberando de la memoria el DTB
+[INFO] 01:17:29:534 FM9/(10812:10814): Borrado archivo scripts/checkpoint.escriptorio de memoria
+[INFO] 01:17:29:534 FM9/(10812:10814): Terminada operacion

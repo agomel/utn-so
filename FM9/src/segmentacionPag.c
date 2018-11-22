@@ -379,6 +379,9 @@ int asignarDatosSegPag(int IdDTB, char* nombreArchivo, int numeroLinea, char* da
 }
 
 void liberarMemoriaSegPag(int idDTB, char* nombreArchivo){
+	char* nombreA = malloc(strlen(nombreArchivo) + 1);
+	memcpy(nombreA, nombreArchivo, strlen(nombreArchivo) + 1);
+
 	ElementoTablaDTBS* proceso = obtenerProcesoPorIdDTB(idDTB);
 	//Primero libero en la tabla de paginas
 	ElementoTablaSegPag* segmento = obtenerSegmentoPorArchivo(nombreArchivo, proceso->segmentos);
@@ -403,11 +406,13 @@ void liberarMemoriaSegPag(int idDTB, char* nombreArchivo){
 		free(elemento->nombreArchivo);
 		free(elemento);
 	}
+
 	waitMutex(&mutexListaSegmentos);
 	list_remove_and_destroy_by_condition(proceso->segmentos, coincideNombre, destruirElemento);
 	signalMutex(&mutexListaSegmentos);
 
-	log_info(logger, "Borrado archivo %s de memoria", nombreArchivo);
+	log_info(logger, "Borrado archivo %s de memoria", nombreA);
+	free(nombreA);
 }
 
 void liberarDTBDeMemoriaSegPag(int idDTB){
@@ -441,15 +446,13 @@ void dumpSegPag(int idDTB){
 	waitMutex(&mutexListaSegmentos);
 	int cantidadDeSegmentos = proceso->segmentos->elements_count;
 	signalMutex(&mutexListaSegmentos);
-	log_info(logger, "Dump 1", idDTB);
 	log_info(logger, "El DTB con id %d, tiene %d archivos abiertos en memoria", idDTB, cantidadDeSegmentos);
 	for (int i = 0; i < cantidadDeSegmentos; ++i) {
-		log_info(logger, "Dump 2", idDTB);
 		waitMutex(&mutexListaSegmentos);
 		ElementoTablaSegPag* segmento = list_get(proceso->segmentos, i);
 		signalMutex(&mutexListaSegmentos);
 		respuestaDeObtencionDeMemoria* respuesta = obtenerDatosSegPag(idDTB, segmento->nombreArchivo);
-		log_info(logger, "El archivo %d tiene estos datos guardados: %s", (i+1), respuesta->datos);
+		log_info(logger, "El archivo %d tiene estos datos guardados: \n %s", (i+1), respuesta->datos);
 		freeRespuestaObtencion(respuesta);
 	}
 }
