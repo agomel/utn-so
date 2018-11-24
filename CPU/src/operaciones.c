@@ -75,6 +75,7 @@ int wait(char* lineaEjecutando, DTB* dtbRecibido){
 	char seguirConEjecucion = deserializarChar(socketSAFA);
 	free(recursoRecibido);
 	if(seguirConEjecucion == LIBERAR_DTB_DE_EJECUCION){
+		bloquearDTB(dtbRecibido);
 		return 1;
 	}else{
 		return 0;
@@ -88,6 +89,7 @@ int signalion(char* lineaEjecutando, DTB* dtbRecibido){
 	char seguirConEjecucion = deserializarChar(socketSAFA);
 	free(recursoRecibido);
 	if(seguirConEjecucion == LIBERAR_DTB_DE_EJECUCION){
+		bloquearDTB(dtbRecibido);
 		return 1;
 	}else{
 		return 0;
