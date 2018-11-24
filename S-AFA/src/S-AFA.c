@@ -160,6 +160,14 @@ void entenderMensaje(int emisor, char header){
 			terminarOperacionDeCPU(emisor, dtb);
 			break;
 
+		case PASAR_A_EXIT_POR_ERROR:
+			log_info(logger, "Recibi pasar a EXIT");
+			dtb = deserializarDTB(emisor);
+			error = deserializarInt(emisor);
+			manejarErrores(dtb->id, dtb->escriptorio, error);
+			terminarOperacionDeCPU(emisor, dtb);
+			break;
+
 		case TERMINO_QUANTUM:
 			log_info(logger, "Recibi termino quantum");
 			dtb = deserializarDTB(emisor);

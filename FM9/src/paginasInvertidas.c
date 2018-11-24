@@ -52,8 +52,8 @@ respuestaDeObtencionDeMemoria* obtenerDatosInvertida(int idDTB, char* nombreArch
 		memcpy(respuesta->datos, archivo, strlen(archivo) + 1);
 		return respuesta;
 	}else{
-		log_error(logger, "El archivo %s no se encuentra abierto", nombreArchivo);
-		return 534354; //ERROR
+		log_error(logger, "Error buscando archivo %s", nombreArchivo);
+		return FALLO_DE_SEGMENTO_MEMORIA; //ERROR
 	}
 
 }
@@ -99,17 +99,17 @@ int asignarDatosInvertida(int idDTB, char* nombreArchivo, int numeroLinea, char*
 		}else{
 			freeLineasBasura(lineaSinBasura, lineaConBasura);
 			free(lineaPosta);
-			if(cantidadLineas - 1 == numeroLinea){
-				log_error(logger, "No se puede escribir en la ultima linea del archivo.");
-				return 2000; //ERROR
-			}else{
-				log_error(logger, "No hay suficiente espacio en la linea %d del archivo %s", (numeroLinea+1), nombreArchivo);
-				return 20002; //ERROR
-			}
+			log_error(logger, "No hay suficiente espacio en la linea %d del archivo %s", (numeroLinea+1), nombreArchivo);
+			return ESPACIO_INSUFICIENTE_EN_FM9; //ERROR
 		}
 	}else {
-		log_error(logger, "El archivo no posee la linea %d", numeroLinea + 1);
-		return 30000; //ERROR
+		if(cantidadLineas - 1 == numeroLinea){
+			log_error(logger, "No se puede escribir en la ultima linea del archivo");
+		}else{
+			log_error(logger, "El archivo no posee la linea %d", numeroLinea + 1);
+		}
+
+		return FALLO_DE_SEGMENTO_MEMORIA; //ERROR
 	}
 }
 
@@ -203,28 +203,34 @@ void liberarDTBDeMemoriaInvertida(int idDTB){
 
 respuestaDeObtencionDeMemoria* obtenerLineaInvertida(int idDTB, char* nombreArchivo, int numeroLinea){
 	respuestaDeObtencionDeMemoria* respuesta = malloc(sizeof(respuestaDeObtencionDeMemoria));
-	t_list* marcosConEseArchivo = filtrarPorDTBYArchivo(idDTB, nombreArchivo);
+	int cantLineas = cantidadDeLineasArchivo(idDTB, nombreArchivo);
 
-	int paginaDondeSeEncuentraLaLinea = numeroLinea / tamanioPagina;
-	int lineaDentroDeLaPagina = numeroLinea % tamanioPagina;
-	ElementoTablaInvertida* pagina = list_get(marcosConEseArchivo, paginaDondeSeEncuentraLaLinea);
-	int desplazamientoPagina = pagina->marco * tamanioPagina * tamanioLinea; //Porque el tamanioPagina esta en lineas
-	int desplazamientoLinea = lineaDentroDeLaPagina * tamanioLinea;
-	char* lineaConBasura = asignarMemoria(tamanioLinea);
-	memcpy(lineaConBasura, storage + desplazamientoPagina + desplazamientoLinea, tamanioLinea);
-	if(lineaConBasura[0]=='\n'){ //FIN DE ARCHIVO
-		respuesta->pudoObtener = 3;
-		free(lineaConBasura);
+	if(numeroLinea < cantLineas - 1){
+		t_list* marcosConEseArchivo = filtrarPorDTBYArchivo(idDTB, nombreArchivo);
+		int paginaDondeSeEncuentraLaLinea = numeroLinea / tamanioPagina;
+		int lineaDentroDeLaPagina = numeroLinea % tamanioPagina;
+		ElementoTablaInvertida* pagina = list_get(marcosConEseArchivo, paginaDondeSeEncuentraLaLinea);
+		int desplazamientoPagina = pagina->marco * tamanioPagina * tamanioLinea; //Porque el tamanioPagina esta en lineas
+		int desplazamientoLinea = lineaDentroDeLaPagina * tamanioLinea;
+		char* lineaConBasura = asignarMemoria(tamanioLinea);
+		memcpy(lineaConBasura, storage + desplazamientoPagina + desplazamientoLinea, tamanioLinea);
+		if(lineaConBasura[0]=='\n'){ //FIN DE ARCHIVO
+			respuesta->pudoObtener = 3;
+			free(lineaConBasura);
+		}else{
+			char** lineaSinBasura = string_split(lineaConBasura, "\n");
+			log_debug(logger, "Linea: %s", lineaSinBasura[0]);
+			respuesta->datos = string_new();
+			respuesta->pudoObtener = 0;
+			string_append(&respuesta->datos, lineaSinBasura[0]);
+			freeLineasBasura(lineaSinBasura, lineaConBasura);
+		}
+
+		list_destroy(marcosConEseArchivo);
 	}else{
-		char** lineaSinBasura = string_split(lineaConBasura, "\n");
-		log_debug(logger, "Linea: %s", lineaSinBasura[0]);
-		respuesta->datos = string_new();
-		respuesta->pudoObtener = 0;
-		string_append(&respuesta->datos, lineaSinBasura[0]);
-		freeLineasBasura(lineaSinBasura, lineaConBasura);
+		log_error(logger, "Error: El archivo no posee la linea %d", numeroLinea);
+		respuesta->pudoObtener = FALLO_DE_SEGMENTO_MEMORIA;
 	}
-
-	list_destroy(marcosConEseArchivo);
 	return respuesta;
 }
 
@@ -265,7 +271,7 @@ RespuestaGuardado* guardarDatosInvertida(int idDTB, char* datos, char* nombreArc
 		char* textoAGuardar;
 		int marcoAUtilizar = obtenerMarcoLibreInvertida();
 		if(marcoAUtilizar == -1)
-			respuesta->pudoGuardar = 10002; //ERROR NO HAY MARCOS LIBRES
+			respuesta->pudoGuardar = ESPACIO_INSUFICIENTE_EN_FM9; //ERROR NO HAY MARCOS LIBRES
 		else
 			respuesta->pudoGuardar = 0; //No hay error
 

@@ -163,9 +163,8 @@ void entenderMensaje(int emisor, char header){
 					free(respuesta); //Porque no hay que hacer el free de respuesta->datos
 
 				}else{
-					log_error(logger, "Error al obtener linea");
-					char* rta = malloc(2);
-					memcpy(rta, "v", 1);
+					char* rta = string_new();
+					string_append(&rta, "u"); //Error o acceso invalido
 					enviarYSerializarStringSinHeader(emisor, rta);
 					free(rta);
 					free(respuesta); //Porque no hay que hacer el free de respuesta->datos
