@@ -4,11 +4,11 @@ void planificadorALargoPlazo() {
 	int a = 1;
 	while (a) {
 		waitSem(&semCantidadEnNew);
-		waitSem(&bloqueadoDummy);
 		log_info(logger, "Hay procesos en la cola new");
 
 		DTB* dtb = obtenerPrimerDTBEnNew();
 
+		waitSem(&semDummy);
 		log_info(logger, "Cargando Dummy para dtb con scriptorio %s", dtb->escriptorio);
 
 		cargarDummy(*dtb);

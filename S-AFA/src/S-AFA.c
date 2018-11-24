@@ -230,7 +230,8 @@ void inicializarSAFA(){
 	recursos = dictionary_create();
 	inicializarMutex(&mutexEsperandoRecursos);
 	esperandoRecursos = list_create();
-	inicializarSem(&bloqueadoDummy, 1);
+	inicializarSem(&semDummy, 1);
+	inicializarMutex(&mutexDummy);
 }
 void crearSelect(int servidor){
 	Select* select = asignarMemoria(sizeof(Select));

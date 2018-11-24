@@ -133,9 +133,11 @@ DTB* removerDTBPorIndice(int indice){
 }
 
 void cambiarEstadoDummy(char estado){
+	waitMutex(&mutexDummy);
 	DTB* dummy = obtenerDummyDeColaRemoviendolo();
 	dummy->estado = estado;
 	agregarDTBALista(dummy);
+	signalMutex(&mutexDummy);
 }
 int dummyCargado(){
 	bool esDummy(DTB* dtb){
@@ -149,8 +151,7 @@ int dummyCargado(){
 
 void cambiarEstadoDummyCargandolo(DTB* dummy){
 	if(dummyCargado()){
-		DTB* viejoDummy = obtenerDummyDeColaRemoviendolo();
-		freeDTBSAFA(viejoDummy);
+		obtenerDummyDeColaRemoviendolo();
 	}
 	agregarDTBALista(dummy);
 }

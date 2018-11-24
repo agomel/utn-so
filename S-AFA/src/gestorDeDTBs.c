@@ -284,16 +284,15 @@ int verificarSiExisteRecurso(char* recurso){
 char asignarRecurso(int idDTB, char* recurso){
 	verificarSiExisteRecurso(recurso);
 	waitMutex(&mutexRecursos);
-	int cant = dictionary_get(recursos, recurso);
+	int cant = dictionary_remove(recursos, recurso);
 	signalMutex(&mutexRecursos);
 	if(cant > 0){
-		log_info(logger, "WAIT - la cantidad de resursos para el recurso %s es %d", recurso, cant);
 		cant--;
-		//Borrara el anterios? como le cambio el valor si no es un puntero?
+		log_info(logger, "WAIT - la cantidad de resursos para el recurso %s es %d", recurso, cant);
 		waitMutex(&mutexRecursos);
 		dictionary_put(recursos, recurso, cant);
 		signalMutex(&mutexRecursos);
-		log_error(logger, "WAIT  - Le di el recurso al dtb %d", idDTB);
+		log_info(logger, "WAIT  - Le di el recurso al dtb %d", idDTB);
 		return CONTINUAR_CON_EJECUCION;
 	}else{
 		waitMutex(&mutexEsperandoRecursos);
