@@ -4,12 +4,10 @@ void planificadorALargoPlazo() {
 	int a = 1;
 	while (a) {
 		waitSem(&semCantidadEnNew);
-		log_info(logger, "Hay procesos en la cola new");
 
 		DTB* dtb = obtenerPrimerDTBEnNew();
 
 		waitSem(&semDummy);
-		log_info(logger, "Cargando Dummy para dtb con scriptorio %s", dtb->escriptorio);
 
 		cargarDummy(*dtb);
 
@@ -56,18 +54,14 @@ void pasarDTBAExit(int idDTB){
 	DTB* dtb = obtenerDTBDeCola(idDTB);
 	if(!dtb){
 		log_error(logger,"NO existe ese dtb");
-	}else if(dtb->estado == EXIT){
-		log_error(logger, "El DTB: %d ya se encontraba en EXIT", idDTB);
-	}else{
+	}else if(dtb->estado != EXIT){
 		cambiarEstado(idDTB, EXIT);
 		finalizarHistorialDeListaExit(idDTB);
 		signalSem(&gradoMultiprogramacion);
 	}
 }
 void pasarDTBAExitGuardandoNuevo(DTB* dtb) {
-	if(dtb->estado == EXIT){
-			log_info(logger, "El DTB: %d ya se encontraba en EXIT", dtb->id);
-	}else{
+	if(dtb->estado != EXIT){
 		cambiarEstadoGuardandoNuevoDTB(dtb, EXIT);
 		finalizarHistorialDeListaExit(dtb->id);
 		signalSem(&gradoMultiprogramacion);

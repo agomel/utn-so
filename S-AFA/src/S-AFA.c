@@ -12,7 +12,6 @@
 int identificarse(int emisor, char header){
 	if(header == IDENTIFICARSE){
 		char identificado = deserializarChar(emisor);
-		log_debug(logger, "Handshake de: %s", traducirModulo(identificado));
 		switch(identificado){
 			case CPU:
 				conectadoCPU = 1;
@@ -161,7 +160,7 @@ void entenderMensaje(int emisor, char header){
 			break;
 
 		case PASAR_A_EXIT_POR_ERROR:
-			log_info(logger, "Recibi pasar a EXIT");
+			log_info(logger, "Recibi pasar a EXIT por un error :(");
 			dtb = deserializarDTB(emisor);
 			error = deserializarInt(emisor);
 			manejarErrores(dtb->id, dtb->escriptorio, error);
