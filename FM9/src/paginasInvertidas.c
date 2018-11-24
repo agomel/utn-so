@@ -205,6 +205,9 @@ respuestaDeObtencionDeMemoria* obtenerLineaInvertida(int idDTB, char* nombreArch
 	respuestaDeObtencionDeMemoria* respuesta = malloc(sizeof(respuestaDeObtencionDeMemoria));
 	int cantLineas = cantidadDeLineasArchivo(idDTB, nombreArchivo);
 
+	if(numeroLinea == cantLineas -1)
+		respuesta->pudoObtener = 3;
+
 	if(numeroLinea < cantLineas - 1){
 		t_list* marcosConEseArchivo = filtrarPorDTBYArchivo(idDTB, nombreArchivo);
 		int paginaDondeSeEncuentraLaLinea = numeroLinea / tamanioPagina;
@@ -227,7 +230,7 @@ respuestaDeObtencionDeMemoria* obtenerLineaInvertida(int idDTB, char* nombreArch
 		}
 
 		list_destroy(marcosConEseArchivo);
-	}else{
+	}else if(numeroLinea != cantLineas -1){
 		log_error(logger, "Error: El archivo no posee la linea %d", numeroLinea);
 		respuesta->pudoObtener = FALLO_DE_SEGMENTO_MEMORIA;
 	}

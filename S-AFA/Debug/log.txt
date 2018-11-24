@@ -2268,3 +2268,74 @@
 [INFO] 19:04:38:354 SAFA/(32694:32696): Recibi pasar a EXIT
 [INFO] 19:04:38:354 SAFA/(32694:32696): Pasado a EXIT dtb con id: 1, escriptorio: scripts/checkpoint.escriptorio, quantum: -1
 [INFO] 19:04:38:355 SAFA/(32694:32696): Terminada operacion
+[INFO] 19:12:15:400 SAFA/(10696:10696): Algoritmo elegido VRR
+[DEBUG] 19:12:22:237 SAFA/(10696:10697): Se agrego a las conexiones DAM
+[DEBUG] 19:12:22:262 SAFA/(10696:10709): Escuchando nuevo cliente en 5
+[DEBUG] 19:12:24:127 SAFA/(10696:10697): Se agrego a las conexiones CPU
+[DEBUG] 19:12:24:134 SAFA/(10696:10715): Escuchando nuevo cliente en 7
+[INFO] 19:12:33:749 SAFA/(10696:10699): Comando ejecutar
+[DEBUG] 19:12:33:749 SAFA/(10696:10719): Enviando dtb con id: 1
+[INFO] 19:12:34:951 SAFA/(10696:10698): Desbloqueo el DUMMY
+[INFO] 19:12:34:951 SAFA/(10696:10698): Terminada operacion
+[INFO] 19:12:35:152 SAFA/(10696:10698): Recibi Desbloquear DTB
+[INFO] 19:12:35:152 SAFA/(10696:10698): Terminada operacion
+[INFO] 19:12:36:153 SAFA/(10696:10698): Recibi cargado con exito en memoria del DAM
+[INFO] 19:12:36:154 SAFA/(10696:10698): Pasado a READY dtb con id: 1, escriptorio: scripts/checkpoint.escriptorio, quantum: 0
+[INFO] 19:12:36:154 SAFA/(10696:10698): Terminada operacion
+[INFO] 19:12:36:154 SAFA/(10696:10719): Pasado a EXECUTE dtb con id: 1, escriptorio: scripts/checkpoint.escriptorio, quantum: 2
+[DEBUG] 19:12:36:154 SAFA/(10696:10719): Enviando dtb con id: 1
+[INFO] 19:12:37:355 SAFA/(10696:10698): Recibi bloquear DTB
+[INFO] 19:12:37:355 SAFA/(10696:10698): Pasado a BLOCKED dtb con id: 1, escriptorio: scripts/checkpoint.escriptorio, quantum: 2
+[INFO] 19:12:37:355 SAFA/(10696:10698): Terminada operacion
+[INFO] 19:12:37:556 SAFA/(10696:10698): Recibi un error
+[INFO] 19:12:37:556 SAFA/(10696:10698): Pasado a EXIT dtb con id: 1, escriptorio: scripts/checkpoint.escriptorio, quantum: 2
+[ERROR] 19:12:37:556 SAFA/(10696:10698): Archivo ya existente: /equipos/equipo1.txt
+[INFO] 19:12:37:556 SAFA/(10696:10698): Terminada operacion
+[INFO] 19:14:22:236 SAFA/(10760:10760): Algoritmo elegido VRR
+[DEBUG] 19:14:27:307 SAFA/(10760:10761): Se agrego a las conexiones DAM
+[DEBUG] 19:14:27:316 SAFA/(10760:10774): Escuchando nuevo cliente en 5
+[DEBUG] 19:14:29:47 SAFA/(10760:10761): Se agrego a las conexiones CPU
+[DEBUG] 19:14:29:55 SAFA/(10760:10779): Escuchando nuevo cliente en 7
+[INFO] 19:14:40:742 SAFA/(10760:10763): Comando ejecutar
+[DEBUG] 19:14:40:742 SAFA/(10760:10783): Enviando dtb con id: 1
+[INFO] 19:14:41:943 SAFA/(10760:10762): Desbloqueo el DUMMY
+[INFO] 19:14:41:943 SAFA/(10760:10762): Terminada operacion
+[INFO] 19:14:42:144 SAFA/(10760:10762): Recibi Desbloquear DTB
+[INFO] 19:14:42:144 SAFA/(10760:10762): Terminada operacion
+[INFO] 19:14:43:145 SAFA/(10760:10762): Recibi cargado con exito en memoria del DAM
+[INFO] 19:14:43:146 SAFA/(10760:10762): Pasado a READY dtb con id: 1, escriptorio: scripts/checkpoint.escriptorio, quantum: 0
+[INFO] 19:14:43:146 SAFA/(10760:10762): Terminada operacion
+[INFO] 19:14:43:146 SAFA/(10760:10783): Pasado a EXECUTE dtb con id: 1, escriptorio: scripts/checkpoint.escriptorio, quantum: 2
+[DEBUG] 19:14:43:146 SAFA/(10760:10783): Enviando dtb con id: 1
+[INFO] 19:14:44:347 SAFA/(10760:10762): Recibi bloquear DTB
+[INFO] 19:14:44:347 SAFA/(10760:10762): Pasado a BLOCKED dtb con id: 1, escriptorio: scripts/checkpoint.escriptorio, quantum: 2
+[INFO] 19:14:44:348 SAFA/(10760:10762): Terminada operacion
+[INFO] 19:14:45:549 SAFA/(10760:10762): Recibi Creado con exito en MDJ para idDTB 1 y path /equipos/equipo1.txt
+[INFO] 19:14:45:549 SAFA/(10760:10762): Pasado a READY_PRIORIDAD dtb con id: 1, escriptorio: scripts/checkpoint.escriptorio, quantum: 2
+[INFO] 19:14:45:549 SAFA/(10760:10762): Terminada operacion
+[INFO] 19:14:45:549 SAFA/(10760:10783): Pasado a EXECUTE dtb con id: 1, escriptorio: scripts/checkpoint.escriptorio, quantum: 2
+[DEBUG] 19:14:45:549 SAFA/(10760:10783): Enviando dtb con id: 1
+[INFO] 19:14:46:751 SAFA/(10760:10762): Recibi bloquear DTB
+[INFO] 19:14:46:751 SAFA/(10760:10762): Pasado a BLOCKED dtb con id: 1, escriptorio: scripts/checkpoint.escriptorio, quantum: 2
+[INFO] 19:14:46:751 SAFA/(10760:10762): Terminada operacion
+[INFO] 19:14:47:953 SAFA/(10760:10762): Recibi cargado con exito en memoria del DAM
+[INFO] 19:14:47:953 SAFA/(10760:10762): Pasado a READY_PRIORIDAD dtb con id: 1, escriptorio: scripts/checkpoint.escriptorio, quantum: 2
+[INFO] 19:14:47:953 SAFA/(10760:10762): Terminada operacion
+[INFO] 19:14:47:953 SAFA/(10760:10783): Pasado a EXECUTE dtb con id: 1, escriptorio: scripts/checkpoint.escriptorio, quantum: 2
+[DEBUG] 19:14:47:953 SAFA/(10760:10783): Enviando dtb con id: 1
+[INFO] 19:14:49:156 SAFA/(10760:10762): Recibi termino quantum
+[INFO] 19:14:49:157 SAFA/(10760:10762): Pasado a READY dtb con id: 1, escriptorio: scripts/checkpoint.escriptorio, quantum: 0
+[INFO] 19:14:49:157 SAFA/(10760:10762): Terminada operacion
+[INFO] 19:14:49:157 SAFA/(10760:10783): Pasado a EXECUTE dtb con id: 1, escriptorio: scripts/checkpoint.escriptorio, quantum: 2
+[DEBUG] 19:14:49:157 SAFA/(10760:10783): Enviando dtb con id: 1
+[INFO] 19:14:50:359 SAFA/(10760:10762): Recibi bloquear DTB
+[INFO] 19:14:50:359 SAFA/(10760:10762): Pasado a BLOCKED dtb con id: 1, escriptorio: scripts/checkpoint.escriptorio, quantum: 2
+[INFO] 19:14:50:359 SAFA/(10760:10762): Terminada operacion
+[INFO] 19:14:51:566 SAFA/(10760:10762): Recibi Guardado con exito en MDJ para idDTB 1 y path /equipos/equipo1.txt
+[INFO] 19:14:51:566 SAFA/(10760:10762): Pasado a READY_PRIORIDAD dtb con id: 1, escriptorio: scripts/checkpoint.escriptorio, quantum: 2
+[INFO] 19:14:51:567 SAFA/(10760:10762): Terminada operacion
+[INFO] 19:14:51:567 SAFA/(10760:10783): Pasado a EXECUTE dtb con id: 1, escriptorio: scripts/checkpoint.escriptorio, quantum: 2
+[DEBUG] 19:14:51:567 SAFA/(10760:10783): Enviando dtb con id: 1
+[INFO] 19:14:52:769 SAFA/(10760:10762): Recibi pasar a EXIT
+[INFO] 19:14:52:769 SAFA/(10760:10762): Pasado a EXIT dtb con id: 1, escriptorio: scripts/checkpoint.escriptorio, quantum: 0
+[INFO] 19:14:52:769 SAFA/(10760:10762): Terminada operacion
