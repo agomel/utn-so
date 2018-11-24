@@ -74,11 +74,6 @@ void entenderMensaje(int emisor, char header){
 	Historial* historial;
 	usleep(retardo*100);//milisegundos
 	switch(header){
-		case MANDAR_TEXTO:
-			//TODO esta operacion es basura, es para probar a serializacion y deserializacion
-			deserializarString(emisor);
-			break;
-
 		case CARGADO_CON_EXITO_EN_MEMORIA:{
 			log_info(logger, "Recibi cargado con exito en memoria del DAM");
 			idDTB = deserializarInt(emisor);
