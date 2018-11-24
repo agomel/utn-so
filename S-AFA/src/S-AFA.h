@@ -17,9 +17,7 @@
 #include <signal.h>
 
 int socketDAM;
-pthread_mutex_t mutexDummy;
 
-sem_t bloqueadoDummy;
 int socketDAM;
 int conectadoCPU;
 int conectadoDAM;
@@ -37,6 +35,10 @@ t_config* configuracion;
 
 t_list* esperandoRecursos;
 pthread_mutex_t mutexEsperandoRecursos;
+
+
+pthread_mutex_t mutexDummy;
+sem_t semDummy;
 
 enum ESTADOSAFA{
 	CORRUPTO = 'c', OPERATIVO = 'a'
