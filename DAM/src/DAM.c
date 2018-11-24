@@ -48,11 +48,17 @@ void entenderMensaje(int emisor, char header){
 			pedirDatosAFM9(idDTB, path);
 			int tamanioArchivo = deserializarInt(socketFM9);
 			char* datos = recibirFlushFM9(tamanioArchivo);
-			int guardarDatos = guardarDatosEnMDJ(datos, path);
-			if(guardarDatos != 0){
-				enviarError(idDTB, path, guardarDatos);
+			int validarArchivo = validarArchivoMDJ(path);
+			if(validarArchivo != 0){
+				printf("Entro al error de validar archivo, valor: %d\n", validarArchivo);
+				enviarError(idDTB, path, validarArchivo);
 			}else{
-				notificarASafaExito(GUARDADO_CON_EXITO_EN_MDJ,idDTB, path);
+				int guardarDatos = guardarDatosEnMDJ(datos, path);
+				if(guardarDatos != 0){
+					enviarError(idDTB, path, guardarDatos);
+				}else{
+					notificarASafaExito(GUARDADO_CON_EXITO_EN_MDJ,idDTB, path);
+				}
 			}
 			free(datos);
 			break;
@@ -72,11 +78,17 @@ void entenderMensaje(int emisor, char header){
 
 		case BORRAR_ARCHIVO: {
 			log_debug(logger, "borrar archivo %s", path);
-			int borrarArchivo = borrarArchivoEnMDJ(path);
-			if(borrarArchivo != 0){
-				enviarError(idDTB, path, borrarArchivo);
+			int validarArchivo = validarArchivoMDJ(path);
+			if(validarArchivo != 0){
+				printf("Entro al error de validar archivo, valor: %d\n", validarArchivo);
+				enviarError(idDTB, path, validarArchivo);
 			}else{
-				notificarASafaExito(BORRADO_CON_EXITO_EN_MDJ,idDTB, path);
+				int borrarArchivo = borrarArchivoEnMDJ(path);
+				if(borrarArchivo != 0){
+					enviarError(idDTB, path, borrarArchivo);
+				}else{
+					notificarASafaExito(BORRADO_CON_EXITO_EN_MDJ,idDTB, path);
+				}
 			}
 			break;
 		}
@@ -96,6 +108,7 @@ void entenderMensaje(int emisor, char header){
 			break;
 		}
 	}
+	free(path);
 }
 
 int identificarse(int emisor, char header){

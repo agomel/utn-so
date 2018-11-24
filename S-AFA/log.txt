@@ -348,3 +348,57 @@
 [INFO] 13:59:34:781 SAFA/(9098:9110): Recibi cargado con exito en memoria del DAM
 [INFO] 13:59:40:622 SAFA/(9098:9124): Hay procesos en la cola new
 [INFO] 13:59:40:622 SAFA/(9098:9124): Cargando Dummy para dtb con scriptorio chau
+[INFO] 17:41:32:814 SAFA/(28496:28496): Algoritmo elegido FIFO
+[DEBUG] 17:41:48:135 SAFA/(28496:28511): Handshake de: DAM
+[DEBUG] 17:41:48:135 SAFA/(28496:28511): Se agrego a las conexiones DAM
+[DEBUG] 17:41:48:166 SAFA/(28496:28522): Escuchando nuevo cliente en 5
+[DEBUG] 17:41:49:802 SAFA/(28496:28511): Handshake de: CPU
+[DEBUG] 17:41:49:803 SAFA/(28496:28511): Se agrego a las conexiones CPU
+[DEBUG] 17:41:49:825 SAFA/(28496:28529): Escuchando nuevo cliente en 6
+[INFO] 17:41:53:961 SAFA/(28496:28513): Comando ejecutar
+[INFO] 17:41:53:961 SAFA/(28496:28531): Hay procesos en la cola new
+[INFO] 17:41:53:961 SAFA/(28496:28531): Cargando Dummy para dtb con scriptorio hola
+[INFO] 17:42:05:268 SAFA/(28496:28513): Comando ejecutar
+[INFO] 17:42:05:268 SAFA/(28496:28513): Comando ejecutar
+[INFO] 17:42:05:268 SAFA/(28496:28513): Comando ejecutar
+[INFO] 17:42:05:269 SAFA/(28496:28531): Hay procesos en la cola new
+[INFO] 17:42:05:269 SAFA/(28496:28532): Pasado Dummy a ejecutar con escriptorio hola
+[DEBUG] 17:42:05:269 SAFA/(28496:28532): enviando a socket 6 header i
+[DEBUG] 17:42:05:269 SAFA/(28496:28532): Enviando dtb con id: 1
+[INFO] 17:42:08:478 SAFA/(28496:28512): Desbloqueo el DUMMY
+[INFO] 17:42:08:479 SAFA/(28496:28512): Terminada operacion
+[INFO] 17:42:08:680 SAFA/(28496:28512): Recibi Desbloquear DTB
+[INFO] 17:42:08:680 SAFA/(28496:28531): Cargando Dummy para dtb con scriptorio chau
+[INFO] 17:42:08:680 SAFA/(28496:28512): Terminada operacion
+[INFO] 17:42:10:377 SAFA/(28496:28531): Hay procesos en la cola new
+[INFO] 17:42:10:378 SAFA/(28496:28532): Pasado Dummy a ejecutar con escriptorio chau
+[DEBUG] 17:42:10:378 SAFA/(28496:28532): enviando a socket 6 header i
+[DEBUG] 17:42:10:378 SAFA/(28496:28532): Enviando dtb con id: 2
+[INFO] 17:42:10:576 SAFA/(28496:28512): Recibi cargado con exito en memoria del DAM
+[INFO] 17:42:10:576 SAFA/(28496:28512): Pasado a READY dtb con id: 1, escriptorio: hola, quantum: 0
+[INFO] 17:42:10:576 SAFA/(28496:28512): Terminada operacion
+[INFO] 17:42:13:579 SAFA/(28496:28512): Desbloqueo el DUMMY
+[INFO] 17:42:13:580 SAFA/(28496:28512): Terminada operacion
+[INFO] 17:42:13:783 SAFA/(28496:28512): Recibi Desbloquear DTB
+[INFO] 17:42:13:784 SAFA/(28496:28531): Cargando Dummy para dtb con scriptorio bloqueate
+[INFO] 17:42:13:784 SAFA/(28496:28512): Terminada operacion
+[INFO] 17:42:13:784 SAFA/(28496:28532): Pasado a EXECUTE dtb con id: 1, escriptorio: hola, quantum: -1
+[DEBUG] 17:42:13:787 SAFA/(28496:28532): enviando a socket 6 header i
+[DEBUG] 17:42:13:787 SAFA/(28496:28532): Enviando dtb con id: 1
+[INFO] 17:42:15:340 SAFA/(28496:28531): Hay procesos en la cola new
+[INFO] 17:42:15:539 SAFA/(28496:28512): Recibi cargado con exito en memoria del DAM
+[INFO] 17:42:15:539 SAFA/(28496:28512): Pasado a READY dtb con id: 2, escriptorio: chau, quantum: 0
+[INFO] 17:42:15:539 SAFA/(28496:28512): Terminada operacion
+[INFO] 17:42:16:989 SAFA/(28496:28512): Recibi liberar recurso
+[INFO] 17:42:16:989 SAFA/(28496:28512): Creado el recurso a, no existia
+[INFO] 17:42:16:989 SAFA/(28496:28512): SIGNAL - Se libero el recurso que no estaba esperando nadie. Ahora del recurso a hay 2
+[INFO] 17:42:16:989 SAFA/(28496:28512): Terminada operacion
+[INFO] 17:42:17:190 SAFA/(28496:28512): Recibi liberar recurso
+[INFO] 17:42:17:191 SAFA/(28496:28512): SIGNAL - Se libero el recurso que no estaba esperando nadie. Ahora del recurso a hay 3
+[INFO] 17:42:17:193 SAFA/(28496:28512): Terminada operacion
+[INFO] 17:42:17:394 SAFA/(28496:28512): Recibi bloquear DTB
+[INFO] 17:42:17:396 SAFA/(28496:28512): Pasado a BLOCKED dtb con id: 1, escriptorio: hola, quantum: -1
+[INFO] 17:42:17:396 SAFA/(28496:28512): Terminada operacion
+[INFO] 17:42:17:396 SAFA/(28496:28532): Pasado Dummy a ejecutar con escriptorio bloqueate
+[DEBUG] 17:42:17:397 SAFA/(28496:28532): enviando a socket 6 header i
+[DEBUG] 17:42:17:397 SAFA/(28496:28532): Enviando dtb con id: 3

@@ -58,7 +58,7 @@ int crearArchivoEnMDJ(int destino, char* path, int cantidadDeLineas){
 	return deserializarInt(socketMDJ);
 }
 int borrarArchivoEnMDJ(char* path){
-	void* buffer = asignarMemoria(sizeof(char) + sizeof(int));
+	void* buffer = asignarMemoria(sizeof(char) + sizeof(int) + strlen(path) + 1);
 	int desplazamiento = 0;
 	concatenarChar(buffer, &desplazamiento, BORRAR_ARCHIVO);
 	concatenarString(buffer, &desplazamiento, path);

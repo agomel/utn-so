@@ -1,0 +1,224 @@
+[DEBUG] 17:28:02:988 DAM/(27663:27671): Handshake de: CPU
+[DEBUG] 17:28:03:79 DAM/(27663:27678): Escuchando nuevo cliente en 9
+[INFO] 17:28:09:759 DAM/(27663:27672): Ehhh, voy a buscar hola para 1
+[INFO] 17:28:09:783 DAM/(27663:27672): Enviando a MDJ que valide escriptorio hola
+[DEBUG] 17:28:09:803 DAM/(27663:27672): Esperando repuesta validacion de MDJ
+[DEBUG] 17:28:09:805 DAM/(27663:27672): Recibida respuesta 0 de MDJ
+[INFO] 17:28:10:818 DAM/(27663:27672): recibi concentrar
+signal a
+signal a
+borrar PGB1.bin
+
+
+[INFO] 17:28:10:852 DAM/(27663:27672): enviando mensaje a safa
+[INFO] 17:28:10:869 DAM/(27663:27672): Terminada operacion
+[INFO] 17:28:13:92 DAM/(27663:27672): Ehhh, voy a buscar chau para 2
+[INFO] 17:28:13:92 DAM/(27663:27672): Enviando a MDJ que valide escriptorio chau
+[DEBUG] 17:28:13:93 DAM/(27663:27672): Esperando repuesta validacion de MDJ
+[DEBUG] 17:28:13:93 DAM/(27663:27672): Recibida respuesta 0 de MDJ
+[INFO] 17:28:14:94 DAM/(27663:27672): recibi concentrar
+wait a
+signal a
+
+
+[INFO] 17:28:14:95 DAM/(27663:27672): enviando mensaje a safa
+[INFO] 17:28:14:96 DAM/(27663:27672): Terminada operacion
+[DEBUG] 17:28:16:903 DAM/(27663:27672): borrar archivo PGB1.bin
+[INFO] 17:28:16:904 DAM/(27663:27672): Enviando a MDJ que valide escriptorio PGB1.bin
+[DEBUG] 17:28:16:905 DAM/(27663:27672): Esperando repuesta validacion de MDJ
+[DEBUG] 17:28:16:907 DAM/(27663:27672): Recibida respuesta 0 de MDJ
+[INFO] 17:28:17:915 DAM/(27663:27672): enviando mensaje a safa
+[INFO] 17:28:17:916 DAM/(27663:27672): Terminada operacion
+[INFO] 17:28:20:142 DAM/(27663:27672): Ehhh, voy a buscar chau para 3
+[INFO] 17:28:20:143 DAM/(27663:27672): Enviando a MDJ que valide escriptorio chau
+[DEBUG] 17:28:20:144 DAM/(27663:27672): Esperando repuesta validacion de MDJ
+[DEBUG] 17:28:20:144 DAM/(27663:27672): Recibida respuesta 0 de MDJ
+[INFO] 17:28:21:149 DAM/(27663:27672): recibi concentrar
+wait a
+signal a
+
+
+[INFO] 17:28:21:151 DAM/(27663:27672): enviando mensaje a safa
+[INFO] 17:28:21:151 DAM/(27663:27672): Terminada operacion
+[INFO] 17:28:56:946 DAM/(27663:27672): Ehhh, voy a buscar chau para 4
+[INFO] 17:28:56:947 DAM/(27663:27672): Enviando a MDJ que valide escriptorio chau
+[DEBUG] 17:28:56:947 DAM/(27663:27672): Esperando repuesta validacion de MDJ
+[DEBUG] 17:28:56:948 DAM/(27663:27672): Recibida respuesta 0 de MDJ
+[INFO] 17:28:57:958 DAM/(27663:27672): recibi concentrar
+wait a
+signal a
+
+
+[INFO] 17:28:57:961 DAM/(27663:27672): enviando mensaje a safa
+[INFO] 17:28:57:962 DAM/(27663:27672): Terminada operacion
+[DEBUG] 17:34:22:747 DAM/(27851:27860): Handshake de: CPU
+[DEBUG] 17:34:22:887 DAM/(27851:27868): Escuchando nuevo cliente en 9
+[INFO] 17:34:29:44 DAM/(27851:27861): Ehhh, voy a buscar hola para 1
+[INFO] 17:34:29:55 DAM/(27851:27861): Enviando a MDJ que valide escriptorio hola
+[DEBUG] 17:34:29:72 DAM/(27851:27861): Esperando repuesta validacion de MDJ
+[DEBUG] 17:34:29:74 DAM/(27851:27861): Recibida respuesta 0 de MDJ
+[INFO] 17:34:30:88 DAM/(27851:27861): recibi concentrar
+signal a
+signal a
+borrar PGB1.bin
+
+
+[INFO] 17:34:30:127 DAM/(27851:27861): enviando mensaje a safa
+[INFO] 17:34:30:141 DAM/(27851:27861): Terminada operacion
+[INFO] 17:34:32:370 DAM/(27851:27861): Ehhh, voy a buscar hola para 2
+[INFO] 17:34:32:370 DAM/(27851:27861): Enviando a MDJ que valide escriptorio hola
+[DEBUG] 17:34:32:371 DAM/(27851:27861): Esperando repuesta validacion de MDJ
+[DEBUG] 17:34:32:374 DAM/(27851:27861): Recibida respuesta 0 de MDJ
+[INFO] 17:34:33:372 DAM/(27851:27861): recibi concentrar
+signal a
+signal a
+borrar PGB1.bin
+
+
+[INFO] 17:34:33:374 DAM/(27851:27861): enviando mensaje a safa
+[INFO] 17:34:33:374 DAM/(27851:27861): Terminada operacion
+[DEBUG] 17:34:36:183 DAM/(27851:27861): borrar archivo PGB1.bin
+[INFO] 17:34:36:183 DAM/(27851:27861): Enviando a MDJ que valide escriptorio PGB1.bin
+[DEBUG] 17:34:36:184 DAM/(27851:27861): Esperando repuesta validacion de MDJ
+[DEBUG] 17:34:36:185 DAM/(27851:27861): Recibida respuesta 0 de MDJ
+[INFO] 17:34:37:208 DAM/(27851:27861): enviando mensaje a safa
+[INFO] 17:34:37:210 DAM/(27851:27861): Terminada operacion
+[DEBUG] 17:34:39:826 DAM/(27851:27861): borrar archivo PGB1.bin
+[INFO] 17:34:39:827 DAM/(27851:27861): Enviando a MDJ que valide escriptorio PGB1.bin
+[DEBUG] 17:34:39:828 DAM/(27851:27861): Esperando repuesta validacion de MDJ
+[DEBUG] 17:34:39:838 DAM/(27851:27861): Recibida respuesta 10001 de MDJ
+[INFO] 17:34:39:858 DAM/(27851:27861): Terminada operacion
+[INFO] 17:34:53:599 DAM/(27851:27861): Ehhh, voy a buscar chau para 3
+[INFO] 17:34:53:600 DAM/(27851:27861): Enviando a MDJ que valide escriptorio chau
+[DEBUG] 17:34:53:601 DAM/(27851:27861): Esperando repuesta validacion de MDJ
+[DEBUG] 17:34:53:607 DAM/(27851:27861): Recibida respuesta 0 de MDJ
+[INFO] 17:34:54:609 DAM/(27851:27861): recibi concentrar
+wait a
+signal a
+
+
+[INFO] 17:34:54:610 DAM/(27851:27861): enviando mensaje a safa
+[INFO] 17:34:54:611 DAM/(27851:27861): Terminada operacion
+[INFO] 17:34:57:3 DAM/(27851:27861): Ehhh, voy a buscar pedidor para 4
+[INFO] 17:34:57:3 DAM/(27851:27861): Enviando a MDJ que valide escriptorio pedidor
+[DEBUG] 17:34:57:4 DAM/(27851:27861): Esperando repuesta validacion de MDJ
+[DEBUG] 17:34:57:4 DAM/(27851:27861): Recibida respuesta 0 de MDJ
+[INFO] 17:34:58:21 DAM/(27851:27861): recibi wait a
+wait a
+
+
+[INFO] 17:34:58:23 DAM/(27851:27861): enviando mensaje a safa
+[INFO] 17:34:58:23 DAM/(27851:27861): Terminada operacion
+[INFO] 17:35:04:5 DAM/(27851:27861): Ehhh, voy a buscar bloqueate para 5
+[INFO] 17:35:04:10 DAM/(27851:27861): Enviando a MDJ que valide escriptorio bloqueate
+[DEBUG] 17:35:04:11 DAM/(27851:27861): Esperando repuesta validacion de MDJ
+[DEBUG] 17:35:04:26 DAM/(27851:27861): Recibida respuesta 0 de MDJ
+[INFO] 17:35:05:30 DAM/(27851:27861): recibi wait a
+
+
+[INFO] 17:35:05:32 DAM/(27851:27861): enviando mensaje a safa
+[INFO] 17:35:05:32 DAM/(27851:27861): Terminada operacion
+[INFO] 17:35:24:267 DAM/(27851:27861): Ehhh, voy a buscar bloqueate para 6
+[INFO] 17:35:24:267 DAM/(27851:27861): Enviando a MDJ que valide escriptorio bloqueate
+[DEBUG] 17:35:24:268 DAM/(27851:27861): Esperando repuesta validacion de MDJ
+[DEBUG] 17:35:24:269 DAM/(27851:27861): Recibida respuesta 0 de MDJ
+[INFO] 17:35:25:269 DAM/(27851:27861): recibi wait a
+
+
+[INFO] 17:35:25:270 DAM/(27851:27861): enviando mensaje a safa
+[INFO] 17:35:25:270 DAM/(27851:27861): Terminada operacion
+[INFO] 17:36:10:759 DAM/(27851:27861): Ehhh, voy a buscar bloqueate para 7
+[INFO] 17:36:10:759 DAM/(27851:27861): Enviando a MDJ que valide escriptorio bloqueate
+[DEBUG] 17:36:10:760 DAM/(27851:27861): Esperando repuesta validacion de MDJ
+[DEBUG] 17:36:10:761 DAM/(27851:27861): Recibida respuesta 0 de MDJ
+[INFO] 17:36:11:774 DAM/(27851:27861): recibi wait a
+
+
+[INFO] 17:36:11:775 DAM/(27851:27861): enviando mensaje a safa
+[INFO] 17:36:11:776 DAM/(27851:27861): Terminada operacion
+[INFO] 17:36:29:724 DAM/(27851:27861): Ehhh, voy a buscar bloqueate para 8
+[INFO] 17:36:29:725 DAM/(27851:27861): Enviando a MDJ que valide escriptorio bloqueate
+[DEBUG] 17:36:29:725 DAM/(27851:27861): Esperando repuesta validacion de MDJ
+[DEBUG] 17:36:29:726 DAM/(27851:27861): Recibida respuesta 0 de MDJ
+[INFO] 17:36:30:739 DAM/(27851:27861): recibi wait a
+
+
+[INFO] 17:36:30:740 DAM/(27851:27861): enviando mensaje a safa
+[INFO] 17:36:30:741 DAM/(27851:27861): Terminada operacion
+[INFO] 17:37:01:13 DAM/(27851:27861): Ehhh, voy a buscar bloqueate para 9
+[INFO] 17:37:01:14 DAM/(27851:27861): Enviando a MDJ que valide escriptorio bloqueate
+[DEBUG] 17:37:01:15 DAM/(27851:27861): Esperando repuesta validacion de MDJ
+[DEBUG] 17:37:01:15 DAM/(27851:27861): Recibida respuesta 0 de MDJ
+[INFO] 17:37:02:17 DAM/(27851:27861): recibi wait a
+
+
+[INFO] 17:37:02:18 DAM/(27851:27861): enviando mensaje a safa
+[INFO] 17:37:02:19 DAM/(27851:27861): Terminada operacion
+[DEBUG] 17:44:56:690 DAM/(28635:28649): Handshake de: CPU
+[DEBUG] 17:44:56:845 DAM/(28635:28656): Escuchando nuevo cliente en 9
+[INFO] 17:45:02:976 DAM/(28635:28650): Ehhh, voy a buscar hola para 1
+[INFO] 17:45:03:4 DAM/(28635:28650): Enviando a MDJ que valide escriptorio hola
+[DEBUG] 17:45:03:17 DAM/(28635:28650): Esperando repuesta validacion de MDJ
+[DEBUG] 17:45:03:28 DAM/(28635:28650): Recibida respuesta 0 de MDJ
+[INFO] 17:45:04:54 DAM/(28635:28650): recibi concentrar
+signal a
+signal a
+borrar PGB1.bin
+
+
+[INFO] 17:45:04:103 DAM/(28635:28650): enviando mensaje a safa
+[INFO] 17:45:04:116 DAM/(28635:28650): Terminada operacion
+[INFO] 17:45:06:298 DAM/(28635:28650): Ehhh, voy a buscar chau para 2
+[INFO] 17:45:06:299 DAM/(28635:28650): Enviando a MDJ que valide escriptorio chau
+[DEBUG] 17:45:06:300 DAM/(28635:28650): Esperando repuesta validacion de MDJ
+[DEBUG] 17:45:06:300 DAM/(28635:28650): Recibida respuesta 0 de MDJ
+[INFO] 17:45:07:310 DAM/(28635:28650): recibi concentrar
+wait a
+signal a
+
+
+[INFO] 17:45:07:315 DAM/(28635:28650): enviando mensaje a safa
+[INFO] 17:45:07:316 DAM/(28635:28650): Terminada operacion
+[DEBUG] 17:45:10:105 DAM/(28635:28650): borrar archivo PGB1.bin
+[INFO] 17:45:10:106 DAM/(28635:28650): Enviando a MDJ que valide escriptorio PGB1.bin
+[DEBUG] 17:45:10:107 DAM/(28635:28650): Esperando repuesta validacion de MDJ
+[DEBUG] 17:45:10:107 DAM/(28635:28650): Recibida respuesta 0 de MDJ
+[INFO] 17:45:11:121 DAM/(28635:28650): enviando mensaje a safa
+[INFO] 17:45:11:124 DAM/(28635:28650): Terminada operacion
+[INFO] 17:45:13:351 DAM/(28635:28650): Ehhh, voy a buscar bloqueate para 3
+[INFO] 17:45:13:352 DAM/(28635:28650): Enviando a MDJ que valide escriptorio bloqueate
+[DEBUG] 17:45:13:353 DAM/(28635:28650): Esperando repuesta validacion de MDJ
+[DEBUG] 17:45:13:353 DAM/(28635:28650): Recibida respuesta 0 de MDJ
+[INFO] 17:45:14:367 DAM/(28635:28650): recibi wait a
+
+
+[INFO] 17:45:14:368 DAM/(28635:28650): enviando mensaje a safa
+[INFO] 17:45:14:368 DAM/(28635:28650): Terminada operacion
+[INFO] 17:45:23:562 DAM/(28635:28650): Ehhh, voy a buscar pedidor para 4
+[INFO] 17:45:23:563 DAM/(28635:28650): Enviando a MDJ que valide escriptorio pedidor
+[DEBUG] 17:45:23:564 DAM/(28635:28650): Esperando repuesta validacion de MDJ
+[DEBUG] 17:45:23:564 DAM/(28635:28650): Recibida respuesta 0 de MDJ
+[INFO] 17:45:24:567 DAM/(28635:28650): recibi wait a
+wait a
+
+
+[INFO] 17:45:24:568 DAM/(28635:28650): enviando mensaje a safa
+[INFO] 17:45:24:569 DAM/(28635:28650): Terminada operacion
+[INFO] 17:45:38:82 DAM/(28635:28650): Ehhh, voy a buscar bloqueate para 5
+[INFO] 17:45:38:83 DAM/(28635:28650): Enviando a MDJ que valide escriptorio bloqueate
+[DEBUG] 17:45:38:84 DAM/(28635:28650): Esperando repuesta validacion de MDJ
+[DEBUG] 17:45:38:84 DAM/(28635:28650): Recibida respuesta 0 de MDJ
+[INFO] 17:45:39:85 DAM/(28635:28650): recibi wait a
+
+
+[INFO] 17:45:39:86 DAM/(28635:28650): enviando mensaje a safa
+[INFO] 17:45:39:86 DAM/(28635:28650): Terminada operacion
+[INFO] 17:45:41:480 DAM/(28635:28650): Ehhh, voy a buscar bloqueate para 6
+[INFO] 17:45:41:481 DAM/(28635:28650): Enviando a MDJ que valide escriptorio bloqueate
+[DEBUG] 17:45:41:484 DAM/(28635:28650): Esperando repuesta validacion de MDJ
+[DEBUG] 17:45:41:485 DAM/(28635:28650): Recibida respuesta 0 de MDJ
+[INFO] 17:45:42:485 DAM/(28635:28650): recibi wait a
+
+
+[INFO] 17:45:42:486 DAM/(28635:28650): enviando mensaje a safa
+[INFO] 17:45:42:486 DAM/(28635:28650): Terminada operacion

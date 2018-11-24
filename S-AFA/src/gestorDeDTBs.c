@@ -287,8 +287,8 @@ char asignarRecurso(int idDTB, char* recurso){
 	int cant = dictionary_remove(recursos, recurso);
 	signalMutex(&mutexRecursos);
 	if(cant > 0){
-		cant--;
 		log_info(logger, "WAIT - la cantidad de resursos para el recurso %s es %d", recurso, cant);
+		cant--;
 		waitMutex(&mutexRecursos);
 		dictionary_put(recursos, recurso, cant);
 		signalMutex(&mutexRecursos);
