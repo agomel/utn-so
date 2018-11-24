@@ -265,7 +265,7 @@ RespuestaGuardado* guardarDatosInvertida(int idDTB, char* datos, char* nombreArc
 		char* textoAGuardar;
 		int marcoAUtilizar = obtenerMarcoLibreInvertida();
 		if(marcoAUtilizar == -1)
-			respuesta->pudoGuardar = -1; //ERROR NO HAY MARCOS LIBRES
+			respuesta->pudoGuardar = 10002; //ERROR NO HAY MARCOS LIBRES
 		else
 			respuesta->pudoGuardar = 0; //No hay error
 

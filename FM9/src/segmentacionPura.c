@@ -128,7 +128,7 @@ static RespuestaCargaSegPura* guardarDatosInternaSegPura(char* datos, char* nomb
 		}
 
 	freeLineas(lineas);
-	respuesta->resultado = rompio; //ERROR
+	respuesta->resultado = 10002; //ERROR
 	return respuesta;
 }
 

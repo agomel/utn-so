@@ -139,7 +139,6 @@ RespuestaGuardado* nuevoProcesoSegPag(int idDTB, char* datos, char* nombreArchiv
 		log_error(logger, "No se pudo agregar proceso %d a tabla de procesos", idDTB);
 		respuesta->pudoGuardar = cargaEnMemoria->resultado;
 		log_error(logger, "No se puede escribir en la ultima linea del archivo.");
-		return 2000; //Error que corresponda
 	}
 	return respuesta;
 }
@@ -187,7 +186,7 @@ static RespuestaCargaSegPag* guardarDatosInternaSegPag(char* datos, char* nombre
 			char* textoAGuardar;
 			int posicionMarco = obtenerMarcoLibre();
 			if(posicionMarco == -1)
-				respuesta->resultado = -1; //ERROR NO HAY MARCOS LIBRES
+				respuesta->resultado = 10002; //ERROR NO HAY MARCOS LIBRES
 
 			ElementoTablaPag* elementoPagina = malloc(sizeof(ElementoTablaPag));
 			elementoPagina->idPag = idPagina;
