@@ -1,17 +1,17 @@
 #include "parser.h"
 
 
-char entendiendoLinea(char* lineaEjecutando, DTB* dtbRecibido){
-	//Devuelve 'b' si lo llama al diego para que el safa lo bloquee
-	//sino devuelve 's' para que siga ejecutando el escriptorio
-	//'a' si hay que abortar el G.DT
+int entendiendoLinea(char* lineaEjecutando, DTB* dtbRecibido){
+	//Devuelve 1 si lo llama al diego para que el safa lo bloquee
+	//sino devuelve 0 para que siga ejecutando el escriptorio
+	//el numero de error si hay que abortar el G.DT
 	if(string_starts_with(lineaEjecutando, "abrir")){
 		log_info(logger, "Ejecutando instruccion abrir");
 		return abrir(lineaEjecutando, dtbRecibido);
 
 	}else if(string_starts_with(lineaEjecutando, "concentrar")){
 		log_info(logger, "Ejecutando instruccion concentrar");
-		return 's';
+		return 0;
 
 	}else if(string_starts_with(lineaEjecutando, "asignar")){
 		//Asignar
@@ -38,8 +38,7 @@ char entendiendoLinea(char* lineaEjecutando, DTB* dtbRecibido){
 	}else if(string_starts_with(lineaEjecutando, "borrar")){
 		log_info(logger, "Ejecutando instruccion borrar");
 		return borrar(lineaEjecutando, dtbRecibido);
-	}else{
-		return 'a';
-	}
+	}else
+		log_error(logger, "No deberia haber llegado aca, %s tendria que ser una palabra reservada conocida", lineaEjecutando);
 }
 

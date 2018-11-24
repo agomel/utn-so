@@ -10,7 +10,7 @@ void escuchar(int socketSAFA){
 	while(a){
 		DTB* dtbRecibido;
 		char header = deserializarChar(socketSAFA);
-		char mensajeEntendido = 's';
+		int mensajeEntendido = 0;
 		log_info(logger, "Iniciando retardo de %d........",retardo);
 		usleep(retardo*1000);//Son milisegundos
 		log_info(logger, "Finalizando retardo");

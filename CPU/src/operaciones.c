@@ -8,13 +8,13 @@ void bloquearDTB(DTB* dtbRecibido){
 	char continuar = deserializarChar(socketSAFA);
 	//continuar
 }
-char abrir(char* lineaEjecutando, DTB* dtbRecibido){
+int abrir(char* lineaEjecutando, DTB* dtbRecibido){
 	char* pathRecibido = asignarMemoria(strlen(lineaEjecutando)-5);
 	pathRecibido = string_substring_from(lineaEjecutando, 6);
 	string_append(&pathRecibido, "\0");
 	//Corrobora si ya esta abierto
 	if(listaContiene(dtbRecibido->listaDeArchivos, pathRecibido)){
-		return 's';
+		return 0;
 	}else {
 		bloquearDTB(dtbRecibido);
 		int tamanioPathEscriptorioACargar;
@@ -32,11 +32,11 @@ char abrir(char* lineaEjecutando, DTB* dtbRecibido){
 		enviarMensaje(socketDIEGO, buffer2, tamanioBuffer2);
 		free(buffer2);
 		free(pathRecibido);
-		return 'b';
+		return 1;
 	}
 }
 
-char asignar(char* lineaEjecutando, DTB* dtbRecibido){
+int asignar(char* lineaEjecutando, DTB* dtbRecibido){
 	char* parametros = string_substring_from(lineaEjecutando, 8);
 	char** pathYNumeroLinea= string_n_split(parametros, 3, " ");
 	char* path = pathYNumeroLinea[0];
@@ -59,19 +59,15 @@ char asignar(char* lineaEjecutando, DTB* dtbRecibido){
 		free(buffer);
 
 		int respuestaAsignado = deserializarInt(socketFM9);
-		if(respuestaAsignado == 0){
-			return 's';
-		}else {
-			return 'a';
-		}
+		return respuestaAsignado;
 
 	}else{
 		//No esta abierto ese archivo
 		log_info(logger, "No esta abierto el archivo %s, no se hace asignar y se aborta el dtb", path);
-		return 'a';
+		return EL_ARCHIVO_NO_SE_ENCUENTRA_ABIERTO;
 	}
 }
-char wait(char* lineaEjecutando, DTB* dtbRecibido){
+int wait(char* lineaEjecutando, DTB* dtbRecibido){
 	char* recursoRecibido = asignarMemoria(strlen(lineaEjecutando)-4);
 	recursoRecibido = string_substring_from(lineaEjecutando, 5);
 	enviarYSerializarString(socketSAFA, recursoRecibido, RETENCION_DE_RECURSO);
@@ -79,26 +75,28 @@ char wait(char* lineaEjecutando, DTB* dtbRecibido){
 	char seguirConEjecucion = deserializarChar(socketSAFA);
 	free(recursoRecibido);
 	if(seguirConEjecucion == LIBERAR_DTB_DE_EJECUCION){
-		return 'b';
+		bloquearDTB(dtbRecibido);
+		return 1;
 	}else{
-		return 's';
+		return 0;
 	}
 }
 
-char signalion(char* lineaEjecutando, DTB* dtbRecibido){
+int signalion(char* lineaEjecutando, DTB* dtbRecibido){
 	char* recursoRecibido = asignarMemoria(strlen(lineaEjecutando)-6);
 	recursoRecibido = string_substring_from(lineaEjecutando, 7);
 	enviarYSerializarString(socketSAFA, recursoRecibido, LIBERAR_RECURSO);
 	char seguirConEjecucion = deserializarChar(socketSAFA);
 	free(recursoRecibido);
 	if(seguirConEjecucion == LIBERAR_DTB_DE_EJECUCION){
-		return 'b';
+		bloquearDTB(dtbRecibido);
+		return 1;
 	}else{
-		return 's';
+		return 0;
 	}
 }
 
-char flush(char* lineaEjecutando, DTB* dtbRecibido){
+int flush(char* lineaEjecutando, DTB* dtbRecibido){
 	char* pathRecibido = asignarMemoria(strlen(lineaEjecutando)-5);
 	pathRecibido = string_substring_from(lineaEjecutando, 6);
 	if(listaContiene(dtbRecibido->listaDeArchivos, pathRecibido)){
@@ -115,12 +113,12 @@ char flush(char* lineaEjecutando, DTB* dtbRecibido){
 		enviarMensaje(socketDIEGO, buffer, tamanioBuffer);
 		free(buffer);
 		free(pathRecibido);
-		return 'b';
+		return 1;
 	}else{
 		log_error(logger, "El DTB %d no tiene el archivo %s abierto", dtbRecibido->id, pathRecibido);
 		//No esta abierto ese archivo
 		free(pathRecibido);
-		return 'a';
+		return EL_ARCHIVO_NO_SE_ENCUENTRA_ABIERTO;
 	}
 }
 
@@ -133,7 +131,7 @@ void eliminarArchivo(char* pathRecibido, DTB* dtbRecibido){
 	}
 	list_remove_and_destroy_by_condition(dtbRecibido->listaDeArchivos, coincideNombre, free);
 }
-char cerrar(char* lineaEjecutando, DTB* dtbRecibido){
+int cerrar(char* lineaEjecutando, DTB* dtbRecibido){
 	char* pathRecibido = asignarMemoria(strlen(lineaEjecutando)-5);
 	pathRecibido = string_substring_from(lineaEjecutando, 6);
 	if(listaContiene(dtbRecibido->listaDeArchivos, pathRecibido)){
@@ -152,25 +150,25 @@ char cerrar(char* lineaEjecutando, DTB* dtbRecibido){
 		eliminarArchivo(pathRecibido, dtbRecibido);
 		free(pathRecibido);
 		char seLiberoLamem = deserializarChar(socketFM9);
-		return 's';
+		return 0;
 	}else{
 		//No esta abierto ese archivo
 		free(pathRecibido);
-		return 'a';
+		return EL_ARCHIVO_NO_SE_ENCUENTRA_ABIERTO;
 	}
 }
 
-char crear(char* lineaEjecutando, DTB* dtbRecibido){
+int crear(char* lineaEjecutando, DTB* dtbRecibido){
 	bloquearDTB(dtbRecibido);
 	char* parametros = string_substring_from(lineaEjecutando, 6);
 	char** pathYCantLineas = string_n_split(parametros, 2, " ");
 	char* path = pathYCantLineas[0];
 	int cantidadDeLineas = atoi(pathYCantLineas[1]);
 	enviarySerializarPathyTamanioArchivo(socketDIEGO, path, cantidadDeLineas, dtbRecibido->id);
-	return 'b';
+	return 1;
 }
 
-char borrar(char* lineaEjecutando, DTB* dtbRecibido){
+int borrar(char* lineaEjecutando, DTB* dtbRecibido){
 	bloquearDTB(dtbRecibido);
 
 	char* pathRecibido = asignarMemoria(strlen(lineaEjecutando)-6);
@@ -188,5 +186,5 @@ char borrar(char* lineaEjecutando, DTB* dtbRecibido){
 
 	free(buffer);
 	free(pathRecibido);
-	return 'b';
+	return 1;
 }
