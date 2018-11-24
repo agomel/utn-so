@@ -12,7 +12,6 @@
 int identificarse(int emisor, char header){
 	if(header == IDENTIFICARSE){
 		char identificado = deserializarChar(emisor);
-		log_debug(logger, "Handshake de: %s", traducirModulo(identificado));
 		switch(identificado){
 			case CPU:
 				conectadoCPU = 1;
@@ -74,11 +73,6 @@ void entenderMensaje(int emisor, char header){
 	Historial* historial;
 	usleep(retardo*100);//milisegundos
 	switch(header){
-		case MANDAR_TEXTO:
-			//TODO esta operacion es basura, es para probar a serializacion y deserializacion
-			deserializarString(emisor);
-			break;
-
 		case CARGADO_CON_EXITO_EN_MEMORIA:{
 			log_info(logger, "Recibi cargado con exito en memoria del DAM");
 			idDTB = deserializarInt(emisor);
@@ -162,6 +156,14 @@ void entenderMensaje(int emisor, char header){
 			dtb = deserializarDTB(emisor);
 			cambiarEstadoGuardandoNuevoDTB(dtb, EXIT);
 
+			terminarOperacionDeCPU(emisor, dtb);
+			break;
+
+		case PASAR_A_EXIT_POR_ERROR:
+			log_info(logger, "Recibi pasar a EXIT por un error :(");
+			dtb = deserializarDTB(emisor);
+			error = deserializarInt(emisor);
+			manejarErrores(dtb->id, dtb->escriptorio, error);
 			terminarOperacionDeCPU(emisor, dtb);
 			break;
 

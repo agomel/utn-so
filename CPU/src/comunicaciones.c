@@ -39,7 +39,7 @@ void tratarDummy(DTB* dtbRecibido){
 	enviarYSerializarIntSinHeader(socketSAFA, 1); //Ejecuta una sentencia
 }
 
-int entenderLinea(char* lineaAEjecutar, DTB* dtbRecibido, char mensajeEntendido, int fifo){
+int entenderLinea(char* lineaAEjecutar, DTB* dtbRecibido, int mensajeEntendido, int fifo){
 	int continuar = 0; //Cuando continuar es 1 continua, sino frena y no busca mas lineas.
 	pedirCosasDelFM9(dtbRecibido);
 	dtbRecibido->programCounter++;
@@ -52,7 +52,6 @@ int entenderLinea(char* lineaAEjecutar, DTB* dtbRecibido, char mensajeEntendido,
 		enviarYSerializarIntSinHeader(socketSAFA, sentencias);
 		enviarYSerializarInt(socketFM9, dtbRecibido->id, LIBERAR_DTB_MEMORIA);
 		char seLiberoLamem = deserializarChar(socketFM9);
-		log_info(logger, "El continuar esta en %d", continuar);
 	}else if(lineaAEjecutar[0] == ERROR_O_ACCESO_INVALIDO){
 		//Hubo error en FM9
 		dtbRecibido->programCounter--;
@@ -69,22 +68,21 @@ int entenderLinea(char* lineaAEjecutar, DTB* dtbRecibido, char mensajeEntendido,
 	}else if(lineaAEjecutar[0] != '#'){
 		sentencias++;
 		mensajeEntendido = entendiendoLinea(lineaAEjecutar, dtbRecibido);
-		if(mensajeEntendido == 'a'){
+		if(mensajeEntendido > 1){
 		log_info(logger, "Pasar DTB a EXIT (3)");
 		dtbRecibido->programCounter--;
-		serializarYEnviarDTB(socketSAFA, *dtbRecibido, logger, PASAR_A_EXIT);
+		serializarYEnviarDTB(socketSAFA, *dtbRecibido, logger, PASAR_A_EXIT_POR_ERROR);
+		enviarYSerializarIntSinHeader(socketSAFA, mensajeEntendido);
 		enviarYSerializarIntSinHeader(socketSAFA, sentencias);
 		enviarYSerializarInt(socketFM9, dtbRecibido->id, LIBERAR_DTB_MEMORIA);
 		char seLiberoLamem = deserializarChar(socketFM9);
-		log_info(logger, "El continuar esta en %d", continuar);
-		}else if(mensajeEntendido != 'b'){
+		}else if(mensajeEntendido != 1){
 			continuar = 1;
 		}
 	}
 	if(!fifo){
 		dtbRecibido->quantum--;
 	}
-	log_info(logger, "Ejecutando una linea del escriptorio porque devuelve continuar en %d", continuar);
 	return continuar;
 }
 
