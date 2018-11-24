@@ -46,7 +46,7 @@ int entenderLinea(char* lineaAEjecutar, DTB* dtbRecibido, int mensajeEntendido, 
 	lineaAEjecutar = deserializarString(socketFM9);
 	if(lineaAEjecutar[0] == FIN_ARCHIVO){
 		//Fin de archivo
-		log_info(logger, "Pasar DTB a EXIT (1)");
+		log_info(logger, "Pasar DTB a EXIT por fin de archivo");
 		dtbRecibido->programCounter--;
 		serializarYEnviarDTB(socketSAFA, *dtbRecibido, logger, PASAR_A_EXIT);
 		enviarYSerializarIntSinHeader(socketSAFA, sentencias);

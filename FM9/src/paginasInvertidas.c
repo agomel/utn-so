@@ -153,7 +153,7 @@ void liberarMemoriaInvertida(int idDTB, char* nombreArchivo){
 	}
 
 	bool coincideIdYNombre(ElementoArchivos* elemento){
-		return elemento->idDTB == idDTB && (strcmp(elemento->nombreArchivo, nombreArchivo));
+		return elemento->idDTB == idDTB && (strcmp(elemento->nombreArchivo, nombreArchivo) == 0);
 	}
 
 	void destruir(ElementoArchivos* elemento){
@@ -204,11 +204,11 @@ void liberarDTBDeMemoriaInvertida(int idDTB){
 respuestaDeObtencionDeMemoria* obtenerLineaInvertida(int idDTB, char* nombreArchivo, int numeroLinea){
 	respuestaDeObtencionDeMemoria* respuesta = malloc(sizeof(respuestaDeObtencionDeMemoria));
 	int cantLineas = cantidadDeLineasArchivo(idDTB, nombreArchivo);
-
-	if(numeroLinea == cantLineas -1)
+	log_info(logger, "CANTIDAD DE LINEAS DE %s ES: %d", nombreArchivo, cantLineas);
+	if(numeroLinea == (cantLineas - 1))
 		respuesta->pudoObtener = 3;
 
-	if(numeroLinea < cantLineas - 1){
+	if(numeroLinea < (cantLineas - 1)){
 		t_list* marcosConEseArchivo = filtrarPorDTBYArchivo(idDTB, nombreArchivo);
 		int paginaDondeSeEncuentraLaLinea = numeroLinea / tamanioPagina;
 		int lineaDentroDeLaPagina = numeroLinea % tamanioPagina;
@@ -230,7 +230,7 @@ respuestaDeObtencionDeMemoria* obtenerLineaInvertida(int idDTB, char* nombreArch
 		}
 
 		list_destroy(marcosConEseArchivo);
-	}else if(numeroLinea != cantLineas -1){
+	}else if(numeroLinea != (cantLineas -1)){
 		log_error(logger, "Error: El archivo no posee la linea %d", numeroLinea);
 		respuesta->pudoObtener = FALLO_DE_SEGMENTO_MEMORIA;
 	}
