@@ -48,6 +48,7 @@ void entenderMensaje(int emisor, char header){
 			pedirDatosAFM9(idDTB, path);
 			int tamanioArchivo = deserializarInt(socketFM9);
 			char* datos = recibirFlushFM9(tamanioArchivo);
+			log_debug(logger, "ESTOS DATOS RECIBI: %s", datos);
 			int guardarDatos = guardarDatosEnMDJ(datos, path);
 			if(guardarDatos != 0){
 				enviarError(idDTB, path, guardarDatos);
