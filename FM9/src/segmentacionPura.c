@@ -98,7 +98,7 @@ RespuestaGuardado* guardarDatosSegPura(int idDTB, char* datos, char* nombreArchi
 
 static RespuestaCargaSegPura* guardarDatosInternaSegPura(char* datos, char* nombreArchivo){
 	log_debug(logger, "Guardando en segmentacion pura");
-	int rompio = 1;
+	int rompio = FALLO_DE_SEGMENTO_MEMORIA;
 
 	RespuestaCargaSegPura* respuesta = malloc(sizeof(RespuestaCargaSegPura));
 	int totalLineas = cantidadDeLineas(datos);
@@ -125,10 +125,10 @@ static RespuestaCargaSegPura* guardarDatosInternaSegPura(char* datos, char* nomb
 		idSegmento++;
 		rompio = 0;
 		log_debug(logger, "Datos guardados");
-		}
+	}
 
 	freeLineas(lineas);
-	respuesta->resultado = 10002; //ERROR
+	respuesta->resultado = rompio;
 	return respuesta;
 }
 
@@ -185,8 +185,8 @@ respuestaDeObtencionDeMemoria* obtenerDatosSegPura(int idDTB, char* nombreArchiv
 		memcpy(respuesta->datos, archivo, strlen(archivo) + 1);
 		free(archivo);
 	}else{
-		log_error(logger, "El archivo %s no se encuentra abierto", nombreArchivo);
-		respuesta->pudoObtener = 12444; //ERROR
+		log_error(logger, "Error obteniendo el segmento de %s", nombreArchivo);
+		respuesta->pudoObtener = FALLO_DE_SEGMENTO_MEMORIA; //ERROR
 	}
 		return respuesta;
 }
@@ -282,6 +282,7 @@ int asignarDatosSegPura(int IdDTB, char* nombreArchivo, int numeroLinea, char* d
 	ElementoTablaProcesos* proceso = obtenerProcesoPorIdDTB(IdDTB);
 	ElementoTablaSegPura* segmento = obtenerSegmentoPorArchivo(nombreArchivo, proceso->tablaSegmentos);
 	int cantidadLineasSegmento = segmento->limite / tamanioLinea;
+
 	if(numeroLinea < cantidadLineasSegmento - 1){
 		int desplazamiento = segmento->base + numeroLinea * tamanioLinea;
 		char* lineaConBasura = malloc(tamanioLinea);
@@ -315,19 +316,16 @@ int asignarDatosSegPura(int IdDTB, char* nombreArchivo, int numeroLinea, char* d
 		}else{
 			freeLineasBasura(lineaSinBasura, lineaConBasura);
 			free(lineaPosta);
-			if(cantidadLineasSegmento - 1 == numeroLinea){
-				log_error(logger, "No se puede escribir en la ultima linea del archivo");
-				return 10314; //ERROR
-			}else{
-				log_error(logger, "No hay suficiente espacio en la linea %d del archivo %s", (numeroLinea+1), nombreArchivo);
-				return 20002; //ERROR
-			}
+			log_error(logger, "No hay suficiente espacio en la linea %d del archivo %s", (numeroLinea+1), nombreArchivo);
+			return ESPACIO_INSUFICIENTE_EN_FM9; //ERROR
 		}
 	}else{
-
-
-		log_error(logger, "El archivo no posee la linea %d", numeroLinea);
-		return 3000; //ERROR
+		if(cantidadLineasSegmento - 1 == numeroLinea){
+			log_error(logger, "No se puede escribir en la ultima linea del archivo");
+		}else{
+			log_error(logger, "El archivo no posee la linea %d", numeroLinea);
+		}
+		return FALLO_DE_SEGMENTO_MEMORIA; //ERROR
 	}
 }
 

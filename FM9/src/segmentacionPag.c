@@ -186,7 +186,7 @@ static RespuestaCargaSegPag* guardarDatosInternaSegPag(char* datos, char* nombre
 			char* textoAGuardar;
 			int posicionMarco = obtenerMarcoLibre();
 			if(posicionMarco == -1)
-				respuesta->resultado = 10002; //ERROR NO HAY MARCOS LIBRES
+				respuesta->resultado = ESPACIO_INSUFICIENTE_EN_FM9; //ERROR NO HAY MARCOS LIBRES
 
 			ElementoTablaPag* elementoPagina = malloc(sizeof(ElementoTablaPag));
 			elementoPagina->idPag = idPagina;
@@ -284,8 +284,8 @@ respuestaDeObtencionDeMemoria* obtenerDatosSegPag(int idDTB, char* nombreArchivo
 		respuesta->pudoObtener = 0;
 
 	}else{
-		log_error(logger, "El archivo %s no se encuentra abierto", nombreArchivo);
-		respuesta->pudoObtener = 12444; //ERROR
+		log_error(logger, "No se encuentra el segmento de %s", nombreArchivo);
+		respuesta->pudoObtener = FALLO_DE_SEGMENTO_MEMORIA; //ERROR
 	}
 
 	return respuesta;
@@ -318,7 +318,7 @@ respuestaDeObtencionDeMemoria* obtenerLineaSegPag(int idDTB, char* nombreArchivo
 				freeLineasBasura(lineaSinBasura, lineaConBasura);
 			}
 		}else{
-			log_error(logger, "El archivo no posee la linea %d", numeroLinea);
+			log_error(logger, "Error: El archivo no posee la linea %d", numeroLinea);
 			respuesta->pudoObtener = 1; //ERROR
 		}
 	return respuesta;
@@ -363,17 +363,17 @@ int asignarDatosSegPag(int IdDTB, char* nombreArchivo, int numeroLinea, char* da
 		}else{
 			freeLineasBasura(lineaSinBasura, lineaConBasura);
 			free(lineaPosta);
-			if(segmento->cantidadLineas - 1 == numeroLinea){
-				log_error(logger, "No se puede escribir en la ultima linea del archivo.");
-				return 2000; //ERROR
-			}else{
-				log_error(logger, "No hay suficiente espacio en la linea %d del archivo %s", (numeroLinea+1), nombreArchivo);
-				return 20002; //ERROR
-			}
+			log_error(logger, "No hay suficiente espacio en la linea %d del archivo %s", (numeroLinea+1), nombreArchivo);
+			return ESPACIO_INSUFICIENTE_EN_FM9; //ERROR
 		}
 	}else {
-		log_error(logger, "El DTB no posee la linea %d", numeroLinea);
-		return 30000; //ERROR
+		if(segmento->cantidadLineas - 1 == numeroLinea){
+			log_error(logger, "No se puede escribir en la ultima linea del archivo.");
+			return FALLO_DE_SEGMENTO_MEMORIA; //ERROR
+		}else{
+			log_error(logger, "El DTB no posee la linea %d", numeroLinea);
+			return FALLO_DE_SEGMENTO_MEMORIA; //ERROR
+		}
 	}
 }
 
