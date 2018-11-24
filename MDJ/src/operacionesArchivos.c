@@ -69,3 +69,10 @@ int eliminarArchivo(char* rutaArchivo){
 	}
 }
 
+int crearCarpetaSiNoExiste(char* path){
+	struct stat st = {0};
+
+	if (stat(path, &st) == -1) {
+	    mkdir(path, 0700);
+	}
+}

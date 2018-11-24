@@ -13,6 +13,7 @@
 #include <fcntl.h>
 #include "operacionesArchivos.h"
 #include "fileSystem.h"
+#include <commons/string.h>
 
 int validarArchivoFIFA(char* rutaArchivo);
 int crearArchivoFIFA(char* rutaArchivo, int cantidadDeBytes);
