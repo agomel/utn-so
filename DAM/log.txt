@@ -222,3 +222,43 @@ wait a
 
 [INFO] 17:45:42:486 DAM/(28635:28650): enviando mensaje a safa
 [INFO] 17:45:42:486 DAM/(28635:28650): Terminada operacion
+[DEBUG] 18:58:26:757 DAM/(32541:32550): Handshake de: CPU
+[DEBUG] 18:58:26:850 DAM/(32541:32558): Escuchando nuevo cliente en 9
+[INFO] 18:58:37:502 DAM/(32541:32551): Ehhh, voy a buscar scripts/checkpoint.escriptorio para 1
+[INFO] 18:58:37:525 DAM/(32541:32551): Enviando a MDJ que valide escriptorio scripts/checkpoint.escriptorio
+[DEBUG] 18:58:37:538 DAM/(32541:32551): Esperando repuesta validacion de MDJ
+[DEBUG] 18:58:37:547 DAM/(32541:32551): Recibida respuesta 0 de MDJ
+[INFO] 18:58:38:587 DAM/(32541:32551): recibi crear /equipos/equipo1.txt 5
+abrir /equipos/equipo1.txt
+asignar /equipos/equipo1.txt 1 Rasing
+asignar /equipos/equipo1.txt 1 Jugadores: Centurion
+flush /equipos/equipo1.txt
+close /equipos/equipo1.txt
+
+
+[INFO] 18:58:38:617 DAM/(32541:32551): enviando mensaje a safa
+[INFO] 18:58:38:630 DAM/(32541:32551): Terminada operacion
+[DEBUG] 18:58:42:48 DAM/(32541:32551): creando archivo
+[INFO] 18:58:42:49 DAM/(32541:32551): Enviando a MDJ que valide escriptorio /equipos/equipo1.txt
+[DEBUG] 18:58:42:51 DAM/(32541:32551): Esperando repuesta validacion de MDJ
+[DEBUG] 18:58:42:75 DAM/(32541:32551): Recibida respuesta 10001 de MDJ
+[INFO] 18:58:43:67 DAM/(32541:32551): enviando mensaje a safa
+[INFO] 18:58:43:68 DAM/(32541:32551): Terminada operacion
+[INFO] 18:58:46:477 DAM/(32541:32551): Ehhh, voy a buscar /equipos/equipo1.txt para 1
+[INFO] 18:58:46:478 DAM/(32541:32551): Enviando a MDJ que valide escriptorio /equipos/equipo1.txt
+[DEBUG] 18:58:46:479 DAM/(32541:32551): Esperando repuesta validacion de MDJ
+[DEBUG] 18:58:46:479 DAM/(32541:32551): Recibida respuesta 0 de MDJ
+[INFO] 18:58:47:481 DAM/(32541:32551): recibi 
+
+
+
+
+
+[INFO] 18:58:47:483 DAM/(32541:32551): enviando mensaje a safa
+[INFO] 18:58:47:483 DAM/(32541:32551): Terminada operacion
+[DEBUG] 18:58:50:898 DAM/(32541:32551): Guardando escriptorio
+[INFO] 18:58:50:912 DAM/(32541:32551): Enviando a MDJ que valide escriptorio /equipos/equipo1.txt
+[DEBUG] 18:58:50:938 DAM/(32541:32551): Esperando repuesta validacion de MDJ
+[DEBUG] 18:58:50:939 DAM/(32541:32551): Recibida respuesta 0 de MDJ
+[INFO] 18:58:51:946 DAM/(32541:32551): enviando mensaje a safa
+[INFO] 18:58:51:947 DAM/(32541:32551): Terminada operacion

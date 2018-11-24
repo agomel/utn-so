@@ -2182,3 +2182,89 @@
 [INFO] 18:50:26:941 SAFA/(9101:9103): Recibi pasar a EXIT
 [INFO] 18:50:26:942 SAFA/(9101:9103): Pasado a EXIT dtb con id: 1, escriptorio: scripts/checkpoint.escriptorio, quantum: -1
 [INFO] 18:50:26:942 SAFA/(9101:9103): Terminada operacion
+[INFO] 18:55:00:91 SAFA/(32352:32352): Algoritmo elegido FIFO
+[DEBUG] 18:58:18:567 SAFA/(32352:32353): Se agrego a las conexiones DAM
+[DEBUG] 18:58:18:577 SAFA/(32352:32547): Escuchando nuevo cliente en 7
+[DEBUG] 18:58:26:466 SAFA/(32352:32353): Se agrego a las conexiones CPU
+[DEBUG] 18:58:26:469 SAFA/(32352:32554): Escuchando nuevo cliente en 5
+[INFO] 18:58:34:232 SAFA/(32352:32355): Comando ejecutar
+[DEBUG] 18:58:34:232 SAFA/(32352:32557): Enviando dtb con id: 1
+[INFO] 18:58:37:440 SAFA/(32352:32354): Desbloqueo el DUMMY
+[INFO] 18:58:37:440 SAFA/(32352:32354): Terminada operacion
+[INFO] 18:58:37:641 SAFA/(32352:32354): Recibi Desbloquear DTB
+[INFO] 18:58:37:641 SAFA/(32352:32354): Terminada operacion
+[INFO] 18:58:38:829 SAFA/(32352:32354): Recibi cargado con exito en memoria del DAM
+[INFO] 18:58:38:830 SAFA/(32352:32354): Pasado a READY dtb con id: 1, escriptorio: scripts/checkpoint.escriptorio, quantum: 0
+[INFO] 18:58:38:830 SAFA/(32352:32354): Terminada operacion
+[INFO] 18:58:38:830 SAFA/(32352:32557): Pasado a EXECUTE dtb con id: 1, escriptorio: scripts/checkpoint.escriptorio, quantum: -1
+[DEBUG] 18:58:38:830 SAFA/(32352:32557): Enviando dtb con id: 1
+[INFO] 18:58:42:32 SAFA/(32352:32354): Recibi bloquear DTB
+[INFO] 18:58:42:32 SAFA/(32352:32354): Pasado a BLOCKED dtb con id: 1, escriptorio: scripts/checkpoint.escriptorio, quantum: -1
+[INFO] 18:58:42:32 SAFA/(32352:32354): Terminada operacion
+[INFO] 18:58:43:268 SAFA/(32352:32354): Recibi Creado con exito en MDJ para idDTB 1 y path /equipos/equipo1.txt
+[INFO] 18:58:43:268 SAFA/(32352:32354): Pasado a READY dtb con id: 1, escriptorio: scripts/checkpoint.escriptorio, quantum: -1
+[INFO] 18:58:43:268 SAFA/(32352:32354): Terminada operacion
+[INFO] 18:58:43:268 SAFA/(32352:32557): Pasado a EXECUTE dtb con id: 1, escriptorio: scripts/checkpoint.escriptorio, quantum: -1
+[DEBUG] 18:58:43:268 SAFA/(32352:32557): Enviando dtb con id: 1
+[INFO] 18:58:46:470 SAFA/(32352:32354): Recibi bloquear DTB
+[INFO] 18:58:46:470 SAFA/(32352:32354): Pasado a BLOCKED dtb con id: 1, escriptorio: scripts/checkpoint.escriptorio, quantum: -1
+[INFO] 18:58:46:470 SAFA/(32352:32354): Terminada operacion
+[INFO] 18:58:47:684 SAFA/(32352:32354): Recibi cargado con exito en memoria del DAM
+[INFO] 18:58:47:684 SAFA/(32352:32354): Pasado a READY dtb con id: 1, escriptorio: scripts/checkpoint.escriptorio, quantum: -1
+[INFO] 18:58:47:684 SAFA/(32352:32354): Terminada operacion
+[INFO] 18:58:47:684 SAFA/(32352:32557): Pasado a EXECUTE dtb con id: 1, escriptorio: scripts/checkpoint.escriptorio, quantum: -1
+[DEBUG] 18:58:47:684 SAFA/(32352:32557): Enviando dtb con id: 1
+[INFO] 18:58:50:889 SAFA/(32352:32354): Recibi bloquear DTB
+[INFO] 18:58:50:889 SAFA/(32352:32354): Pasado a BLOCKED dtb con id: 1, escriptorio: scripts/checkpoint.escriptorio, quantum: -1
+[INFO] 18:58:50:890 SAFA/(32352:32354): Terminada operacion
+[INFO] 18:58:52:147 SAFA/(32352:32354): Recibi Guardado con exito en MDJ para idDTB 1 y path /equipos/equipo1.txt
+[INFO] 18:58:52:147 SAFA/(32352:32354): Pasado a READY dtb con id: 1, escriptorio: scripts/checkpoint.escriptorio, quantum: -1
+[INFO] 18:58:52:147 SAFA/(32352:32354): Terminada operacion
+[INFO] 18:58:52:147 SAFA/(32352:32557): Pasado a EXECUTE dtb con id: 1, escriptorio: scripts/checkpoint.escriptorio, quantum: -1
+[DEBUG] 18:58:52:147 SAFA/(32352:32557): Enviando dtb con id: 1
+[INFO] 18:58:55:350 SAFA/(32352:32354): Recibi pasar a EXIT
+[INFO] 18:58:55:351 SAFA/(32352:32354): Pasado a EXIT dtb con id: 1, escriptorio: scripts/checkpoint.escriptorio, quantum: -1
+[INFO] 18:58:55:351 SAFA/(32352:32354): Terminada operacion
+[INFO] 19:03:55:642 SAFA/(32694:32694): Algoritmo elegido FIFO
+[DEBUG] 19:04:04:954 SAFA/(32694:32695): Se agrego a las conexiones DAM
+[DEBUG] 19:04:04:971 SAFA/(32694:32708): Escuchando nuevo cliente en 7
+[DEBUG] 19:04:07:196 SAFA/(32694:32695): Se agrego a las conexiones CPU
+[DEBUG] 19:04:07:204 SAFA/(32694:32715): Escuchando nuevo cliente en 5
+[INFO] 19:04:17:513 SAFA/(32694:32697): Comando ejecutar
+[DEBUG] 19:04:17:513 SAFA/(32694:32719): Enviando dtb con id: 1
+[INFO] 19:04:20:722 SAFA/(32694:32696): Desbloqueo el DUMMY
+[INFO] 19:04:20:722 SAFA/(32694:32696): Terminada operacion
+[INFO] 19:04:20:924 SAFA/(32694:32696): Recibi Desbloquear DTB
+[INFO] 19:04:20:924 SAFA/(32694:32696): Terminada operacion
+[INFO] 19:04:21:935 SAFA/(32694:32696): Recibi cargado con exito en memoria del DAM
+[INFO] 19:04:21:935 SAFA/(32694:32696): Pasado a READY dtb con id: 1, escriptorio: scripts/checkpoint.escriptorio, quantum: 0
+[INFO] 19:04:21:935 SAFA/(32694:32696): Terminada operacion
+[INFO] 19:04:21:935 SAFA/(32694:32719): Pasado a EXECUTE dtb con id: 1, escriptorio: scripts/checkpoint.escriptorio, quantum: -1
+[DEBUG] 19:04:21:936 SAFA/(32694:32719): Enviando dtb con id: 1
+[INFO] 19:04:25:138 SAFA/(32694:32696): Recibi bloquear DTB
+[INFO] 19:04:25:139 SAFA/(32694:32696): Pasado a BLOCKED dtb con id: 1, escriptorio: scripts/checkpoint.escriptorio, quantum: -1
+[INFO] 19:04:25:139 SAFA/(32694:32696): Terminada operacion
+[INFO] 19:04:26:341 SAFA/(32694:32696): Recibi Creado con exito en MDJ para idDTB 1 y path /equipos/equipo1.txt
+[INFO] 19:04:26:341 SAFA/(32694:32696): Pasado a READY dtb con id: 1, escriptorio: scripts/checkpoint.escriptorio, quantum: -1
+[INFO] 19:04:26:341 SAFA/(32694:32696): Terminada operacion
+[INFO] 19:04:26:341 SAFA/(32694:32719): Pasado a EXECUTE dtb con id: 1, escriptorio: scripts/checkpoint.escriptorio, quantum: -1
+[DEBUG] 19:04:26:341 SAFA/(32694:32719): Enviando dtb con id: 1
+[INFO] 19:04:29:542 SAFA/(32694:32696): Recibi bloquear DTB
+[INFO] 19:04:29:543 SAFA/(32694:32696): Pasado a BLOCKED dtb con id: 1, escriptorio: scripts/checkpoint.escriptorio, quantum: -1
+[INFO] 19:04:29:543 SAFA/(32694:32696): Terminada operacion
+[INFO] 19:04:30:745 SAFA/(32694:32696): Recibi cargado con exito en memoria del DAM
+[INFO] 19:04:30:745 SAFA/(32694:32696): Pasado a READY dtb con id: 1, escriptorio: scripts/checkpoint.escriptorio, quantum: -1
+[INFO] 19:04:30:745 SAFA/(32694:32696): Terminada operacion
+[INFO] 19:04:30:745 SAFA/(32694:32719): Pasado a EXECUTE dtb con id: 1, escriptorio: scripts/checkpoint.escriptorio, quantum: -1
+[DEBUG] 19:04:30:745 SAFA/(32694:32719): Enviando dtb con id: 1
+[INFO] 19:04:33:948 SAFA/(32694:32696): Recibi bloquear DTB
+[INFO] 19:04:33:948 SAFA/(32694:32696): Pasado a BLOCKED dtb con id: 1, escriptorio: scripts/checkpoint.escriptorio, quantum: -1
+[INFO] 19:04:33:949 SAFA/(32694:32696): Terminada operacion
+[INFO] 19:04:35:151 SAFA/(32694:32696): Recibi Guardado con exito en MDJ para idDTB 1 y path /equipos/equipo1.txt
+[INFO] 19:04:35:151 SAFA/(32694:32696): Pasado a READY dtb con id: 1, escriptorio: scripts/checkpoint.escriptorio, quantum: -1
+[INFO] 19:04:35:151 SAFA/(32694:32696): Terminada operacion
+[INFO] 19:04:35:151 SAFA/(32694:32719): Pasado a EXECUTE dtb con id: 1, escriptorio: scripts/checkpoint.escriptorio, quantum: -1
+[DEBUG] 19:04:35:151 SAFA/(32694:32719): Enviando dtb con id: 1
+[INFO] 19:04:38:354 SAFA/(32694:32696): Recibi pasar a EXIT
+[INFO] 19:04:38:354 SAFA/(32694:32696): Pasado a EXIT dtb con id: 1, escriptorio: scripts/checkpoint.escriptorio, quantum: -1
+[INFO] 19:04:38:355 SAFA/(32694:32696): Terminada operacion
