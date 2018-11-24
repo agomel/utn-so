@@ -91,15 +91,19 @@ void manejarErrores(int idDTB, char* path, int error){
 		case FALLO_DE_SEGMENTO_MEMORIA:
 			log_error(logger, "Fallo de segmento/memoria en path %s", path);
 			break;
+
 		case ESPACIO_INSUFICIENTE_EN_MDJ:
 			log_error(logger, "Espacio insuficiente en MDJ para archivo %s", path);
 			break;
+
 		case EL_ARCHIVO_NO_EXISTE_EN_MDJ:
 			log_error(logger, "El archivo no existe en MDJ, fue borrado previamente MDJ path: %s", path);
 			break;
+
 		case ARCHIVO_YA_EXISTENTE:
 			log_error(logger, "Archivo ya existente: %s", path);
 			break;
+
 		default:
 			log_error(logger, "No reconozco el error, pero te termino el dtb. Numero de error: %d", error);
 	}

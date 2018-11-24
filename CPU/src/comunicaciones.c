@@ -69,9 +69,7 @@ int entenderLinea(char* lineaAEjecutar, DTB* dtbRecibido, char mensajeEntendido,
 	}else if(lineaAEjecutar[0] != '#'){
 		sentencias++;
 		mensajeEntendido = entendiendoLinea(lineaAEjecutar, dtbRecibido);
-		if(mensajeEntendido == 'b'){
-			//NADA
-		}else if(mensajeEntendido == 'a'){
+		if(mensajeEntendido == 'a'){
 		log_info(logger, "Pasar DTB a EXIT (3)");
 		dtbRecibido->programCounter--;
 		serializarYEnviarDTB(socketSAFA, *dtbRecibido, logger, PASAR_A_EXIT);
@@ -79,7 +77,7 @@ int entenderLinea(char* lineaAEjecutar, DTB* dtbRecibido, char mensajeEntendido,
 		enviarYSerializarInt(socketFM9, dtbRecibido->id, LIBERAR_DTB_MEMORIA);
 		char seLiberoLamem = deserializarChar(socketFM9);
 		log_info(logger, "El continuar esta en %d", continuar);
-		}else{
+		}else if(mensajeEntendido != 'b'){
 			continuar = 1;
 		}
 	}
