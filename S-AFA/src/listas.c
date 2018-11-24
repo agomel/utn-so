@@ -133,10 +133,27 @@ DTB* removerDTBPorIndice(int indice){
 }
 
 void cambiarEstadoDummy(char estado){
+	waitMutex(&mutexDummy);
 	DTB* dummy = obtenerDummyDeColaRemoviendolo();
 	dummy->estado = estado;
 	agregarDTBALista(dummy);
-	signalSem(&bloqueadoDummy);
+	signalMutex(&mutexDummy);
+}
+int dummyCargado(){
+	bool esDummy(DTB* dtb){
+		return dtb->flag == 0;
+	}
+	waitMutex(&mutexListaDTBs);
+	int hayDummy = list_any_satisfy(listaDeTodosLosDTBs, esDummy);
+	signalMutex(&mutexListaDTBs);
+	return hayDummy;
+}
+
+void cambiarEstadoDummyCargandolo(DTB* dummy){
+	if(dummyCargado()){
+		obtenerDummyDeColaRemoviendolo();
+	}
+	agregarDTBALista(dummy);
 }
 
 int obtenerCPUDisponibleYOcupar(int id){
