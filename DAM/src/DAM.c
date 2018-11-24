@@ -61,11 +61,17 @@ void entenderMensaje(int emisor, char header){
 		case CREAR_ARCHIVO:{
 			log_debug(logger, "creando archivo");
 			cantidadDeLineas = deserializarInt(emisor);
-			int crearArchivo = crearArchivoEnMDJ(socketMDJ, path, cantidadDeLineas);
-			if(crearArchivo != 0){
-				enviarError(idDTB, path, crearArchivo);
+			int validarArchivo = validarArchivoMDJ(path);
+			if(validarArchivo == 0){
+				enviarError(idDTB, path, ARCHIVO_YA_EXISTENTE);
+				log_error(logger, "el archivo %s no se puede abrir porque ya existe", path);
 			}else{
-				notificarASafaExito(CREADO_CON_EXITO_EN_MDJ,idDTB, path);
+				int crearArchivo = crearArchivoEnMDJ(socketMDJ, path, cantidadDeLineas);
+				if(crearArchivo != 0){
+					enviarError(idDTB, path, crearArchivo);
+				}else{
+					notificarASafaExito(CREADO_CON_EXITO_EN_MDJ, idDTB, path);
+				}
 			}
 			break;
 		}
