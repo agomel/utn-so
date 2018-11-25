@@ -164,9 +164,8 @@ void init(){
 	levantarMetadata();
 
 	initBitmap();
-	crearArchivoDePruebas();
 
-	crearCarpetaSiNoExiste(concatenar(PUNTO_MONTAJE_ARCHIVOS, "zanita"));
+	crearArchivoDePruebas();
 
 	inicializarMutex(&mutexOperaciones);
 	colaOperaciones = queue_create();
