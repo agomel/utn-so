@@ -23,22 +23,22 @@ endif
 # Add inputs and outputs from these tool invocations to the build variables 
 
 # All Target
-all: DAM
+all: FM9
 
 dependents:
 	-cd /home/utnso/workspace/tp-2018-2c-5-fant-sticos/biblioteca/Debug && $(MAKE) clean all
 
 # Tool invocations
-DAM: $(OBJS) $(USER_OBJS) /home/utnso/workspace/tp-2018-2c-5-fant-sticos/biblioteca/Debug/libbiblioteca.so
+FM9: $(OBJS) $(USER_OBJS) /home/utnso/workspace/tp-2018-2c-5-fant-sticos/biblioteca/Debug/libbiblioteca.so
 	@echo 'Building target: $@'
 	@echo 'Invoking: GCC C Linker'
-	gcc -L"/home/utnso/workspace/tp-2018-2c-5-fant-sticos/biblioteca/Debug" -o "DAM" $(OBJS) $(USER_OBJS) $(LIBS)
+	gcc -L"/home/utnso/workspace/tp-2018-2c-5-fant-sticos/biblioteca/Debug" -o "FM9" $(OBJS) $(USER_OBJS) $(LIBS)
 	@echo 'Finished building target: $@'
 	@echo ' '
 
 # Other Targets
 clean:
-	-$(RM) $(EXECUTABLES)$(OBJS)$(C_DEPS) DAM
+	-$(RM) $(EXECUTABLES)$(OBJS)$(C_DEPS) FM9
 	-@echo ' '
 
 .PHONY: all clean dependents
