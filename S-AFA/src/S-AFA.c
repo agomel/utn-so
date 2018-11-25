@@ -95,7 +95,7 @@ void entenderMensaje(int emisor, char header){
 			}
 
 			operacionDelDiego(idDTB);
-			desbloquearDTBCambiandolo(dtb);
+			desbloquearDTB(idDTB);
 			break;
 
 		}

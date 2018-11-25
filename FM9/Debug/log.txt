@@ -1911,3 +1911,382 @@
 [DEBUG] 11:14:21:843 FM9/(14505:14507): Liberando el dtb 0 de memoria por pasar a EXIT
 [INFO] 11:14:21:843 FM9/(14505:14507): Borrado DTB 0 de memoria por pasar a EXIT
 [INFO] 11:14:21:843 FM9/(14505:14507): Terminada operacion
+[INFO] 11:24:43:313 FM9/(5486:5486): Utilizando segmentacion paginada
+[DEBUG] 11:24:47:870 FM9/(5486:5487): Handshake de: DAM
+[DEBUG] 11:24:47:870 FM9/(5486:5487): Se agrego a las conexiones DAM
+[DEBUG] 11:24:47:882 FM9/(5486:5493): Escuchando nuevo cliente en 5
+[DEBUG] 11:24:51:339 FM9/(5486:5487): Handshake de: CPU
+[DEBUG] 11:24:51:339 FM9/(5486:5487): Se agrego a las conexiones CPU
+[DEBUG] 11:24:51:339 FM9/(5486:5505): Escuchando nuevo cliente en 7
+[DEBUG] 11:25:00:585 FM9/(5486:5488): Guardando escriptorio 1 en memoria
+[DEBUG] 11:25:00:585 FM9/(5486:5488): Guardando en segmentacion paginada
+[DEBUG] 11:25:00:585 FM9/(5486:5488): Datos guardados
+[INFO] 11:25:00:585 FM9/(5486:5488): Agregado proceso 1 a tabla de procesos
+[DEBUG] 11:25:00:585 FM9/(5486:5488): Enviando 0 al cargar nuevo DTB
+[INFO] 11:25:00:585 FM9/(5486:5488): Terminada operacion
+[DEBUG] 11:25:00:855 FM9/(5486:5488): Trayendo linea escriptorio
+[DEBUG] 11:25:00:855 FM9/(5486:5488): Se pide linea 0 para escriptorio scripts/simple.escriptorio
+[INFO] 11:26:52:378 FM9/(5579:5579): Utilizando segmentacion paginada
+[DEBUG] 11:26:55:378 FM9/(5579:5580): Handshake de: DAM
+[DEBUG] 11:26:55:378 FM9/(5579:5580): Se agrego a las conexiones DAM
+[DEBUG] 11:26:55:386 FM9/(5579:5591): Escuchando nuevo cliente en 5
+[DEBUG] 11:26:57:946 FM9/(5579:5580): Handshake de: CPU
+[DEBUG] 11:26:57:946 FM9/(5579:5580): Se agrego a las conexiones CPU
+[DEBUG] 11:26:57:947 FM9/(5579:5601): Escuchando nuevo cliente en 7
+[DEBUG] 11:27:07:202 FM9/(5579:5581): Guardando escriptorio 1 en memoria
+[DEBUG] 11:27:07:202 FM9/(5579:5581): Guardando en segmentacion paginada
+[DEBUG] 11:27:07:202 FM9/(5579:5581): Datos guardados
+[INFO] 11:27:07:202 FM9/(5579:5581): Agregado proceso 1 a tabla de procesos
+[DEBUG] 11:27:07:202 FM9/(5579:5581): Enviando 0 al cargar nuevo DTB
+[INFO] 11:27:07:202 FM9/(5579:5581): Terminada operacion
+[DEBUG] 11:27:07:471 FM9/(5579:5581): Trayendo linea escriptorio
+[DEBUG] 11:27:07:471 FM9/(5579:5581): Se pide linea 0 para escriptorio scripts/simple.escriptorio
+[INFO] 11:32:59:658 FM9/(5765:5765): Utilizando segmentacion paginada
+[DEBUG] 11:33:43:845 FM9/(5765:5766): Handshake de: DAM
+[DEBUG] 11:33:43:846 FM9/(5765:5766): Se agrego a las conexiones DAM
+[DEBUG] 11:33:43:873 FM9/(5765:5839): Escuchando nuevo cliente en 5
+[DEBUG] 11:33:46:546 FM9/(5765:5766): Handshake de: CPU
+[DEBUG] 11:33:46:546 FM9/(5765:5766): Se agrego a las conexiones CPU
+[DEBUG] 11:33:46:564 FM9/(5765:5844): Escuchando nuevo cliente en 7
+[DEBUG] 11:34:03:7 FM9/(5765:5767): Guardando escriptorio 1 en memoria
+[DEBUG] 11:34:03:7 FM9/(5765:5767): Guardando en segmentacion paginada
+[DEBUG] 11:34:03:7 FM9/(5765:5767): Datos guardados
+[INFO] 11:34:03:7 FM9/(5765:5767): Agregado proceso 1 a tabla de procesos
+[DEBUG] 11:34:03:7 FM9/(5765:5767): Enviando 0 al cargar nuevo DTB
+[INFO] 11:34:03:7 FM9/(5765:5767): Terminada operacion
+[DEBUG] 11:34:03:277 FM9/(5765:5767): Trayendo linea escriptorio
+[DEBUG] 11:34:03:277 FM9/(5765:5767): Se pide linea 0 para escriptorio scripts/simple.escriptorio
+[INFO] 11:34:52:21 FM9/(5889:5889): Utilizando segmentacion paginada
+[DEBUG] 11:34:54:773 FM9/(5889:5890): Handshake de: DAM
+[DEBUG] 11:34:54:773 FM9/(5889:5890): Se agrego a las conexiones DAM
+[DEBUG] 11:34:54:781 FM9/(5889:5896): Escuchando nuevo cliente en 5
+[DEBUG] 11:34:57:205 FM9/(5889:5890): Handshake de: CPU
+[DEBUG] 11:34:57:206 FM9/(5889:5890): Se agrego a las conexiones CPU
+[DEBUG] 11:34:57:206 FM9/(5889:5901): Escuchando nuevo cliente en 7
+[DEBUG] 11:35:06:838 FM9/(5889:5891): Guardando escriptorio 1 en memoria
+[DEBUG] 11:35:06:838 FM9/(5889:5891): Guardando en segmentacion paginada
+[DEBUG] 11:35:06:838 FM9/(5889:5891): Datos guardados
+[INFO] 11:35:06:838 FM9/(5889:5891): Agregado proceso 1 a tabla de procesos
+[DEBUG] 11:35:06:838 FM9/(5889:5891): Enviando 0 al cargar nuevo DTB
+[INFO] 11:35:06:838 FM9/(5889:5891): Terminada operacion
+[DEBUG] 11:35:07:97 FM9/(5889:5891): Trayendo linea escriptorio
+[DEBUG] 11:35:07:97 FM9/(5889:5891): Se pide linea 0 para escriptorio scripts/simple.escriptorio
+[DEBUG] 11:35:07:97 FM9/(5889:5891): Linea: abrir /scripts/complejo.escriptorio
+[INFO] 11:35:07:97 FM9/(5889:5891): Terminada operacion
+[DEBUG] 11:35:07:848 FM9/(5889:5891): Guardando datos en memoria
+[DEBUG] 11:35:07:848 FM9/(5889:5891): Guardando en segmentacion paginada
+[DEBUG] 11:35:07:848 FM9/(5889:5891): Datos guardados
+[DEBUG] 11:35:07:848 FM9/(5889:5891): Enviando 0 al guardar los datos
+[INFO] 11:35:07:848 FM9/(5889:5891): Terminada operacion
+[DEBUG] 11:35:08:118 FM9/(5889:5891): Trayendo linea escriptorio
+[DEBUG] 11:35:08:118 FM9/(5889:5891): Se pide linea 1 para escriptorio scripts/simple.escriptorio
+[DEBUG] 11:35:08:118 FM9/(5889:5891): Linea: concentrar
+[INFO] 11:35:08:118 FM9/(5889:5891): Terminada operacion
+[DEBUG] 11:35:08:118 FM9/(5889:5891): Trayendo linea escriptorio
+[DEBUG] 11:35:08:118 FM9/(5889:5891): Se pide linea 2 para escriptorio scripts/simple.escriptorio
+[DEBUG] 11:35:08:118 FM9/(5889:5891): Linea: asignar /scripts/complejo.escriptorio 1 Soy invalido
+[INFO] 11:35:08:118 FM9/(5889:5891): Terminada operacion
+[DEBUG] 11:35:08:119 FM9/(5889:5891): Asignando datos en linea Nro 1
+[DEBUG] 11:35:08:119 FM9/(5889:5891): Escribiendo: Soy invalido. En: /scripts/complejo.escriptorio 
+[DEBUG] 11:35:08:119 FM9/(5889:5891): Asignados datos con exito
+[INFO] 11:35:08:119 FM9/(5889:5891): Terminada operacion
+[DEBUG] 11:35:08:119 FM9/(5889:5891): Trayendo linea escriptorio
+[DEBUG] 11:35:08:119 FM9/(5889:5891): Se pide linea 3 para escriptorio scripts/simple.escriptorio
+[DEBUG] 11:35:08:119 FM9/(5889:5891): Linea: concentrar
+[INFO] 11:35:08:119 FM9/(5889:5891): Terminada operacion
+[DEBUG] 11:35:08:119 FM9/(5889:5891): Trayendo linea escriptorio
+[DEBUG] 11:35:08:119 FM9/(5889:5891): Se pide linea 4 para escriptorio scripts/simple.escriptorio
+[DEBUG] 11:35:08:119 FM9/(5889:5891): Linea: close /scripts/complejo.escriptorio
+[INFO] 11:35:08:119 FM9/(5889:5891): Terminada operacion
+[DEBUG] 11:35:08:119 FM9/(5889:5891): Liberando memoria para archivo /scripts/complejo.escriptorio
+[INFO] 11:35:08:119 FM9/(5889:5891): Borrado archivo /scripts/complejo.escriptorio de memoria
+[INFO] 11:35:08:119 FM9/(5889:5891): Terminada operacion
+[DEBUG] 11:35:08:119 FM9/(5889:5891): Trayendo linea escriptorio
+[DEBUG] 11:35:08:119 FM9/(5889:5891): Se pide linea 5 para escriptorio scripts/simple.escriptorio
+[DEBUG] 11:35:08:119 FM9/(5889:5891): Linea: concentrar
+[INFO] 11:35:08:119 FM9/(5889:5891): Terminada operacion
+[DEBUG] 11:35:08:119 FM9/(5889:5891): Trayendo linea escriptorio
+[DEBUG] 11:35:08:119 FM9/(5889:5891): Se pide linea 6 para escriptorio scripts/simple.escriptorio
+[INFO] 11:35:08:119 FM9/(5889:5891): Es fin de archivo
+[INFO] 11:35:08:120 FM9/(5889:5891): Terminada operacion
+[DEBUG] 11:35:08:120 FM9/(5889:5891): Liberando el dtb 1 de memoria por pasar a EXIT
+[INFO] 11:35:08:120 FM9/(5889:5891): Liberando de la memoria el DTB
+[INFO] 11:35:08:120 FM9/(5889:5891): Borrado archivo scripts/simple.escriptorio de memoria
+[INFO] 11:35:08:120 FM9/(5889:5891): Terminada operacion
+[DEBUG] 11:35:19:311 FM9/(5889:5891): Guardando escriptorio 2 en memoria
+[DEBUG] 11:35:19:311 FM9/(5889:5891): Guardando en segmentacion paginada
+[DEBUG] 11:35:19:311 FM9/(5889:5891): Datos guardados
+[INFO] 11:35:19:311 FM9/(5889:5891): Agregado proceso 2 a tabla de procesos
+[DEBUG] 11:35:19:311 FM9/(5889:5891): Enviando 0 al cargar nuevo DTB
+[INFO] 11:35:19:311 FM9/(5889:5891): Terminada operacion
+[DEBUG] 11:35:19:581 FM9/(5889:5891): Trayendo linea escriptorio
+[DEBUG] 11:35:19:581 FM9/(5889:5891): Se pide linea 0 para escriptorio scripts/complejo.escriptorio
+[DEBUG] 11:35:19:581 FM9/(5889:5891): Linea: crear /equipos/Rafaela 5
+[INFO] 11:35:19:581 FM9/(5889:5891): Terminada operacion
+[DEBUG] 11:35:20:577 FM9/(5889:5891): Trayendo linea escriptorio
+[DEBUG] 11:35:20:577 FM9/(5889:5891): Se pide linea 1 para escriptorio scripts/complejo.escriptorio
+[DEBUG] 11:35:20:577 FM9/(5889:5891): Linea: abrir /equipos/Rafaela
+[INFO] 11:35:20:577 FM9/(5889:5891): Terminada operacion
+[DEBUG] 11:35:21:318 FM9/(5889:5891): Guardando datos en memoria
+[DEBUG] 11:35:21:318 FM9/(5889:5891): Guardando en segmentacion paginada
+[DEBUG] 11:35:21:318 FM9/(5889:5891): Datos guardados
+[DEBUG] 11:35:21:318 FM9/(5889:5891): Enviando 0 al guardar los datos
+[INFO] 11:35:21:318 FM9/(5889:5891): Terminada operacion
+[DEBUG] 11:35:21:575 FM9/(5889:5891): Trayendo linea escriptorio
+[DEBUG] 11:35:21:575 FM9/(5889:5891): Se pide linea 2 para escriptorio scripts/complejo.escriptorio
+[DEBUG] 11:35:21:575 FM9/(5889:5891): Linea: asignar /equipos/Rafaela 1 Atletico Rafaela
+[INFO] 11:35:21:575 FM9/(5889:5891): Terminada operacion
+[DEBUG] 11:35:21:575 FM9/(5889:5891): Asignando datos en linea Nro 1
+[DEBUG] 11:35:21:575 FM9/(5889:5891): Escribiendo: Atletico Rafaela. En: /equipos/Rafaela 
+[DEBUG] 11:35:21:575 FM9/(5889:5891): Asignados datos con exito
+[INFO] 11:35:21:575 FM9/(5889:5891): Terminada operacion
+[DEBUG] 11:35:21:575 FM9/(5889:5891): Trayendo linea escriptorio
+[DEBUG] 11:35:21:575 FM9/(5889:5891): Se pide linea 3 para escriptorio scripts/complejo.escriptorio
+[DEBUG] 11:35:21:576 FM9/(5889:5891): Linea: concentrar
+[INFO] 11:35:21:576 FM9/(5889:5891): Terminada operacion
+[DEBUG] 11:35:21:576 FM9/(5889:5891): Trayendo linea escriptorio
+[DEBUG] 11:35:21:576 FM9/(5889:5891): Se pide linea 4 para escriptorio scripts/complejo.escriptorio
+[DEBUG] 11:35:21:576 FM9/(5889:5891): Linea: asignar /equipos/Rafaela 2 Estrella: Juan M. Suligoy
+[INFO] 11:35:21:576 FM9/(5889:5891): Terminada operacion
+[DEBUG] 11:35:21:576 FM9/(5889:5891): Asignando datos en linea Nro 2
+[DEBUG] 11:35:21:576 FM9/(5889:5891): Escribiendo: Estrella: Juan M. Suligoy. En: /equipos/Rafaela 
+[DEBUG] 11:35:21:576 FM9/(5889:5891): Asignados datos con exito
+[INFO] 11:35:21:576 FM9/(5889:5891): Terminada operacion
+[DEBUG] 11:35:21:576 FM9/(5889:5891): Trayendo linea escriptorio
+[DEBUG] 11:35:21:576 FM9/(5889:5891): Se pide linea 5 para escriptorio scripts/complejo.escriptorio
+[DEBUG] 11:35:21:576 FM9/(5889:5891): Linea: concentrar
+[INFO] 11:35:21:576 FM9/(5889:5891): Terminada operacion
+[DEBUG] 11:35:21:576 FM9/(5889:5891): Trayendo linea escriptorio
+[DEBUG] 11:35:21:576 FM9/(5889:5891): Se pide linea 6 para escriptorio scripts/complejo.escriptorio
+[DEBUG] 11:35:21:577 FM9/(5889:5891): Linea: asignar /equipos/Rafaela 3 Promedio: 91
+[INFO] 11:35:21:577 FM9/(5889:5891): Terminada operacion
+[DEBUG] 11:35:21:577 FM9/(5889:5891): Asignando datos en linea Nro 3
+[DEBUG] 11:35:21:577 FM9/(5889:5891): Escribiendo: Promedio: 91. En: /equipos/Rafaela 
+[DEBUG] 11:35:21:577 FM9/(5889:5891): Asignados datos con exito
+[INFO] 11:35:21:577 FM9/(5889:5891): Terminada operacion
+[DEBUG] 11:35:21:577 FM9/(5889:5891): Trayendo linea escriptorio
+[DEBUG] 11:35:21:577 FM9/(5889:5891): Se pide linea 7 para escriptorio scripts/complejo.escriptorio
+[DEBUG] 11:35:21:577 FM9/(5889:5891): Linea: concentrar
+[INFO] 11:35:21:577 FM9/(5889:5891): Terminada operacion
+[DEBUG] 11:35:21:577 FM9/(5889:5891): Trayendo linea escriptorio
+[DEBUG] 11:35:21:577 FM9/(5889:5891): Se pide linea 8 para escriptorio scripts/complejo.escriptorio
+[DEBUG] 11:35:21:577 FM9/(5889:5891): Linea: flush /equipos/Rafaela
+[INFO] 11:35:21:577 FM9/(5889:5891): Terminada operacion
+[DEBUG] 11:35:21:633 FM9/(5889:5891): Obteniendo datos de memoria
+[INFO] 11:35:21:634 FM9/(5889:5891): Datos enviados: Atletico Rafaela
+Estrella: Juan M. Suligoy
+Promedio: 91
+
+
+ 
+[INFO] 11:35:21:634 FM9/(5889:5891): Terminada operacion
+[DEBUG] 11:35:22:581 FM9/(5889:5891): Trayendo linea escriptorio
+[DEBUG] 11:35:22:582 FM9/(5889:5891): Se pide linea 9 para escriptorio scripts/complejo.escriptorio
+[DEBUG] 11:35:22:582 FM9/(5889:5891): Linea: close /equipos/Rafaela
+[INFO] 11:35:22:582 FM9/(5889:5891): Terminada operacion
+[DEBUG] 11:35:22:582 FM9/(5889:5891): Liberando memoria para archivo /equipos/Rafaela
+[INFO] 11:35:22:582 FM9/(5889:5891): Borrado archivo /equipos/Rafaela de memoria
+[INFO] 11:35:22:582 FM9/(5889:5891): Terminada operacion
+[DEBUG] 11:35:22:582 FM9/(5889:5891): Trayendo linea escriptorio
+[DEBUG] 11:35:22:582 FM9/(5889:5891): Se pide linea 10 para escriptorio scripts/complejo.escriptorio
+[DEBUG] 11:35:22:582 FM9/(5889:5891): Linea: concentrar
+[INFO] 11:35:22:582 FM9/(5889:5891): Terminada operacion
+[DEBUG] 11:35:22:582 FM9/(5889:5891): Trayendo linea escriptorio
+[DEBUG] 11:35:22:582 FM9/(5889:5891): Se pide linea 11 para escriptorio scripts/complejo.escriptorio
+[INFO] 11:48:11:690 FM9/(6275:6275): Utilizando segmentacion paginada
+[DEBUG] 11:48:14:822 FM9/(6275:6276): Handshake de: DAM
+[DEBUG] 11:48:14:822 FM9/(6275:6276): Se agrego a las conexiones DAM
+[DEBUG] 11:48:14:842 FM9/(6275:6284): Escuchando nuevo cliente en 5
+[DEBUG] 11:48:17:524 FM9/(6275:6276): Handshake de: CPU
+[DEBUG] 11:48:17:524 FM9/(6275:6276): Se agrego a las conexiones CPU
+[DEBUG] 11:48:17:524 FM9/(6275:6289): Escuchando nuevo cliente en 7
+[DEBUG] 11:48:28:104 FM9/(6275:6277): Guardando escriptorio 1 en memoria
+[DEBUG] 11:48:28:104 FM9/(6275:6277): Guardando en segmentacion paginada
+[DEBUG] 11:48:28:104 FM9/(6275:6277): Datos guardados
+[INFO] 11:48:28:104 FM9/(6275:6277): Agregado proceso 1 a tabla de procesos
+[DEBUG] 11:48:28:104 FM9/(6275:6277): Enviando 0 al cargar nuevo DTB
+[INFO] 11:48:28:104 FM9/(6275:6277): Terminada operacion
+[DEBUG] 11:48:28:364 FM9/(6275:6277): Trayendo linea escriptorio
+[DEBUG] 11:48:28:364 FM9/(6275:6277): Se pide linea 0 para escriptorio scripts/complejo.escriptorio
+[DEBUG] 11:48:28:364 FM9/(6275:6277): Linea: crear /equipos/Rafaela 5
+[INFO] 11:48:28:364 FM9/(6275:6277): Terminada operacion
+[DEBUG] 11:48:29:393 FM9/(6275:6277): Trayendo linea escriptorio
+[DEBUG] 11:48:29:393 FM9/(6275:6277): Se pide linea 1 para escriptorio scripts/complejo.escriptorio
+[DEBUG] 11:48:29:393 FM9/(6275:6277): Linea: abrir /equipos/Rafaela
+[INFO] 11:48:29:393 FM9/(6275:6277): Terminada operacion
+[DEBUG] 11:48:30:144 FM9/(6275:6277): Guardando datos en memoria
+[DEBUG] 11:48:30:144 FM9/(6275:6277): Guardando en segmentacion paginada
+[DEBUG] 11:48:30:144 FM9/(6275:6277): Datos guardados
+[DEBUG] 11:48:30:144 FM9/(6275:6277): Enviando 0 al guardar los datos
+[INFO] 11:48:30:144 FM9/(6275:6277): Terminada operacion
+[DEBUG] 11:48:30:414 FM9/(6275:6277): Trayendo linea escriptorio
+[DEBUG] 11:48:30:414 FM9/(6275:6277): Se pide linea 2 para escriptorio scripts/complejo.escriptorio
+[DEBUG] 11:48:30:414 FM9/(6275:6277): Linea: asignar /equipos/Rafaela 1 Atletico Rafaela
+[INFO] 11:48:30:414 FM9/(6275:6277): Terminada operacion
+[DEBUG] 11:48:30:414 FM9/(6275:6277): Asignando datos en linea Nro 1
+[DEBUG] 11:48:30:414 FM9/(6275:6277): Escribiendo: Atletico Rafaela. En: /equipos/Rafaela 
+[DEBUG] 11:48:30:414 FM9/(6275:6277): Asignados datos con exito
+[INFO] 11:48:30:414 FM9/(6275:6277): Terminada operacion
+[DEBUG] 11:48:30:414 FM9/(6275:6277): Trayendo linea escriptorio
+[DEBUG] 11:48:30:414 FM9/(6275:6277): Se pide linea 3 para escriptorio scripts/complejo.escriptorio
+[DEBUG] 11:48:30:414 FM9/(6275:6277): Linea: concentrar
+[INFO] 11:48:30:414 FM9/(6275:6277): Terminada operacion
+[DEBUG] 11:48:30:414 FM9/(6275:6277): Trayendo linea escriptorio
+[DEBUG] 11:48:30:414 FM9/(6275:6277): Se pide linea 4 para escriptorio scripts/complejo.escriptorio
+[DEBUG] 11:48:30:414 FM9/(6275:6277): Linea: asignar /equipos/Rafaela 2 Estrella: Juan M. Suligoy
+[INFO] 11:48:30:414 FM9/(6275:6277): Terminada operacion
+[DEBUG] 11:48:30:414 FM9/(6275:6277): Asignando datos en linea Nro 2
+[DEBUG] 11:48:30:414 FM9/(6275:6277): Escribiendo: Estrella: Juan M. Suligoy. En: /equipos/Rafaela 
+[DEBUG] 11:48:30:414 FM9/(6275:6277): Asignados datos con exito
+[INFO] 11:48:30:414 FM9/(6275:6277): Terminada operacion
+[DEBUG] 11:48:30:414 FM9/(6275:6277): Trayendo linea escriptorio
+[DEBUG] 11:48:30:415 FM9/(6275:6277): Se pide linea 5 para escriptorio scripts/complejo.escriptorio
+[DEBUG] 11:48:30:415 FM9/(6275:6277): Linea: concentrar
+[INFO] 11:48:30:415 FM9/(6275:6277): Terminada operacion
+[DEBUG] 11:48:30:415 FM9/(6275:6277): Trayendo linea escriptorio
+[DEBUG] 11:48:30:415 FM9/(6275:6277): Se pide linea 6 para escriptorio scripts/complejo.escriptorio
+[DEBUG] 11:48:30:415 FM9/(6275:6277): Linea: asignar /equipos/Rafaela 3 Promedio: 91
+[INFO] 11:48:30:415 FM9/(6275:6277): Terminada operacion
+[DEBUG] 11:48:30:415 FM9/(6275:6277): Asignando datos en linea Nro 3
+[DEBUG] 11:48:30:415 FM9/(6275:6277): Escribiendo: Promedio: 91. En: /equipos/Rafaela 
+[DEBUG] 11:48:30:415 FM9/(6275:6277): Asignados datos con exito
+[INFO] 11:48:30:415 FM9/(6275:6277): Terminada operacion
+[DEBUG] 11:48:30:415 FM9/(6275:6277): Trayendo linea escriptorio
+[DEBUG] 11:48:30:415 FM9/(6275:6277): Se pide linea 7 para escriptorio scripts/complejo.escriptorio
+[DEBUG] 11:48:30:415 FM9/(6275:6277): Linea: concentrar
+[INFO] 11:48:30:415 FM9/(6275:6277): Terminada operacion
+[DEBUG] 11:48:30:415 FM9/(6275:6277): Trayendo linea escriptorio
+[DEBUG] 11:48:30:415 FM9/(6275:6277): Se pide linea 8 para escriptorio scripts/complejo.escriptorio
+[DEBUG] 11:48:30:415 FM9/(6275:6277): Linea: flush /equipos/Rafaela
+[INFO] 11:48:30:415 FM9/(6275:6277): Terminada operacion
+[DEBUG] 11:48:30:474 FM9/(6275:6277): Obteniendo datos de memoria
+[INFO] 11:48:30:474 FM9/(6275:6277): Datos enviados: Atletico Rafaela
+Estrella: Juan M. Suligoy
+Promedio: 91
+
+
+ 
+[INFO] 11:48:30:474 FM9/(6275:6277): Terminada operacion
+[DEBUG] 11:48:31:423 FM9/(6275:6277): Trayendo linea escriptorio
+[DEBUG] 11:48:31:424 FM9/(6275:6277): Se pide linea 9 para escriptorio scripts/complejo.escriptorio
+[DEBUG] 11:48:31:424 FM9/(6275:6277): Linea: close /equipos/Rafaela
+[INFO] 11:48:31:424 FM9/(6275:6277): Terminada operacion
+[DEBUG] 11:48:31:424 FM9/(6275:6277): Liberando memoria para archivo /equipos/Rafaela
+[INFO] 11:48:31:424 FM9/(6275:6277): Borrado archivo /equipos/Rafaela de memoria
+[INFO] 11:48:31:424 FM9/(6275:6277): Terminada operacion
+[DEBUG] 11:48:31:424 FM9/(6275:6277): Trayendo linea escriptorio
+[DEBUG] 11:48:31:424 FM9/(6275:6277): Se pide linea 10 para escriptorio scripts/complejo.escriptorio
+[DEBUG] 11:48:31:424 FM9/(6275:6277): Linea: concentrar
+[INFO] 11:48:31:424 FM9/(6275:6277): Terminada operacion
+[DEBUG] 11:48:31:424 FM9/(6275:6277): Trayendo linea escriptorio
+[DEBUG] 11:48:31:424 FM9/(6275:6277): Se pide linea 11 para escriptorio scripts/complejo.escriptorio
+[INFO] 12:15:58:266 FM9/(7790:7790): Utilizando segmentacion paginada
+[DEBUG] 12:16:04:465 FM9/(7790:7791): Handshake de: DAM
+[DEBUG] 12:16:04:465 FM9/(7790:7791): Se agrego a las conexiones DAM
+[DEBUG] 12:16:04:474 FM9/(7790:7798): Escuchando nuevo cliente en 5
+[DEBUG] 12:16:08:541 FM9/(7790:7791): Handshake de: CPU
+[DEBUG] 12:16:08:542 FM9/(7790:7791): Se agrego a las conexiones CPU
+[DEBUG] 12:16:08:542 FM9/(7790:7806): Escuchando nuevo cliente en 7
+[DEBUG] 12:16:19:945 FM9/(7790:7792): Guardando escriptorio 1 en memoria
+[DEBUG] 12:16:19:945 FM9/(7790:7792): Guardando en segmentacion paginada
+[DEBUG] 12:16:19:945 FM9/(7790:7792): Datos guardados
+[INFO] 12:16:19:945 FM9/(7790:7792): Agregado proceso 1 a tabla de procesos
+[DEBUG] 12:16:19:945 FM9/(7790:7792): Enviando 0 al cargar nuevo DTB
+[INFO] 12:16:19:945 FM9/(7790:7792): Terminada operacion
+[DEBUG] 12:16:20:212 FM9/(7790:7792): Trayendo linea escriptorio
+[DEBUG] 12:16:20:212 FM9/(7790:7792): Se pide linea 0 para escriptorio scripts/complejo.escriptorio
+[DEBUG] 12:16:20:213 FM9/(7790:7792): Linea: crear /equipos/Rafaela 5
+[INFO] 12:16:20:213 FM9/(7790:7792): Terminada operacion
+[INFO] 12:17:22:865 FM9/(7841:7841): Utilizando segmentacion paginada
+[DEBUG] 12:17:27:373 FM9/(7841:7842): Handshake de: DAM
+[DEBUG] 12:17:27:373 FM9/(7841:7842): Se agrego a las conexiones DAM
+[DEBUG] 12:17:27:384 FM9/(7841:7849): Escuchando nuevo cliente en 5
+[DEBUG] 12:17:30:994 FM9/(7841:7842): Handshake de: CPU
+[DEBUG] 12:17:30:994 FM9/(7841:7842): Se agrego a las conexiones CPU
+[DEBUG] 12:17:31:5 FM9/(7841:7854): Escuchando nuevo cliente en 7
+[DEBUG] 12:17:41:224 FM9/(7841:7843): Guardando escriptorio 1 en memoria
+[DEBUG] 12:17:41:224 FM9/(7841:7843): Guardando en segmentacion paginada
+[DEBUG] 12:17:41:224 FM9/(7841:7843): Datos guardados
+[INFO] 12:17:41:224 FM9/(7841:7843): Agregado proceso 1 a tabla de procesos
+[DEBUG] 12:17:41:224 FM9/(7841:7843): Enviando 0 al cargar nuevo DTB
+[INFO] 12:17:41:224 FM9/(7841:7843): Terminada operacion
+[DEBUG] 12:17:41:494 FM9/(7841:7843): Trayendo linea escriptorio
+[DEBUG] 12:17:41:494 FM9/(7841:7843): Se pide linea 0 para escriptorio scripts/complejo.escriptorio
+[DEBUG] 12:17:41:494 FM9/(7841:7843): Linea: crear /equipos/Rafaela 5
+[INFO] 12:17:41:494 FM9/(7841:7843): Terminada operacion
+[DEBUG] 12:17:42:514 FM9/(7841:7843): Trayendo linea escriptorio
+[DEBUG] 12:17:42:514 FM9/(7841:7843): Se pide linea 1 para escriptorio scripts/complejo.escriptorio
+[DEBUG] 12:17:42:514 FM9/(7841:7843): Linea: abrir /equipos/Rafaela
+[INFO] 12:17:42:514 FM9/(7841:7843): Terminada operacion
+[DEBUG] 12:17:43:264 FM9/(7841:7843): Guardando datos en memoria
+[DEBUG] 12:17:43:264 FM9/(7841:7843): Guardando en segmentacion paginada
+[DEBUG] 12:17:43:264 FM9/(7841:7843): Datos guardados
+[DEBUG] 12:17:43:264 FM9/(7841:7843): Enviando 0 al guardar los datos
+[INFO] 12:17:43:264 FM9/(7841:7843): Terminada operacion
+[DEBUG] 12:17:43:534 FM9/(7841:7843): Trayendo linea escriptorio
+[DEBUG] 12:17:43:534 FM9/(7841:7843): Se pide linea 2 para escriptorio scripts/complejo.escriptorio
+[DEBUG] 12:17:43:534 FM9/(7841:7843): Linea: asignar /equipos/Rafaela 1 Atletico Rafaela
+[INFO] 12:17:43:534 FM9/(7841:7843): Terminada operacion
+[DEBUG] 12:17:43:534 FM9/(7841:7843): Asignando datos en linea Nro 1
+[DEBUG] 12:17:43:534 FM9/(7841:7843): Escribiendo: Atletico Rafaela. En: /equipos/Rafaela 
+[DEBUG] 12:17:43:534 FM9/(7841:7843): Asignados datos con exito
+[INFO] 12:17:43:534 FM9/(7841:7843): Terminada operacion
+[DEBUG] 12:17:43:534 FM9/(7841:7843): Trayendo linea escriptorio
+[DEBUG] 12:17:43:534 FM9/(7841:7843): Se pide linea 3 para escriptorio scripts/complejo.escriptorio
+[DEBUG] 12:17:43:534 FM9/(7841:7843): Linea: concentrar
+[INFO] 12:17:43:534 FM9/(7841:7843): Terminada operacion
+[DEBUG] 12:17:43:535 FM9/(7841:7843): Trayendo linea escriptorio
+[DEBUG] 12:17:43:535 FM9/(7841:7843): Se pide linea 4 para escriptorio scripts/complejo.escriptorio
+[DEBUG] 12:17:43:535 FM9/(7841:7843): Linea: asignar /equipos/Rafaela 2 Estrella: Juan M. Suligoy
+[INFO] 12:17:43:535 FM9/(7841:7843): Terminada operacion
+[DEBUG] 12:17:43:535 FM9/(7841:7843): Asignando datos en linea Nro 2
+[DEBUG] 12:17:43:535 FM9/(7841:7843): Escribiendo: Estrella: Juan M. Suligoy. En: /equipos/Rafaela 
+[DEBUG] 12:17:43:535 FM9/(7841:7843): Asignados datos con exito
+[INFO] 12:17:43:535 FM9/(7841:7843): Terminada operacion
+[DEBUG] 12:17:43:535 FM9/(7841:7843): Trayendo linea escriptorio
+[DEBUG] 12:17:43:535 FM9/(7841:7843): Se pide linea 5 para escriptorio scripts/complejo.escriptorio
+[DEBUG] 12:17:43:535 FM9/(7841:7843): Linea: concentrar
+[INFO] 12:17:43:535 FM9/(7841:7843): Terminada operacion
+[DEBUG] 12:17:43:535 FM9/(7841:7843): Trayendo linea escriptorio
+[DEBUG] 12:17:43:535 FM9/(7841:7843): Se pide linea 6 para escriptorio scripts/complejo.escriptorio
+[DEBUG] 12:17:43:535 FM9/(7841:7843): Linea: asignar /equipos/Rafaela 3 Promedio: 91
+[INFO] 12:17:43:535 FM9/(7841:7843): Terminada operacion
+[DEBUG] 12:17:43:535 FM9/(7841:7843): Asignando datos en linea Nro 3
+[DEBUG] 12:17:43:535 FM9/(7841:7843): Escribiendo: Promedio: 91. En: /equipos/Rafaela 
+[DEBUG] 12:17:43:535 FM9/(7841:7843): Asignados datos con exito
+[INFO] 12:17:43:535 FM9/(7841:7843): Terminada operacion
+[DEBUG] 12:17:43:535 FM9/(7841:7843): Trayendo linea escriptorio
+[DEBUG] 12:17:43:535 FM9/(7841:7843): Se pide linea 7 para escriptorio scripts/complejo.escriptorio
+[DEBUG] 12:17:43:536 FM9/(7841:7843): Linea: concentrar
+[INFO] 12:17:43:536 FM9/(7841:7843): Terminada operacion
+[DEBUG] 12:17:43:536 FM9/(7841:7843): Trayendo linea escriptorio
+[DEBUG] 12:17:43:536 FM9/(7841:7843): Se pide linea 8 para escriptorio scripts/complejo.escriptorio
+[DEBUG] 12:17:43:536 FM9/(7841:7843): Linea: flush /equipos/Rafaela
+[INFO] 12:17:43:536 FM9/(7841:7843): Terminada operacion
+[DEBUG] 12:17:43:592 FM9/(7841:7843): Obteniendo datos de memoria
+[INFO] 12:17:43:592 FM9/(7841:7843): Datos enviados: Atletico Rafaela
+Estrella: Juan M. Suligoy
+Promedio: 91
+
+
+ 
+[INFO] 12:17:43:592 FM9/(7841:7843): Terminada operacion
+[DEBUG] 12:17:44:554 FM9/(7841:7843): Trayendo linea escriptorio
+[DEBUG] 12:17:44:554 FM9/(7841:7843): Se pide linea 9 para escriptorio scripts/complejo.escriptorio
+[DEBUG] 12:17:44:554 FM9/(7841:7843): Linea: close /equipos/Rafaela
+[INFO] 12:17:44:554 FM9/(7841:7843): Terminada operacion
+[DEBUG] 12:17:44:554 FM9/(7841:7843): Liberando memoria para archivo /equipos/Rafaela
+[INFO] 12:17:44:554 FM9/(7841:7843): Borrado archivo /equipos/Rafaela de memoria
+[INFO] 12:17:44:554 FM9/(7841:7843): Terminada operacion
+[DEBUG] 12:17:44:554 FM9/(7841:7843): Trayendo linea escriptorio
+[DEBUG] 12:17:44:554 FM9/(7841:7843): Se pide linea 10 para escriptorio scripts/complejo.escriptorio
+[DEBUG] 12:17:44:554 FM9/(7841:7843): Linea: concentrar
+[INFO] 12:17:44:554 FM9/(7841:7843): Terminada operacion
+[DEBUG] 12:17:44:554 FM9/(7841:7843): Trayendo linea escriptorio
+[DEBUG] 12:17:44:555 FM9/(7841:7843): Se pide linea 11 para escriptorio scripts/complejo.escriptorio
+[INFO] 12:17:44:555 FM9/(7841:7843): Es fin de archivo
+[INFO] 12:17:44:555 FM9/(7841:7843): Terminada operacion
+[DEBUG] 12:17:44:555 FM9/(7841:7843): Liberando el dtb 1 de memoria por pasar a EXIT
+[INFO] 12:17:44:555 FM9/(7841:7843): Liberando de la memoria el DTB
+[INFO] 12:17:44:555 FM9/(7841:7843): Borrado archivo scripts/complejo.escriptorio de memoria
+[INFO] 12:17:44:555 FM9/(7841:7843): Terminada operacion

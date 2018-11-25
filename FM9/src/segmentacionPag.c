@@ -309,7 +309,7 @@ respuestaDeObtencionDeMemoria* obtenerLineaSegPag(int idDTB, char* nombreArchivo
 			int desplazamientoLinea = lineaDentroDeLaPagina * tamanioLinea;
 			char* lineaConBasura = asignarMemoria(tamanioLinea);
 			memcpy(lineaConBasura, storage + desplazamientoPagina + desplazamientoLinea, tamanioLinea);
-			if(lineaConBasura[0]=='\n'){ //FIN DE ARCHIVO
+			if(lineaConBasura[0] =='\n' || lineaConBasura[0] == NULL){ //FIN DE ARCHIVO
 				respuesta->pudoObtener = 3;
 				free(lineaConBasura);
 			}else{
