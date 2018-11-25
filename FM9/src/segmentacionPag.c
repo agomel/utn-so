@@ -178,6 +178,9 @@ static RespuestaCargaSegPag* guardarDatosInternaSegPag(char* datos, char* nombre
 		if(lineasEnLaUltimaPagina != 0)
 			cantidadPaginas++;
 	}
+	if(lineasEnLaUltimaPagina == 0)
+		lineasEnLaUltimaPagina = tamanioPagina - 1;
+
 	if((cantidadMarcosTotales - tablaDePaginas->elements_count) >= cantidadPaginas){
 		respuesta->resultado = 0; //No hay error
 		ElementoTablaSegPag* elementoSegmento = crearElemTablaSegPag(nombreArchivo, totalLineas);

@@ -1,8 +1,0 @@
-[INFO] 02:33:02:990 MDJ/(13122:13122): creado archivo de pruebas para BOAF con nombre PGB1.bin
-[INFO] 02:33:02:991 MDJ/(13122:13122): creado archivo de pruebas para BOAF con nombre PGB2.bin
-[INFO] 02:33:02:993 MDJ/(13122:13122): creado archivo de pruebas para BOAF con nombre hola
-[INFO] 02:33:02:995 MDJ/(13122:13122): creado archivo de pruebas para BOAF con nombre chau
-[INFO] 02:33:02:996 MDJ/(13122:13122): creado archivo de pruebas para BOAF con nombre pedidor
-[INFO] 02:33:02:998 MDJ/(13122:13122): creado archivo de pruebas para BOAF con nombre bloqueate
-[INFO] 02:38:27:705 MDJ/(13122:13123): chauuuuu :)
-[INFO] 02:39:48:557 MDJ/(13256:13257): chauuuuu :)

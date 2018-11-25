@@ -1,176 +1,500 @@
-[DEBUG] 16:56:15:473 DAM/(5199:5216): Escuchando a cpu
-[DEBUG] 17:12:07:785 DAM/(5624:5627): Escuchando a cpu
-[DEBUG] 17:24:41:521 DAM/(5977:5980): Escuchando a cpu
-[DEBUG] 17:28:08:391 DAM/(6057:6083): Escuchando a cpu
-[DEBUG] 17:34:32:250 DAM/(6460:6476): Escuchando a cpu
-[INFO] 17:34:43:47 DAM/(6460:6465): Ehhh, voy a buscar hola para 1
-[DEBUG] 17:41:19:5 DAM/(6730:6741): Escuchando a cpu
-[DEBUG] 17:42:19:361 DAM/(6792:6809): Escuchando a cpu
-[DEBUG] 17:46:36:115 DAM/(6917:6941): Escuchando a cpu
-[DEBUG] 17:52:23:769 DAM/(7381:7384): Escuchando a cpu
-[DEBUG] 18:17:53:254 DAM/(8269:8278): Escuchando a cpu
-[DEBUG] 18:18:49:36 DAM/(8286:8296): Escuchando a cpu
-[DEBUG] 18:21:17:951 DAM/(8395:8404): Escuchando a cpu
-[ERROR] 18:14:13:307 DAM/(9794:9798): Header desconocido
-[DEBUG] 17:23:17:644 DAM/(4608:4610): Handshake de: c
-[DEBUG] 17:23:17:652 DAM/(4608:4636): Escuchando nuevo cliente en 9
-[INFO] 17:23:29:466 DAM/(4608:4611): Ehhh, voy a buscar hola para 1
-[INFO] 17:23:29:466 DAM/(4608:4611): enviando a emisor 7 char: e y escriptorio hola
-[INFO] 17:23:29:468 DAM/(4608:4611): Recibio la lista de direcciones
-[INFO] 17:23:29:468 DAM/(4608:4611): enviando mensaje a safa
-[INFO] 17:23:29:468 DAM/(4608:4611): Terminada operacion
-[INFO] 17:28:25:839 DAM/(4608:4611): Ehhh, voy a buscar hola para 2
-[INFO] 17:28:25:839 DAM/(4608:4611): enviando a emisor 7 char: e y escriptorio hola
-[INFO] 17:28:25:840 DAM/(4608:4611): Recibio la lista de direcciones
-[INFO] 17:28:25:840 DAM/(4608:4611): enviando mensaje a safa
-[INFO] 17:28:25:840 DAM/(4608:4611): Terminada operacion
-[INFO] 17:28:32:562 DAM/(4608:4611): Ehhh, voy a buscar chau para 3
-[INFO] 17:28:32:562 DAM/(4608:4611): enviando a emisor 7 char: e y escriptorio chau
-[INFO] 17:28:32:562 DAM/(4608:4611): Recibio la lista de direcciones
-[INFO] 17:28:32:563 DAM/(4608:4611): enviando mensaje a safa
-[INFO] 17:28:32:563 DAM/(4608:4611): Terminada operacion
-[INFO] 17:28:37:875 DAM/(4608:4611): Ehhh, voy a buscar daleeeeeeee para 4
-[INFO] 17:28:37:875 DAM/(4608:4611): enviando a emisor 7 char: e y escriptorio daleeeeeeee
-[INFO] 17:28:37:875 DAM/(4608:4611): Recibio la lista de direcciones
-[INFO] 17:28:37:875 DAM/(4608:4611): enviando mensaje a safa
-[INFO] 17:28:37:875 DAM/(4608:4611): Terminada operacion
-[DEBUG] 17:45:42:972 DAM/(5417:5421): Handshake de: c
-[DEBUG] 17:45:42:975 DAM/(5417:5427): Escuchando nuevo cliente en 9
-[INFO] 17:45:48:452 DAM/(5417:5422): Ehhh, voy a buscar hola para 1
-[INFO] 17:45:48:452 DAM/(5417:5422): enviando a emisor 7 char: e y escriptorio hola
-[INFO] 17:45:48:453 DAM/(5417:5422): Recibio la lista de direcciones
-[INFO] 17:45:48:453 DAM/(5417:5422): enviando mensaje a safa
-[INFO] 17:45:48:453 DAM/(5417:5422): Terminada operacion
-[DEBUG] 17:57:20:383 DAM/(5867:5871): Handshake de: CPU
-[DEBUG] 17:57:20:393 DAM/(5867:5876): Escuchando nuevo cliente en 9
-[ERROR] 17:57:36:382 DAM/(5867:5872): Header desconocido
-[INFO] 17:57:36:382 DAM/(5867:5872): Terminada operacion
-[DEBUG] 17:59:59:831 DAM/(6150:6151): Handshake de: c
-[DEBUG] 17:59:59:834 DAM/(6150:6159): Escuchando nuevo cliente en 9
-[ERROR] 18:00:01:513 DAM/(6150:6152): Header desconocido
-[INFO] 18:00:01:514 DAM/(6150:6152): Terminada operacion
-[DEBUG] 18:02:14:899 DAM/(6461:6464): Handshake de: CPU
-[DEBUG] 18:02:14:901 DAM/(6461:6470): Escuchando nuevo cliente en 9
-[INFO] 18:02:19:555 DAM/(6461:6465): Ehhh, voy a buscar hola para 1
-[INFO] 18:02:19:556 DAM/(6461:6465): enviando a emisor 7 char: e y escriptorio hola
-[INFO] 18:02:19:557 DAM/(6461:6465): Recibio la lista de direcciones
-[INFO] 18:02:19:557 DAM/(6461:6465): enviando mensaje a safa
-[INFO] 18:02:19:557 DAM/(6461:6465): Terminada operacion
-[INFO] 18:02:28:480 DAM/(6461:6465): Ehhh, voy a buscar putoelquelee para 2
-[INFO] 18:02:28:480 DAM/(6461:6465): enviando a emisor 7 char: e y escriptorio putoelquelee
-[INFO] 18:02:28:481 DAM/(6461:6465): Recibio la lista de direcciones
-[INFO] 18:02:28:481 DAM/(6461:6465): enviando mensaje a safa
-[INFO] 18:02:28:481 DAM/(6461:6465): Terminada operacion
-[DEBUG] 18:06:47:65 DAM/(6661:6662): Handshake de: CPU
-[DEBUG] 18:06:47:72 DAM/(6661:6670): Escuchando nuevo cliente en 9
-[INFO] 18:06:58:529 DAM/(6661:6663): Ehhh, voy a buscar abcd para 1
-[INFO] 18:06:58:529 DAM/(6661:6663): enviando a emisor 7 char: e y escriptorio abcd
-[INFO] 18:06:58:530 DAM/(6661:6663): Recibio la lista de direcciones
-[INFO] 18:06:58:530 DAM/(6661:6663): enviando mensaje a safa
-[INFO] 18:06:58:530 DAM/(6661:6663): Terminada operacion
-[DEBUG] 18:24:16:290 DAM/(7106:7109): Handshake de: CPU
-[DEBUG] 18:24:16:307 DAM/(7106:7116): Escuchando nuevo cliente en 9
-[INFO] 18:24:21:155 DAM/(7106:7110): Ehhh, voy a buscar hola para 1
-[INFO] 18:24:21:155 DAM/(7106:7110): enviando a emisor 7 char: e y escriptorio hola
-[INFO] 18:24:21:156 DAM/(7106:7110): Recibio la lista de direcciones
-[INFO] 18:24:21:156 DAM/(7106:7110): enviando mensaje a safa
-[INFO] 18:24:21:156 DAM/(7106:7110): Terminada operacion
-[DEBUG] 18:25:56:650 DAM/(7184:7185): Handshake de: CPU
-[DEBUG] 18:25:56:666 DAM/(7184:7195): Escuchando nuevo cliente en 9
-[INFO] 18:26:03:182 DAM/(7184:7189): Ehhh, voy a buscar hola para 1
-[INFO] 18:26:03:182 DAM/(7184:7189): enviando a emisor 7 char: e y escriptorio hola
-[INFO] 18:26:03:183 DAM/(7184:7189): Recibio la lista de direcciones
-[INFO] 18:26:03:183 DAM/(7184:7189): enviando mensaje a safa
-[INFO] 18:26:03:183 DAM/(7184:7189): Terminada operacion
-[DEBUG] 18:27:09:983 DAM/(7247:7251): Handshake de: CPU
-[DEBUG] 18:27:09:989 DAM/(7247:7256): Escuchando nuevo cliente en 9
-[INFO] 18:27:15:97 DAM/(7247:7252): Ehhh, voy a buscar hola para 1
-[INFO] 18:27:15:98 DAM/(7247:7252): enviando a emisor 7 char: e y escriptorio hola
-[INFO] 18:27:15:99 DAM/(7247:7252): Recibio la lista de direcciones
-[INFO] 18:27:15:99 DAM/(7247:7252): enviando mensaje a safa
-[INFO] 18:27:15:99 DAM/(7247:7252): Terminada operacion
-[INFO] 18:28:50:947 DAM/(7247:7252): Ehhh, voy a buscar puto para 2
-[INFO] 18:28:50:947 DAM/(7247:7252): enviando a emisor 7 char: e y escriptorio puto
-[INFO] 18:28:50:948 DAM/(7247:7252): Recibio la lista de direcciones
-[INFO] 18:28:50:948 DAM/(7247:7252): enviando mensaje a safa
-[INFO] 18:28:50:948 DAM/(7247:7252): Terminada operacion
-[DEBUG] 18:29:52:361 DAM/(7326:7330): Handshake de: CPU
-[DEBUG] 18:29:52:374 DAM/(7326:7335): Escuchando nuevo cliente en 9
-[INFO] 18:29:59:559 DAM/(7326:7331): Ehhh, voy a buscar gato para 1
-[INFO] 18:29:59:559 DAM/(7326:7331): enviando a emisor 7 char: e y escriptorio gato
-[INFO] 18:29:59:560 DAM/(7326:7331): Recibio la lista de direcciones
-[INFO] 18:29:59:560 DAM/(7326:7331): enviando mensaje a safa
-[INFO] 18:29:59:560 DAM/(7326:7331): Terminada operacion
-[INFO] 18:30:07:201 DAM/(7326:7331): Ehhh, voy a buscar dalequedalee para 2
-[INFO] 18:30:07:201 DAM/(7326:7331): enviando a emisor 7 char: e y escriptorio dalequedalee
-[INFO] 18:30:07:203 DAM/(7326:7331): Recibio la lista de direcciones
-[INFO] 18:30:07:203 DAM/(7326:7331): enviando mensaje a safa
-[INFO] 18:30:07:203 DAM/(7326:7331): Terminada operacion
-[INFO] 18:30:12:679 DAM/(7326:7331): Ehhh, voy a buscar skereeee para 3
-[INFO] 18:30:12:679 DAM/(7326:7331): enviando a emisor 7 char: e y escriptorio skereeee
-[INFO] 18:30:12:679 DAM/(7326:7331): Recibio la lista de direcciones
-[INFO] 18:30:12:679 DAM/(7326:7331): enviando mensaje a safa
-[INFO] 18:30:12:679 DAM/(7326:7331): Terminada operacion
-[DEBUG] 18:36:13:207 DAM/(7594:7596): Handshake de: CPU
-[DEBUG] 18:36:13:226 DAM/(7594:7603): Escuchando nuevo cliente en 9
-[INFO] 18:36:36:315 DAM/(7594:7597): Ehhh, voy a buscar HOLAAAAA para 1
-[INFO] 18:36:36:315 DAM/(7594:7597): enviando a emisor 7 char: e y escriptorio HOLAAAAA
-[INFO] 18:36:36:315 DAM/(7594:7597): Recibio la lista de direcciones
-[INFO] 18:36:36:315 DAM/(7594:7597): enviando mensaje a safa
-[INFO] 18:36:36:316 DAM/(7594:7597): Terminada operacion
-[DEBUG] 23:46:33:46 DAM/(4029:4033): Handshake de: CPU
-[DEBUG] 23:46:33:56 DAM/(4029:4045): Escuchando nuevo cliente en 9
-[INFO] 23:46:43:790 DAM/(4029:4034): Ehhh, voy a buscar hola para 1
-[INFO] 23:46:43:790 DAM/(4029:4034): enviando a emisor 7 char: e y escriptorio hola
-[INFO] 23:46:43:790 DAM/(4029:4034): Recibio la lista de direcciones
-[INFO] 23:46:43:790 DAM/(4029:4034): enviando mensaje a safa
-[INFO] 23:46:43:791 DAM/(4029:4034): Terminada operacion
-[INFO] 23:46:51:162 DAM/(4029:4034): Ehhh, voy a buscar chauuuu para 2
-[INFO] 23:46:51:162 DAM/(4029:4034): enviando a emisor 7 char: e y escriptorio chauuuu
-[INFO] 23:46:51:163 DAM/(4029:4034): Recibio la lista de direcciones
-[INFO] 23:46:51:163 DAM/(4029:4034): enviando mensaje a safa
-[INFO] 23:46:51:163 DAM/(4029:4034): Terminada operacion
-[INFO] 23:46:59:656 DAM/(4029:4034): Ehhh, voy a buscar daleee para 3
-[INFO] 23:46:59:656 DAM/(4029:4034): enviando a emisor 7 char: e y escriptorio daleee
-[INFO] 23:46:59:657 DAM/(4029:4034): Recibio la lista de direcciones
-[INFO] 23:46:59:657 DAM/(4029:4034): enviando mensaje a safa
-[INFO] 23:46:59:657 DAM/(4029:4034): Terminada operacion
-[DEBUG] 23:57:23:765 DAM/(4648:4650): Handshake de: CPU
-[DEBUG] 23:57:23:778 DAM/(4648:4657): Escuchando nuevo cliente en 9
-[INFO] 23:57:32:724 DAM/(4648:4651): Ehhh, voy a buscar hola para 1
-[INFO] 23:57:32:724 DAM/(4648:4651): enviando a emisor 7 char: e y escriptorio hola
-[INFO] 23:57:32:727 DAM/(4648:4651): Recibio la lista de direcciones
-[INFO] 23:57:32:727 DAM/(4648:4651): enviando mensaje a safa
-[INFO] 23:57:32:727 DAM/(4648:4651): Terminada operacion
-[DEBUG] 23:59:03:37 DAM/(4734:4738): Handshake de: CPU
-[DEBUG] 23:59:03:52 DAM/(4734:4748): Escuchando nuevo cliente en 9
-[INFO] 23:59:08:838 DAM/(4734:4739): Ehhh, voy a buscar skereee para 1
-[INFO] 23:59:08:838 DAM/(4734:4739): enviando a emisor 7 char: e y escriptorio skereee
-[INFO] 23:59:08:865 DAM/(4734:4739): Recibio la lista de direcciones
-[INFO] 23:59:08:865 DAM/(4734:4739): enviando mensaje a safa
-[INFO] 23:59:08:865 DAM/(4734:4739): Terminada operacion
-[DEBUG] 00:04:12:231 DAM/(4828:4832): Handshake de: CPU
-[DEBUG] 00:04:12:252 DAM/(4828:4837): Escuchando nuevo cliente en 9
-[INFO] 00:04:19:154 DAM/(4828:4833): Ehhh, voy a buscar aaaaaa para 1
-[INFO] 00:04:19:154 DAM/(4828:4833): enviando a emisor 7 char: e y escriptorio aaaaaa
-[INFO] 00:04:29:158 DAM/(4828:4833): Recibio la lista de direcciones
-[INFO] 00:04:29:158 DAM/(4828:4833): enviando mensaje a safa
-[INFO] 00:04:29:158 DAM/(4828:4833): Terminada operacion
-[INFO] 00:04:43:659 DAM/(4828:4833): Ehhh, voy a buscar rekereee para 2
-[INFO] 00:04:43:659 DAM/(4828:4833): enviando a emisor 7 char: e y escriptorio rekereee
-[INFO] 00:04:53:664 DAM/(4828:4833): Recibio la lista de direcciones
-[INFO] 00:04:53:664 DAM/(4828:4833): enviando mensaje a safa
-[INFO] 00:04:53:664 DAM/(4828:4833): Terminada operacion
-[DEBUG] 00:10:04:798 DAM/(4931:4935): Handshake de: CPU
-[DEBUG] 00:10:04:801 DAM/(4931:4940): Escuchando nuevo cliente en 9
-[INFO] 00:10:11:616 DAM/(4931:4936): Ehhh, voy a buscar wwww para 1
-[INFO] 00:10:11:616 DAM/(4931:4936): enviando a emisor 7 char: e y escriptorio wwww
-[INFO] 00:10:21:619 DAM/(4931:4936): Recibio la lista de direcciones
-[INFO] 00:10:21:619 DAM/(4931:4936): enviando mensaje a safa
-[INFO] 00:10:21:620 DAM/(4931:4936): Terminada operacion
-[DEBUG] 17:09:19:982 DAM/(7618:7622): Handshake de: CPU
-[DEBUG] 17:09:19:996 DAM/(7618:7627): Escuchando nuevo cliente en 9
-[ERROR] 17:10:55:968 DAM/(7618:7623): Header desconocido
-[INFO] 17:10:55:968 DAM/(7618:7623): Terminada operacion
-[DEBUG] 17:11:47:440 DAM/(7801:7804): Handshake de: CPU
-[DEBUG] 17:11:47:445 DAM/(7801:7810): Escuchando nuevo cliente en 9
+[DEBUG] 01:39:10:531 DAM/(10364:10368): Handshake de: CPU
+[DEBUG] 01:39:10:532 DAM/(10364:10394): Escuchando nuevo cliente en 9
+[INFO] 01:39:30:962 DAM/(10364:10369): Ehhh, voy a buscar scripts/io_bound.escriptorio para 1
+[INFO] 01:39:30:962 DAM/(10364:10369): Enviando a MDJ que valide escriptorio scripts/io_bound.escriptorio
+[DEBUG] 01:39:30:962 DAM/(10364:10369): Esperando repuesta validacion de MDJ
+[DEBUG] 01:39:30:962 DAM/(10364:10369): Recibida respuesta 0 de MDJ
+[INFO] 01:39:31:963 DAM/(10364:10369): recibi abrir /scripts/cpu_bound.escriptorio
+concentrar
+concentrar
+close /scripts/cpu_bound.escriptorio
+concentrar
+concentrar
+abrir /scripts/cpu_bound.escriptorio
+close /scripts/cpu_bound.escriptorio
+concentrar
+concentrar
+
+
+[INFO] 01:39:31:964 DAM/(10364:10369): enviando mensaje a safa
+[INFO] 01:39:31:964 DAM/(10364:10369): Terminada operacion
+[INFO] 01:39:32:491 DAM/(10364:10369): Ehhh, voy a buscar /scripts/cpu_bound.escriptorio para 1
+[INFO] 01:39:32:491 DAM/(10364:10369): Enviando a MDJ que valide escriptorio /scripts/cpu_bound.escriptorio
+[DEBUG] 01:39:32:491 DAM/(10364:10369): Esperando repuesta validacion de MDJ
+[DEBUG] 01:39:32:971 DAM/(10364:10369): Recibida respuesta 0 de MDJ
+[INFO] 01:39:33:981 DAM/(10364:10369): recibi concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+
+
+[INFO] 01:39:33:981 DAM/(10364:10369): enviando mensaje a safa
+[INFO] 01:39:33:981 DAM/(10364:10369): Terminada operacion
+[INFO] 01:39:34:497 DAM/(10364:10369): Ehhh, voy a buscar /scripts/cpu_bound.escriptorio para 1
+[INFO] 01:39:34:497 DAM/(10364:10369): Enviando a MDJ que valide escriptorio /scripts/cpu_bound.escriptorio
+[DEBUG] 01:39:34:497 DAM/(10364:10369): Esperando repuesta validacion de MDJ
+[DEBUG] 01:39:34:991 DAM/(10364:10369): Recibida respuesta 0 de MDJ
+[INFO] 01:39:35:1 DAM/(10364:10369): recibi concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+
+
+[INFO] 01:39:35:1 DAM/(10364:10369): enviando mensaje a safa
+[INFO] 01:39:35:1 DAM/(10364:10369): Terminada operacion
+[INFO] 01:40:37:797 DAM/(10364:10369): Ehhh, voy a buscar scripts/io_bound.escriptorio para 2
+[INFO] 01:40:37:797 DAM/(10364:10369): Enviando a MDJ que valide escriptorio scripts/io_bound.escriptorio
+[DEBUG] 01:40:37:797 DAM/(10364:10369): Esperando repuesta validacion de MDJ
+[DEBUG] 01:40:37:797 DAM/(10364:10369): Recibida respuesta 0 de MDJ
+[INFO] 01:40:38:802 DAM/(10364:10369): recibi abrir /scripts/cpu_bound.escriptorio
+concentrar
+concentrar
+close /scripts/cpu_bound.escriptorio
+concentrar
+concentrar
+abrir /scripts/cpu_bound.escriptorio
+close /scripts/cpu_bound.escriptorio
+concentrar
+concentrar
+
+
+[INFO] 01:40:38:802 DAM/(10364:10369): enviando mensaje a safa
+[INFO] 01:40:38:802 DAM/(10364:10369): Terminada operacion
+[INFO] 01:40:39:321 DAM/(10364:10369): Ehhh, voy a buscar /scripts/cpu_bound.escriptorio para 2
+[INFO] 01:40:39:321 DAM/(10364:10369): Enviando a MDJ que valide escriptorio /scripts/cpu_bound.escriptorio
+[DEBUG] 01:40:39:322 DAM/(10364:10369): Esperando repuesta validacion de MDJ
+[DEBUG] 01:40:39:802 DAM/(10364:10369): Recibida respuesta 0 de MDJ
+[INFO] 01:40:40:804 DAM/(10364:10369): recibi concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+
+
+[INFO] 01:40:40:804 DAM/(10364:10369): enviando mensaje a safa
+[INFO] 01:40:40:804 DAM/(10364:10369): Terminada operacion
+[INFO] 01:40:40:804 DAM/(10364:10369): Ehhh, voy a buscar scripts/ para 3
+[INFO] 01:40:40:804 DAM/(10364:10369): Enviando a MDJ que valide escriptorio scripts/
+[DEBUG] 01:40:40:805 DAM/(10364:10369): Esperando repuesta validacion de MDJ
+[DEBUG] 01:40:41:813 DAM/(10364:10369): Recibida respuesta 0 de MDJ
+[DEBUG] 01:42:38:863 DAM/(10475:10479): Handshake de: CPU
+[DEBUG] 01:42:38:863 DAM/(10475:10484): Escuchando nuevo cliente en 9
+[INFO] 01:42:41:976 DAM/(10475:10480): Ehhh, voy a buscar scripts/ para 1
+[INFO] 01:42:41:976 DAM/(10475:10480): Enviando a MDJ que valide escriptorio scripts/
+[DEBUG] 01:42:41:976 DAM/(10475:10480): Esperando repuesta validacion de MDJ
+[DEBUG] 01:42:41:976 DAM/(10475:10480): Recibida respuesta 0 de MDJ
+[DEBUG] 01:43:16:925 DAM/(10518:10522): Handshake de: CPU
+[DEBUG] 01:43:16:925 DAM/(10518:10527): Escuchando nuevo cliente en 9
+[INFO] 01:44:10:954 DAM/(10518:10523): Ehhh, voy a buscar scripts/io_bound.escriptorio para 1
+[INFO] 01:44:10:954 DAM/(10518:10523): Enviando a MDJ que valide escriptorio scripts/io_bound.escriptorio
+[DEBUG] 01:44:10:954 DAM/(10518:10523): Esperando repuesta validacion de MDJ
+[DEBUG] 01:44:10:954 DAM/(10518:10523): Recibida respuesta 0 de MDJ
+[INFO] 01:44:11:964 DAM/(10518:10523): recibi abrir /scripts/cpu_bound.escriptorio
+concentrar
+concentrar
+close /scripts/cpu_bound.escriptorio
+concentrar
+concentrar
+abrir /scripts/cpu_bound.escriptorio
+close /scripts/cpu_bound.escriptorio
+concentrar
+concentrar
+
+
+[INFO] 01:44:11:964 DAM/(10518:10523): enviando mensaje a safa
+[INFO] 01:44:11:964 DAM/(10518:10523): Terminada operacion
+[INFO] 01:44:12:484 DAM/(10518:10523): Ehhh, voy a buscar /scripts/cpu_bound.escriptorio para 1
+[INFO] 01:44:12:484 DAM/(10518:10523): Enviando a MDJ que valide escriptorio /scripts/cpu_bound.escriptorio
+[DEBUG] 01:44:12:484 DAM/(10518:10523): Esperando repuesta validacion de MDJ
+[DEBUG] 01:44:12:967 DAM/(10518:10523): Recibida respuesta 0 de MDJ
+[INFO] 01:44:13:970 DAM/(10518:10523): recibi concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+
+
+[INFO] 01:44:13:971 DAM/(10518:10523): enviando mensaje a safa
+[INFO] 01:44:13:971 DAM/(10518:10523): Terminada operacion
+[INFO] 01:44:14:489 DAM/(10518:10523): Ehhh, voy a buscar /scripts/cpu_bound.escriptorio para 1
+[INFO] 01:44:14:490 DAM/(10518:10523): Enviando a MDJ que valide escriptorio /scripts/cpu_bound.escriptorio
+[DEBUG] 01:44:14:490 DAM/(10518:10523): Esperando repuesta validacion de MDJ
+[DEBUG] 01:44:14:974 DAM/(10518:10523): Recibida respuesta 0 de MDJ
+[INFO] 01:44:15:979 DAM/(10518:10523): recibi concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+
+
+[INFO] 01:44:15:979 DAM/(10518:10523): enviando mensaje a safa
+[INFO] 01:44:15:979 DAM/(10518:10523): Terminada operacion
+[INFO] 01:44:17:744 DAM/(10518:10523): Ehhh, voy a buscar scripts/ccpu_b para 2
+[INFO] 01:44:17:744 DAM/(10518:10523): Enviando a MDJ que valide escriptorio scripts/ccpu_b
+[DEBUG] 01:44:17:744 DAM/(10518:10523): Esperando repuesta validacion de MDJ
+[DEBUG] 01:44:17:744 DAM/(10518:10523): Recibida respuesta 10001 de MDJ
+[INFO] 01:44:17:744 DAM/(10518:10523): Terminada operacion
+[INFO] 01:45:51:99 DAM/(10518:10523): Ehhh, voy a buscar scripts/io_bound.escriptorio para 3
+[INFO] 01:45:51:99 DAM/(10518:10523): Enviando a MDJ que valide escriptorio scripts/io_bound.escriptorio
+[DEBUG] 01:45:51:100 DAM/(10518:10523): Esperando repuesta validacion de MDJ
+[DEBUG] 01:45:51:100 DAM/(10518:10523): Recibida respuesta 0 de MDJ
+[INFO] 01:45:52:107 DAM/(10518:10523): recibi abrir /scripts/cpu_bound.escriptorio
+concentrar
+concentrar
+close /scripts/cpu_bound.escriptorio
+concentrar
+concentrar
+abrir /scripts/cpu_bound.escriptorio
+close /scripts/cpu_bound.escriptorio
+concentrar
+concentrar
+
+
+[INFO] 01:45:52:108 DAM/(10518:10523): enviando mensaje a safa
+[INFO] 01:45:52:108 DAM/(10518:10523): Terminada operacion
+[INFO] 01:45:52:619 DAM/(10518:10523): Ehhh, voy a buscar /scripts/cpu_bound.escriptorio para 3
+[INFO] 01:45:52:619 DAM/(10518:10523): Enviando a MDJ que valide escriptorio /scripts/cpu_bound.escriptorio
+[DEBUG] 01:45:52:619 DAM/(10518:10523): Esperando repuesta validacion de MDJ
+[DEBUG] 01:45:53:115 DAM/(10518:10523): Recibida respuesta 0 de MDJ
+[INFO] 01:45:54:125 DAM/(10518:10523): recibi concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+
+
+[INFO] 01:45:54:125 DAM/(10518:10523): enviando mensaje a safa
+[INFO] 01:45:54:125 DAM/(10518:10523): Terminada operacion
+[INFO] 01:45:54:635 DAM/(10518:10523): Ehhh, voy a buscar /scripts/cpu_bound.escriptorio para 3
+[INFO] 01:45:54:635 DAM/(10518:10523): Enviando a MDJ que valide escriptorio /scripts/cpu_bound.escriptorio
+[DEBUG] 01:45:54:635 DAM/(10518:10523): Esperando repuesta validacion de MDJ
+[DEBUG] 01:45:55:129 DAM/(10518:10523): Recibida respuesta 0 de MDJ
+[INFO] 01:45:56:138 DAM/(10518:10523): recibi concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+
+
+[INFO] 01:45:56:138 DAM/(10518:10523): enviando mensaje a safa
+[INFO] 01:45:56:138 DAM/(10518:10523): Terminada operacion
+[INFO] 01:45:58:905 DAM/(10518:10523): Ehhh, voy a buscar scripts/cput_bound.escriptorio para 4
+[INFO] 01:45:58:905 DAM/(10518:10523): Enviando a MDJ que valide escriptorio scripts/cput_bound.escriptorio
+[DEBUG] 01:45:58:905 DAM/(10518:10523): Esperando repuesta validacion de MDJ
+[DEBUG] 01:45:58:905 DAM/(10518:10523): Recibida respuesta 10001 de MDJ
+[INFO] 01:45:58:905 DAM/(10518:10523): Terminada operacion
+[INFO] 01:47:09:942 DAM/(10518:10523): Ehhh, voy a buscar scripts/io_bound.escriptorio para 5
+[INFO] 01:47:09:942 DAM/(10518:10523): Enviando a MDJ que valide escriptorio scripts/io_bound.escriptorio
+[DEBUG] 01:47:09:942 DAM/(10518:10523): Esperando repuesta validacion de MDJ
+[DEBUG] 01:47:09:942 DAM/(10518:10523): Recibida respuesta 0 de MDJ
+[INFO] 01:47:10:946 DAM/(10518:10523): recibi abrir /scripts/cpu_bound.escriptorio
+concentrar
+concentrar
+close /scripts/cpu_bound.escriptorio
+concentrar
+concentrar
+abrir /scripts/cpu_bound.escriptorio
+close /scripts/cpu_bound.escriptorio
+concentrar
+concentrar
+
+
+[INFO] 01:47:10:946 DAM/(10518:10523): enviando mensaje a safa
+[INFO] 01:47:10:946 DAM/(10518:10523): Terminada operacion
+[INFO] 01:47:10:946 DAM/(10518:10523): Ehhh, voy a buscar scripts/cpu_bound.escriptorio para 6
+[INFO] 01:47:10:946 DAM/(10518:10523): Enviando a MDJ que valide escriptorio scripts/cpu_bound.escriptorio
+[DEBUG] 01:47:10:946 DAM/(10518:10523): Esperando repuesta validacion de MDJ
+[DEBUG] 01:47:11:949 DAM/(10518:10523): Recibida respuesta 0 de MDJ
+[INFO] 01:47:12:950 DAM/(10518:10523): recibi concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+
+
+[INFO] 01:47:12:950 DAM/(10518:10523): enviando mensaje a safa
+[INFO] 01:47:12:950 DAM/(10518:10523): Terminada operacion
+[INFO] 01:47:12:950 DAM/(10518:10523): Ehhh, voy a buscar /scripts/cpu_bound.escriptorio para 5
+[INFO] 01:47:12:950 DAM/(10518:10523): Enviando a MDJ que valide escriptorio /scripts/cpu_bound.escriptorio
+[DEBUG] 01:47:12:951 DAM/(10518:10523): Esperando repuesta validacion de MDJ
+[DEBUG] 01:47:13:952 DAM/(10518:10523): Recibida respuesta 0 de MDJ
+[INFO] 01:47:14:956 DAM/(10518:10523): recibi concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+
+
+[DEBUG] 01:52:32:990 DAM/(10938:10942): Handshake de: CPU
+[DEBUG] 01:52:33:15 DAM/(10938:10954): Escuchando nuevo cliente en 9
+[INFO] 01:52:46:248 DAM/(10938:10943): Ehhh, voy a buscar scripts/io_bound.escriptorio para 1
+[INFO] 01:52:46:248 DAM/(10938:10943): Enviando a MDJ que valide escriptorio scripts/io_bound.escriptorio
+[DEBUG] 01:52:46:248 DAM/(10938:10943): Esperando repuesta validacion de MDJ
+[DEBUG] 01:52:46:249 DAM/(10938:10943): Recibida respuesta 0 de MDJ
+[INFO] 01:52:47:260 DAM/(10938:10943): recibi abrir /scripts/cpu_bound.escriptorio
+concentrar
+concentrar
+close /scripts/cpu_bound.escriptorio
+concentrar
+concentrar
+abrir /scripts/cpu_bound.escriptorio
+close /scripts/cpu_bound.escriptorio
+concentrar
+concentrar
+
+
+[INFO] 01:53:13:425 DAM/(10938:10943): enviando mensaje a safa
+[INFO] 01:53:13:425 DAM/(10938:10943): Terminada operacion
+[INFO] 01:53:19:5 DAM/(10938:10943): Ehhh, voy a buscar /scripts/cpu_bound.escriptorio para 1
+[INFO] 01:53:19:5 DAM/(10938:10943): Enviando a MDJ que valide escriptorio /scripts/cpu_bound.escriptorio
+[DEBUG] 01:53:19:5 DAM/(10938:10943): Esperando repuesta validacion de MDJ
+[DEBUG] 01:53:19:5 DAM/(10938:10943): Recibida respuesta 0 de MDJ
+[INFO] 01:53:20:10 DAM/(10938:10943): recibi concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+
+
+[INFO] 01:53:24:803 DAM/(10938:10943): enviando mensaje a safa
+[INFO] 01:53:24:803 DAM/(10938:10943): Terminada operacion
+[INFO] 01:54:04:815 DAM/(10938:10943): Ehhh, voy a buscar /scripts/cpu_bound.escriptorio para 1
+[INFO] 01:54:04:815 DAM/(10938:10943): Enviando a MDJ que valide escriptorio /scripts/cpu_bound.escriptorio
+[DEBUG] 01:54:04:815 DAM/(10938:10943): Esperando repuesta validacion de MDJ
+[DEBUG] 01:54:04:815 DAM/(10938:10943): Recibida respuesta 0 de MDJ
+[INFO] 01:54:05:819 DAM/(10938:10943): recibi concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+
+
+[INFO] 01:54:08:972 DAM/(10938:10943): enviando mensaje a safa
+[INFO] 01:54:08:972 DAM/(10938:10943): Terminada operacion
+[INFO] 01:54:36:448 DAM/(10938:10943): Ehhh, voy a buscar scripts/cpu_bound.escriptorio para 2
+[INFO] 01:54:36:448 DAM/(10938:10943): Enviando a MDJ que valide escriptorio scripts/cpu_bound.escriptorio
+[DEBUG] 01:54:36:448 DAM/(10938:10943): Esperando repuesta validacion de MDJ
+[DEBUG] 01:54:36:449 DAM/(10938:10943): Recibida respuesta 0 de MDJ
+[INFO] 01:54:37:460 DAM/(10938:10943): recibi concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+
+
+[INFO] 01:54:39:898 DAM/(10938:10943): enviando mensaje a safa
+[INFO] 01:54:39:898 DAM/(10938:10943): Terminada operacion
+[DEBUG] 01:56:16:516 DAM/(11134:11138): Handshake de: CPU
+[DEBUG] 01:56:16:517 DAM/(11134:11143): Escuchando nuevo cliente en 9
+[DEBUG] 01:57:36:871 DAM/(11238:11242): Handshake de: CPU
+[DEBUG] 01:57:36:894 DAM/(11238:11247): Escuchando nuevo cliente en 9
+[INFO] 01:57:50:11 DAM/(11238:11243): Ehhh, voy a buscar scripts/io_bound.escriptorio para 1
+[INFO] 01:57:50:11 DAM/(11238:11243): Enviando a MDJ que valide escriptorio scripts/io_bound.escriptorio
+[DEBUG] 01:57:50:11 DAM/(11238:11243): Esperando repuesta validacion de MDJ
+[DEBUG] 01:57:50:13 DAM/(11238:11243): Recibida respuesta 0 de MDJ
+[INFO] 01:57:51:16 DAM/(11238:11243): recibi abrir /scripts/cpu_bound.escriptorio
+concentrar
+concentrar
+close /scripts/cpu_bound.escriptorio
+concentrar
+concentrar
+abrir /scripts/cpu_bound.escriptorio
+close /scripts/cpu_bound.escriptorio
+concentrar
+concentrar
+
+
+[INFO] 01:57:51:17 DAM/(11238:11243): enviando mensaje a safa
+[INFO] 01:57:51:17 DAM/(11238:11243): Terminada operacion
+[INFO] 01:57:51:528 DAM/(11238:11243): Ehhh, voy a buscar /scripts/cpu_bound.escriptorio para 1
+[INFO] 01:57:51:528 DAM/(11238:11243): Enviando a MDJ que valide escriptorio /scripts/cpu_bound.escriptorio
+[DEBUG] 01:57:51:528 DAM/(11238:11243): Esperando repuesta validacion de MDJ
+[DEBUG] 01:57:52:18 DAM/(11238:11243): Recibida respuesta 0 de MDJ
+[INFO] 01:57:53:20 DAM/(11238:11243): recibi concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+
+
+[INFO] 01:57:53:21 DAM/(11238:11243): enviando mensaje a safa
+[INFO] 01:57:53:21 DAM/(11238:11243): Terminada operacion
+[INFO] 01:57:53:21 DAM/(11238:11243): Ehhh, voy a buscar scripts/cpu_bound.escriptorio para 2
+[INFO] 01:57:53:21 DAM/(11238:11243): Enviando a MDJ que valide escriptorio scripts/cpu_bound.escriptorio
+[DEBUG] 01:57:53:21 DAM/(11238:11243): Esperando repuesta validacion de MDJ
+[DEBUG] 01:57:54:28 DAM/(11238:11243): Recibida respuesta 0 de MDJ
+[INFO] 01:57:55:34 DAM/(11238:11243): recibi concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+
+
+[INFO] 01:57:55:35 DAM/(11238:11243): enviando mensaje a safa
+[INFO] 01:57:55:35 DAM/(11238:11243): Terminada operacion
+[INFO] 01:57:55:35 DAM/(11238:11243): Ehhh, voy a buscar /scripts/cpu_bound.escriptorio para 1
+[INFO] 01:57:55:35 DAM/(11238:11243): Enviando a MDJ que valide escriptorio /scripts/cpu_bound.escriptorio
+[DEBUG] 01:57:55:35 DAM/(11238:11243): Esperando repuesta validacion de MDJ
+[DEBUG] 01:57:56:38 DAM/(11238:11243): Recibida respuesta 0 de MDJ
+[INFO] 01:57:57:41 DAM/(11238:11243): recibi concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+
+
+[DEBUG] 02:04:02:620 DAM/(11364:11368): Handshake de: CPU
+[DEBUG] 02:04:02:628 DAM/(11364:11373): Escuchando nuevo cliente en 9
+[INFO] 02:04:20:298 DAM/(11364:11369): Ehhh, voy a buscar scripts/cpu_bound.escriptorio para 1
+[INFO] 02:04:20:298 DAM/(11364:11369): Enviando a MDJ que valide escriptorio scripts/cpu_bound.escriptorio
+[DEBUG] 02:04:20:298 DAM/(11364:11369): Esperando repuesta validacion de MDJ
+[DEBUG] 02:04:20:298 DAM/(11364:11369): Recibida respuesta 0 de MDJ
+[INFO] 02:04:21:308 DAM/(11364:11369): recibi concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+
+
+[INFO] 02:04:21:308 DAM/(11364:11369): enviando mensaje a safa
+[INFO] 02:04:21:308 DAM/(11364:11369): Terminada operacion
+[DEBUG] 02:06:09:721 DAM/(11474:11478): Handshake de: CPU
+[DEBUG] 02:06:09:730 DAM/(11474:11483): Escuchando nuevo cliente en 9
+[INFO] 02:06:24:928 DAM/(11474:11479): Ehhh, voy a buscar scripts/cpu_bound.escriptorio para 1
+[INFO] 02:06:24:929 DAM/(11474:11479): Enviando a MDJ que valide escriptorio scripts/cpu_bound.escriptorio
+[DEBUG] 02:06:24:929 DAM/(11474:11479): Esperando repuesta validacion de MDJ
+[DEBUG] 02:06:24:930 DAM/(11474:11479): Recibida respuesta 0 de MDJ
+[INFO] 02:06:25:937 DAM/(11474:11479): recibi concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+
+
+[INFO] 02:13:49:991 DAM/(11474:11479): enviando mensaje a safa
+[INFO] 02:13:49:992 DAM/(11474:11479): Terminada operacion
+[DEBUG] 02:23:25:693 DAM/(12100:12104): Handshake de: CPU
+[DEBUG] 02:23:25:711 DAM/(12100:12111): Escuchando nuevo cliente en 9
+[INFO] 02:23:37:987 DAM/(12100:12105): Ehhh, voy a buscar scripts/cpu_bound.escriptorio para 1
+[INFO] 02:23:37:987 DAM/(12100:12105): Enviando a MDJ que valide escriptorio scripts/cpu_bound.escriptorio
+[DEBUG] 02:23:37:987 DAM/(12100:12105): Esperando repuesta validacion de MDJ
+[DEBUG] 02:23:37:987 DAM/(12100:12105): Recibida respuesta 0 de MDJ
+[INFO] 02:23:38:989 DAM/(12100:12105): recibi concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+
+
+[INFO] 02:23:38:990 DAM/(12100:12105): enviando mensaje a safa
+[INFO] 02:23:38:990 DAM/(12100:12105): Terminada operacion
