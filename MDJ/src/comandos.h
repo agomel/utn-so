@@ -8,7 +8,7 @@
 #include <dirent.h>
 #include <unistd.h>
 #include <openssl/md5.h>
-#include "operacionesArchivos.h"
+#include "fileSystem.h"
 
 extern char* MONTAJE_ACTUAL;
 

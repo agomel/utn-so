@@ -28,13 +28,13 @@ void cd(char* directorio){
 }
 
 void cat(char* parametro){
-	char* datosTotales = obtenerDatos(parametro, 0, -1);
+	char* datosTotales = obtenerDatosFS(parametro, 0, -1);
 	printf("%s", datosTotales);
 	free(datosTotales);
 }
 
 void md5(char* parametro){
-	char* datosTotales = obtenerDatos(parametro, 0, -1);
+	char* datosTotales = obtenerDatosFS(parametro, 0, -1);
 
 	unsigned char digest[16];
 	MD5_CTX context;
