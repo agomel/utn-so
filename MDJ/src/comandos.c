@@ -39,7 +39,7 @@ void md5(char* parametro){
 	unsigned char digest[16];
 	MD5_CTX context;
 	MD5_Init(&context);
-	MD5_Update(&context, datosTotales, strlen(datosTotales) + 1);
+	MD5_Update(&context, datosTotales, strlen(datosTotales));
 	MD5_Final(digest, &context);
 
 	char out[33];
