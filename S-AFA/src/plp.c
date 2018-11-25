@@ -4,7 +4,6 @@ void planificadorALargoPlazo() {
 	int a = 1;
 	while (a) {
 		waitSem(&semCantidadEnNew);
-		log_error(logger, "hay en new DTBs");
 
 		DTB* dtb = obtenerPrimerDTBEnNew();
 

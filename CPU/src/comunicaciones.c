@@ -67,7 +67,7 @@ int entenderLinea(char* lineaAEjecutar, DTB* dtbRecibido, int mensajeEntendido, 
 		sentencias++;
 		mensajeEntendido = entendiendoLinea(lineaAEjecutar, dtbRecibido);
 		if(mensajeEntendido > 1){
-		log_info(logger, "Pasar DTB a EXIT (3) mensaje entendido: %d", mensajeEntendido);
+		log_info(logger, "Pasar DTB a EXIT (3)");
 		dtbRecibido->programCounter--;
 		serializarYEnviarDTB(socketSAFA, *dtbRecibido, logger, PASAR_A_EXIT_POR_ERROR);
 		enviarYSerializarIntSinHeader(socketSAFA, mensajeEntendido);
