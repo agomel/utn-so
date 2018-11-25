@@ -273,46 +273,52 @@ RespuestaGuardado* guardarDatosInvertida(int idDTB, char* datos, char* nombreArc
 	for(int i = 0; i < cantidadPaginas; i++){
 		char* textoAGuardar;
 		int marcoAUtilizar = obtenerMarcoLibreInvertida();
-		if(marcoAUtilizar == -1)
+		if(marcoAUtilizar == -1){
+			freeLineas(lineas);
 			respuesta->pudoGuardar = ESPACIO_INSUFICIENTE_EN_FM9; //ERROR NO HAY MARCOS LIBRES
-		else
+			return respuesta;
+		}else{
 			respuesta->pudoGuardar = 0; //No hay error
 
-		ElementoTablaInvertida* elementoInvertida = obtenerElementoPorMarco(marcoAUtilizar);
-		cargarElemento(elementoInvertida, idPagina, nombreArchivo, idDTB);
+			ElementoTablaInvertida* elementoInvertida = obtenerElementoPorMarco(marcoAUtilizar);
+			cargarElemento(elementoInvertida, idPagina, nombreArchivo, idDTB);
 
-		idPagina++;
-		int base = storage + marcoAUtilizar * (tamanioPagina * tamanioLinea); //Porque el tamanioPagina esta en lineas
-		if(cantidadPaginas - 1 == i){ //Es la ultima pagina
-			for (int j = 0;  j < lineasEnLaUltimaPagina; j++) {
-				if(lineas[lineaACargar]==NULL)
-					lineas[lineaACargar] = string_new();
+			idPagina++;
+			int base = storage + marcoAUtilizar * (tamanioPagina * tamanioLinea); //Porque el tamanioPagina esta en lineas
+			if(cantidadPaginas - 1 == i){ //Es la ultima pagina
+				for (int j = 0;  j < lineasEnLaUltimaPagina; j++) {
+					if(lineas[lineaACargar]==NULL)
+						lineas[lineaACargar] = string_new();
 
-				string_append(&lineas[lineaACargar], "\n");
-				char* textoAEscribir = malloc(tamanioLinea);
-				memcpy(textoAEscribir, lineas[lineaACargar], strlen(lineas[lineaACargar]) + 1);
-				memcpy(base + tamanioLinea * j, textoAEscribir, tamanioLinea); //Guardando de a una linea
-				free(textoAEscribir);
-				lineaACargar++;
+					string_append(&lineas[lineaACargar], "\n");
+					char* textoAEscribir = malloc(tamanioLinea);
+					memcpy(textoAEscribir, lineas[lineaACargar], strlen(lineas[lineaACargar]) + 1);
+					memcpy(base + tamanioLinea * j, textoAEscribir, tamanioLinea); //Guardando de a una linea
+					free(textoAEscribir);
+					lineaACargar++;
+				}
+			}else{
+				for(int j = 0; j < (tamanioPagina); j++){
+					if(lineas[lineaACargar]==NULL)
+						lineas[lineaACargar] = string_new();
+
+					string_append(&lineas[lineaACargar], "\n");
+					char* textoAEscribir = malloc(tamanioLinea);
+					memcpy(textoAEscribir, lineas[lineaACargar], strlen(lineas[lineaACargar]) + 1);
+					memcpy(base + tamanioLinea * j, textoAEscribir, tamanioLinea); //Guardando de a una linea
+					free(textoAEscribir);
+					lineaACargar++;
+				}
 			}
-		}else{
-			for(int j = 0; j < (tamanioPagina); j++){
-				if(lineas[lineaACargar]==NULL)
-					lineas[lineaACargar] = string_new();
 
-				string_append(&lineas[lineaACargar], "\n");
-				char* textoAEscribir = malloc(tamanioLinea);
-				memcpy(textoAEscribir, lineas[lineaACargar], strlen(lineas[lineaACargar]) + 1);
-				memcpy(base + tamanioLinea * j, textoAEscribir, tamanioLinea); //Guardando de a una linea
-				free(textoAEscribir);
-				lineaACargar++;
-			}
+		  }
 		}
-	}
-		log_debug(logger, "Datos guardados");
-		respuesta->pesoArchivo = cantidadPaginas * tamanioPagina;
+			log_debug(logger, "Datos guardados");
+			respuesta->pesoArchivo = cantidadPaginas * tamanioPagina;
 
-	freeLineas(lineas);
+
+		freeLineas(lineas);
+
 	return respuesta;
 }
 
