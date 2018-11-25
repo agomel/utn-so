@@ -82,3 +82,73 @@
 [INFO] 11:13:14:691 SAFA/(14403:14412): Terminada operacion
 [INFO] 11:13:15:164 SAFA/(14403:14412): Recibi cargado con exito en memoria del DAM
 [ERROR] 11:13:15:167 SAFA/(14403:14412): agregado el archivo scripts/io_bound.escriptorio a la lista de 1
+[INFO] 11:49:10:302 SAFA/(11341:11341): Algoritmo elegido VRR
+[DEBUG] 11:49:16:486 SAFA/(11341:11349): Se agrego a las conexiones DAM
+[DEBUG] 11:49:16:502 SAFA/(11341:11368): Escuchando nuevo cliente en 5
+[DEBUG] 11:49:18:250 SAFA/(11341:11349): Se agrego a las conexiones CPU
+[DEBUG] 11:49:18:278 SAFA/(11341:11376): Escuchando nuevo cliente en 6
+[INFO] 11:49:27:838 SAFA/(11341:11351): Comando ejecutar
+[DEBUG] 11:49:27:838 SAFA/(11341:11380): Enviando dtb con id: 1
+[INFO] 11:49:28:94 SAFA/(11341:11350): Desbloqueo el DUMMY
+[INFO] 11:49:28:94 SAFA/(11341:11350): Terminada operacion
+[INFO] 11:49:28:146 SAFA/(11341:11350): Recibi Desbloquear DTB
+[INFO] 11:49:28:146 SAFA/(11341:11350): Terminada operacion
+[INFO] 11:49:29:153 SAFA/(11341:11350): Recibi cargado con exito en memoria del DAM
+[INFO] 11:57:16:808 SAFA/(11921:11921): Algoritmo elegido VRR
+[DEBUG] 11:57:25:96 SAFA/(11921:11930): Se agrego a las conexiones DAM
+[DEBUG] 11:57:25:116 SAFA/(11921:11945): Escuchando nuevo cliente en 5
+[DEBUG] 11:57:26:600 SAFA/(11921:11930): Se agrego a las conexiones CPU
+[DEBUG] 11:57:26:618 SAFA/(11921:11951): Escuchando nuevo cliente en 6
+[INFO] 11:57:34:461 SAFA/(11921:11932): Comando ejecutar
+[DEBUG] 11:57:34:461 SAFA/(11921:11955): Enviando dtb con id: 1
+[INFO] 11:57:34:714 SAFA/(11921:11931): Desbloqueo el DUMMY
+[INFO] 11:57:34:714 SAFA/(11921:11931): Terminada operacion
+[INFO] 11:57:34:767 SAFA/(11921:11931): Recibi Desbloquear DTB
+[INFO] 11:57:34:767 SAFA/(11921:11931): Terminada operacion
+[INFO] 11:57:35:772 SAFA/(11921:11931): Recibi cargado con exito en memoria del DAM
+[ERROR] 11:58:18:845 SAFA/(11921:11931): agregado el archivo scripts/io_bound.escriptorio a la lista de 1
+[INFO] 11:58:50:867 SAFA/(11921:11931): Pasado a READY dtb con id: 0, escriptorio: scripts/io_bound.escriptorio, quantum: 0
+[INFO] 11:58:56:176 SAFA/(11921:11955): Pasado a EXECUTE dtb con id: 0, escriptorio: scripts/io_bound.escriptorio, quantum: 2
+[DEBUG] 11:58:56:176 SAFA/(11921:11955): Enviando dtb con id: 0
+[INFO] 11:59:25:865 SAFA/(12070:12070): Algoritmo elegido VRR
+[DEBUG] 11:59:31:158 SAFA/(12070:12082): Se agrego a las conexiones DAM
+[DEBUG] 11:59:31:190 SAFA/(12070:12091): Escuchando nuevo cliente en 5
+[DEBUG] 11:59:32:843 SAFA/(12070:12082): Se agrego a las conexiones CPU
+[DEBUG] 11:59:32:859 SAFA/(12070:12097): Escuchando nuevo cliente en 6
+[INFO] 11:59:39:995 SAFA/(12070:12084): Comando ejecutar
+[DEBUG] 11:59:39:996 SAFA/(12070:12101): Enviando dtb con id: 1
+[INFO] 11:59:40:252 SAFA/(12070:12083): Desbloqueo el DUMMY
+[INFO] 11:59:40:252 SAFA/(12070:12083): Terminada operacion
+[INFO] 11:59:40:303 SAFA/(12070:12083): Recibi Desbloquear DTB
+[INFO] 11:59:40:305 SAFA/(12070:12083): Terminada operacion
+[INFO] 11:59:41:312 SAFA/(12070:12083): Recibi cargado con exito en memoria del DAM
+[ERROR] 11:59:59:207 SAFA/(12070:12083): agregado el archivo scripts/io_bound.escriptorio a la lista de 1
+[INFO] 12:00:04:968 SAFA/(12070:12083): Pasado a READY dtb con id: 0, escriptorio: scripts/io_bound.escriptorio, quantum: 0
+[INFO] 12:00:04:969 SAFA/(12070:12083): Terminada operacion
+[INFO] 12:01:11:845 SAFA/(12183:12183): Algoritmo elegido VRR
+[DEBUG] 12:01:17:943 SAFA/(12183:12195): Se agrego a las conexiones DAM
+[DEBUG] 12:01:17:970 SAFA/(12183:12210): Escuchando nuevo cliente en 5
+[DEBUG] 12:01:19:567 SAFA/(12183:12195): Se agrego a las conexiones CPU
+[DEBUG] 12:01:19:584 SAFA/(12183:12216): Escuchando nuevo cliente en 6
+[INFO] 12:01:30:304 SAFA/(12183:12197): Comando ejecutar
+[DEBUG] 12:01:59:882 SAFA/(12183:12220): Enviando dtb con id: 1
+[INFO] 12:02:00:134 SAFA/(12183:12196): Desbloqueo el DUMMY
+[INFO] 12:02:00:134 SAFA/(12183:12196): Terminada operacion
+[INFO] 12:02:00:187 SAFA/(12183:12196): Recibi Desbloquear DTB
+[INFO] 12:02:00:187 SAFA/(12183:12196): Terminada operacion
+[INFO] 12:02:01:198 SAFA/(12183:12196): Recibi cargado con exito en memoria del DAM
+[ERROR] 12:02:23:973 SAFA/(12183:12196): agregado el archivo scripts/io_bound.escriptorio a la lista de 1
+[INFO] 12:03:21:613 SAFA/(12183:12196): Pasado a READY dtb con id: 0, escriptorio: scripts/io_bound.escriptorio, quantum: 0
+[INFO] 12:03:55:181 SAFA/(12393:12393): Algoritmo elegido VRR
+[DEBUG] 12:04:01:526 SAFA/(12393:12405): Se agrego a las conexiones DAM
+[DEBUG] 12:04:01:557 SAFA/(12393:12419): Escuchando nuevo cliente en 5
+[DEBUG] 12:04:03:96 SAFA/(12393:12405): Se agrego a las conexiones CPU
+[DEBUG] 12:04:03:116 SAFA/(12393:12425): Escuchando nuevo cliente en 6
+[INFO] 12:04:11:879 SAFA/(12393:12407): Comando ejecutar
+[DEBUG] 12:04:16:722 SAFA/(12393:12429): Enviando dtb con id: 1
+[INFO] 12:04:16:978 SAFA/(12393:12406): Desbloqueo el DUMMY
+[INFO] 12:04:16:979 SAFA/(12393:12406): Terminada operacion
+[INFO] 12:04:17:31 SAFA/(12393:12406): Recibi Desbloquear DTB
+[INFO] 12:04:17:31 SAFA/(12393:12406): Terminada operacion
+[INFO] 12:04:18:35 SAFA/(12393:12406): Recibi cargado con exito en memoria del DAM
+[ERROR] 12:04:28:276 SAFA/(12393:12406): agregado el archivo scripts/io_bound.escriptorio a la lista de 1

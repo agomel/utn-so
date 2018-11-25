@@ -64,7 +64,6 @@ void despedirACpusMenos(int emisor){
 
 void entenderMensaje(int emisor, char header){
 	int idDTB;
-	DTB* dtb;
 	t_dictionary* direccionesYArchivos;
 	t_list* lista;
 	char* path;
@@ -78,7 +77,7 @@ void entenderMensaje(int emisor, char header){
 			idDTB = deserializarInt(emisor);
 			path = deserializarString(emisor);
 			int pesoArchivo = deserializarInt(emisor);
-			dtb = obtenerDTBDeCola(idDTB);
+			DTB* dtb = obtenerDTBDeCola(idDTB);
 
 			bool compararPath(char* pathDeLista){
 				if(strcmp(pathDeLista, path) == 0){
@@ -89,7 +88,6 @@ void entenderMensaje(int emisor, char header){
 			}
 
 			if(!list_any_satisfy(dtb->listaDeArchivos, compararPath)){
-				log_error(logger, "agregado el archivo %s a la lista de %d", path, idDTB);
 				list_add(dtb->listaDeArchivos, path);
 				dtb->tamanioArchivosAbiertos += pesoArchivo;
 			}
@@ -100,21 +98,23 @@ void entenderMensaje(int emisor, char header){
 
 		}
 
-		case DUMMY:
+		case DUMMY:{
 			log_info(logger, "Desbloqueo el DUMMY");
-			dtb = deserializarDTB(emisor);
+			DTB* dtb = deserializarDTB(emisor);
 			historial = crearHistorial(dtb->id);
 			agregarHistorialAListaTiempoRespuesta(historial);
 			enviarYSerializarCharSinHeader(emisor, CONTINUAR_CON_EJECUCION);
 			break;
+		}
 
-		case DESBLOQUEAR_DTB:
+		case DESBLOQUEAR_DTB:{
 			log_info(logger, "Recibi Desbloquear DTB");
-			dtb = deserializarDTB(emisor);
+			DTB* dtb = deserializarDTB(emisor);
 			desbloquearDummy(dtb);
 
 			terminarOperacionDeCPU(emisor, dtb);
 			break;
+		}
 
 		case GUARDADO_CON_EXITO_EN_MDJ:
 		case BORRADO_CON_EXITO_EN_MDJ:

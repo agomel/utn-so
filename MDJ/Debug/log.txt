@@ -103,3 +103,165 @@ concentrar
 
 
 [INFO] 11:33:28:915 MDJ/(10557:10560): Terminada operacion
+[DEBUG] 11:49:16:486 MDJ/(11354:11356): Handshake de: DAM
+[DEBUG] 11:49:16:489 MDJ/(11354:11372): Escuchando nuevo cliente en 7
+[INFO] 11:49:28:95 MDJ/(11354:11357): Validar archivo...
+[INFO] 11:49:29:95 MDJ/(11354:11357): Terminada operacion
+[INFO] 11:49:29:96 MDJ/(11354:11357): Obtener datos...
+[INFO] 11:49:29:102 MDJ/(11354:11357): Datos a enviar: abrir /scripts/cpu_bound.escriptorio
+concentrar
+concentrar
+close /scripts/cpu_bound.escriptorio
+concentrar
+concentrar
+abrir /scripts/cpu_bound.escriptorio
+close /scripts/cpu_bound.escriptorio
+concentrar
+concentrar
+
+
+[INFO] 11:49:30:102 MDJ/(11354:11357): Terminada operacion
+[DEBUG] 11:56:42:555 MDJ/(11871:11873): Handshake de: DAM
+[DEBUG] 11:56:42:569 MDJ/(11871:11882): Escuchando nuevo cliente en 7
+[INFO] 11:56:56:314 MDJ/(11871:11874): Validar archivo...
+[INFO] 11:56:57:319 MDJ/(11871:11874): Terminada operacion
+[INFO] 11:56:57:320 MDJ/(11871:11874): Obtener datos...
+[INFO] 11:56:57:326 MDJ/(11871:11874): Datos a enviar: abrir /scripts/cpu_bound.escriptorio
+concentrar
+concentrar
+close /scripts/cpu_bound.escriptorio
+concentrar
+concentrar
+abrir /scripts/cpu_bound.escriptorio
+close /scripts/cpu_bound.escriptorio
+concentrar
+concentrar
+
+
+[INFO] 11:56:58:327 MDJ/(11871:11874): Terminada operacion
+[DEBUG] 11:57:25:96 MDJ/(11936:11938): Handshake de: DAM
+[DEBUG] 11:57:25:116 MDJ/(11936:11947): Escuchando nuevo cliente en 7
+[INFO] 11:57:34:715 MDJ/(11936:11939): Validar archivo...
+[INFO] 11:57:35:715 MDJ/(11936:11939): Terminada operacion
+[INFO] 11:57:35:715 MDJ/(11936:11939): Obtener datos...
+[INFO] 11:57:35:721 MDJ/(11936:11939): Datos a enviar: abrir /scripts/cpu_bound.escriptorio
+concentrar
+concentrar
+close /scripts/cpu_bound.escriptorio
+concentrar
+concentrar
+abrir /scripts/cpu_bound.escriptorio
+close /scripts/cpu_bound.escriptorio
+concentrar
+concentrar
+
+
+[INFO] 11:57:36:722 MDJ/(11936:11939): Terminada operacion
+[DEBUG] 11:59:31:161 MDJ/(12077:12079): Handshake de: DAM
+[DEBUG] 11:59:31:190 MDJ/(12077:12092): Escuchando nuevo cliente en 7
+[INFO] 11:59:40:253 MDJ/(12077:12080): Validar archivo...
+[INFO] 11:59:41:258 MDJ/(12077:12080): Terminada operacion
+[INFO] 11:59:41:258 MDJ/(12077:12080): Obtener datos...
+[INFO] 11:59:41:261 MDJ/(12077:12080): Datos a enviar: abrir /scripts/cpu_bound.escriptorio
+concentrar
+concentrar
+close /scripts/cpu_bound.escriptorio
+concentrar
+concentrar
+abrir /scripts/cpu_bound.escriptorio
+close /scripts/cpu_bound.escriptorio
+concentrar
+concentrar
+
+
+[INFO] 11:59:42:261 MDJ/(12077:12080): Terminada operacion
+[DEBUG] 12:01:17:943 MDJ/(12199:12201): Handshake de: DAM
+[DEBUG] 12:01:17:957 MDJ/(12199:12214): Escuchando nuevo cliente en 7
+[INFO] 12:02:00:135 MDJ/(12199:12202): Validar archivo...
+[INFO] 12:02:01:137 MDJ/(12199:12202): Terminada operacion
+[INFO] 12:02:01:137 MDJ/(12199:12202): Obtener datos...
+[INFO] 12:02:01:146 MDJ/(12199:12202): Datos a enviar: abrir /scripts/cpu_bound.escriptorio
+concentrar
+concentrar
+close /scripts/cpu_bound.escriptorio
+concentrar
+concentrar
+abrir /scripts/cpu_bound.escriptorio
+close /scripts/cpu_bound.escriptorio
+concentrar
+concentrar
+
+
+[INFO] 12:02:02:147 MDJ/(12199:12202): Terminada operacion
+[DEBUG] 12:04:01:526 MDJ/(12410:12412): Handshake de: DAM
+[DEBUG] 12:04:01:545 MDJ/(12410:12421): Escuchando nuevo cliente en 7
+[INFO] 12:04:16:979 MDJ/(12410:12413): Validar archivo...
+[INFO] 12:04:17:981 MDJ/(12410:12413): Terminada operacion
+[INFO] 12:04:17:981 MDJ/(12410:12413): Obtener datos...
+[INFO] 12:04:17:984 MDJ/(12410:12413): Datos a enviar: abrir /scripts/cpu_bound.escriptorio
+concentrar
+concentrar
+close /scripts/cpu_bound.escriptorio
+concentrar
+concentrar
+abrir /scripts/cpu_bound.escriptorio
+close /scripts/cpu_bound.escriptorio
+concentrar
+concentrar
+
+
+[INFO] 12:04:18:985 MDJ/(12410:12413): Terminada operacion
+[DEBUG] 12:07:23:742 MDJ/(12620:12622): Handshake de: DAM
+[DEBUG] 12:07:23:746 MDJ/(12620:12633): Escuchando nuevo cliente en 7
+[INFO] 12:07:42:719 MDJ/(12620:12623): Validar archivo...
+[INFO] 12:07:43:720 MDJ/(12620:12623): Terminada operacion
+[INFO] 12:07:57:646 MDJ/(12620:12623): Validar archivo...
+[INFO] 12:07:58:647 MDJ/(12620:12623): Terminada operacion
+[INFO] 12:07:58:647 MDJ/(12620:12623): Obtener datos...
+[INFO] 12:07:58:653 MDJ/(12620:12623): Datos a enviar: abrir /scripts/cpu_bound.escriptorio
+concentrar
+concentrar
+close /scripts/cpu_bound.escriptorio
+concentrar
+concentrar
+abrir /scripts/cpu_bound.escriptorio
+close /scripts/cpu_bound.escriptorio
+concentrar
+concentrar
+
+
+[INFO] 12:07:59:654 MDJ/(12620:12623): Terminada operacion
+[INFO] 12:07:59:654 MDJ/(12620:12623): Validar archivo...
+[INFO] 12:08:00:655 MDJ/(12620:12623): Terminada operacion
+[INFO] 12:08:00:655 MDJ/(12620:12623): Obtener datos...
+[INFO] 12:08:00:660 MDJ/(12620:12623): Datos a enviar: concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+
+
+[INFO] 12:08:01:660 MDJ/(12620:12623): Terminada operacion
+[INFO] 12:08:01:661 MDJ/(12620:12623): Validar archivo...
+[INFO] 12:08:02:661 MDJ/(12620:12623): Terminada operacion
+[INFO] 12:08:02:661 MDJ/(12620:12623): Obtener datos...
+[INFO] 12:08:02:661 MDJ/(12620:12623): Datos a enviar: concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+
+
+[INFO] 12:08:03:662 MDJ/(12620:12623): Terminada operacion

@@ -38,7 +38,7 @@ void cambiarEstado(int idDTB, char nuevoEstado){
 }
 
 void cambiarEstadoGuardandoNuevoDTB(DTB* nuevoDTB, char nuevoEstado){
-	removerDTBDeCola(nuevoDTB->id);
+	obtenerDTBDeColaRemoviendolo(nuevoDTB->id);
 	nuevoDTB->estado = nuevoEstado;
 
 	logguearCambioEstado(nuevoDTB, nuevoEstado);
