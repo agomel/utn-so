@@ -162,3 +162,5 @@
 [DEBUG] 02:13:50:308 FM9/(11461:11472): Trayendo linea escriptorio
 [DEBUG] 02:13:50:308 FM9/(11461:11472): Se pide linea 0 para escriptorio scripts/cpu_bound.escriptorio
 [INFO] 02:13:55:863 FM9/(11461:11472): CANTIDAD DE LINEAS DE scripts/cpu_bound.escriptorio ES: 12
+[INFO] 02:41:30:666 FM9/(12875:12875): Utilizando paginas invertidas
+[INFO] 02:42:08:197 FM9/(12948:12948): Utilizando paginas invertidas

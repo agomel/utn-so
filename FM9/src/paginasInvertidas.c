@@ -329,9 +329,11 @@ RespuestaGuardado* guardarDatosInvertida(int idDTB, char* datos, char* nombreArc
 void dumpInvertida(int idDTB){
 	log_info(logger, "Dump de DTB: %d", idDTB);
 	char* dump = string_new();
-	waitMutex(&mutexArchivos);
+
 	for(int i=0; i < (tablaDeArchivos->elements_count); i++){
+		waitMutex(&mutexArchivos);
 		ElementoArchivos* elemento = list_get(tablaDeArchivos, i);
+		signalMutex(&mutexArchivos);
 
 		if(elemento->idDTB == idDTB){
 			int cantidadPaginas = elemento->cantidadLineas / tamanioPagina + 1;
@@ -340,11 +342,15 @@ void dumpInvertida(int idDTB){
 			string_append_with_format(&dump, "Abierto archivo: %s \n"
 							">>> Ocupa %d paginas \n"
 							">>> Su contenido es: %s", elemento->nombreArchivo, cantidadPaginas, datos->datos);
-
 		}
 	}
-	log_info(logger, "- %s", dump);
-	signalMutex(&mutexArchivos);
+
+	if(strcmp(dump, "") != 0){
+		log_info(logger, "- %s", dump);
+	}else{
+		log_info(logger, "DUMP ----- No hay archivos abiertos para ese DTB.");
+	}
+
 	free(dump);
 }
 

@@ -6,16 +6,16 @@ void consola(){
 		char* mensaje = readline("");
 		char* comando =  strtok(mensaje, " ");
 		char* parametro =  strtok(NULL, " ");
-		int idDTB = atoi(parametro);
 
 		if(strcmp(comando, "dump") == 0){
-			if(strcmp(modo, "SEG_PURA") == 0)
+			int idDTB = atoi(parametro);
+			if(strcmp(modo, "SEG") == 0)
 				dumpSegPura(idDTB);
 
-			if(strcmp(modo, "SEG_PAG") == 0)
+			if(strcmp(modo, "SPA") == 0)
 				dumpSegPag(idDTB);
 
-			if(strcmp(modo, "INV") == 0)
+			if(strcmp(modo, "TPI") == 0)
 				dumpInvertida(idDTB);
 
 		}else if(strcmp(comando, "exit") == 0){

@@ -451,3 +451,546 @@ concentrar
 
 
 [INFO] 02:23:39:991 MDJ/(12086:12089): Terminada operacion
+[DEBUG] 02:26:27:232 MDJ/(12198:12200): Handshake de: DAM
+[DEBUG] 02:26:27:240 MDJ/(12198:12223): Escuchando nuevo cliente en 7
+[INFO] 02:26:38:782 MDJ/(12198:12201): Validar archivo...
+[INFO] 02:26:39:791 MDJ/(12198:12201): Terminada operacion
+[INFO] 02:26:39:791 MDJ/(12198:12201): Obtener datos...
+[INFO] 02:26:39:794 MDJ/(12198:12201): Datos a enviar: abrir /scripts/cpu_bound.escriptorio
+concentrar
+concentrar
+close /scripts/cpu_bound.escriptorio
+concentrar
+concentrar
+abrir /scripts/cpu_bound.escriptorio
+close /scripts/cpu_bound.escriptorio
+concentrar
+concentrar
+
+
+[INFO] 02:26:40:796 MDJ/(12198:12201): Terminada operacion
+[INFO] 02:26:40:796 MDJ/(12198:12201): Validar archivo...
+[INFO] 02:26:41:799 MDJ/(12198:12201): Terminada operacion
+[INFO] 02:26:41:799 MDJ/(12198:12201): Obtener datos...
+[INFO] 02:26:41:799 MDJ/(12198:12201): Datos a enviar: concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+
+
+[INFO] 02:26:42:801 MDJ/(12198:12201): Terminada operacion
+[INFO] 02:26:42:802 MDJ/(12198:12201): Validar archivo...
+[INFO] 02:26:43:806 MDJ/(12198:12201): Terminada operacion
+[INFO] 02:26:43:806 MDJ/(12198:12201): Obtener datos...
+[INFO] 02:26:43:807 MDJ/(12198:12201): Datos a enviar: concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+
+
+[INFO] 02:26:44:810 MDJ/(12198:12201): Terminada operacion
+[INFO] 02:26:44:810 MDJ/(12198:12201): Validar archivo...
+[INFO] 02:26:45:811 MDJ/(12198:12201): Terminada operacion
+[INFO] 02:26:45:812 MDJ/(12198:12201): Obtener datos...
+[INFO] 02:26:45:812 MDJ/(12198:12201): Datos a enviar: concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+
+
+[INFO] 02:26:46:820 MDJ/(12198:12201): Terminada operacion
+[INFO] 02:27:18:12 MDJ/(12198:12201): Validar archivo...
+[INFO] 02:27:19:16 MDJ/(12198:12201): Terminada operacion
+[INFO] 02:27:19:16 MDJ/(12198:12201): Obtener datos...
+[INFO] 02:27:19:16 MDJ/(12198:12201): Datos a enviar: concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+
+
+[INFO] 02:27:20:19 MDJ/(12198:12201): Terminada operacion
+[INFO] 02:27:20:19 MDJ/(12198:12201): Validar archivo...
+[INFO] 02:27:21:21 MDJ/(12198:12201): Terminada operacion
+[INFO] 02:27:21:21 MDJ/(12198:12201): Obtener datos...
+[INFO] 02:27:21:22 MDJ/(12198:12201): Datos a enviar: concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+
+
+[INFO] 02:27:22:24 MDJ/(12198:12201): Terminada operacion
+[INFO] 02:27:22:24 MDJ/(12198:12201): Validar archivo...
+[INFO] 02:27:23:32 MDJ/(12198:12201): Terminada operacion
+[INFO] 02:27:23:32 MDJ/(12198:12201): Obtener datos...
+[INFO] 02:27:23:32 MDJ/(12198:12201): Datos a enviar: concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+
+
+[INFO] 02:27:24:37 MDJ/(12198:12201): Terminada operacion
+[INFO] 02:27:24:37 MDJ/(12198:12201): Validar archivo...
+[INFO] 02:27:25:39 MDJ/(12198:12201): Terminada operacion
+[INFO] 02:27:25:39 MDJ/(12198:12201): Obtener datos...
+[INFO] 02:27:25:39 MDJ/(12198:12201): Datos a enviar: concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+
+
+[INFO] 02:27:26:40 MDJ/(12198:12201): Terminada operacion
+[INFO] 02:27:26:40 MDJ/(12198:12201): Validar archivo...
+[INFO] 02:27:27:42 MDJ/(12198:12201): Terminada operacion
+[INFO] 02:27:27:42 MDJ/(12198:12201): Obtener datos...
+[INFO] 02:27:27:42 MDJ/(12198:12201): Datos a enviar: concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+
+
+[INFO] 02:27:28:52 MDJ/(12198:12201): Terminada operacion
+[INFO] 02:27:55:232 MDJ/(12198:12201): Validar archivo...
+[INFO] 02:27:56:240 MDJ/(12198:12201): Terminada operacion
+[INFO] 02:27:56:240 MDJ/(12198:12201): Obtener datos...
+[INFO] 02:27:56:240 MDJ/(12198:12201): Datos a enviar: abrir /scripts/cpu_bound.escriptorio
+concentrar
+concentrar
+close /scripts/cpu_bound.escriptorio
+concentrar
+concentrar
+abrir /scripts/cpu_bound.escriptorio
+close /scripts/cpu_bound.escriptorio
+concentrar
+concentrar
+
+
+[INFO] 02:27:57:240 MDJ/(12198:12201): Terminada operacion
+[INFO] 02:27:57:241 MDJ/(12198:12201): Validar archivo...
+[INFO] 02:27:58:242 MDJ/(12198:12201): Terminada operacion
+[INFO] 02:27:58:242 MDJ/(12198:12201): Obtener datos...
+[INFO] 02:27:58:242 MDJ/(12198:12201): Datos a enviar: concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+
+
+[INFO] 02:27:59:252 MDJ/(12198:12201): Terminada operacion
+[INFO] 02:27:59:252 MDJ/(12198:12201): Validar archivo...
+[INFO] 02:28:00:262 MDJ/(12198:12201): Terminada operacion
+[INFO] 02:28:00:262 MDJ/(12198:12201): Obtener datos...
+[INFO] 02:28:00:262 MDJ/(12198:12201): Datos a enviar: concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+
+
+[INFO] 02:28:01:265 MDJ/(12198:12201): Terminada operacion
+[INFO] 02:28:01:265 MDJ/(12198:12201): Validar archivo...
+[INFO] 02:28:02:272 MDJ/(12198:12201): Terminada operacion
+[INFO] 02:28:02:272 MDJ/(12198:12201): Obtener datos...
+[INFO] 02:28:02:272 MDJ/(12198:12201): Datos a enviar: concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+
+
+[INFO] 02:28:03:273 MDJ/(12198:12201): Terminada operacion
+[INFO] 02:28:03:273 MDJ/(12198:12201): Validar archivo...
+[INFO] 02:28:04:278 MDJ/(12198:12201): Terminada operacion
+[INFO] 02:28:04:278 MDJ/(12198:12201): Obtener datos...
+[INFO] 02:28:04:279 MDJ/(12198:12201): Datos a enviar: concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+
+
+[INFO] 02:28:05:281 MDJ/(12198:12201): Terminada operacion
+[INFO] 02:28:05:281 MDJ/(12198:12201): Validar archivo...
+[INFO] 02:28:06:281 MDJ/(12198:12201): Terminada operacion
+[INFO] 02:28:06:281 MDJ/(12198:12201): Obtener datos...
+[INFO] 02:28:06:281 MDJ/(12198:12201): Datos a enviar: concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+
+
+[INFO] 02:28:07:282 MDJ/(12198:12201): Terminada operacion
+[INFO] 02:28:10:497 MDJ/(12198:12201): Validar archivo...
+[INFO] 02:28:11:499 MDJ/(12198:12201): Terminada operacion
+[INFO] 02:28:11:499 MDJ/(12198:12201): Obtener datos...
+[INFO] 02:28:11:501 MDJ/(12198:12201): Datos a enviar: abrir /scripts/complejo.escriptorio
+concentrar
+asignar /scripts/complejo.escriptorio 1 Soy invalido
+concentrar
+close /scripts/complejo.escriptorio
+concentrar
+
+
+[INFO] 02:28:12:503 MDJ/(12198:12201): Terminada operacion
+[INFO] 02:28:12:503 MDJ/(12198:12201): Validar archivo...
+[INFO] 02:28:13:507 MDJ/(12198:12201): Terminada operacion
+[INFO] 02:28:13:507 MDJ/(12198:12201): Obtener datos...
+[INFO] 02:28:13:508 MDJ/(12198:12201): Datos a enviar: crear /equipos/Rafaela 5
+abrir /equipos/Rafaela
+asignar /equipos/Rafaela 1 Atletico Rafaela
+concentrar
+asignar /equipos/Rafaela 2 Estrella: Juan M. Suligoy
+concentrar
+asignar /equipos/Rafaela 3 Promedio: 91
+concentrar
+flush /equipos/Rafaela
+close /equipos/Rafaela
+concentrar
+
+
+[INFO] 02:28:14:509 MDJ/(12198:12201): Terminada operacion
+[INFO] 02:28:14:509 MDJ/(12198:12201): Validar archivo...
+[INFO] 02:28:15:512 MDJ/(12198:12201): Terminada operacion
+[INFO] 02:28:15:512 MDJ/(12198:12201): Obtener datos...
+[INFO] 02:28:15:512 MDJ/(12198:12201): Datos a enviar: concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+
+
+[INFO] 02:28:16:519 MDJ/(12198:12201): Terminada operacion
+[INFO] 02:29:38:263 MDJ/(12198:12201): Validar archivo...
+[INFO] 02:29:39:270 MDJ/(12198:12201): Terminada operacion
+[INFO] 02:29:39:270 MDJ/(12198:12201): Obtener datos...
+[INFO] 02:29:39:270 MDJ/(12198:12201): Datos a enviar: concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+
+
+[INFO] 02:29:40:272 MDJ/(12198:12201): Terminada operacion
+[DEBUG] 02:33:41:824 MDJ/(12438:12440): Handshake de: DAM
+[DEBUG] 02:33:41:833 MDJ/(12438:12449): Escuchando nuevo cliente en 7
+[INFO] 02:33:55:500 MDJ/(12438:12441): Validar archivo...
+[INFO] 02:33:56:503 MDJ/(12438:12441): Terminada operacion
+[INFO] 02:33:56:504 MDJ/(12438:12441): Obtener datos...
+[INFO] 02:33:56:508 MDJ/(12438:12441): Datos a enviar: abrir /scripts/cpu_bound.escriptorio
+concentrar
+concentrar
+close /scripts/cpu_bound.escriptorio
+concentrar
+concentrar
+abrir /scripts/cpu_bound.escriptorio
+close /scripts/cpu_bound.escriptorio
+concentrar
+concentrar
+
+
+[INFO] 02:33:57:510 MDJ/(12438:12441): Terminada operacion
+[INFO] 02:33:57:510 MDJ/(12438:12441): Validar archivo...
+[INFO] 02:33:58:513 MDJ/(12438:12441): Terminada operacion
+[INFO] 02:33:58:513 MDJ/(12438:12441): Obtener datos...
+[INFO] 02:33:58:514 MDJ/(12438:12441): Datos a enviar: concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+
+
+[INFO] 02:33:59:517 MDJ/(12438:12441): Terminada operacion
+[INFO] 02:33:59:517 MDJ/(12438:12441): Validar archivo...
+[INFO] 02:34:00:523 MDJ/(12438:12441): Terminada operacion
+[INFO] 02:34:00:523 MDJ/(12438:12441): Obtener datos...
+[INFO] 02:34:00:523 MDJ/(12438:12441): Datos a enviar: concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+
+
+[INFO] 02:34:01:524 MDJ/(12438:12441): Terminada operacion
+[INFO] 02:34:30:606 MDJ/(12438:12441): Validar archivo...
+[INFO] 02:34:31:613 MDJ/(12438:12441): Terminada operacion
+[INFO] 02:34:31:613 MDJ/(12438:12441): Obtener datos...
+[INFO] 02:34:31:613 MDJ/(12438:12441): Datos a enviar: abrir /scripts/cpu_bound.escriptorio
+concentrar
+concentrar
+close /scripts/cpu_bound.escriptorio
+concentrar
+concentrar
+abrir /scripts/cpu_bound.escriptorio
+close /scripts/cpu_bound.escriptorio
+concentrar
+concentrar
+
+
+[INFO] 02:34:32:617 MDJ/(12438:12441): Terminada operacion
+[DEBUG] 02:35:29:91 MDJ/(12535:12537): Handshake de: DAM
+[DEBUG] 02:35:29:104 MDJ/(12535:12551): Escuchando nuevo cliente en 7
+[INFO] 02:35:39:102 MDJ/(12535:12538): Validar archivo...
+[INFO] 02:35:40:107 MDJ/(12535:12538): Terminada operacion
+[INFO] 02:35:40:107 MDJ/(12535:12538): Obtener datos...
+[INFO] 02:35:40:109 MDJ/(12535:12538): Datos a enviar: abrir /scripts/cpu_bound.escriptorio
+concentrar
+concentrar
+close /scripts/cpu_bound.escriptorio
+concentrar
+concentrar
+abrir /scripts/cpu_bound.escriptorio
+close /scripts/cpu_bound.escriptorio
+concentrar
+concentrar
+
+
+[INFO] 02:35:41:112 MDJ/(12535:12538): Terminada operacion
+[INFO] 02:35:41:112 MDJ/(12535:12538): Validar archivo...
+[INFO] 02:35:42:113 MDJ/(12535:12538): Terminada operacion
+[INFO] 02:35:42:113 MDJ/(12535:12538): Obtener datos...
+[INFO] 02:35:42:114 MDJ/(12535:12538): Datos a enviar: concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+
+
+[INFO] 02:35:43:123 MDJ/(12535:12538): Terminada operacion
+[INFO] 02:35:43:123 MDJ/(12535:12538): Validar archivo...
+[INFO] 02:35:44:133 MDJ/(12535:12538): Terminada operacion
+[INFO] 02:35:44:133 MDJ/(12535:12538): Obtener datos...
+[INFO] 02:35:44:133 MDJ/(12535:12538): Datos a enviar: concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+
+
+[INFO] 02:35:45:143 MDJ/(12535:12538): Terminada operacion
+[INFO] 02:35:45:143 MDJ/(12535:12538): Validar archivo...
+[INFO] 02:35:46:153 MDJ/(12535:12538): Terminada operacion
+[INFO] 02:35:46:153 MDJ/(12535:12538): Obtener datos...
+[INFO] 02:35:46:154 MDJ/(12535:12538): Datos a enviar: concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+
+
+[INFO] 02:35:47:159 MDJ/(12535:12538): Terminada operacion
+[DEBUG] 02:43:39:514 MDJ/(13073:13075): Handshake de: DAM
+[DEBUG] 02:43:39:519 MDJ/(13073:13090): Escuchando nuevo cliente en 7
+[DEBUG] 02:44:25:475 MDJ/(13166:13168): Handshake de: DAM
+[DEBUG] 02:44:25:477 MDJ/(13166:13172): Escuchando nuevo cliente en 7
+[INFO] 02:44:48:44 MDJ/(13166:13169): Validar archivo...
+[INFO] 02:44:49:52 MDJ/(13166:13169): Terminada operacion
+[INFO] 02:44:49:53 MDJ/(13166:13169): Obtener datos...
+[INFO] 02:44:49:56 MDJ/(13166:13169): Datos a enviar: abrir /scripts/cpu_bound.escriptorio
+concentrar
+concentrar
+close /scripts/cpu_bound.escriptorio
+concentrar
+concentrar
+abrir /scripts/cpu_bound.escriptorio
+close /scripts/cpu_bound.escriptorio
+concentrar
+concentrar
+
+
+[INFO] 02:44:50:63 MDJ/(13166:13169): Terminada operacion
+[INFO] 02:44:50:67 MDJ/(13166:13169): Validar archivo...
+[INFO] 02:44:51:73 MDJ/(13166:13169): Terminada operacion
+[INFO] 02:44:51:73 MDJ/(13166:13169): Obtener datos...
+[INFO] 02:44:51:75 MDJ/(13166:13169): Datos a enviar: concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+
+
+[INFO] 02:44:52:77 MDJ/(13166:13169): Terminada operacion
+[INFO] 02:44:52:78 MDJ/(13166:13169): Validar archivo...
+[INFO] 02:44:53:83 MDJ/(13166:13169): Terminada operacion
+[INFO] 02:44:53:84 MDJ/(13166:13169): Obtener datos...
+[INFO] 02:44:53:84 MDJ/(13166:13169): Datos a enviar: concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+
+
+[INFO] 02:44:54:87 MDJ/(13166:13169): Terminada operacion
+[INFO] 02:44:54:88 MDJ/(13166:13169): Validar archivo...
+[INFO] 02:44:55:90 MDJ/(13166:13169): Terminada operacion
+[INFO] 02:44:55:90 MDJ/(13166:13169): Obtener datos...
+[INFO] 02:44:55:90 MDJ/(13166:13169): Datos a enviar: concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+
+
+[INFO] 02:44:56:91 MDJ/(13166:13169): Terminada operacion
+[INFO] 02:44:56:91 MDJ/(13166:13169): Validar archivo...
+[INFO] 02:44:57:93 MDJ/(13166:13169): Terminada operacion
+[INFO] 02:44:57:93 MDJ/(13166:13169): Obtener datos...
+[INFO] 02:44:57:93 MDJ/(13166:13169): Datos a enviar: concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+concentrar
+
+
+[INFO] 02:44:58:93 MDJ/(13166:13169): Terminada operacion
