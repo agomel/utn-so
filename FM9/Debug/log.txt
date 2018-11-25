@@ -421,3 +421,1236 @@
 [DEBUG] 02:59:28:1 FM9/(14155:14157): Liberando el dtb 1 de memoria por pasar a EXIT
 [INFO] 02:59:28:1 FM9/(14155:14157): Borrado DTB 1 de memoria por pasar a EXIT
 [INFO] 02:59:28:1 FM9/(14155:14157): Terminada operacion
+[INFO] 03:06:35:525 FM9/(11216:11216): Utilizando paginas invertidas
+[DEBUG] 03:06:58:28 FM9/(11216:11217): Handshake de: DAM
+[DEBUG] 03:06:58:28 FM9/(11216:11217): Se agrego a las conexiones DAM
+[DEBUG] 03:06:58:32 FM9/(11216:11239): Escuchando nuevo cliente en 5
+[DEBUG] 03:07:05:623 FM9/(11216:11217): Handshake de: CPU
+[DEBUG] 03:07:05:623 FM9/(11216:11217): Se agrego a las conexiones CPU
+[DEBUG] 03:07:05:627 FM9/(11216:11256): Escuchando nuevo cliente en 7
+[DEBUG] 03:07:37:555 FM9/(11216:11218): Guardando escriptorio 1 en memoria
+[DEBUG] 03:07:37:556 FM9/(11216:11218): Guardando en paginas invertidas
+[DEBUG] 03:07:37:556 FM9/(11216:11218): Datos guardados
+[DEBUG] 03:07:37:556 FM9/(11216:11218): Enviando 0 al cargar nuevo DTB
+[INFO] 03:07:37:556 FM9/(11216:11218): Terminada operacion
+[DEBUG] 03:07:37:808 FM9/(11216:11218): Trayendo linea escriptorio
+[DEBUG] 03:07:37:808 FM9/(11216:11218): Se pide linea 0 para escriptorio scripts/io_bound.escriptorio
+[INFO] 03:07:37:808 FM9/(11216:11218): CANTIDAD DE LINEAS DE scripts/io_bound.escriptorio ES: 11
+[DEBUG] 03:07:37:808 FM9/(11216:11218): Linea: abrir /scripts/cpu_bound.escriptorio
+[INFO] 03:07:37:808 FM9/(11216:11218): Terminada operacion
+[DEBUG] 03:07:38:557 FM9/(11216:11218): Guardando escriptorio 2 en memoria
+[DEBUG] 03:07:38:557 FM9/(11216:11218): Guardando en paginas invertidas
+[DEBUG] 03:07:38:558 FM9/(11216:11218): Datos guardados
+[DEBUG] 03:07:38:558 FM9/(11216:11218): Enviando 0 al cargar nuevo DTB
+[INFO] 03:07:38:558 FM9/(11216:11218): Terminada operacion
+[DEBUG] 03:07:39:87 FM9/(11216:11218): Trayendo linea escriptorio
+[DEBUG] 03:07:39:87 FM9/(11216:11218): Se pide linea 0 para escriptorio scripts/cpu_bound.escriptorio
+[INFO] 03:07:39:87 FM9/(11216:11218): CANTIDAD DE LINEAS DE scripts/cpu_bound.escriptorio ES: 12
+[DEBUG] 03:07:39:87 FM9/(11216:11218): Linea: concentrar
+[INFO] 03:07:39:88 FM9/(11216:11218): Terminada operacion
+[DEBUG] 03:07:39:88 FM9/(11216:11218): Trayendo linea escriptorio
+[DEBUG] 03:07:39:88 FM9/(11216:11218): Se pide linea 1 para escriptorio scripts/cpu_bound.escriptorio
+[INFO] 03:07:39:88 FM9/(11216:11218): CANTIDAD DE LINEAS DE scripts/cpu_bound.escriptorio ES: 12
+[DEBUG] 03:07:39:88 FM9/(11216:11218): Linea: concentrar
+[INFO] 03:07:39:88 FM9/(11216:11218): Terminada operacion
+[DEBUG] 03:07:39:559 FM9/(11216:11218): Guardando datos en memoria
+[DEBUG] 03:07:39:559 FM9/(11216:11218): Guardando en paginas invertidas
+[DEBUG] 03:07:39:560 FM9/(11216:11218): Datos guardados
+[DEBUG] 03:07:39:560 FM9/(11216:11218): Enviando 0 al guardar los datos
+[INFO] 03:07:39:560 FM9/(11216:11218): Terminada operacion
+[DEBUG] 03:07:39:649 FM9/(11216:11218): Trayendo linea escriptorio
+[DEBUG] 03:07:39:650 FM9/(11216:11218): Se pide linea 2 para escriptorio scripts/cpu_bound.escriptorio
+[INFO] 03:07:39:650 FM9/(11216:11218): CANTIDAD DE LINEAS DE scripts/cpu_bound.escriptorio ES: 12
+[DEBUG] 03:07:39:650 FM9/(11216:11218): Linea: concentrar
+[INFO] 03:07:39:650 FM9/(11216:11218): Terminada operacion
+[DEBUG] 03:07:39:650 FM9/(11216:11218): Trayendo linea escriptorio
+[DEBUG] 03:07:39:650 FM9/(11216:11218): Se pide linea 3 para escriptorio scripts/cpu_bound.escriptorio
+[INFO] 03:07:39:650 FM9/(11216:11218): CANTIDAD DE LINEAS DE scripts/cpu_bound.escriptorio ES: 12
+[DEBUG] 03:07:39:650 FM9/(11216:11218): Linea: concentrar
+[INFO] 03:07:39:651 FM9/(11216:11218): Terminada operacion
+[DEBUG] 03:07:39:903 FM9/(11216:11218): Trayendo linea escriptorio
+[DEBUG] 03:07:39:903 FM9/(11216:11218): Se pide linea 1 para escriptorio scripts/io_bound.escriptorio
+[INFO] 03:07:39:903 FM9/(11216:11218): CANTIDAD DE LINEAS DE scripts/io_bound.escriptorio ES: 11
+[DEBUG] 03:07:39:903 FM9/(11216:11218): Linea: concentrar
+[INFO] 03:07:39:903 FM9/(11216:11218): Terminada operacion
+[DEBUG] 03:07:39:904 FM9/(11216:11218): Trayendo linea escriptorio
+[DEBUG] 03:07:39:904 FM9/(11216:11218): Se pide linea 2 para escriptorio scripts/io_bound.escriptorio
+[INFO] 03:07:39:904 FM9/(11216:11218): CANTIDAD DE LINEAS DE scripts/io_bound.escriptorio ES: 11
+[DEBUG] 03:07:39:904 FM9/(11216:11218): Linea: concentrar
+[INFO] 03:07:39:904 FM9/(11216:11218): Terminada operacion
+[DEBUG] 03:07:40:460 FM9/(11216:11218): Trayendo linea escriptorio
+[DEBUG] 03:07:40:460 FM9/(11216:11218): Se pide linea 4 para escriptorio scripts/cpu_bound.escriptorio
+[INFO] 03:07:40:460 FM9/(11216:11218): CANTIDAD DE LINEAS DE scripts/cpu_bound.escriptorio ES: 12
+[DEBUG] 03:07:40:460 FM9/(11216:11218): Linea: concentrar
+[INFO] 03:07:40:460 FM9/(11216:11218): Terminada operacion
+[DEBUG] 03:07:40:461 FM9/(11216:11218): Trayendo linea escriptorio
+[DEBUG] 03:07:40:461 FM9/(11216:11218): Se pide linea 5 para escriptorio scripts/cpu_bound.escriptorio
+[INFO] 03:07:40:461 FM9/(11216:11218): CANTIDAD DE LINEAS DE scripts/cpu_bound.escriptorio ES: 12
+[DEBUG] 03:07:40:461 FM9/(11216:11218): Linea: concentrar
+[INFO] 03:07:40:461 FM9/(11216:11218): Terminada operacion
+[DEBUG] 03:07:40:562 FM9/(11216:11218): Guardando escriptorio 3 en memoria
+[DEBUG] 03:07:40:562 FM9/(11216:11218): Guardando en paginas invertidas
+[DEBUG] 03:07:40:562 FM9/(11216:11218): Datos guardados
+[DEBUG] 03:07:40:562 FM9/(11216:11218): Enviando 0 al cargar nuevo DTB
+[INFO] 03:07:40:562 FM9/(11216:11218): Terminada operacion
+[DEBUG] 03:07:40:717 FM9/(11216:11218): Trayendo linea escriptorio
+[DEBUG] 03:07:40:718 FM9/(11216:11218): Se pide linea 3 para escriptorio scripts/io_bound.escriptorio
+[INFO] 03:07:40:718 FM9/(11216:11218): CANTIDAD DE LINEAS DE scripts/io_bound.escriptorio ES: 11
+[DEBUG] 03:07:40:718 FM9/(11216:11218): Linea: close /scripts/cpu_bound.escriptorio
+[INFO] 03:07:40:718 FM9/(11216:11218): Terminada operacion
+[DEBUG] 03:07:40:720 FM9/(11216:11218): Liberando memoria para archivo /scripts/cpu_bound.escriptorio
+[INFO] 03:07:40:720 FM9/(11216:11218): Borrado archivo /scripts/cpu_bound.escriptorio de memoria
+[INFO] 03:07:40:720 FM9/(11216:11218): Terminada operacion
+[DEBUG] 03:07:40:722 FM9/(11216:11218): Trayendo linea escriptorio
+[DEBUG] 03:07:40:722 FM9/(11216:11218): Se pide linea 4 para escriptorio scripts/io_bound.escriptorio
+[INFO] 03:07:40:722 FM9/(11216:11218): CANTIDAD DE LINEAS DE scripts/io_bound.escriptorio ES: 11
+[DEBUG] 03:07:40:722 FM9/(11216:11218): Linea: concentrar
+[INFO] 03:07:40:722 FM9/(11216:11218): Terminada operacion
+[DEBUG] 03:07:40:976 FM9/(11216:11218): Trayendo linea escriptorio
+[DEBUG] 03:07:40:976 FM9/(11216:11218): Se pide linea 6 para escriptorio scripts/cpu_bound.escriptorio
+[INFO] 03:07:40:976 FM9/(11216:11218): CANTIDAD DE LINEAS DE scripts/cpu_bound.escriptorio ES: 12
+[DEBUG] 03:07:40:976 FM9/(11216:11218): Linea: concentrar
+[INFO] 03:07:40:976 FM9/(11216:11218): Terminada operacion
+[DEBUG] 03:07:40:977 FM9/(11216:11218): Trayendo linea escriptorio
+[DEBUG] 03:07:40:977 FM9/(11216:11218): Se pide linea 7 para escriptorio scripts/cpu_bound.escriptorio
+[INFO] 03:07:40:977 FM9/(11216:11218): CANTIDAD DE LINEAS DE scripts/cpu_bound.escriptorio ES: 12
+[DEBUG] 03:07:40:977 FM9/(11216:11218): Linea: concentrar
+[INFO] 03:07:40:977 FM9/(11216:11218): Terminada operacion
+[DEBUG] 03:07:41:230 FM9/(11216:11218): Trayendo linea escriptorio
+[DEBUG] 03:07:41:230 FM9/(11216:11218): Se pide linea 0 para escriptorio scripts/cpu_bound.escriptorio
+[INFO] 03:07:41:230 FM9/(11216:11218): CANTIDAD DE LINEAS DE scripts/cpu_bound.escriptorio ES: 12
+[DEBUG] 03:07:41:230 FM9/(11216:11218): Linea: concentrar
+[INFO] 03:07:41:230 FM9/(11216:11218): Terminada operacion
+[DEBUG] 03:07:41:230 FM9/(11216:11218): Trayendo linea escriptorio
+[DEBUG] 03:07:41:230 FM9/(11216:11218): Se pide linea 1 para escriptorio scripts/cpu_bound.escriptorio
+[INFO] 03:07:41:230 FM9/(11216:11218): CANTIDAD DE LINEAS DE scripts/cpu_bound.escriptorio ES: 12
+[DEBUG] 03:07:41:231 FM9/(11216:11218): Linea: concentrar
+[INFO] 03:07:41:231 FM9/(11216:11218): Terminada operacion
+[DEBUG] 03:07:41:484 FM9/(11216:11218): Trayendo linea escriptorio
+[DEBUG] 03:07:41:484 FM9/(11216:11218): Se pide linea 5 para escriptorio scripts/io_bound.escriptorio
+[INFO] 03:07:41:484 FM9/(11216:11218): CANTIDAD DE LINEAS DE scripts/io_bound.escriptorio ES: 11
+[DEBUG] 03:07:41:484 FM9/(11216:11218): Linea: concentrar
+[INFO] 03:07:41:484 FM9/(11216:11218): Terminada operacion
+[DEBUG] 03:07:41:484 FM9/(11216:11218): Trayendo linea escriptorio
+[DEBUG] 03:07:41:485 FM9/(11216:11218): Se pide linea 6 para escriptorio scripts/io_bound.escriptorio
+[INFO] 03:07:41:485 FM9/(11216:11218): CANTIDAD DE LINEAS DE scripts/io_bound.escriptorio ES: 11
+[DEBUG] 03:07:41:485 FM9/(11216:11218): Linea: abrir /scripts/cpu_bound.escriptorio
+[INFO] 03:07:41:485 FM9/(11216:11218): Terminada operacion
+[DEBUG] 03:07:41:563 FM9/(11216:11218): Guardando escriptorio 4 en memoria
+[DEBUG] 03:07:41:563 FM9/(11216:11218): Guardando en paginas invertidas
+[DEBUG] 03:07:41:563 FM9/(11216:11218): Datos guardados
+[DEBUG] 03:07:41:563 FM9/(11216:11218): Enviando 0 al cargar nuevo DTB
+[INFO] 03:07:41:563 FM9/(11216:11218): Terminada operacion
+[DEBUG] 03:07:41:737 FM9/(11216:11218): Trayendo linea escriptorio
+[DEBUG] 03:07:41:737 FM9/(11216:11218): Se pide linea 8 para escriptorio scripts/cpu_bound.escriptorio
+[INFO] 03:07:41:737 FM9/(11216:11218): CANTIDAD DE LINEAS DE scripts/cpu_bound.escriptorio ES: 12
+[DEBUG] 03:07:41:738 FM9/(11216:11218): Linea: concentrar
+[INFO] 03:07:41:738 FM9/(11216:11218): Terminada operacion
+[DEBUG] 03:07:41:738 FM9/(11216:11218): Trayendo linea escriptorio
+[DEBUG] 03:07:41:738 FM9/(11216:11218): Se pide linea 9 para escriptorio scripts/cpu_bound.escriptorio
+[INFO] 03:07:41:738 FM9/(11216:11218): CANTIDAD DE LINEAS DE scripts/cpu_bound.escriptorio ES: 12
+[DEBUG] 03:07:41:738 FM9/(11216:11218): Linea: concentrar
+[INFO] 03:07:41:738 FM9/(11216:11218): Terminada operacion
+[DEBUG] 03:07:41:940 FM9/(11216:11218): Trayendo linea escriptorio
+[DEBUG] 03:07:41:942 FM9/(11216:11218): Se pide linea 2 para escriptorio scripts/cpu_bound.escriptorio
+[INFO] 03:07:41:942 FM9/(11216:11218): CANTIDAD DE LINEAS DE scripts/cpu_bound.escriptorio ES: 12
+[DEBUG] 03:07:41:942 FM9/(11216:11218): Linea: concentrar
+[INFO] 03:07:41:942 FM9/(11216:11218): Terminada operacion
+[DEBUG] 03:07:41:943 FM9/(11216:11218): Trayendo linea escriptorio
+[DEBUG] 03:07:41:943 FM9/(11216:11218): Se pide linea 3 para escriptorio scripts/cpu_bound.escriptorio
+[INFO] 03:07:41:943 FM9/(11216:11218): CANTIDAD DE LINEAS DE scripts/cpu_bound.escriptorio ES: 12
+[DEBUG] 03:07:41:943 FM9/(11216:11218): Linea: concentrar
+[INFO] 03:07:41:944 FM9/(11216:11218): Terminada operacion
+[DEBUG] 03:07:42:145 FM9/(11216:11218): Trayendo linea escriptorio
+[DEBUG] 03:07:42:145 FM9/(11216:11218): Se pide linea 7 para escriptorio scripts/io_bound.escriptorio
+[INFO] 03:07:42:145 FM9/(11216:11218): CANTIDAD DE LINEAS DE scripts/io_bound.escriptorio ES: 11
+[DEBUG] 03:07:42:145 FM9/(11216:11218): Linea: close /scripts/cpu_bound.escriptorio
+[INFO] 03:07:42:146 FM9/(11216:11218): Terminada operacion
+[DEBUG] 03:07:42:147 FM9/(11216:11218): Liberando el dtb 1 de memoria por pasar a EXIT
+[INFO] 03:07:42:147 FM9/(11216:11218): Borrado DTB 1 de memoria por pasar a EXIT
+[INFO] 03:07:42:148 FM9/(11216:11218): Terminada operacion
+[DEBUG] 03:07:42:350 FM9/(11216:11218): Trayendo linea escriptorio
+[DEBUG] 03:07:42:350 FM9/(11216:11218): Se pide linea 0 para escriptorio scripts/cpu_bound.escriptorio
+[INFO] 03:07:42:350 FM9/(11216:11218): CANTIDAD DE LINEAS DE scripts/cpu_bound.escriptorio ES: 12
+[DEBUG] 03:07:42:351 FM9/(11216:11218): Linea: concentrar
+[INFO] 03:07:42:351 FM9/(11216:11218): Terminada operacion
+[DEBUG] 03:07:42:351 FM9/(11216:11218): Trayendo linea escriptorio
+[DEBUG] 03:07:42:351 FM9/(11216:11218): Se pide linea 1 para escriptorio scripts/cpu_bound.escriptorio
+[INFO] 03:07:42:351 FM9/(11216:11218): CANTIDAD DE LINEAS DE scripts/cpu_bound.escriptorio ES: 12
+[DEBUG] 03:07:42:351 FM9/(11216:11218): Linea: concentrar
+[INFO] 03:07:42:352 FM9/(11216:11218): Terminada operacion
+[DEBUG] 03:07:42:553 FM9/(11216:11218): Trayendo linea escriptorio
+[DEBUG] 03:07:42:553 FM9/(11216:11218): Se pide linea 10 para escriptorio scripts/cpu_bound.escriptorio
+[INFO] 03:07:42:553 FM9/(11216:11218): CANTIDAD DE LINEAS DE scripts/cpu_bound.escriptorio ES: 12
+[DEBUG] 03:07:42:553 FM9/(11216:11218): Linea: concentrar
+[INFO] 03:07:42:553 FM9/(11216:11218): Terminada operacion
+[DEBUG] 03:07:42:553 FM9/(11216:11218): Trayendo linea escriptorio
+[DEBUG] 03:07:42:554 FM9/(11216:11218): Se pide linea 11 para escriptorio scripts/cpu_bound.escriptorio
+[INFO] 03:07:42:554 FM9/(11216:11218): CANTIDAD DE LINEAS DE scripts/cpu_bound.escriptorio ES: 12
+[INFO] 03:07:42:554 FM9/(11216:11218): Es fin de archivo
+[INFO] 03:07:42:554 FM9/(11216:11218): Terminada operacion
+[DEBUG] 03:07:42:554 FM9/(11216:11218): Liberando el dtb 2 de memoria por pasar a EXIT
+[INFO] 03:07:42:554 FM9/(11216:11218): Borrado DTB 2 de memoria por pasar a EXIT
+[INFO] 03:07:42:554 FM9/(11216:11218): Terminada operacion
+[DEBUG] 03:07:42:567 FM9/(11216:11218): Guardando escriptorio 5 en memoria
+[DEBUG] 03:07:42:567 FM9/(11216:11218): Guardando en paginas invertidas
+[DEBUG] 03:07:42:567 FM9/(11216:11218): Datos guardados
+[DEBUG] 03:07:42:567 FM9/(11216:11218): Enviando 0 al cargar nuevo DTB
+[INFO] 03:07:42:567 FM9/(11216:11218): Terminada operacion
+[DEBUG] 03:07:42:755 FM9/(11216:11218): Trayendo linea escriptorio
+[DEBUG] 03:07:42:755 FM9/(11216:11218): Se pide linea 4 para escriptorio scripts/cpu_bound.escriptorio
+[INFO] 03:07:42:755 FM9/(11216:11218): CANTIDAD DE LINEAS DE scripts/cpu_bound.escriptorio ES: 12
+[DEBUG] 03:07:42:756 FM9/(11216:11218): Linea: concentrar
+[INFO] 03:07:42:756 FM9/(11216:11218): Terminada operacion
+[DEBUG] 03:07:42:756 FM9/(11216:11218): Trayendo linea escriptorio
+[DEBUG] 03:07:42:757 FM9/(11216:11218): Se pide linea 5 para escriptorio scripts/cpu_bound.escriptorio
+[INFO] 03:07:42:757 FM9/(11216:11218): CANTIDAD DE LINEAS DE scripts/cpu_bound.escriptorio ES: 12
+[DEBUG] 03:07:42:757 FM9/(11216:11218): Linea: concentrar
+[INFO] 03:07:42:757 FM9/(11216:11218): Terminada operacion
+[DEBUG] 03:07:42:958 FM9/(11216:11218): Trayendo linea escriptorio
+[DEBUG] 03:07:42:958 FM9/(11216:11218): Se pide linea 2 para escriptorio scripts/cpu_bound.escriptorio
+[INFO] 03:07:42:958 FM9/(11216:11218): CANTIDAD DE LINEAS DE scripts/cpu_bound.escriptorio ES: 12
+[DEBUG] 03:07:42:959 FM9/(11216:11218): Linea: concentrar
+[INFO] 03:07:42:959 FM9/(11216:11218): Terminada operacion
+[DEBUG] 03:07:42:959 FM9/(11216:11218): Trayendo linea escriptorio
+[DEBUG] 03:07:42:959 FM9/(11216:11218): Se pide linea 3 para escriptorio scripts/cpu_bound.escriptorio
+[INFO] 03:07:42:959 FM9/(11216:11218): CANTIDAD DE LINEAS DE scripts/cpu_bound.escriptorio ES: 12
+[DEBUG] 03:07:42:959 FM9/(11216:11218): Linea: concentrar
+[INFO] 03:07:42:959 FM9/(11216:11218): Terminada operacion
+[DEBUG] 03:07:43:161 FM9/(11216:11218): Trayendo linea escriptorio
+[DEBUG] 03:07:43:161 FM9/(11216:11218): Se pide linea 0 para escriptorio scripts/cpu_bound.escriptorio
+[INFO] 03:07:43:161 FM9/(11216:11218): CANTIDAD DE LINEAS DE scripts/cpu_bound.escriptorio ES: 12
+[DEBUG] 03:07:43:161 FM9/(11216:11218): Linea: concentrar
+[INFO] 03:07:43:161 FM9/(11216:11218): Terminada operacion
+[DEBUG] 03:07:43:161 FM9/(11216:11218): Trayendo linea escriptorio
+[DEBUG] 03:07:43:162 FM9/(11216:11218): Se pide linea 1 para escriptorio scripts/cpu_bound.escriptorio
+[INFO] 03:07:43:162 FM9/(11216:11218): CANTIDAD DE LINEAS DE scripts/cpu_bound.escriptorio ES: 12
+[DEBUG] 03:07:43:162 FM9/(11216:11218): Linea: concentrar
+[INFO] 03:07:43:162 FM9/(11216:11218): Terminada operacion
+[DEBUG] 03:07:43:363 FM9/(11216:11218): Trayendo linea escriptorio
+[DEBUG] 03:07:43:363 FM9/(11216:11218): Se pide linea 6 para escriptorio scripts/cpu_bound.escriptorio
+[INFO] 03:07:43:363 FM9/(11216:11218): CANTIDAD DE LINEAS DE scripts/cpu_bound.escriptorio ES: 12
+[DEBUG] 03:07:43:363 FM9/(11216:11218): Linea: concentrar
+[INFO] 03:07:43:363 FM9/(11216:11218): Terminada operacion
+[DEBUG] 03:07:43:363 FM9/(11216:11218): Trayendo linea escriptorio
+[DEBUG] 03:07:43:363 FM9/(11216:11218): Se pide linea 7 para escriptorio scripts/cpu_bound.escriptorio
+[INFO] 03:07:43:363 FM9/(11216:11218): CANTIDAD DE LINEAS DE scripts/cpu_bound.escriptorio ES: 12
+[DEBUG] 03:07:43:364 FM9/(11216:11218): Linea: concentrar
+[INFO] 03:07:43:364 FM9/(11216:11218): Terminada operacion
+[DEBUG] 03:07:43:565 FM9/(11216:11218): Trayendo linea escriptorio
+[DEBUG] 03:07:43:565 FM9/(11216:11218): Se pide linea 4 para escriptorio scripts/cpu_bound.escriptorio
+[INFO] 03:07:43:565 FM9/(11216:11218): CANTIDAD DE LINEAS DE scripts/cpu_bound.escriptorio ES: 12
+[DEBUG] 03:07:43:565 FM9/(11216:11218): Linea: concentrar
+[INFO] 03:07:43:565 FM9/(11216:11218): Terminada operacion
+[DEBUG] 03:07:43:566 FM9/(11216:11218): Trayendo linea escriptorio
+[DEBUG] 03:07:43:566 FM9/(11216:11218): Se pide linea 5 para escriptorio scripts/cpu_bound.escriptorio
+[INFO] 03:07:43:566 FM9/(11216:11218): CANTIDAD DE LINEAS DE scripts/cpu_bound.escriptorio ES: 12
+[DEBUG] 03:07:43:566 FM9/(11216:11218): Linea: concentrar
+[INFO] 03:07:43:566 FM9/(11216:11218): Terminada operacion
+[DEBUG] 03:07:43:568 FM9/(11216:11218): Guardando escriptorio 6 en memoria
+[DEBUG] 03:07:43:569 FM9/(11216:11218): Guardando en paginas invertidas
+[DEBUG] 03:07:43:569 FM9/(11216:11218): Datos guardados
+[DEBUG] 03:07:43:569 FM9/(11216:11218): Enviando 0 al cargar nuevo DTB
+[INFO] 03:07:43:569 FM9/(11216:11218): Terminada operacion
+[DEBUG] 03:07:43:767 FM9/(11216:11218): Trayendo linea escriptorio
+[DEBUG] 03:07:43:767 FM9/(11216:11218): Se pide linea 2 para escriptorio scripts/cpu_bound.escriptorio
+[INFO] 03:07:43:767 FM9/(11216:11218): CANTIDAD DE LINEAS DE scripts/cpu_bound.escriptorio ES: 12
+[DEBUG] 03:07:43:768 FM9/(11216:11218): Linea: concentrar
+[INFO] 03:07:43:768 FM9/(11216:11218): Terminada operacion
+[DEBUG] 03:07:43:769 FM9/(11216:11218): Trayendo linea escriptorio
+[DEBUG] 03:07:43:769 FM9/(11216:11218): Se pide linea 3 para escriptorio scripts/cpu_bound.escriptorio
+[INFO] 03:07:43:769 FM9/(11216:11218): CANTIDAD DE LINEAS DE scripts/cpu_bound.escriptorio ES: 12
+[DEBUG] 03:07:43:769 FM9/(11216:11218): Linea: concentrar
+[INFO] 03:07:43:769 FM9/(11216:11218): Terminada operacion
+[DEBUG] 03:07:43:972 FM9/(11216:11218): Trayendo linea escriptorio
+[DEBUG] 03:07:43:972 FM9/(11216:11218): Se pide linea 8 para escriptorio scripts/cpu_bound.escriptorio
+[INFO] 03:07:43:972 FM9/(11216:11218): CANTIDAD DE LINEAS DE scripts/cpu_bound.escriptorio ES: 12
+[DEBUG] 03:07:43:972 FM9/(11216:11218): Linea: concentrar
+[INFO] 03:07:43:973 FM9/(11216:11218): Terminada operacion
+[DEBUG] 03:07:43:973 FM9/(11216:11218): Trayendo linea escriptorio
+[DEBUG] 03:07:43:973 FM9/(11216:11218): Se pide linea 9 para escriptorio scripts/cpu_bound.escriptorio
+[INFO] 03:07:43:973 FM9/(11216:11218): CANTIDAD DE LINEAS DE scripts/cpu_bound.escriptorio ES: 12
+[DEBUG] 03:07:43:973 FM9/(11216:11218): Linea: concentrar
+[INFO] 03:07:43:974 FM9/(11216:11218): Terminada operacion
+[DEBUG] 03:07:44:175 FM9/(11216:11218): Trayendo linea escriptorio
+[DEBUG] 03:07:44:175 FM9/(11216:11218): Se pide linea 6 para escriptorio scripts/cpu_bound.escriptorio
+[INFO] 03:07:44:175 FM9/(11216:11218): CANTIDAD DE LINEAS DE scripts/cpu_bound.escriptorio ES: 12
+[DEBUG] 03:07:44:175 FM9/(11216:11218): Linea: concentrar
+[INFO] 03:07:44:175 FM9/(11216:11218): Terminada operacion
+[DEBUG] 03:07:44:176 FM9/(11216:11218): Trayendo linea escriptorio
+[DEBUG] 03:07:44:176 FM9/(11216:11218): Se pide linea 7 para escriptorio scripts/cpu_bound.escriptorio
+[INFO] 03:07:44:176 FM9/(11216:11218): CANTIDAD DE LINEAS DE scripts/cpu_bound.escriptorio ES: 12
+[DEBUG] 03:07:44:176 FM9/(11216:11218): Linea: concentrar
+[INFO] 03:07:44:176 FM9/(11216:11218): Terminada operacion
+[DEBUG] 03:07:44:377 FM9/(11216:11218): Trayendo linea escriptorio
+[DEBUG] 03:07:44:377 FM9/(11216:11218): Se pide linea 0 para escriptorio scripts/cpu_bound.escriptorio
+[INFO] 03:07:44:377 FM9/(11216:11218): CANTIDAD DE LINEAS DE scripts/cpu_bound.escriptorio ES: 12
+[DEBUG] 03:07:44:377 FM9/(11216:11218): Linea: concentrar
+[INFO] 03:07:44:377 FM9/(11216:11218): Terminada operacion
+[DEBUG] 03:07:44:378 FM9/(11216:11218): Trayendo linea escriptorio
+[DEBUG] 03:07:44:378 FM9/(11216:11218): Se pide linea 1 para escriptorio scripts/cpu_bound.escriptorio
+[INFO] 03:07:44:378 FM9/(11216:11218): CANTIDAD DE LINEAS DE scripts/cpu_bound.escriptorio ES: 12
+[DEBUG] 03:07:44:378 FM9/(11216:11218): Linea: concentrar
+[INFO] 03:07:44:378 FM9/(11216:11218): Terminada operacion
+[DEBUG] 03:07:44:572 FM9/(11216:11218): Guardando escriptorio 7 en memoria
+[DEBUG] 03:07:44:572 FM9/(11216:11218): Guardando en paginas invertidas
+[DEBUG] 03:07:44:572 FM9/(11216:11218): Datos guardados
+[DEBUG] 03:07:44:572 FM9/(11216:11218): Enviando 0 al cargar nuevo DTB
+[INFO] 03:07:44:572 FM9/(11216:11218): Terminada operacion
+[DEBUG] 03:07:44:579 FM9/(11216:11218): Trayendo linea escriptorio
+[DEBUG] 03:07:44:579 FM9/(11216:11218): Se pide linea 4 para escriptorio scripts/cpu_bound.escriptorio
+[INFO] 03:07:44:579 FM9/(11216:11218): CANTIDAD DE LINEAS DE scripts/cpu_bound.escriptorio ES: 12
+[DEBUG] 03:07:44:580 FM9/(11216:11218): Linea: concentrar
+[INFO] 03:07:44:580 FM9/(11216:11218): Terminada operacion
+[DEBUG] 03:07:44:581 FM9/(11216:11218): Trayendo linea escriptorio
+[DEBUG] 03:07:44:581 FM9/(11216:11218): Se pide linea 5 para escriptorio scripts/cpu_bound.escriptorio
+[INFO] 03:07:44:581 FM9/(11216:11218): CANTIDAD DE LINEAS DE scripts/cpu_bound.escriptorio ES: 12
+[DEBUG] 03:07:44:582 FM9/(11216:11218): Linea: concentrar
+[INFO] 03:07:44:582 FM9/(11216:11218): Terminada operacion
+[DEBUG] 03:07:44:783 FM9/(11216:11218): Trayendo linea escriptorio
+[DEBUG] 03:07:44:783 FM9/(11216:11218): Se pide linea 10 para escriptorio scripts/cpu_bound.escriptorio
+[INFO] 03:07:44:783 FM9/(11216:11218): CANTIDAD DE LINEAS DE scripts/cpu_bound.escriptorio ES: 12
+[DEBUG] 03:07:44:783 FM9/(11216:11218): Linea: concentrar
+[INFO] 03:07:44:783 FM9/(11216:11218): Terminada operacion
+[DEBUG] 03:07:44:783 FM9/(11216:11218): Trayendo linea escriptorio
+[DEBUG] 03:07:44:783 FM9/(11216:11218): Se pide linea 11 para escriptorio scripts/cpu_bound.escriptorio
+[INFO] 03:07:44:783 FM9/(11216:11218): CANTIDAD DE LINEAS DE scripts/cpu_bound.escriptorio ES: 12
+[INFO] 03:07:44:783 FM9/(11216:11218): Es fin de archivo
+[INFO] 03:07:44:783 FM9/(11216:11218): Terminada operacion
+[DEBUG] 03:07:44:784 FM9/(11216:11218): Liberando el dtb 3 de memoria por pasar a EXIT
+[INFO] 03:07:44:784 FM9/(11216:11218): Borrado DTB 3 de memoria por pasar a EXIT
+[INFO] 03:07:44:784 FM9/(11216:11218): Terminada operacion
+[DEBUG] 03:07:44:985 FM9/(11216:11218): Trayendo linea escriptorio
+[DEBUG] 03:07:44:985 FM9/(11216:11218): Se pide linea 8 para escriptorio scripts/cpu_bound.escriptorio
+[INFO] 03:07:44:985 FM9/(11216:11218): CANTIDAD DE LINEAS DE scripts/cpu_bound.escriptorio ES: 12
+[DEBUG] 03:07:44:985 FM9/(11216:11218): Linea: concentrar
+[INFO] 03:07:44:985 FM9/(11216:11218): Terminada operacion
+[DEBUG] 03:07:44:985 FM9/(11216:11218): Trayendo linea escriptorio
+[DEBUG] 03:07:44:985 FM9/(11216:11218): Se pide linea 9 para escriptorio scripts/cpu_bound.escriptorio
+[INFO] 03:07:44:986 FM9/(11216:11218): CANTIDAD DE LINEAS DE scripts/cpu_bound.escriptorio ES: 12
+[DEBUG] 03:07:44:986 FM9/(11216:11218): Linea: concentrar
+[INFO] 03:07:44:986 FM9/(11216:11218): Terminada operacion
+[DEBUG] 03:07:45:188 FM9/(11216:11218): Trayendo linea escriptorio
+[DEBUG] 03:07:45:188 FM9/(11216:11218): Se pide linea 2 para escriptorio scripts/cpu_bound.escriptorio
+[INFO] 03:07:45:188 FM9/(11216:11218): CANTIDAD DE LINEAS DE scripts/cpu_bound.escriptorio ES: 12
+[DEBUG] 03:07:45:188 FM9/(11216:11218): Linea: concentrar
+[INFO] 03:07:45:188 FM9/(11216:11218): Terminada operacion
+[DEBUG] 03:07:45:188 FM9/(11216:11218): Trayendo linea escriptorio
+[DEBUG] 03:07:45:188 FM9/(11216:11218): Se pide linea 3 para escriptorio scripts/cpu_bound.escriptorio
+[INFO] 03:07:45:188 FM9/(11216:11218): CANTIDAD DE LINEAS DE scripts/cpu_bound.escriptorio ES: 12
+[DEBUG] 03:07:45:188 FM9/(11216:11218): Linea: concentrar
+[INFO] 03:07:45:189 FM9/(11216:11218): Terminada operacion
+[DEBUG] 03:07:45:391 FM9/(11216:11218): Trayendo linea escriptorio
+[DEBUG] 03:07:45:391 FM9/(11216:11218): Se pide linea 0 para escriptorio scripts/cpu_bound.escriptorio
+[INFO] 03:07:45:391 FM9/(11216:11218): CANTIDAD DE LINEAS DE scripts/cpu_bound.escriptorio ES: 12
+[DEBUG] 03:07:45:391 FM9/(11216:11218): Linea: concentrar
+[INFO] 03:07:45:392 FM9/(11216:11218): Terminada operacion
+[DEBUG] 03:07:45:392 FM9/(11216:11218): Trayendo linea escriptorio
+[DEBUG] 03:07:45:392 FM9/(11216:11218): Se pide linea 1 para escriptorio scripts/cpu_bound.escriptorio
+[INFO] 03:07:45:392 FM9/(11216:11218): CANTIDAD DE LINEAS DE scripts/cpu_bound.escriptorio ES: 12
+[DEBUG] 03:07:45:392 FM9/(11216:11218): Linea: concentrar
+[INFO] 03:07:45:392 FM9/(11216:11218): Terminada operacion
+[DEBUG] 03:07:45:580 FM9/(11216:11218): Guardando datos en memoria
+[DEBUG] 03:07:45:581 FM9/(11216:11218): Guardando en paginas invertidas
+[DEBUG] 03:07:45:581 FM9/(11216:11218): Datos guardados
+[DEBUG] 03:07:45:581 FM9/(11216:11218): Enviando 0 al guardar los datos
+[INFO] 03:07:45:581 FM9/(11216:11218): Terminada operacion
+[DEBUG] 03:07:45:593 FM9/(11216:11218): Trayendo linea escriptorio
+[DEBUG] 03:07:45:593 FM9/(11216:11218): Se pide linea 6 para escriptorio scripts/cpu_bound.escriptorio
+[INFO] 03:07:45:593 FM9/(11216:11218): CANTIDAD DE LINEAS DE scripts/cpu_bound.escriptorio ES: 12
+[DEBUG] 03:07:45:593 FM9/(11216:11218): Linea: concentrar
+[INFO] 03:07:45:593 FM9/(11216:11218): Terminada operacion
+[DEBUG] 03:07:45:594 FM9/(11216:11218): Trayendo linea escriptorio
+[DEBUG] 03:07:45:594 FM9/(11216:11218): Se pide linea 7 para escriptorio scripts/cpu_bound.escriptorio
+[INFO] 03:07:45:594 FM9/(11216:11218): CANTIDAD DE LINEAS DE scripts/cpu_bound.escriptorio ES: 12
+[DEBUG] 03:07:45:594 FM9/(11216:11218): Linea: concentrar
+[INFO] 03:07:45:594 FM9/(11216:11218): Terminada operacion
+[DEBUG] 03:07:45:796 FM9/(11216:11218): Trayendo linea escriptorio
+[DEBUG] 03:07:45:796 FM9/(11216:11218): Se pide linea 10 para escriptorio scripts/cpu_bound.escriptorio
+[INFO] 03:07:45:797 FM9/(11216:11218): CANTIDAD DE LINEAS DE scripts/cpu_bound.escriptorio ES: 12
+[DEBUG] 03:07:45:797 FM9/(11216:11218): Linea: concentrar
+[INFO] 03:07:45:797 FM9/(11216:11218): Terminada operacion
+[DEBUG] 03:07:45:797 FM9/(11216:11218): Trayendo linea escriptorio
+[DEBUG] 03:07:45:797 FM9/(11216:11218): Se pide linea 11 para escriptorio scripts/cpu_bound.escriptorio
+[INFO] 03:07:45:797 FM9/(11216:11218): CANTIDAD DE LINEAS DE scripts/cpu_bound.escriptorio ES: 12
+[INFO] 03:07:45:797 FM9/(11216:11218): Es fin de archivo
+[INFO] 03:07:45:797 FM9/(11216:11218): Terminada operacion
+[DEBUG] 03:07:45:797 FM9/(11216:11218): Liberando el dtb 4 de memoria por pasar a EXIT
+[INFO] 03:07:45:797 FM9/(11216:11218): Borrado DTB 4 de memoria por pasar a EXIT
+[INFO] 03:07:45:797 FM9/(11216:11218): Terminada operacion
+[DEBUG] 03:07:45:999 FM9/(11216:11218): Trayendo linea escriptorio
+[DEBUG] 03:07:45:999 FM9/(11216:11218): Se pide linea 4 para escriptorio scripts/cpu_bound.escriptorio
+[INFO] 03:07:45:0 FM9/(11216:11218): CANTIDAD DE LINEAS DE scripts/cpu_bound.escriptorio ES: 12
+[DEBUG] 03:07:45:0 FM9/(11216:11218): Linea: concentrar
+[INFO] 03:07:45:0 FM9/(11216:11218): Terminada operacion
+[DEBUG] 03:07:45:1 FM9/(11216:11218): Trayendo linea escriptorio
+[DEBUG] 03:07:45:1 FM9/(11216:11218): Se pide linea 5 para escriptorio scripts/cpu_bound.escriptorio
+[INFO] 03:07:45:1 FM9/(11216:11218): CANTIDAD DE LINEAS DE scripts/cpu_bound.escriptorio ES: 12
+[DEBUG] 03:07:46:1 FM9/(11216:11218): Linea: concentrar
+[INFO] 03:07:46:2 FM9/(11216:11218): Terminada operacion
+[DEBUG] 03:07:46:203 FM9/(11216:11218): Trayendo linea escriptorio
+[DEBUG] 03:07:46:203 FM9/(11216:11218): Se pide linea 2 para escriptorio scripts/cpu_bound.escriptorio
+[INFO] 03:07:46:203 FM9/(11216:11218): CANTIDAD DE LINEAS DE scripts/cpu_bound.escriptorio ES: 12
+[DEBUG] 03:07:46:203 FM9/(11216:11218): Linea: concentrar
+[INFO] 03:07:46:204 FM9/(11216:11218): Terminada operacion
+[DEBUG] 03:07:46:205 FM9/(11216:11218): Trayendo linea escriptorio
+[DEBUG] 03:07:46:205 FM9/(11216:11218): Se pide linea 3 para escriptorio scripts/cpu_bound.escriptorio
+[INFO] 03:07:46:205 FM9/(11216:11218): CANTIDAD DE LINEAS DE scripts/cpu_bound.escriptorio ES: 12
+[DEBUG] 03:07:46:205 FM9/(11216:11218): Linea: concentrar
+[INFO] 03:07:46:206 FM9/(11216:11218): Terminada operacion
+[DEBUG] 03:07:46:407 FM9/(11216:11218): Trayendo linea escriptorio
+[DEBUG] 03:07:46:407 FM9/(11216:11218): Se pide linea 7 para escriptorio scripts/io_bound.escriptorio
+[INFO] 03:07:46:407 FM9/(11216:11218): CANTIDAD DE LINEAS DE scripts/io_bound.escriptorio ES: -1
+[ERROR] 03:07:46:407 FM9/(11216:11218): Error: El archivo no posee la linea 7
+[INFO] 03:07:46:407 FM9/(11216:11218): Terminada operacion
+[DEBUG] 03:07:46:407 FM9/(11216:11218): Liberando el dtb 1 de memoria por pasar a EXIT
+[INFO] 03:07:46:407 FM9/(11216:11218): Borrado DTB 1 de memoria por pasar a EXIT
+[INFO] 03:07:46:407 FM9/(11216:11218): Terminada operacion
+[DEBUG] 03:07:46:608 FM9/(11216:11218): Trayendo linea escriptorio
+[DEBUG] 03:07:46:609 FM9/(11216:11218): Se pide linea 8 para escriptorio scripts/cpu_bound.escriptorio
+[INFO] 03:07:46:609 FM9/(11216:11218): CANTIDAD DE LINEAS DE scripts/cpu_bound.escriptorio ES: 12
+[DEBUG] 03:07:46:609 FM9/(11216:11218): Linea: concentrar
+[INFO] 03:07:46:610 FM9/(11216:11218): Terminada operacion
+[DEBUG] 03:07:46:610 FM9/(11216:11218): Trayendo linea escriptorio
+[DEBUG] 03:07:46:610 FM9/(11216:11218): Se pide linea 9 para escriptorio scripts/cpu_bound.escriptorio
+[INFO] 03:07:46:610 FM9/(11216:11218): CANTIDAD DE LINEAS DE scripts/cpu_bound.escriptorio ES: 12
+[DEBUG] 03:07:46:611 FM9/(11216:11218): Linea: concentrar
+[INFO] 03:07:46:613 FM9/(11216:11218): Terminada operacion
+[DEBUG] 03:07:46:814 FM9/(11216:11218): Trayendo linea escriptorio
+[DEBUG] 03:07:46:814 FM9/(11216:11218): Se pide linea 6 para escriptorio scripts/cpu_bound.escriptorio
+[INFO] 03:07:46:814 FM9/(11216:11218): CANTIDAD DE LINEAS DE scripts/cpu_bound.escriptorio ES: 12
+[DEBUG] 03:07:46:814 FM9/(11216:11218): Linea: concentrar
+[INFO] 03:07:46:814 FM9/(11216:11218): Terminada operacion
+[DEBUG] 03:07:46:814 FM9/(11216:11218): Trayendo linea escriptorio
+[DEBUG] 03:07:46:814 FM9/(11216:11218): Se pide linea 7 para escriptorio scripts/cpu_bound.escriptorio
+[INFO] 03:07:46:814 FM9/(11216:11218): CANTIDAD DE LINEAS DE scripts/cpu_bound.escriptorio ES: 12
+[DEBUG] 03:07:46:815 FM9/(11216:11218): Linea: concentrar
+[INFO] 03:07:46:815 FM9/(11216:11218): Terminada operacion
+[DEBUG] 03:07:47:16 FM9/(11216:11218): Trayendo linea escriptorio
+[DEBUG] 03:07:47:16 FM9/(11216:11218): Se pide linea 4 para escriptorio scripts/cpu_bound.escriptorio
+[INFO] 03:07:47:16 FM9/(11216:11218): CANTIDAD DE LINEAS DE scripts/cpu_bound.escriptorio ES: 12
+[DEBUG] 03:07:47:16 FM9/(11216:11218): Linea: concentrar
+[INFO] 03:07:47:17 FM9/(11216:11218): Terminada operacion
+[DEBUG] 03:07:47:17 FM9/(11216:11218): Trayendo linea escriptorio
+[DEBUG] 03:07:47:17 FM9/(11216:11218): Se pide linea 5 para escriptorio scripts/cpu_bound.escriptorio
+[INFO] 03:07:47:17 FM9/(11216:11218): CANTIDAD DE LINEAS DE scripts/cpu_bound.escriptorio ES: 12
+[DEBUG] 03:07:47:18 FM9/(11216:11218): Linea: concentrar
+[INFO] 03:07:47:18 FM9/(11216:11218): Terminada operacion
+[DEBUG] 03:07:47:221 FM9/(11216:11218): Trayendo linea escriptorio
+[DEBUG] 03:07:47:221 FM9/(11216:11218): Se pide linea 10 para escriptorio scripts/cpu_bound.escriptorio
+[INFO] 03:07:47:221 FM9/(11216:11218): CANTIDAD DE LINEAS DE scripts/cpu_bound.escriptorio ES: 12
+[DEBUG] 03:07:47:221 FM9/(11216:11218): Linea: concentrar
+[INFO] 03:07:47:221 FM9/(11216:11218): Terminada operacion
+[DEBUG] 03:07:47:221 FM9/(11216:11218): Trayendo linea escriptorio
+[DEBUG] 03:07:47:221 FM9/(11216:11218): Se pide linea 11 para escriptorio scripts/cpu_bound.escriptorio
+[INFO] 03:07:47:221 FM9/(11216:11218): CANTIDAD DE LINEAS DE scripts/cpu_bound.escriptorio ES: 12
+[INFO] 03:07:47:221 FM9/(11216:11218): Es fin de archivo
+[INFO] 03:07:47:221 FM9/(11216:11218): Terminada operacion
+[DEBUG] 03:07:47:221 FM9/(11216:11218): Liberando el dtb 5 de memoria por pasar a EXIT
+[INFO] 03:07:47:222 FM9/(11216:11218): Borrado DTB 5 de memoria por pasar a EXIT
+[INFO] 03:07:47:222 FM9/(11216:11218): Terminada operacion
+[DEBUG] 03:07:47:423 FM9/(11216:11218): Trayendo linea escriptorio
+[DEBUG] 03:07:47:423 FM9/(11216:11218): Se pide linea 8 para escriptorio scripts/cpu_bound.escriptorio
+[INFO] 03:07:47:423 FM9/(11216:11218): CANTIDAD DE LINEAS DE scripts/cpu_bound.escriptorio ES: 12
+[DEBUG] 03:07:47:423 FM9/(11216:11218): Linea: concentrar
+[INFO] 03:07:47:424 FM9/(11216:11218): Terminada operacion
+[DEBUG] 03:07:47:424 FM9/(11216:11218): Trayendo linea escriptorio
+[DEBUG] 03:07:47:425 FM9/(11216:11218): Se pide linea 9 para escriptorio scripts/cpu_bound.escriptorio
+[INFO] 03:07:47:425 FM9/(11216:11218): CANTIDAD DE LINEAS DE scripts/cpu_bound.escriptorio ES: 12
+[DEBUG] 03:07:47:425 FM9/(11216:11218): Linea: concentrar
+[INFO] 03:07:47:425 FM9/(11216:11218): Terminada operacion
+[DEBUG] 03:07:47:627 FM9/(11216:11218): Trayendo linea escriptorio
+[DEBUG] 03:07:47:627 FM9/(11216:11218): Se pide linea 6 para escriptorio scripts/cpu_bound.escriptorio
+[INFO] 03:07:47:627 FM9/(11216:11218): CANTIDAD DE LINEAS DE scripts/cpu_bound.escriptorio ES: 12
+[DEBUG] 03:07:47:627 FM9/(11216:11218): Linea: concentrar
+[INFO] 03:07:47:627 FM9/(11216:11218): Terminada operacion
+[DEBUG] 03:07:47:627 FM9/(11216:11218): Trayendo linea escriptorio
+[DEBUG] 03:07:47:627 FM9/(11216:11218): Se pide linea 7 para escriptorio scripts/cpu_bound.escriptorio
+[INFO] 03:07:47:627 FM9/(11216:11218): CANTIDAD DE LINEAS DE scripts/cpu_bound.escriptorio ES: 12
+[DEBUG] 03:07:47:628 FM9/(11216:11218): Linea: concentrar
+[INFO] 03:07:47:628 FM9/(11216:11218): Terminada operacion
+[DEBUG] 03:07:47:829 FM9/(11216:11218): Trayendo linea escriptorio
+[DEBUG] 03:07:47:829 FM9/(11216:11218): Se pide linea 10 para escriptorio scripts/cpu_bound.escriptorio
+[INFO] 03:07:47:829 FM9/(11216:11218): CANTIDAD DE LINEAS DE scripts/cpu_bound.escriptorio ES: 12
+[DEBUG] 03:07:47:829 FM9/(11216:11218): Linea: concentrar
+[INFO] 03:07:47:829 FM9/(11216:11218): Terminada operacion
+[DEBUG] 03:07:47:829 FM9/(11216:11218): Trayendo linea escriptorio
+[DEBUG] 03:07:47:829 FM9/(11216:11218): Se pide linea 11 para escriptorio scripts/cpu_bound.escriptorio
+[INFO] 03:07:47:829 FM9/(11216:11218): CANTIDAD DE LINEAS DE scripts/cpu_bound.escriptorio ES: 12
+[INFO] 03:07:47:829 FM9/(11216:11218): Es fin de archivo
+[INFO] 03:07:47:829 FM9/(11216:11218): Terminada operacion
+[DEBUG] 03:07:47:830 FM9/(11216:11218): Liberando el dtb 6 de memoria por pasar a EXIT
+[INFO] 03:07:47:830 FM9/(11216:11218): Borrado DTB 6 de memoria por pasar a EXIT
+[INFO] 03:07:47:830 FM9/(11216:11218): Terminada operacion
+[DEBUG] 03:07:48:31 FM9/(11216:11218): Trayendo linea escriptorio
+[DEBUG] 03:07:48:31 FM9/(11216:11218): Se pide linea 8 para escriptorio scripts/cpu_bound.escriptorio
+[INFO] 03:07:48:31 FM9/(11216:11218): CANTIDAD DE LINEAS DE scripts/cpu_bound.escriptorio ES: 12
+[DEBUG] 03:07:48:31 FM9/(11216:11218): Linea: concentrar
+[INFO] 03:07:48:31 FM9/(11216:11218): Terminada operacion
+[DEBUG] 03:07:48:31 FM9/(11216:11218): Trayendo linea escriptorio
+[DEBUG] 03:07:48:32 FM9/(11216:11218): Se pide linea 9 para escriptorio scripts/cpu_bound.escriptorio
+[INFO] 03:07:48:32 FM9/(11216:11218): CANTIDAD DE LINEAS DE scripts/cpu_bound.escriptorio ES: 12
+[DEBUG] 03:07:48:32 FM9/(11216:11218): Linea: concentrar
+[INFO] 03:07:48:32 FM9/(11216:11218): Terminada operacion
+[DEBUG] 03:07:48:284 FM9/(11216:11218): Trayendo linea escriptorio
+[DEBUG] 03:07:48:284 FM9/(11216:11218): Se pide linea 10 para escriptorio scripts/cpu_bound.escriptorio
+[INFO] 03:07:48:284 FM9/(11216:11218): CANTIDAD DE LINEAS DE scripts/cpu_bound.escriptorio ES: 12
+[DEBUG] 03:07:48:285 FM9/(11216:11218): Linea: concentrar
+[INFO] 03:07:48:285 FM9/(11216:11218): Terminada operacion
+[DEBUG] 03:07:48:285 FM9/(11216:11218): Trayendo linea escriptorio
+[DEBUG] 03:07:48:285 FM9/(11216:11218): Se pide linea 11 para escriptorio scripts/cpu_bound.escriptorio
+[INFO] 03:07:48:285 FM9/(11216:11218): CANTIDAD DE LINEAS DE scripts/cpu_bound.escriptorio ES: 12
+[INFO] 03:07:48:285 FM9/(11216:11218): Es fin de archivo
+[INFO] 03:07:48:285 FM9/(11216:11218): Terminada operacion
+[DEBUG] 03:07:48:286 FM9/(11216:11218): Liberando el dtb 7 de memoria por pasar a EXIT
+[INFO] 03:07:48:286 FM9/(11216:11218): Borrado DTB 7 de memoria por pasar a EXIT
+[INFO] 03:07:48:286 FM9/(11216:11218): Terminada operacion
+[INFO] 03:09:03:800 FM9/(11297:11297): Utilizando paginas invertidas
+[DEBUG] 03:09:06:544 FM9/(11297:11298): Handshake de: DAM
+[DEBUG] 03:09:06:544 FM9/(11297:11298): Se agrego a las conexiones DAM
+[DEBUG] 03:09:06:547 FM9/(11297:11304): Escuchando nuevo cliente en 5
+[DEBUG] 03:09:10:114 FM9/(11297:11298): Handshake de: CPU
+[DEBUG] 03:09:10:114 FM9/(11297:11298): Se agrego a las conexiones CPU
+[DEBUG] 03:09:10:115 FM9/(11297:11309): Escuchando nuevo cliente en 7
+[DEBUG] 03:09:40:419 FM9/(11297:11299): Guardando escriptorio 1 en memoria
+[DEBUG] 03:09:40:419 FM9/(11297:11299): Guardando en paginas invertidas
+[DEBUG] 03:09:40:419 FM9/(11297:11299): Datos guardados
+[DEBUG] 03:09:40:419 FM9/(11297:11299): Enviando 0 al cargar nuevo DTB
+[INFO] 03:09:40:419 FM9/(11297:11299): Terminada operacion
+[DEBUG] 03:09:40:776 FM9/(11297:11299): Trayendo linea escriptorio
+[DEBUG] 03:09:40:776 FM9/(11297:11299): Se pide linea 0 para escriptorio scripts/io_bound.escriptorio
+[INFO] 03:09:40:776 FM9/(11297:11299): CANTIDAD DE LINEAS DE scripts/io_bound.escriptorio ES: 11
+[DEBUG] 03:09:40:776 FM9/(11297:11299): Linea: abrir /scripts/cpu_bound.escriptorio
+[INFO] 03:09:40:776 FM9/(11297:11299): Terminada operacion
+[DEBUG] 03:09:41:422 FM9/(11297:11299): Guardando escriptorio 2 en memoria
+[DEBUG] 03:09:41:422 FM9/(11297:11299): Guardando en paginas invertidas
+[DEBUG] 03:09:41:422 FM9/(11297:11299): Datos guardados
+[DEBUG] 03:09:41:422 FM9/(11297:11299): Enviando 0 al cargar nuevo DTB
+[INFO] 03:09:41:422 FM9/(11297:11299): Terminada operacion
+[DEBUG] 03:09:41:676 FM9/(11297:11299): Trayendo linea escriptorio
+[DEBUG] 03:09:41:676 FM9/(11297:11299): Se pide linea 0 para escriptorio scripts/cpu_bound.escriptorio
+[INFO] 03:09:41:676 FM9/(11297:11299): CANTIDAD DE LINEAS DE scripts/cpu_bound.escriptorio ES: 12
+[DEBUG] 03:09:41:676 FM9/(11297:11299): Linea: concentrar
+[INFO] 03:09:41:676 FM9/(11297:11299): Terminada operacion
+[DEBUG] 03:09:41:677 FM9/(11297:11299): Trayendo linea escriptorio
+[DEBUG] 03:09:41:677 FM9/(11297:11299): Se pide linea 1 para escriptorio scripts/cpu_bound.escriptorio
+[INFO] 03:09:41:677 FM9/(11297:11299): CANTIDAD DE LINEAS DE scripts/cpu_bound.escriptorio ES: 12
+[DEBUG] 03:09:41:677 FM9/(11297:11299): Linea: concentrar
+[INFO] 03:09:41:678 FM9/(11297:11299): Terminada operacion
+[DEBUG] 03:09:41:931 FM9/(11297:11299): Trayendo linea escriptorio
+[DEBUG] 03:09:41:931 FM9/(11297:11299): Se pide linea 2 para escriptorio scripts/cpu_bound.escriptorio
+[INFO] 03:09:41:931 FM9/(11297:11299): CANTIDAD DE LINEAS DE scripts/cpu_bound.escriptorio ES: 12
+[DEBUG] 03:09:41:931 FM9/(11297:11299): Linea: concentrar
+[INFO] 03:09:41:931 FM9/(11297:11299): Terminada operacion
+[DEBUG] 03:09:41:931 FM9/(11297:11299): Trayendo linea escriptorio
+[DEBUG] 03:09:41:931 FM9/(11297:11299): Se pide linea 3 para escriptorio scripts/cpu_bound.escriptorio
+[INFO] 03:09:41:931 FM9/(11297:11299): CANTIDAD DE LINEAS DE scripts/cpu_bound.escriptorio ES: 12
+[DEBUG] 03:09:41:932 FM9/(11297:11299): Linea: concentrar
+[INFO] 03:09:41:932 FM9/(11297:11299): Terminada operacion
+[DEBUG] 03:09:42:184 FM9/(11297:11299): Trayendo linea escriptorio
+[DEBUG] 03:09:42:184 FM9/(11297:11299): Se pide linea 4 para escriptorio scripts/cpu_bound.escriptorio
+[INFO] 03:09:42:184 FM9/(11297:11299): CANTIDAD DE LINEAS DE scripts/cpu_bound.escriptorio ES: 12
+[DEBUG] 03:09:42:184 FM9/(11297:11299): Linea: concentrar
+[INFO] 03:09:42:184 FM9/(11297:11299): Terminada operacion
+[DEBUG] 03:09:42:185 FM9/(11297:11299): Trayendo linea escriptorio
+[DEBUG] 03:09:42:185 FM9/(11297:11299): Se pide linea 5 para escriptorio scripts/cpu_bound.escriptorio
+[INFO] 03:09:42:185 FM9/(11297:11299): CANTIDAD DE LINEAS DE scripts/cpu_bound.escriptorio ES: 12
+[DEBUG] 03:09:42:185 FM9/(11297:11299): Linea: concentrar
+[INFO] 03:09:42:185 FM9/(11297:11299): Terminada operacion
+[DEBUG] 03:09:42:424 FM9/(11297:11299): Guardando escriptorio 3 en memoria
+[DEBUG] 03:09:42:424 FM9/(11297:11299): Guardando en paginas invertidas
+[DEBUG] 03:09:42:424 FM9/(11297:11299): Datos guardados
+[DEBUG] 03:09:42:424 FM9/(11297:11299): Enviando 0 al cargar nuevo DTB
+[INFO] 03:09:42:424 FM9/(11297:11299): Terminada operacion
+[DEBUG] 03:09:42:445 FM9/(11297:11299): Trayendo linea escriptorio
+[DEBUG] 03:09:42:445 FM9/(11297:11299): Se pide linea 6 para escriptorio scripts/cpu_bound.escriptorio
+[INFO] 03:09:42:445 FM9/(11297:11299): CANTIDAD DE LINEAS DE scripts/cpu_bound.escriptorio ES: 12
+[DEBUG] 03:09:42:445 FM9/(11297:11299): Linea: concentrar
+[INFO] 03:09:42:445 FM9/(11297:11299): Terminada operacion
+[DEBUG] 03:09:42:446 FM9/(11297:11299): Trayendo linea escriptorio
+[DEBUG] 03:09:42:446 FM9/(11297:11299): Se pide linea 7 para escriptorio scripts/cpu_bound.escriptorio
+[INFO] 03:09:42:446 FM9/(11297:11299): CANTIDAD DE LINEAS DE scripts/cpu_bound.escriptorio ES: 12
+[DEBUG] 03:09:42:446 FM9/(11297:11299): Linea: concentrar
+[INFO] 03:09:42:446 FM9/(11297:11299): Terminada operacion
+[DEBUG] 03:09:42:731 FM9/(11297:11299): Trayendo linea escriptorio
+[DEBUG] 03:09:42:731 FM9/(11297:11299): Se pide linea 0 para escriptorio scripts/cpu_bound.escriptorio
+[INFO] 03:09:42:731 FM9/(11297:11299): CANTIDAD DE LINEAS DE scripts/cpu_bound.escriptorio ES: 12
+[DEBUG] 03:09:42:732 FM9/(11297:11299): Linea: concentrar
+[INFO] 03:09:42:732 FM9/(11297:11299): Terminada operacion
+[DEBUG] 03:09:42:732 FM9/(11297:11299): Trayendo linea escriptorio
+[DEBUG] 03:09:42:732 FM9/(11297:11299): Se pide linea 1 para escriptorio scripts/cpu_bound.escriptorio
+[INFO] 03:09:42:732 FM9/(11297:11299): CANTIDAD DE LINEAS DE scripts/cpu_bound.escriptorio ES: 12
+[DEBUG] 03:09:42:732 FM9/(11297:11299): Linea: concentrar
+[INFO] 03:09:42:733 FM9/(11297:11299): Terminada operacion
+[DEBUG] 03:09:42:988 FM9/(11297:11299): Trayendo linea escriptorio
+[DEBUG] 03:09:42:988 FM9/(11297:11299): Se pide linea 8 para escriptorio scripts/cpu_bound.escriptorio
+[INFO] 03:09:42:988 FM9/(11297:11299): CANTIDAD DE LINEAS DE scripts/cpu_bound.escriptorio ES: 12
+[DEBUG] 03:09:42:988 FM9/(11297:11299): Linea: concentrar
+[INFO] 03:09:42:988 FM9/(11297:11299): Terminada operacion
+[DEBUG] 03:09:42:988 FM9/(11297:11299): Trayendo linea escriptorio
+[DEBUG] 03:09:42:988 FM9/(11297:11299): Se pide linea 9 para escriptorio scripts/cpu_bound.escriptorio
+[INFO] 03:09:42:988 FM9/(11297:11299): CANTIDAD DE LINEAS DE scripts/cpu_bound.escriptorio ES: 12
+[DEBUG] 03:09:42:989 FM9/(11297:11299): Linea: concentrar
+[INFO] 03:09:42:989 FM9/(11297:11299): Terminada operacion
+[DEBUG] 03:09:43:242 FM9/(11297:11299): Trayendo linea escriptorio
+[DEBUG] 03:09:43:242 FM9/(11297:11299): Se pide linea 2 para escriptorio scripts/cpu_bound.escriptorio
+[INFO] 03:09:43:242 FM9/(11297:11299): CANTIDAD DE LINEAS DE scripts/cpu_bound.escriptorio ES: 12
+[DEBUG] 03:09:43:242 FM9/(11297:11299): Linea: concentrar
+[INFO] 03:09:43:243 FM9/(11297:11299): Terminada operacion
+[DEBUG] 03:09:43:243 FM9/(11297:11299): Trayendo linea escriptorio
+[DEBUG] 03:09:43:243 FM9/(11297:11299): Se pide linea 3 para escriptorio scripts/cpu_bound.escriptorio
+[INFO] 03:09:43:243 FM9/(11297:11299): CANTIDAD DE LINEAS DE scripts/cpu_bound.escriptorio ES: 12
+[DEBUG] 03:09:43:243 FM9/(11297:11299): Linea: concentrar
+[INFO] 03:09:43:243 FM9/(11297:11299): Terminada operacion
+[DEBUG] 03:09:43:426 FM9/(11297:11299): Guardando datos en memoria
+[DEBUG] 03:09:43:426 FM9/(11297:11299): Guardando en paginas invertidas
+[DEBUG] 03:09:43:426 FM9/(11297:11299): Datos guardados
+[DEBUG] 03:09:43:426 FM9/(11297:11299): Enviando 0 al guardar los datos
+[INFO] 03:09:43:426 FM9/(11297:11299): Terminada operacion
+[DEBUG] 03:09:43:495 FM9/(11297:11299): Trayendo linea escriptorio
+[DEBUG] 03:09:43:495 FM9/(11297:11299): Se pide linea 10 para escriptorio scripts/cpu_bound.escriptorio
+[INFO] 03:09:43:495 FM9/(11297:11299): CANTIDAD DE LINEAS DE scripts/cpu_bound.escriptorio ES: 12
+[DEBUG] 03:09:43:495 FM9/(11297:11299): Linea: concentrar
+[INFO] 03:09:43:495 FM9/(11297:11299): Terminada operacion
+[DEBUG] 03:09:43:496 FM9/(11297:11299): Trayendo linea escriptorio
+[DEBUG] 03:09:43:496 FM9/(11297:11299): Se pide linea 11 para escriptorio scripts/cpu_bound.escriptorio
+[INFO] 03:09:43:496 FM9/(11297:11299): CANTIDAD DE LINEAS DE scripts/cpu_bound.escriptorio ES: 12
+[INFO] 03:09:43:496 FM9/(11297:11299): Es fin de archivo
+[INFO] 03:09:43:496 FM9/(11297:11299): Terminada operacion
+[DEBUG] 03:09:43:496 FM9/(11297:11299): Liberando el dtb 2 de memoria por pasar a EXIT
+[INFO] 03:09:43:496 FM9/(11297:11299): Borrado DTB 2 de memoria por pasar a EXIT
+[INFO] 03:09:43:496 FM9/(11297:11299): Terminada operacion
+[DEBUG] 03:09:43:752 FM9/(11297:11299): Trayendo linea escriptorio
+[DEBUG] 03:09:43:753 FM9/(11297:11299): Se pide linea 1 para escriptorio scripts/io_bound.escriptorio
+[INFO] 03:09:43:753 FM9/(11297:11299): CANTIDAD DE LINEAS DE scripts/io_bound.escriptorio ES: 11
+[DEBUG] 03:09:43:754 FM9/(11297:11299): Linea: concentrar
+[INFO] 03:09:43:754 FM9/(11297:11299): Terminada operacion
+[DEBUG] 03:09:43:754 FM9/(11297:11299): Trayendo linea escriptorio
+[DEBUG] 03:09:43:754 FM9/(11297:11299): Se pide linea 2 para escriptorio scripts/io_bound.escriptorio
+[INFO] 03:09:43:754 FM9/(11297:11299): CANTIDAD DE LINEAS DE scripts/io_bound.escriptorio ES: 11
+[DEBUG] 03:09:43:755 FM9/(11297:11299): Linea: concentrar
+[INFO] 03:09:43:755 FM9/(11297:11299): Terminada operacion
+[DEBUG] 03:09:43:956 FM9/(11297:11299): Trayendo linea escriptorio
+[DEBUG] 03:09:43:956 FM9/(11297:11299): Se pide linea 4 para escriptorio scripts/cpu_bound.escriptorio
+[INFO] 03:09:43:956 FM9/(11297:11299): CANTIDAD DE LINEAS DE scripts/cpu_bound.escriptorio ES: 12
+[DEBUG] 03:09:43:956 FM9/(11297:11299): Linea: concentrar
+[INFO] 03:09:43:956 FM9/(11297:11299): Terminada operacion
+[DEBUG] 03:09:43:958 FM9/(11297:11299): Trayendo linea escriptorio
+[DEBUG] 03:09:43:958 FM9/(11297:11299): Se pide linea 5 para escriptorio scripts/cpu_bound.escriptorio
+[INFO] 03:09:43:958 FM9/(11297:11299): CANTIDAD DE LINEAS DE scripts/cpu_bound.escriptorio ES: 12
+[DEBUG] 03:09:43:958 FM9/(11297:11299): Linea: concentrar
+[INFO] 03:09:43:962 FM9/(11297:11299): Terminada operacion
+[DEBUG] 03:09:44:163 FM9/(11297:11299): Trayendo linea escriptorio
+[DEBUG] 03:09:44:164 FM9/(11297:11299): Se pide linea 3 para escriptorio scripts/io_bound.escriptorio
+[INFO] 03:09:44:164 FM9/(11297:11299): CANTIDAD DE LINEAS DE scripts/io_bound.escriptorio ES: 11
+[DEBUG] 03:09:44:164 FM9/(11297:11299): Linea: close /scripts/cpu_bound.escriptorio
+[INFO] 03:09:44:164 FM9/(11297:11299): Terminada operacion
+[DEBUG] 03:09:44:164 FM9/(11297:11299): Liberando memoria para archivo /scripts/cpu_bound.escriptorio
+[INFO] 03:09:44:164 FM9/(11297:11299): Borrado archivo /scripts/cpu_bound.escriptorio de memoria
+[INFO] 03:09:44:164 FM9/(11297:11299): Terminada operacion
+[DEBUG] 03:09:44:164 FM9/(11297:11299): Trayendo linea escriptorio
+[DEBUG] 03:09:44:165 FM9/(11297:11299): Se pide linea 4 para escriptorio scripts/io_bound.escriptorio
+[INFO] 03:09:44:165 FM9/(11297:11299): CANTIDAD DE LINEAS DE scripts/io_bound.escriptorio ES: 11
+[DEBUG] 03:09:44:165 FM9/(11297:11299): Linea: concentrar
+[INFO] 03:09:44:165 FM9/(11297:11299): Terminada operacion
+[DEBUG] 03:09:44:366 FM9/(11297:11299): Trayendo linea escriptorio
+[DEBUG] 03:09:44:366 FM9/(11297:11299): Se pide linea 6 para escriptorio scripts/cpu_bound.escriptorio
+[INFO] 03:09:44:366 FM9/(11297:11299): CANTIDAD DE LINEAS DE scripts/cpu_bound.escriptorio ES: 12
+[DEBUG] 03:09:44:366 FM9/(11297:11299): Linea: concentrar
+[INFO] 03:09:44:367 FM9/(11297:11299): Terminada operacion
+[DEBUG] 03:09:44:367 FM9/(11297:11299): Trayendo linea escriptorio
+[DEBUG] 03:09:44:367 FM9/(11297:11299): Se pide linea 7 para escriptorio scripts/cpu_bound.escriptorio
+[INFO] 03:09:44:367 FM9/(11297:11299): CANTIDAD DE LINEAS DE scripts/cpu_bound.escriptorio ES: 12
+[DEBUG] 03:09:44:367 FM9/(11297:11299): Linea: concentrar
+[INFO] 03:09:44:367 FM9/(11297:11299): Terminada operacion
+[DEBUG] 03:09:44:431 FM9/(11297:11299): Guardando escriptorio 4 en memoria
+[DEBUG] 03:09:44:431 FM9/(11297:11299): Guardando en paginas invertidas
+[DEBUG] 03:09:44:431 FM9/(11297:11299): Datos guardados
+[DEBUG] 03:09:44:431 FM9/(11297:11299): Enviando 0 al cargar nuevo DTB
+[INFO] 03:09:44:431 FM9/(11297:11299): Terminada operacion
+[DEBUG] 03:09:44:568 FM9/(11297:11299): Trayendo linea escriptorio
+[DEBUG] 03:09:44:568 FM9/(11297:11299): Se pide linea 5 para escriptorio scripts/io_bound.escriptorio
+[INFO] 03:09:44:568 FM9/(11297:11299): CANTIDAD DE LINEAS DE scripts/io_bound.escriptorio ES: 11
+[DEBUG] 03:09:44:569 FM9/(11297:11299): Linea: concentrar
+[INFO] 03:09:44:569 FM9/(11297:11299): Terminada operacion
+[DEBUG] 03:09:44:569 FM9/(11297:11299): Trayendo linea escriptorio
+[DEBUG] 03:09:44:569 FM9/(11297:11299): Se pide linea 6 para escriptorio scripts/io_bound.escriptorio
+[INFO] 03:09:44:569 FM9/(11297:11299): CANTIDAD DE LINEAS DE scripts/io_bound.escriptorio ES: 11
+[DEBUG] 03:09:44:569 FM9/(11297:11299): Linea: abrir /scripts/cpu_bound.escriptorio
+[INFO] 03:09:44:570 FM9/(11297:11299): Terminada operacion
+[DEBUG] 03:09:45:432 FM9/(11297:11299): Guardando datos en memoria
+[DEBUG] 03:09:45:432 FM9/(11297:11299): Guardando en paginas invertidas
+[DEBUG] 03:09:45:432 FM9/(11297:11299): Datos guardados
+[DEBUG] 03:09:45:432 FM9/(11297:11299): Enviando 0 al guardar los datos
+[INFO] 03:09:45:432 FM9/(11297:11299): Terminada operacion
+[INFO] 03:11:15:794 FM9/(11341:11341): Utilizando paginas invertidas
+[DEBUG] 03:11:18:359 FM9/(11341:11343): Handshake de: DAM
+[DEBUG] 03:11:18:359 FM9/(11341:11343): Se agrego a las conexiones DAM
+[DEBUG] 03:11:18:361 FM9/(11341:11349): Escuchando nuevo cliente en 5
+[DEBUG] 03:11:20:699 FM9/(11341:11343): Handshake de: CPU
+[DEBUG] 03:11:20:699 FM9/(11341:11343): Se agrego a las conexiones CPU
+[DEBUG] 03:11:20:702 FM9/(11341:11354): Escuchando nuevo cliente en 7
+[DEBUG] 03:11:52:517 FM9/(11341:11344): Guardando escriptorio 1 en memoria
+[DEBUG] 03:11:52:517 FM9/(11341:11344): Guardando en paginas invertidas
+[DEBUG] 03:11:52:517 FM9/(11341:11344): Datos guardados
+[DEBUG] 03:11:52:517 FM9/(11341:11344): Enviando 0 al cargar nuevo DTB
+[INFO] 03:11:52:517 FM9/(11341:11344): Terminada operacion
+[DEBUG] 03:11:52:769 FM9/(11341:11344): Trayendo linea escriptorio
+[DEBUG] 03:11:52:769 FM9/(11341:11344): Se pide linea 0 para escriptorio scripts/io_bound.escriptorio
+[INFO] 03:11:52:769 FM9/(11341:11344): CANTIDAD DE LINEAS DE scripts/io_bound.escriptorio ES: 11
+[DEBUG] 03:11:52:769 FM9/(11341:11344): Linea: abrir /scripts/cpu_bound.escriptorio
+[INFO] 03:11:52:770 FM9/(11341:11344): Terminada operacion
+[DEBUG] 03:11:53:518 FM9/(11341:11344): Guardando escriptorio 2 en memoria
+[DEBUG] 03:11:53:518 FM9/(11341:11344): Guardando en paginas invertidas
+[DEBUG] 03:11:53:518 FM9/(11341:11344): Datos guardados
+[DEBUG] 03:11:53:518 FM9/(11341:11344): Enviando 0 al cargar nuevo DTB
+[INFO] 03:11:53:518 FM9/(11341:11344): Terminada operacion
+[DEBUG] 03:11:53:772 FM9/(11341:11344): Trayendo linea escriptorio
+[DEBUG] 03:11:53:773 FM9/(11341:11344): Se pide linea 0 para escriptorio scripts/cpu_bound.escriptorio
+[INFO] 03:11:53:774 FM9/(11341:11344): CANTIDAD DE LINEAS DE scripts/cpu_bound.escriptorio ES: 12
+[DEBUG] 03:11:53:774 FM9/(11341:11344): Linea: concentrar
+[INFO] 03:11:53:775 FM9/(11341:11344): Terminada operacion
+[DEBUG] 03:11:53:775 FM9/(11341:11344): Trayendo linea escriptorio
+[DEBUG] 03:11:53:775 FM9/(11341:11344): Se pide linea 1 para escriptorio scripts/cpu_bound.escriptorio
+[INFO] 03:11:53:775 FM9/(11341:11344): CANTIDAD DE LINEAS DE scripts/cpu_bound.escriptorio ES: 12
+[DEBUG] 03:11:53:776 FM9/(11341:11344): Linea: concentrar
+[INFO] 03:11:53:776 FM9/(11341:11344): Terminada operacion
+[DEBUG] 03:11:54:28 FM9/(11341:11344): Trayendo linea escriptorio
+[DEBUG] 03:11:54:28 FM9/(11341:11344): Se pide linea 2 para escriptorio scripts/cpu_bound.escriptorio
+[INFO] 03:11:54:28 FM9/(11341:11344): CANTIDAD DE LINEAS DE scripts/cpu_bound.escriptorio ES: 12
+[DEBUG] 03:11:54:28 FM9/(11341:11344): Linea: concentrar
+[INFO] 03:11:54:29 FM9/(11341:11344): Terminada operacion
+[DEBUG] 03:11:54:29 FM9/(11341:11344): Trayendo linea escriptorio
+[DEBUG] 03:11:54:29 FM9/(11341:11344): Se pide linea 3 para escriptorio scripts/cpu_bound.escriptorio
+[INFO] 03:11:54:29 FM9/(11341:11344): CANTIDAD DE LINEAS DE scripts/cpu_bound.escriptorio ES: 12
+[DEBUG] 03:11:54:29 FM9/(11341:11344): Linea: concentrar
+[INFO] 03:11:54:33 FM9/(11341:11344): Terminada operacion
+[DEBUG] 03:11:54:287 FM9/(11341:11344): Trayendo linea escriptorio
+[DEBUG] 03:11:54:287 FM9/(11341:11344): Se pide linea 4 para escriptorio scripts/cpu_bound.escriptorio
+[INFO] 03:11:54:287 FM9/(11341:11344): CANTIDAD DE LINEAS DE scripts/cpu_bound.escriptorio ES: 12
+[DEBUG] 03:11:54:287 FM9/(11341:11344): Linea: concentrar
+[INFO] 03:11:54:287 FM9/(11341:11344): Terminada operacion
+[DEBUG] 03:11:54:288 FM9/(11341:11344): Trayendo linea escriptorio
+[DEBUG] 03:11:54:288 FM9/(11341:11344): Se pide linea 5 para escriptorio scripts/cpu_bound.escriptorio
+[INFO] 03:11:54:288 FM9/(11341:11344): CANTIDAD DE LINEAS DE scripts/cpu_bound.escriptorio ES: 12
+[DEBUG] 03:11:54:288 FM9/(11341:11344): Linea: concentrar
+[INFO] 03:11:54:288 FM9/(11341:11344): Terminada operacion
+[DEBUG] 03:11:54:522 FM9/(11341:11344): Guardando datos en memoria
+[DEBUG] 03:11:54:524 FM9/(11341:11344): Guardando en paginas invertidas
+[DEBUG] 03:11:54:524 FM9/(11341:11344): Datos guardados
+[DEBUG] 03:11:54:524 FM9/(11341:11344): Enviando 0 al guardar los datos
+[INFO] 03:11:54:525 FM9/(11341:11344): Terminada operacion
+[DEBUG] 03:11:54:544 FM9/(11341:11344): Trayendo linea escriptorio
+[DEBUG] 03:11:54:544 FM9/(11341:11344): Se pide linea 6 para escriptorio scripts/cpu_bound.escriptorio
+[INFO] 03:11:54:544 FM9/(11341:11344): CANTIDAD DE LINEAS DE scripts/cpu_bound.escriptorio ES: 12
+[DEBUG] 03:11:54:545 FM9/(11341:11344): Linea: concentrar
+[INFO] 03:11:54:545 FM9/(11341:11344): Terminada operacion
+[DEBUG] 03:11:54:545 FM9/(11341:11344): Trayendo linea escriptorio
+[DEBUG] 03:11:54:545 FM9/(11341:11344): Se pide linea 7 para escriptorio scripts/cpu_bound.escriptorio
+[INFO] 03:11:54:545 FM9/(11341:11344): CANTIDAD DE LINEAS DE scripts/cpu_bound.escriptorio ES: 12
+[DEBUG] 03:11:54:545 FM9/(11341:11344): Linea: concentrar
+[INFO] 03:11:54:545 FM9/(11341:11344): Terminada operacion
+[DEBUG] 03:11:54:829 FM9/(11341:11344): Trayendo linea escriptorio
+[DEBUG] 03:11:54:830 FM9/(11341:11344): Se pide linea 1 para escriptorio scripts/io_bound.escriptorio
+[INFO] 03:11:54:830 FM9/(11341:11344): CANTIDAD DE LINEAS DE scripts/io_bound.escriptorio ES: 11
+[DEBUG] 03:11:54:830 FM9/(11341:11344): Linea: concentrar
+[INFO] 03:11:54:830 FM9/(11341:11344): Terminada operacion
+[DEBUG] 03:11:54:830 FM9/(11341:11344): Trayendo linea escriptorio
+[DEBUG] 03:11:54:830 FM9/(11341:11344): Se pide linea 2 para escriptorio scripts/io_bound.escriptorio
+[INFO] 03:11:54:830 FM9/(11341:11344): CANTIDAD DE LINEAS DE scripts/io_bound.escriptorio ES: 11
+[DEBUG] 03:11:54:830 FM9/(11341:11344): Linea: concentrar
+[INFO] 03:11:54:830 FM9/(11341:11344): Terminada operacion
+[DEBUG] 03:11:55:83 FM9/(11341:11344): Trayendo linea escriptorio
+[DEBUG] 03:11:55:83 FM9/(11341:11344): Se pide linea 8 para escriptorio scripts/cpu_bound.escriptorio
+[INFO] 03:11:55:83 FM9/(11341:11344): CANTIDAD DE LINEAS DE scripts/cpu_bound.escriptorio ES: 12
+[DEBUG] 03:11:55:83 FM9/(11341:11344): Linea: concentrar
+[INFO] 03:11:55:84 FM9/(11341:11344): Terminada operacion
+[DEBUG] 03:11:55:84 FM9/(11341:11344): Trayendo linea escriptorio
+[DEBUG] 03:11:55:84 FM9/(11341:11344): Se pide linea 9 para escriptorio scripts/cpu_bound.escriptorio
+[INFO] 03:11:55:84 FM9/(11341:11344): CANTIDAD DE LINEAS DE scripts/cpu_bound.escriptorio ES: 12
+[DEBUG] 03:11:55:84 FM9/(11341:11344): Linea: concentrar
+[INFO] 03:11:55:85 FM9/(11341:11344): Terminada operacion
+[DEBUG] 03:11:55:338 FM9/(11341:11344): Trayendo linea escriptorio
+[DEBUG] 03:11:55:338 FM9/(11341:11344): Se pide linea 3 para escriptorio scripts/io_bound.escriptorio
+[INFO] 03:11:55:338 FM9/(11341:11344): CANTIDAD DE LINEAS DE scripts/io_bound.escriptorio ES: 11
+[DEBUG] 03:11:55:338 FM9/(11341:11344): Linea: close /scripts/cpu_bound.escriptorio
+[INFO] 03:11:55:338 FM9/(11341:11344): Terminada operacion
+[DEBUG] 03:11:55:339 FM9/(11341:11344): Liberando memoria para archivo /scripts/cpu_bound.escriptorio
+[INFO] 03:11:55:339 FM9/(11341:11344): Borrado archivo /scripts/cpu_bound.escriptorio de memoria
+[INFO] 03:11:55:339 FM9/(11341:11344): Terminada operacion
+[DEBUG] 03:11:55:339 FM9/(11341:11344): Trayendo linea escriptorio
+[DEBUG] 03:11:55:339 FM9/(11341:11344): Se pide linea 4 para escriptorio scripts/io_bound.escriptorio
+[INFO] 03:11:55:339 FM9/(11341:11344): CANTIDAD DE LINEAS DE scripts/io_bound.escriptorio ES: 11
+[DEBUG] 03:11:55:339 FM9/(11341:11344): Linea: concentrar
+[INFO] 03:11:55:340 FM9/(11341:11344): Terminada operacion
+[DEBUG] 03:11:55:596 FM9/(11341:11344): Trayendo linea escriptorio
+[DEBUG] 03:11:55:596 FM9/(11341:11344): Se pide linea 10 para escriptorio scripts/cpu_bound.escriptorio
+[INFO] 03:11:55:596 FM9/(11341:11344): CANTIDAD DE LINEAS DE scripts/cpu_bound.escriptorio ES: 12
+[DEBUG] 03:11:55:597 FM9/(11341:11344): Linea: concentrar
+[INFO] 03:11:55:597 FM9/(11341:11344): Terminada operacion
+[DEBUG] 03:11:55:597 FM9/(11341:11344): Trayendo linea escriptorio
+[DEBUG] 03:11:55:597 FM9/(11341:11344): Se pide linea 11 para escriptorio scripts/cpu_bound.escriptorio
+[INFO] 03:11:55:597 FM9/(11341:11344): CANTIDAD DE LINEAS DE scripts/cpu_bound.escriptorio ES: 12
+[INFO] 03:11:55:597 FM9/(11341:11344): Es fin de archivo
+[INFO] 03:11:55:597 FM9/(11341:11344): Terminada operacion
+[DEBUG] 03:11:55:597 FM9/(11341:11344): Liberando el dtb 2 de memoria por pasar a EXIT
+[INFO] 03:11:55:598 FM9/(11341:11344): Borrado DTB 2 de memoria por pasar a EXIT
+[INFO] 03:11:55:598 FM9/(11341:11344): Terminada operacion
+[DEBUG] 03:11:55:849 FM9/(11341:11344): Trayendo linea escriptorio
+[DEBUG] 03:11:55:849 FM9/(11341:11344): Se pide linea 5 para escriptorio scripts/io_bound.escriptorio
+[INFO] 03:11:55:849 FM9/(11341:11344): CANTIDAD DE LINEAS DE scripts/io_bound.escriptorio ES: 11
+[DEBUG] 03:11:55:849 FM9/(11341:11344): Linea: concentrar
+[INFO] 03:11:55:849 FM9/(11341:11344): Terminada operacion
+[DEBUG] 03:11:55:850 FM9/(11341:11344): Trayendo linea escriptorio
+[DEBUG] 03:11:55:850 FM9/(11341:11344): Se pide linea 6 para escriptorio scripts/io_bound.escriptorio
+[INFO] 03:11:55:850 FM9/(11341:11344): CANTIDAD DE LINEAS DE scripts/io_bound.escriptorio ES: 11
+[DEBUG] 03:11:55:850 FM9/(11341:11344): Linea: abrir /scripts/cpu_bound.escriptorio
+[INFO] 03:11:55:850 FM9/(11341:11344): Terminada operacion
+[DEBUG] 03:11:56:155 FM9/(11341:11344): Trayendo linea escriptorio
+[DEBUG] 03:11:56:155 FM9/(11341:11344): Se pide linea 7 para escriptorio scripts/io_bound.escriptorio
+[INFO] 03:11:56:155 FM9/(11341:11344): CANTIDAD DE LINEAS DE scripts/io_bound.escriptorio ES: 11
+[DEBUG] 03:11:56:156 FM9/(11341:11344): Linea: close /scripts/cpu_bound.escriptorio
+[INFO] 03:11:56:156 FM9/(11341:11344): Terminada operacion
+[DEBUG] 03:11:56:156 FM9/(11341:11344): Liberando el dtb 1 de memoria por pasar a EXIT
+[INFO] 03:11:56:156 FM9/(11341:11344): Borrado DTB 1 de memoria por pasar a EXIT
+[INFO] 03:11:56:156 FM9/(11341:11344): Terminada operacion
+[DEBUG] 03:11:56:404 FM9/(11341:11344): Guardando datos en memoria
+[DEBUG] 03:11:56:404 FM9/(11341:11344): Guardando en paginas invertidas
+[DEBUG] 03:11:56:405 FM9/(11341:11344): Datos guardados
+[DEBUG] 03:11:56:405 FM9/(11341:11344): Enviando 0 al guardar los datos
+[INFO] 03:11:56:405 FM9/(11341:11344): Terminada operacion
+[DEBUG] 03:11:56:658 FM9/(11341:11344): Trayendo linea escriptorio
+[DEBUG] 03:11:56:658 FM9/(11341:11344): Se pide linea 7 para escriptorio scripts/io_bound.escriptorio
+[INFO] 03:11:56:658 FM9/(11341:11344): CANTIDAD DE LINEAS DE scripts/io_bound.escriptorio ES: -1
+[ERROR] 03:11:56:658 FM9/(11341:11344): Error: El archivo no posee la linea 7
+[INFO] 03:11:56:658 FM9/(11341:11344): Terminada operacion
+[DEBUG] 03:11:56:658 FM9/(11341:11344): Liberando el dtb 1 de memoria por pasar a EXIT
+[INFO] 03:11:56:658 FM9/(11341:11344): Borrado DTB 1 de memoria por pasar a EXIT
+[INFO] 03:11:56:658 FM9/(11341:11344): Terminada operacion
+[INFO] 03:19:07:913 FM9/(11442:11442): Utilizando paginas invertidas
+[DEBUG] 03:19:11:15 FM9/(11442:11443): Handshake de: DAM
+[DEBUG] 03:19:11:15 FM9/(11442:11443): Se agrego a las conexiones DAM
+[DEBUG] 03:19:11:17 FM9/(11442:11450): Escuchando nuevo cliente en 5
+[DEBUG] 03:20:14:258 FM9/(11442:11443): Handshake de: CPU
+[DEBUG] 03:20:14:268 FM9/(11442:11443): Se agrego a las conexiones CPU
+[DEBUG] 03:20:14:279 FM9/(11442:11516): Escuchando nuevo cliente en 7
+[DEBUG] 03:20:28:881 FM9/(11442:11443): Handshake de: CPU
+[DEBUG] 03:20:28:881 FM9/(11442:11443): Se agrego a las conexiones CPU
+[DEBUG] 03:20:28:893 FM9/(11442:11551): Escuchando nuevo cliente en 8
+[INFO] 03:24:56:176 FM9/(11827:11827): Utilizando paginas invertidas
+[DEBUG] 03:25:01:212 FM9/(11827:11828): Handshake de: DAM
+[DEBUG] 03:25:01:212 FM9/(11827:11828): Se agrego a las conexiones DAM
+[DEBUG] 03:25:01:229 FM9/(11827:11834): Escuchando nuevo cliente en 5
+[DEBUG] 03:25:03:839 FM9/(11827:11828): Handshake de: CPU
+[DEBUG] 03:25:03:839 FM9/(11827:11828): Se agrego a las conexiones CPU
+[DEBUG] 03:25:03:852 FM9/(11827:11841): Escuchando nuevo cliente en 7
+[INFO] 03:25:29:267 FM9/(11864:11864): Utilizando paginas invertidas
+[DEBUG] 03:25:31:621 FM9/(11864:11865): Handshake de: DAM
+[DEBUG] 03:25:31:621 FM9/(11864:11865): Se agrego a las conexiones DAM
+[DEBUG] 03:25:31:630 FM9/(11864:11872): Escuchando nuevo cliente en 5
+[DEBUG] 03:25:56:644 FM9/(11864:11865): Handshake de: CPU
+[DEBUG] 03:25:56:644 FM9/(11864:11865): Se agrego a las conexiones CPU
+[DEBUG] 03:25:56:658 FM9/(11864:11918): Escuchando nuevo cliente en 7
+[DEBUG] 03:26:24:213 FM9/(11864:11866): Guardando escriptorio 1 en memoria
+[DEBUG] 03:26:24:213 FM9/(11864:11866): Guardando en paginas invertidas
+[DEBUG] 03:26:24:214 FM9/(11864:11866): Datos guardados
+[DEBUG] 03:26:24:217 FM9/(11864:11866): Enviando 0 al cargar nuevo DTB
+[INFO] 03:26:24:217 FM9/(11864:11866): Terminada operacion
+[DEBUG] 03:26:52:84 FM9/(11864:11866): Guardando escriptorio 2 en memoria
+[DEBUG] 03:26:52:84 FM9/(11864:11866): Guardando en paginas invertidas
+[DEBUG] 03:26:52:84 FM9/(11864:11866): Datos guardados
+[DEBUG] 03:26:52:84 FM9/(11864:11866): Enviando 0 al cargar nuevo DTB
+[INFO] 03:26:52:84 FM9/(11864:11866): Terminada operacion
+[DEBUG] 03:27:43:386 FM9/(11864:11866): Trayendo linea escriptorio
+[DEBUG] 03:27:43:386 FM9/(11864:11866): Se pide linea 0 para escriptorio scripts/io_bound.escriptorio
+[INFO] 03:27:43:386 FM9/(11864:11866): CANTIDAD DE LINEAS DE scripts/io_bound.escriptorio ES: 11
+[DEBUG] 03:27:43:387 FM9/(11864:11866): Linea: abrir /scripts/cpu_bound.escriptorio
+[INFO] 03:27:43:387 FM9/(11864:11866): Terminada operacion
+[DEBUG] 03:27:43:942 FM9/(11864:11866): Guardando datos en memoria
+[DEBUG] 03:27:43:942 FM9/(11864:11866): Guardando en paginas invertidas
+[DEBUG] 03:27:43:942 FM9/(11864:11866): Datos guardados
+[DEBUG] 03:27:43:942 FM9/(11864:11866): Enviando 0 al guardar los datos
+[INFO] 03:27:43:942 FM9/(11864:11866): Terminada operacion
+[DEBUG] 03:27:55:417 FM9/(11864:11866): Trayendo linea escriptorio
+[DEBUG] 03:27:55:417 FM9/(11864:11866): Se pide linea 0 para escriptorio scripts/cpu_bound.escriptorio
+[INFO] 03:27:55:417 FM9/(11864:11866): CANTIDAD DE LINEAS DE scripts/cpu_bound.escriptorio ES: 12
+[DEBUG] 03:27:55:417 FM9/(11864:11866): Linea: concentrar
+[INFO] 03:27:55:418 FM9/(11864:11866): Terminada operacion
+[DEBUG] 03:27:55:419 FM9/(11864:11866): Trayendo linea escriptorio
+[DEBUG] 03:27:55:419 FM9/(11864:11866): Se pide linea 1 para escriptorio scripts/cpu_bound.escriptorio
+[INFO] 03:27:55:419 FM9/(11864:11866): CANTIDAD DE LINEAS DE scripts/cpu_bound.escriptorio ES: 12
+[DEBUG] 03:27:55:420 FM9/(11864:11866): Linea: concentrar
+[INFO] 03:27:55:420 FM9/(11864:11866): Terminada operacion
+[DEBUG] 03:28:16:981 FM9/(11864:11866): Trayendo linea escriptorio
+[DEBUG] 03:28:16:981 FM9/(11864:11866): Se pide linea 1 para escriptorio scripts/io_bound.escriptorio
+[INFO] 03:28:16:981 FM9/(11864:11866): CANTIDAD DE LINEAS DE scripts/io_bound.escriptorio ES: 11
+[DEBUG] 03:28:16:981 FM9/(11864:11866): Linea: concentrar
+[INFO] 03:28:16:981 FM9/(11864:11866): Terminada operacion
+[DEBUG] 03:28:16:982 FM9/(11864:11866): Trayendo linea escriptorio
+[DEBUG] 03:28:16:982 FM9/(11864:11866): Se pide linea 2 para escriptorio scripts/io_bound.escriptorio
+[INFO] 03:28:16:982 FM9/(11864:11866): CANTIDAD DE LINEAS DE scripts/io_bound.escriptorio ES: 11
+[DEBUG] 03:28:16:982 FM9/(11864:11866): Linea: concentrar
+[INFO] 03:28:16:982 FM9/(11864:11866): Terminada operacion
+[DEBUG] 03:28:24:869 FM9/(11864:11866): Trayendo linea escriptorio
+[DEBUG] 03:28:24:869 FM9/(11864:11866): Se pide linea 2 para escriptorio scripts/cpu_bound.escriptorio
+[INFO] 03:28:24:869 FM9/(11864:11866): CANTIDAD DE LINEAS DE scripts/cpu_bound.escriptorio ES: 12
+[DEBUG] 03:28:24:870 FM9/(11864:11866): Linea: concentrar
+[INFO] 03:28:24:870 FM9/(11864:11866): Terminada operacion
+[DEBUG] 03:28:24:870 FM9/(11864:11866): Trayendo linea escriptorio
+[DEBUG] 03:28:24:870 FM9/(11864:11866): Se pide linea 3 para escriptorio scripts/cpu_bound.escriptorio
+[INFO] 03:28:24:871 FM9/(11864:11866): CANTIDAD DE LINEAS DE scripts/cpu_bound.escriptorio ES: 12
+[DEBUG] 03:28:24:871 FM9/(11864:11866): Linea: concentrar
+[INFO] 03:28:24:871 FM9/(11864:11866): Terminada operacion
+[DEBUG] 03:28:28:271 FM9/(11864:11866): Trayendo linea escriptorio
+[DEBUG] 03:28:28:272 FM9/(11864:11866): Se pide linea 3 para escriptorio scripts/io_bound.escriptorio
+[INFO] 03:28:28:272 FM9/(11864:11866): CANTIDAD DE LINEAS DE scripts/io_bound.escriptorio ES: 11
+[DEBUG] 03:28:28:272 FM9/(11864:11866): Linea: close /scripts/cpu_bound.escriptorio
+[INFO] 03:28:28:272 FM9/(11864:11866): Terminada operacion
+[INFO] 03:28:50:229 FM9/(12011:12011): Utilizando paginas invertidas
+[DEBUG] 03:28:52:739 FM9/(12011:12012): Handshake de: DAM
+[DEBUG] 03:28:52:739 FM9/(12011:12012): Se agrego a las conexiones DAM
+[DEBUG] 03:28:52:758 FM9/(12011:12019): Escuchando nuevo cliente en 5
+[DEBUG] 03:28:54:755 FM9/(12011:12012): Handshake de: CPU
+[DEBUG] 03:28:54:755 FM9/(12011:12012): Se agrego a las conexiones CPU
+[DEBUG] 03:28:54:758 FM9/(12011:12024): Escuchando nuevo cliente en 7
+[DEBUG] 03:29:05:965 FM9/(12011:12013): Guardando escriptorio 1 en memoria
+[DEBUG] 03:29:05:965 FM9/(12011:12013): Guardando en paginas invertidas
+[DEBUG] 03:29:05:965 FM9/(12011:12013): Datos guardados
+[DEBUG] 03:29:05:965 FM9/(12011:12013): Enviando 0 al cargar nuevo DTB
+[INFO] 03:29:05:965 FM9/(12011:12013): Terminada operacion
+[DEBUG] 03:29:06:222 FM9/(12011:12013): Trayendo linea escriptorio
+[DEBUG] 03:29:06:222 FM9/(12011:12013): Se pide linea 0 para escriptorio scripts/io_bound.escriptorio
+[INFO] 03:29:06:222 FM9/(12011:12013): CANTIDAD DE LINEAS DE scripts/io_bound.escriptorio ES: 11
+[DEBUG] 03:29:06:222 FM9/(12011:12013): Linea: abrir /scripts/cpu_bound.escriptorio
+[INFO] 03:29:06:223 FM9/(12011:12013): Terminada operacion
+[DEBUG] 03:29:06:968 FM9/(12011:12013): Guardando escriptorio 2 en memoria
+[DEBUG] 03:29:06:968 FM9/(12011:12013): Guardando en paginas invertidas
+[DEBUG] 03:29:06:968 FM9/(12011:12013): Datos guardados
+[DEBUG] 03:29:06:968 FM9/(12011:12013): Enviando 0 al cargar nuevo DTB
+[INFO] 03:29:06:968 FM9/(12011:12013): Terminada operacion
+[DEBUG] 03:29:07:222 FM9/(12011:12013): Trayendo linea escriptorio
+[DEBUG] 03:29:07:222 FM9/(12011:12013): Se pide linea 0 para escriptorio scripts/cpu_bound.escriptorio
+[INFO] 03:29:07:222 FM9/(12011:12013): CANTIDAD DE LINEAS DE scripts/cpu_bound.escriptorio ES: 12
+[DEBUG] 03:29:07:222 FM9/(12011:12013): Linea: concentrar
+[INFO] 03:29:07:223 FM9/(12011:12013): Terminada operacion
+[DEBUG] 03:29:07:223 FM9/(12011:12013): Trayendo linea escriptorio
+[DEBUG] 03:29:07:224 FM9/(12011:12013): Se pide linea 1 para escriptorio scripts/cpu_bound.escriptorio
+[INFO] 03:29:07:224 FM9/(12011:12013): CANTIDAD DE LINEAS DE scripts/cpu_bound.escriptorio ES: 12
+[DEBUG] 03:29:07:224 FM9/(12011:12013): Linea: concentrar
+[INFO] 03:29:07:225 FM9/(12011:12013): Terminada operacion
+[DEBUG] 03:29:07:478 FM9/(12011:12013): Trayendo linea escriptorio
+[DEBUG] 03:29:07:478 FM9/(12011:12013): Se pide linea 2 para escriptorio scripts/cpu_bound.escriptorio
+[INFO] 03:29:07:478 FM9/(12011:12013): CANTIDAD DE LINEAS DE scripts/cpu_bound.escriptorio ES: 12
+[DEBUG] 03:29:07:479 FM9/(12011:12013): Linea: concentrar
+[INFO] 03:29:07:484 FM9/(12011:12013): Terminada operacion
+[DEBUG] 03:29:07:484 FM9/(12011:12013): Trayendo linea escriptorio
+[DEBUG] 03:29:07:484 FM9/(12011:12013): Se pide linea 3 para escriptorio scripts/cpu_bound.escriptorio
+[INFO] 03:29:07:484 FM9/(12011:12013): CANTIDAD DE LINEAS DE scripts/cpu_bound.escriptorio ES: 12
+[DEBUG] 03:29:07:484 FM9/(12011:12013): Linea: concentrar
+[INFO] 03:29:07:485 FM9/(12011:12013): Terminada operacion
+[DEBUG] 03:29:07:739 FM9/(12011:12013): Trayendo linea escriptorio
+[DEBUG] 03:29:07:739 FM9/(12011:12013): Se pide linea 4 para escriptorio scripts/cpu_bound.escriptorio
+[INFO] 03:29:07:739 FM9/(12011:12013): CANTIDAD DE LINEAS DE scripts/cpu_bound.escriptorio ES: 12
+[DEBUG] 03:29:07:739 FM9/(12011:12013): Linea: concentrar
+[INFO] 03:29:07:739 FM9/(12011:12013): Terminada operacion
+[DEBUG] 03:29:07:740 FM9/(12011:12013): Trayendo linea escriptorio
+[DEBUG] 03:29:07:740 FM9/(12011:12013): Se pide linea 5 para escriptorio scripts/cpu_bound.escriptorio
+[INFO] 03:29:07:740 FM9/(12011:12013): CANTIDAD DE LINEAS DE scripts/cpu_bound.escriptorio ES: 12
+[DEBUG] 03:29:07:742 FM9/(12011:12013): Linea: concentrar
+[INFO] 03:29:07:745 FM9/(12011:12013): Terminada operacion
+[DEBUG] 03:29:07:971 FM9/(12011:12013): Guardando datos en memoria
+[DEBUG] 03:29:07:971 FM9/(12011:12013): Guardando en paginas invertidas
+[DEBUG] 03:29:07:971 FM9/(12011:12013): Datos guardados
+[DEBUG] 03:29:07:972 FM9/(12011:12013): Enviando 0 al guardar los datos
+[INFO] 03:29:07:972 FM9/(12011:12013): Terminada operacion
+[DEBUG] 03:29:07:4 FM9/(12011:12013): Trayendo linea escriptorio
+[DEBUG] 03:29:07:4 FM9/(12011:12013): Se pide linea 6 para escriptorio scripts/cpu_bound.escriptorio
+[INFO] 03:29:07:4 FM9/(12011:12013): CANTIDAD DE LINEAS DE scripts/cpu_bound.escriptorio ES: 12
+[DEBUG] 03:29:07:4 FM9/(12011:12013): Linea: concentrar
+[INFO] 03:29:07:4 FM9/(12011:12013): Terminada operacion
+[DEBUG] 03:29:07:4 FM9/(12011:12013): Trayendo linea escriptorio
+[DEBUG] 03:29:07:4 FM9/(12011:12013): Se pide linea 7 para escriptorio scripts/cpu_bound.escriptorio
+[INFO] 03:29:07:5 FM9/(12011:12013): CANTIDAD DE LINEAS DE scripts/cpu_bound.escriptorio ES: 12
+[DEBUG] 03:29:07:5 FM9/(12011:12013): Linea: concentrar
+[INFO] 03:29:07:5 FM9/(12011:12013): Terminada operacion
+[DEBUG] 03:29:08:285 FM9/(12011:12013): Trayendo linea escriptorio
+[DEBUG] 03:29:08:285 FM9/(12011:12013): Se pide linea 1 para escriptorio scripts/io_bound.escriptorio
+[INFO] 03:29:08:285 FM9/(12011:12013): CANTIDAD DE LINEAS DE scripts/io_bound.escriptorio ES: 11
+[DEBUG] 03:29:08:285 FM9/(12011:12013): Linea: concentrar
+[INFO] 03:29:08:285 FM9/(12011:12013): Terminada operacion
+[DEBUG] 03:29:08:286 FM9/(12011:12013): Trayendo linea escriptorio
+[DEBUG] 03:29:08:286 FM9/(12011:12013): Se pide linea 2 para escriptorio scripts/io_bound.escriptorio
+[INFO] 03:29:08:286 FM9/(12011:12013): CANTIDAD DE LINEAS DE scripts/io_bound.escriptorio ES: 11
+[DEBUG] 03:29:08:286 FM9/(12011:12013): Linea: concentrar
+[INFO] 03:29:08:287 FM9/(12011:12013): Terminada operacion
+[DEBUG] 03:29:08:540 FM9/(12011:12013): Trayendo linea escriptorio
+[DEBUG] 03:29:08:540 FM9/(12011:12013): Se pide linea 8 para escriptorio scripts/cpu_bound.escriptorio
+[INFO] 03:29:08:540 FM9/(12011:12013): CANTIDAD DE LINEAS DE scripts/cpu_bound.escriptorio ES: 12
+[DEBUG] 03:29:08:540 FM9/(12011:12013): Linea: concentrar
+[INFO] 03:29:08:540 FM9/(12011:12013): Terminada operacion
+[DEBUG] 03:29:08:541 FM9/(12011:12013): Trayendo linea escriptorio
+[DEBUG] 03:29:08:541 FM9/(12011:12013): Se pide linea 9 para escriptorio scripts/cpu_bound.escriptorio
+[INFO] 03:29:08:541 FM9/(12011:12013): CANTIDAD DE LINEAS DE scripts/cpu_bound.escriptorio ES: 12
+[DEBUG] 03:29:08:542 FM9/(12011:12013): Linea: concentrar
+[INFO] 03:29:08:542 FM9/(12011:12013): Terminada operacion
+[DEBUG] 03:29:08:798 FM9/(12011:12013): Trayendo linea escriptorio
+[DEBUG] 03:29:08:798 FM9/(12011:12013): Se pide linea 3 para escriptorio scripts/io_bound.escriptorio
+[INFO] 03:29:08:798 FM9/(12011:12013): CANTIDAD DE LINEAS DE scripts/io_bound.escriptorio ES: 11
+[DEBUG] 03:29:08:799 FM9/(12011:12013): Linea: close /scripts/cpu_bound.escriptorio
+[INFO] 03:29:08:799 FM9/(12011:12013): Terminada operacion
+[DEBUG] 03:29:08:799 FM9/(12011:12013): Liberando memoria para archivo /scripts/cpu_bound.escriptorio
+[INFO] 03:29:08:799 FM9/(12011:12013): Borrado archivo /scripts/cpu_bound.escriptorio de memoria
+[INFO] 03:29:08:799 FM9/(12011:12013): Terminada operacion
+[DEBUG] 03:29:08:800 FM9/(12011:12013): Trayendo linea escriptorio
+[DEBUG] 03:29:08:800 FM9/(12011:12013): Se pide linea 4 para escriptorio scripts/io_bound.escriptorio
+[INFO] 03:29:08:800 FM9/(12011:12013): CANTIDAD DE LINEAS DE scripts/io_bound.escriptorio ES: 11
+[DEBUG] 03:29:08:800 FM9/(12011:12013): Linea: concentrar
+[INFO] 03:29:08:801 FM9/(12011:12013): Terminada operacion
+[DEBUG] 03:29:09:54 FM9/(12011:12013): Trayendo linea escriptorio
+[DEBUG] 03:29:09:54 FM9/(12011:12013): Se pide linea 10 para escriptorio scripts/cpu_bound.escriptorio
+[INFO] 03:29:09:54 FM9/(12011:12013): CANTIDAD DE LINEAS DE scripts/cpu_bound.escriptorio ES: 12
+[DEBUG] 03:29:09:54 FM9/(12011:12013): Linea: concentrar
+[INFO] 03:29:09:54 FM9/(12011:12013): Terminada operacion
+[DEBUG] 03:29:09:54 FM9/(12011:12013): Trayendo linea escriptorio
+[DEBUG] 03:29:09:55 FM9/(12011:12013): Se pide linea 11 para escriptorio scripts/cpu_bound.escriptorio
+[INFO] 03:29:09:55 FM9/(12011:12013): CANTIDAD DE LINEAS DE scripts/cpu_bound.escriptorio ES: 12
+[INFO] 03:29:09:55 FM9/(12011:12013): Es fin de archivo
+[INFO] 03:29:09:55 FM9/(12011:12013): Terminada operacion
+[DEBUG] 03:29:09:55 FM9/(12011:12013): Liberando el dtb 2 de memoria por pasar a EXIT
+[INFO] 03:29:09:55 FM9/(12011:12013): Borrado DTB 2 de memoria por pasar a EXIT
+[INFO] 03:29:09:55 FM9/(12011:12013): Terminada operacion
+[DEBUG] 03:29:09:308 FM9/(12011:12013): Trayendo linea escriptorio
+[DEBUG] 03:29:09:308 FM9/(12011:12013): Se pide linea 5 para escriptorio scripts/io_bound.escriptorio
+[INFO] 03:29:09:308 FM9/(12011:12013): CANTIDAD DE LINEAS DE scripts/io_bound.escriptorio ES: 11
+[DEBUG] 03:29:09:308 FM9/(12011:12013): Linea: concentrar
+[INFO] 03:29:09:308 FM9/(12011:12013): Terminada operacion
+[DEBUG] 03:29:09:309 FM9/(12011:12013): Trayendo linea escriptorio
+[DEBUG] 03:29:09:309 FM9/(12011:12013): Se pide linea 6 para escriptorio scripts/io_bound.escriptorio
+[INFO] 03:29:09:309 FM9/(12011:12013): CANTIDAD DE LINEAS DE scripts/io_bound.escriptorio ES: 11
+[DEBUG] 03:29:09:309 FM9/(12011:12013): Linea: abrir /scripts/cpu_bound.escriptorio
+[INFO] 03:29:09:309 FM9/(12011:12013): Terminada operacion
+[DEBUG] 03:29:09:615 FM9/(12011:12013): Trayendo linea escriptorio
+[DEBUG] 03:29:09:615 FM9/(12011:12013): Se pide linea 7 para escriptorio scripts/io_bound.escriptorio
+[INFO] 03:29:09:615 FM9/(12011:12013): CANTIDAD DE LINEAS DE scripts/io_bound.escriptorio ES: 11
+[DEBUG] 03:29:09:615 FM9/(12011:12013): Linea: close /scripts/cpu_bound.escriptorio
+[INFO] 03:29:09:616 FM9/(12011:12013): Terminada operacion
+[DEBUG] 03:29:09:617 FM9/(12011:12013): Liberando el dtb 1 de memoria por pasar a EXIT
+[INFO] 03:29:09:617 FM9/(12011:12013): Borrado DTB 1 de memoria por pasar a EXIT
+[INFO] 03:29:09:618 FM9/(12011:12013): Terminada operacion
+[DEBUG] 03:29:09:865 FM9/(12011:12013): Guardando datos en memoria
+[DEBUG] 03:29:09:865 FM9/(12011:12013): Guardando en paginas invertidas
+[DEBUG] 03:29:09:865 FM9/(12011:12013): Datos guardados
+[DEBUG] 03:29:09:865 FM9/(12011:12013): Enviando 0 al guardar los datos
+[INFO] 03:29:09:865 FM9/(12011:12013): Terminada operacion
+[DEBUG] 03:29:10:122 FM9/(12011:12013): Trayendo linea escriptorio
+[DEBUG] 03:29:10:122 FM9/(12011:12013): Se pide linea 7 para escriptorio scripts/io_bound.escriptorio
+[INFO] 03:29:10:122 FM9/(12011:12013): CANTIDAD DE LINEAS DE scripts/io_bound.escriptorio ES: -1
+[ERROR] 03:29:10:122 FM9/(12011:12013): Error: El archivo no posee la linea 7
+[INFO] 03:29:10:122 FM9/(12011:12013): Terminada operacion
+[DEBUG] 03:29:10:123 FM9/(12011:12013): Liberando el dtb 1 de memoria por pasar a EXIT
+[INFO] 03:29:10:123 FM9/(12011:12013): Borrado DTB 1 de memoria por pasar a EXIT
+[INFO] 03:29:10:123 FM9/(12011:12013): Terminada operacion
+[INFO] 03:34:02:306 FM9/(12184:12184): Utilizando paginas invertidas
+[DEBUG] 03:34:05:258 FM9/(12184:12185): Handshake de: DAM
+[DEBUG] 03:34:05:258 FM9/(12184:12185): Se agrego a las conexiones DAM
+[DEBUG] 03:34:05:281 FM9/(12184:12191): Escuchando nuevo cliente en 5
+[DEBUG] 03:34:07:137 FM9/(12184:12185): Handshake de: CPU
+[DEBUG] 03:34:07:142 FM9/(12184:12185): Se agrego a las conexiones CPU
+[DEBUG] 03:34:07:150 FM9/(12184:12199): Escuchando nuevo cliente en 7
+[DEBUG] 03:34:18:811 FM9/(12184:12186): Guardando escriptorio 1 en memoria
+[DEBUG] 03:34:18:812 FM9/(12184:12186): Guardando en paginas invertidas
+[DEBUG] 03:34:18:812 FM9/(12184:12186): Datos guardados
+[DEBUG] 03:34:18:812 FM9/(12184:12186): Enviando 0 al cargar nuevo DTB
+[INFO] 03:34:18:812 FM9/(12184:12186): Terminada operacion
+[DEBUG] 03:34:19:66 FM9/(12184:12186): Trayendo linea escriptorio
+[DEBUG] 03:34:19:66 FM9/(12184:12186): Se pide linea 0 para escriptorio scripts/io_bound.escriptorio
+[INFO] 03:34:19:66 FM9/(12184:12186): CANTIDAD DE LINEAS DE scripts/io_bound.escriptorio ES: 11
+[DEBUG] 03:34:19:66 FM9/(12184:12186): Linea: abrir /scripts/cpu_bound.escriptorio
+[INFO] 03:34:19:66 FM9/(12184:12186): Terminada operacion
+[DEBUG] 03:34:19:822 FM9/(12184:12186): Guardando datos en memoria
+[DEBUG] 03:34:19:822 FM9/(12184:12186): Guardando en paginas invertidas
+[DEBUG] 03:34:19:822 FM9/(12184:12186): Datos guardados
+[DEBUG] 03:34:19:822 FM9/(12184:12186): Enviando 0 al guardar los datos
+[INFO] 03:34:19:822 FM9/(12184:12186): Terminada operacion
+[DEBUG] 03:34:20:78 FM9/(12184:12186): Trayendo linea escriptorio
+[DEBUG] 03:34:20:78 FM9/(12184:12186): Se pide linea 1 para escriptorio scripts/io_bound.escriptorio
+[INFO] 03:34:20:78 FM9/(12184:12186): CANTIDAD DE LINEAS DE scripts/io_bound.escriptorio ES: 11
+[DEBUG] 03:34:20:79 FM9/(12184:12186): Linea: concentrar
+[INFO] 03:34:20:79 FM9/(12184:12186): Terminada operacion
+[DEBUG] 03:34:20:81 FM9/(12184:12186): Trayendo linea escriptorio
+[DEBUG] 03:34:20:81 FM9/(12184:12186): Se pide linea 2 para escriptorio scripts/io_bound.escriptorio
+[INFO] 03:34:20:81 FM9/(12184:12186): CANTIDAD DE LINEAS DE scripts/io_bound.escriptorio ES: 11
+[DEBUG] 03:34:20:82 FM9/(12184:12186): Linea: concentrar
+[INFO] 03:34:20:82 FM9/(12184:12186): Terminada operacion
+[DEBUG] 03:34:20:335 FM9/(12184:12186): Trayendo linea escriptorio
+[DEBUG] 03:34:20:335 FM9/(12184:12186): Se pide linea 3 para escriptorio scripts/io_bound.escriptorio
+[INFO] 03:34:20:335 FM9/(12184:12186): CANTIDAD DE LINEAS DE scripts/io_bound.escriptorio ES: 11
+[DEBUG] 03:34:20:336 FM9/(12184:12186): Linea: close /scripts/cpu_bound.escriptorio
+[INFO] 03:34:20:336 FM9/(12184:12186): Terminada operacion
+[DEBUG] 03:34:20:336 FM9/(12184:12186): Liberando memoria para archivo /scripts/cpu_bound.escriptorio
+[INFO] 03:34:20:336 FM9/(12184:12186): Borrado archivo /scripts/cpu_bound.escriptorio de memoria
+[INFO] 03:34:20:336 FM9/(12184:12186): Terminada operacion
+[DEBUG] 03:34:20:340 FM9/(12184:12186): Trayendo linea escriptorio
+[DEBUG] 03:34:20:341 FM9/(12184:12186): Se pide linea 4 para escriptorio scripts/io_bound.escriptorio
+[INFO] 03:34:20:341 FM9/(12184:12186): CANTIDAD DE LINEAS DE scripts/io_bound.escriptorio ES: 11
+[DEBUG] 03:34:20:341 FM9/(12184:12186): Linea: concentrar
+[INFO] 03:34:20:342 FM9/(12184:12186): Terminada operacion
+[DEBUG] 03:34:20:595 FM9/(12184:12186): Trayendo linea escriptorio
+[DEBUG] 03:34:20:595 FM9/(12184:12186): Se pide linea 5 para escriptorio scripts/io_bound.escriptorio
+[INFO] 03:34:20:595 FM9/(12184:12186): CANTIDAD DE LINEAS DE scripts/io_bound.escriptorio ES: 11
+[DEBUG] 03:34:20:595 FM9/(12184:12186): Linea: concentrar
+[INFO] 03:34:20:596 FM9/(12184:12186): Terminada operacion
+[DEBUG] 03:34:20:596 FM9/(12184:12186): Trayendo linea escriptorio
+[DEBUG] 03:34:20:596 FM9/(12184:12186): Se pide linea 6 para escriptorio scripts/io_bound.escriptorio
+[INFO] 03:34:20:596 FM9/(12184:12186): CANTIDAD DE LINEAS DE scripts/io_bound.escriptorio ES: 11
+[DEBUG] 03:34:20:596 FM9/(12184:12186): Linea: abrir /scripts/cpu_bound.escriptorio
+[INFO] 03:34:20:597 FM9/(12184:12186): Terminada operacion
+[DEBUG] 03:34:20:904 FM9/(12184:12186): Trayendo linea escriptorio
+[DEBUG] 03:34:20:904 FM9/(12184:12186): Se pide linea 7 para escriptorio scripts/io_bound.escriptorio
+[INFO] 03:34:20:904 FM9/(12184:12186): CANTIDAD DE LINEAS DE scripts/io_bound.escriptorio ES: 11
+[DEBUG] 03:34:20:905 FM9/(12184:12186): Linea: close /scripts/cpu_bound.escriptorio
+[INFO] 03:34:20:905 FM9/(12184:12186): Terminada operacion
+[DEBUG] 03:34:20:906 FM9/(12184:12186): Liberando el dtb 1 de memoria por pasar a EXIT
+[INFO] 03:34:20:906 FM9/(12184:12186): Borrado DTB 1 de memoria por pasar a EXIT
+[INFO] 03:34:20:907 FM9/(12184:12186): Terminada operacion
+[DEBUG] 03:34:21:150 FM9/(12184:12186): Guardando datos en memoria
+[DEBUG] 03:34:21:150 FM9/(12184:12186): Guardando en paginas invertidas
+[DEBUG] 03:34:21:151 FM9/(12184:12186): Datos guardados
+[DEBUG] 03:34:21:151 FM9/(12184:12186): Enviando 0 al guardar los datos
+[INFO] 03:34:21:151 FM9/(12184:12186): Terminada operacion
+[INFO] 03:35:20:763 FM9/(12232:12232): Utilizando paginas invertidas
+[DEBUG] 03:35:23:943 FM9/(12232:12233): Handshake de: DAM
+[DEBUG] 03:35:23:943 FM9/(12232:12233): Se agrego a las conexiones DAM
+[DEBUG] 03:35:23:954 FM9/(12232:12240): Escuchando nuevo cliente en 5
+[DEBUG] 03:35:26:615 FM9/(12232:12233): Handshake de: CPU
+[DEBUG] 03:35:26:616 FM9/(12232:12233): Se agrego a las conexiones CPU
+[DEBUG] 03:35:26:618 FM9/(12232:12246): Escuchando nuevo cliente en 7
+[DEBUG] 03:35:37:231 FM9/(12232:12234): Guardando escriptorio 1 en memoria
+[DEBUG] 03:35:37:231 FM9/(12232:12234): Guardando en paginas invertidas
+[DEBUG] 03:35:37:231 FM9/(12232:12234): Datos guardados
+[DEBUG] 03:35:37:231 FM9/(12232:12234): Enviando 0 al cargar nuevo DTB
+[INFO] 03:35:37:231 FM9/(12232:12234): Terminada operacion
+[DEBUG] 03:35:37:484 FM9/(12232:12234): Trayendo linea escriptorio
+[DEBUG] 03:35:37:484 FM9/(12232:12234): Se pide linea 0 para escriptorio scripts/io_bound.escriptorio
+[INFO] 03:35:37:484 FM9/(12232:12234): CANTIDAD DE LINEAS DE scripts/io_bound.escriptorio ES: 11
+[DEBUG] 03:35:37:485 FM9/(12232:12234): Linea: abrir /scripts/cpu_bound.escriptorio
+[INFO] 03:35:37:485 FM9/(12232:12234): Terminada operacion
+[DEBUG] 03:35:38:232 FM9/(12232:12234): Guardando escriptorio 2 en memoria
+[DEBUG] 03:35:38:233 FM9/(12232:12234): Guardando en paginas invertidas
+[DEBUG] 03:35:38:233 FM9/(12232:12234): Datos guardados
+[DEBUG] 03:35:38:233 FM9/(12232:12234): Enviando 0 al cargar nuevo DTB
+[INFO] 03:35:38:233 FM9/(12232:12234): Terminada operacion
+[DEBUG] 03:35:38:485 FM9/(12232:12234): Trayendo linea escriptorio
+[DEBUG] 03:35:38:485 FM9/(12232:12234): Se pide linea 0 para escriptorio scripts/cpu_bound.escriptorio
+[INFO] 03:35:38:485 FM9/(12232:12234): CANTIDAD DE LINEAS DE scripts/cpu_bound.escriptorio ES: 12
+[DEBUG] 03:35:38:485 FM9/(12232:12234): Linea: concentrar
+[INFO] 03:35:38:485 FM9/(12232:12234): Terminada operacion
+[DEBUG] 03:35:38:486 FM9/(12232:12234): Trayendo linea escriptorio
+[DEBUG] 03:35:38:486 FM9/(12232:12234): Se pide linea 1 para escriptorio scripts/cpu_bound.escriptorio
+[INFO] 03:35:38:486 FM9/(12232:12234): CANTIDAD DE LINEAS DE scripts/cpu_bound.escriptorio ES: 12
+[DEBUG] 03:35:38:486 FM9/(12232:12234): Linea: concentrar
+[INFO] 03:35:38:486 FM9/(12232:12234): Terminada operacion
+[DEBUG] 03:35:38:739 FM9/(12232:12234): Trayendo linea escriptorio
+[DEBUG] 03:35:38:739 FM9/(12232:12234): Se pide linea 2 para escriptorio scripts/cpu_bound.escriptorio
+[INFO] 03:35:38:739 FM9/(12232:12234): CANTIDAD DE LINEAS DE scripts/cpu_bound.escriptorio ES: 12
+[DEBUG] 03:35:38:739 FM9/(12232:12234): Linea: concentrar
+[INFO] 03:35:38:739 FM9/(12232:12234): Terminada operacion
+[DEBUG] 03:35:38:740 FM9/(12232:12234): Trayendo linea escriptorio
+[DEBUG] 03:35:38:740 FM9/(12232:12234): Se pide linea 3 para escriptorio scripts/cpu_bound.escriptorio
+[INFO] 03:35:38:740 FM9/(12232:12234): CANTIDAD DE LINEAS DE scripts/cpu_bound.escriptorio ES: 12
+[DEBUG] 03:35:38:740 FM9/(12232:12234): Linea: concentrar
+[INFO] 03:35:38:740 FM9/(12232:12234): Terminada operacion
+[DEBUG] 03:35:38:997 FM9/(12232:12234): Trayendo linea escriptorio
+[DEBUG] 03:35:38:997 FM9/(12232:12234): Se pide linea 4 para escriptorio scripts/cpu_bound.escriptorio
+[INFO] 03:35:38:997 FM9/(12232:12234): CANTIDAD DE LINEAS DE scripts/cpu_bound.escriptorio ES: 12
+[DEBUG] 03:35:38:998 FM9/(12232:12234): Linea: concentrar
+[INFO] 03:35:39:12 FM9/(12232:12234): Terminada operacion
+[DEBUG] 03:35:39:13 FM9/(12232:12234): Trayendo linea escriptorio
+[DEBUG] 03:35:39:13 FM9/(12232:12234): Se pide linea 5 para escriptorio scripts/cpu_bound.escriptorio
+[INFO] 03:35:39:13 FM9/(12232:12234): CANTIDAD DE LINEAS DE scripts/cpu_bound.escriptorio ES: 12
+[DEBUG] 03:35:39:14 FM9/(12232:12234): Linea: concentrar
+[INFO] 03:35:39:17 FM9/(12232:12234): Terminada operacion
+[DEBUG] 03:35:39:235 FM9/(12232:12234): Guardando datos en memoria
+[DEBUG] 03:35:39:235 FM9/(12232:12234): Guardando en paginas invertidas
+[DEBUG] 03:35:39:235 FM9/(12232:12234): Datos guardados
+[DEBUG] 03:35:39:235 FM9/(12232:12234): Enviando 0 al guardar los datos
+[INFO] 03:35:39:235 FM9/(12232:12234): Terminada operacion
+[DEBUG] 03:35:39:269 FM9/(12232:12234): Trayendo linea escriptorio
+[DEBUG] 03:35:39:269 FM9/(12232:12234): Se pide linea 6 para escriptorio scripts/cpu_bound.escriptorio
+[INFO] 03:35:39:269 FM9/(12232:12234): CANTIDAD DE LINEAS DE scripts/cpu_bound.escriptorio ES: 12
+[DEBUG] 03:35:39:269 FM9/(12232:12234): Linea: concentrar
+[INFO] 03:35:39:269 FM9/(12232:12234): Terminada operacion
+[DEBUG] 03:35:39:270 FM9/(12232:12234): Trayendo linea escriptorio
+[DEBUG] 03:35:39:270 FM9/(12232:12234): Se pide linea 7 para escriptorio scripts/cpu_bound.escriptorio
+[INFO] 03:35:39:270 FM9/(12232:12234): CANTIDAD DE LINEAS DE scripts/cpu_bound.escriptorio ES: 12
+[DEBUG] 03:35:39:270 FM9/(12232:12234): Linea: concentrar
+[INFO] 03:35:39:271 FM9/(12232:12234): Terminada operacion
+[DEBUG] 03:35:39:540 FM9/(12232:12234): Trayendo linea escriptorio
+[DEBUG] 03:35:39:540 FM9/(12232:12234): Se pide linea 1 para escriptorio scripts/io_bound.escriptorio
+[INFO] 03:35:39:540 FM9/(12232:12234): CANTIDAD DE LINEAS DE scripts/io_bound.escriptorio ES: 11
+[DEBUG] 03:35:39:540 FM9/(12232:12234): Linea: concentrar
+[INFO] 03:35:39:540 FM9/(12232:12234): Terminada operacion
+[DEBUG] 03:35:39:541 FM9/(12232:12234): Trayendo linea escriptorio
+[DEBUG] 03:35:39:541 FM9/(12232:12234): Se pide linea 2 para escriptorio scripts/io_bound.escriptorio
+[INFO] 03:35:39:541 FM9/(12232:12234): CANTIDAD DE LINEAS DE scripts/io_bound.escriptorio ES: 11
+[DEBUG] 03:35:39:541 FM9/(12232:12234): Linea: concentrar
+[INFO] 03:35:39:542 FM9/(12232:12234): Terminada operacion
+[DEBUG] 03:35:39:795 FM9/(12232:12234): Trayendo linea escriptorio
+[DEBUG] 03:35:39:795 FM9/(12232:12234): Se pide linea 8 para escriptorio scripts/cpu_bound.escriptorio
+[INFO] 03:35:39:795 FM9/(12232:12234): CANTIDAD DE LINEAS DE scripts/cpu_bound.escriptorio ES: 12
+[DEBUG] 03:35:39:796 FM9/(12232:12234): Linea: concentrar
+[INFO] 03:35:39:796 FM9/(12232:12234): Terminada operacion
+[DEBUG] 03:35:39:796 FM9/(12232:12234): Trayendo linea escriptorio
+[DEBUG] 03:35:39:796 FM9/(12232:12234): Se pide linea 9 para escriptorio scripts/cpu_bound.escriptorio
+[INFO] 03:35:39:796 FM9/(12232:12234): CANTIDAD DE LINEAS DE scripts/cpu_bound.escriptorio ES: 12
+[DEBUG] 03:35:39:797 FM9/(12232:12234): Linea: concentrar
+[INFO] 03:35:39:797 FM9/(12232:12234): Terminada operacion
+[DEBUG] 03:35:40:50 FM9/(12232:12234): Trayendo linea escriptorio
+[DEBUG] 03:35:40:50 FM9/(12232:12234): Se pide linea 3 para escriptorio scripts/io_bound.escriptorio
+[INFO] 03:35:40:50 FM9/(12232:12234): CANTIDAD DE LINEAS DE scripts/io_bound.escriptorio ES: 11
+[DEBUG] 03:35:40:51 FM9/(12232:12234): Linea: close /scripts/cpu_bound.escriptorio
+[INFO] 03:35:40:51 FM9/(12232:12234): Terminada operacion
+[DEBUG] 03:35:40:51 FM9/(12232:12234): Liberando memoria para archivo /scripts/cpu_bound.escriptorio
+[INFO] 03:35:40:51 FM9/(12232:12234): Borrado archivo /scripts/cpu_bound.escriptorio de memoria
+[INFO] 03:35:40:52 FM9/(12232:12234): Terminada operacion
+[DEBUG] 03:35:40:52 FM9/(12232:12234): Trayendo linea escriptorio
+[DEBUG] 03:35:40:52 FM9/(12232:12234): Se pide linea 4 para escriptorio scripts/io_bound.escriptorio
+[INFO] 03:35:40:52 FM9/(12232:12234): CANTIDAD DE LINEAS DE scripts/io_bound.escriptorio ES: 11
+[DEBUG] 03:35:40:52 FM9/(12232:12234): Linea: concentrar
+[INFO] 03:35:40:52 FM9/(12232:12234): Terminada operacion
+[DEBUG] 03:35:40:307 FM9/(12232:12234): Trayendo linea escriptorio
+[DEBUG] 03:35:40:307 FM9/(12232:12234): Se pide linea 10 para escriptorio scripts/cpu_bound.escriptorio
+[INFO] 03:35:40:307 FM9/(12232:12234): CANTIDAD DE LINEAS DE scripts/cpu_bound.escriptorio ES: 12
+[DEBUG] 03:35:40:307 FM9/(12232:12234): Linea: concentrar
+[INFO] 03:35:40:307 FM9/(12232:12234): Terminada operacion
+[DEBUG] 03:35:40:308 FM9/(12232:12234): Trayendo linea escriptorio
+[DEBUG] 03:35:40:308 FM9/(12232:12234): Se pide linea 11 para escriptorio scripts/cpu_bound.escriptorio
+[INFO] 03:35:40:308 FM9/(12232:12234): CANTIDAD DE LINEAS DE scripts/cpu_bound.escriptorio ES: 12
+[INFO] 03:35:40:308 FM9/(12232:12234): Es fin de archivo
+[INFO] 03:35:40:308 FM9/(12232:12234): Terminada operacion
+[DEBUG] 03:35:40:308 FM9/(12232:12234): Liberando el dtb 2 de memoria por pasar a EXIT
+[INFO] 03:35:40:308 FM9/(12232:12234): Borrado DTB 2 de memoria por pasar a EXIT
+[INFO] 03:35:40:309 FM9/(12232:12234): Terminada operacion
+[DEBUG] 03:35:40:560 FM9/(12232:12234): Trayendo linea escriptorio
+[DEBUG] 03:35:40:560 FM9/(12232:12234): Se pide linea 5 para escriptorio scripts/io_bound.escriptorio
+[INFO] 03:35:40:560 FM9/(12232:12234): CANTIDAD DE LINEAS DE scripts/io_bound.escriptorio ES: 11
+[DEBUG] 03:35:40:560 FM9/(12232:12234): Linea: concentrar
+[INFO] 03:35:40:560 FM9/(12232:12234): Terminada operacion
+[DEBUG] 03:35:40:561 FM9/(12232:12234): Trayendo linea escriptorio
+[DEBUG] 03:35:40:561 FM9/(12232:12234): Se pide linea 6 para escriptorio scripts/io_bound.escriptorio
+[INFO] 03:35:40:561 FM9/(12232:12234): CANTIDAD DE LINEAS DE scripts/io_bound.escriptorio ES: 11
+[DEBUG] 03:35:40:561 FM9/(12232:12234): Linea: abrir /scripts/cpu_bound.escriptorio
+[INFO] 03:35:40:561 FM9/(12232:12234): Terminada operacion
+[DEBUG] 03:35:40:869 FM9/(12232:12234): Trayendo linea escriptorio
+[DEBUG] 03:35:40:869 FM9/(12232:12234): Se pide linea 7 para escriptorio scripts/io_bound.escriptorio
+[INFO] 03:35:40:869 FM9/(12232:12234): CANTIDAD DE LINEAS DE scripts/io_bound.escriptorio ES: 11
+[DEBUG] 03:35:40:870 FM9/(12232:12234): Linea: close /scripts/cpu_bound.escriptorio
+[INFO] 03:35:40:870 FM9/(12232:12234): Terminada operacion
+[DEBUG] 03:35:40:872 FM9/(12232:12234): Liberando el dtb 1 de memoria por pasar a EXIT
+[INFO] 03:35:40:872 FM9/(12232:12234): Borrado DTB 1 de memoria por pasar a EXIT
+[INFO] 03:35:40:872 FM9/(12232:12234): Terminada operacion
+[DEBUG] 03:35:41:117 FM9/(12232:12234): Guardando datos en memoria
+[DEBUG] 03:35:41:117 FM9/(12232:12234): Guardando en paginas invertidas
+[DEBUG] 03:35:41:118 FM9/(12232:12234): Datos guardados
+[DEBUG] 03:35:41:118 FM9/(12232:12234): Enviando 0 al guardar los datos
+[INFO] 03:35:41:118 FM9/(12232:12234): Terminada operacion

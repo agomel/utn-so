@@ -69,11 +69,14 @@ void planificadorACortoPlazo(){
 }
 
 void desbloquearDTB(int idDTB){
-	if(!strcmp(algoritmo, "VRR") && obtenerDTBDeCola(idDTB)->quantum != 0){
-		cambiarEstado(idDTB, READY_PRIORIDAD);
-		signalSem(&cantidadTotalREADY);
-	}else{
-		ponerEnReady(idDTB);
+	DTB* dtb = obtenerDTBDeCola(idDTB);
+	if(dtb->estado != EXIT){
+		if(!strcmp(algoritmo, "VRR") && dtb->quantum != 0){
+				cambiarEstado(idDTB, READY_PRIORIDAD);
+				signalSem(&cantidadTotalREADY);
+			}else{
+				ponerEnReady(idDTB);
+			}
 	}
 }
 
