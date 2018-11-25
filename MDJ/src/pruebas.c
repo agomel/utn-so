@@ -31,12 +31,4 @@ void crearArchivoDePruebas(){
 	crearArchivoGral("PGB1.bin", "abrir PruebaBOAF0.bin\nabrir PruebaBOAF1.bin\nabrir PruebaBOAF2.bin\nabrir PruebaBOAF3.bin\nabrir PruebaBOAF4.bin\n\n");
 
 	crearArchivoGral("PGB2.bin", "abrir PruebaBOAF0.bin\nabrir PruebaBOAF1.bin\n\n");
-
-	crearArchivoGral("hola", "concentrar\nsignal a\nsignal a\nborrar PGB1.bin\n\n");
-
-
-	crearArchivoGral("chau", "concentrar\nwait a\nsignal a\n\n");
-
-	crearArchivoGral("pedidor", "wait a\nwait a\n\n");
-	crearArchivoGral("bloqueate", "wait a\n\n");
 }

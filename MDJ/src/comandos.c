@@ -28,33 +28,27 @@ void cd(char* directorio){
 }
 
 void cat(char* parametro){
-	FILE* archivo = fopen(parametro, "r");
-	char* linea = asignarMemoria(CANTIDAD_BLOQUES + 1);
-	while(fscanf(archivo, "%s", linea) != EOF){
-		printf("%s\n", linea);
-	}
-	free(linea);
-	fclose(archivo);
+	char* datosTotales = obtenerDatos(parametro, 0, -1);
+	printf("%s", datosTotales);
+	free(datosTotales);
 }
 
 void md5(char* parametro){
-	FILE* archivo = fopen(parametro, "r");
-	char* linea = asignarMemoria(250);
-	while(fscanf(archivo, "%s", linea) != EOF){
-		unsigned char digest[16];
-		MD5_CTX context;
-		MD5_Init(&context);
-		MD5_Update(&context, linea, strlen(linea) + 1);
-		MD5_Final(digest, &context);
+	char* datosTotales = obtenerDatos(parametro, 0, -1);
 
-		char out[33];
-		for(int i = 0; i < 16; ++i){
-			sprintf(&out[i*2], "%02x", (unsigned int)digest[i]);
-		}
-		printf("%s\n", out);
+	unsigned char digest[16];
+	MD5_CTX context;
+	MD5_Init(&context);
+	MD5_Update(&context, datosTotales, strlen(datosTotales) + 1);
+	MD5_Final(digest, &context);
+
+	char out[33];
+	for(int i = 0; i < 16; ++i){
+		sprintf(&out[i*2], "%02x", (unsigned int)digest[i]);
 	}
-	free(linea);
-	fclose(archivo);
+
+	printf("%s\n", out);
+	free(datosTotales);
 }
 
 
