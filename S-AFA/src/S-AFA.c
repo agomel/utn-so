@@ -93,7 +93,7 @@ void entenderMensaje(int emisor, char header){
 			}
 
 			operacionDelDiego(idDTB);
-			desbloquearDTB(idDTB);
+			desbloquearDTBCambiandolo(idDTB);
 			break;
 
 		}
