@@ -7,3 +7,10 @@
 [INFO] 21:21:52:221 MDJ/(7515:7515): creado archivo de pruebas para BOAF con nombre pedidor
 [INFO] 21:21:52:222 MDJ/(7515:7515): creado archivo de pruebas para BOAF con nombre bloqueate
 [INFO] 21:21:57:910 MDJ/(7515:7516): chauuuuu :)
+[INFO] 01:00:55:211 MDJ/(12175:12175): creado archivo de pruebas para BOAF con nombre PGB1.bin
+[INFO] 01:00:55:215 MDJ/(12175:12175): creado archivo de pruebas para BOAF con nombre PGB2.bin
+[INFO] 01:00:55:220 MDJ/(12175:12175): creado archivo de pruebas para BOAF con nombre hola
+[INFO] 01:00:55:221 MDJ/(12175:12175): creado archivo de pruebas para BOAF con nombre chau
+[INFO] 01:00:55:223 MDJ/(12175:12175): creado archivo de pruebas para BOAF con nombre pedidor
+[INFO] 01:00:55:224 MDJ/(12175:12175): creado archivo de pruebas para BOAF con nombre bloqueate
+[INFO] 01:02:26:681 MDJ/(12175:12176): chauuuuu :)
