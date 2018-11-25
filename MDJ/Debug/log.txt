@@ -1,0 +1,105 @@
+[INFO] 03:06:59:627 MDJ/(9242:9242): creado archivo de pruebas para BOAF con nombre PGB1.bin
+[INFO] 03:06:59:628 MDJ/(9242:9242): creado archivo de pruebas para BOAF con nombre PGB2.bin
+[DEBUG] 03:07:57:226 MDJ/(9242:9244): Handshake de: DAM
+[DEBUG] 03:07:57:233 MDJ/(9242:9274): Escuchando nuevo cliente en 7
+[INFO] 11:24:33:306 MDJ/(9242:9245): Validar archivo...
+[INFO] 11:24:34:306 MDJ/(9242:9245): Terminada operacion
+[INFO] 11:24:34:306 MDJ/(9242:9245): Obtener datos...
+[INFO] 11:24:34:312 MDJ/(9242:9245): Datos a enviar: abrir /scripts/complejo.escriptorio
+concentrar
+asignar /scripts/complejo.escriptorio 1 Soy invalido
+concentrar
+close /scripts/complejo.escriptorio
+concentrar
+
+
+[INFO] 11:24:35:312 MDJ/(9242:9245): Terminada operacion
+[INFO] 11:24:35:312 MDJ/(9242:9245): Validar archivo...
+[INFO] 11:24:36:313 MDJ/(9242:9245): Terminada operacion
+[INFO] 11:24:36:313 MDJ/(9242:9245): Obtener datos...
+[INFO] 11:24:36:319 MDJ/(9242:9245): Datos a enviar: crear /equipos/Rafaela 5
+abrir /equipos/Rafaela
+asignar /equipos/Rafaela 1 Atletico Rafaela
+concentrar
+asignar /equipos/Rafaela 2 Estrella: Juan M. Suligoy
+concentrar
+asignar /equipos/Rafaela 3 Promedio: 91
+concentrar
+flush /equipos/Rafaela
+close /equipos/Rafaela
+concentrar
+
+
+[INFO] 11:24:37:320 MDJ/(9242:9245): Terminada operacion
+[DEBUG] 11:29:48:417 MDJ/(10311:10313): Handshake de: DAM
+[DEBUG] 11:29:48:425 MDJ/(10311:10321): Escuchando nuevo cliente en 7
+[INFO] 11:29:59:349 MDJ/(10311:10314): Validar archivo...
+[INFO] 11:30:00:350 MDJ/(10311:10314): Terminada operacion
+[INFO] 11:30:00:350 MDJ/(10311:10314): Obtener datos...
+[INFO] 11:30:00:350 MDJ/(10311:10314): Datos a enviar: abrir /scripts/cpu_bound.escriptorio
+concentrar
+concentrar
+close /scripts/cpu_bound.escriptorio
+concentrar
+concentrar
+abrir /scripts/cpu_bound.escriptorio
+close /scripts/cpu_bound.escriptorio
+concentrar
+concentrar
+
+
+[INFO] 11:30:01:351 MDJ/(10311:10314): Terminada operacion
+[DEBUG] 11:30:51:463 MDJ/(10410:10412): Handshake de: DAM
+[DEBUG] 11:30:51:473 MDJ/(10410:10421): Escuchando nuevo cliente en 7
+[INFO] 11:31:02:618 MDJ/(10410:10413): Validar archivo...
+[INFO] 11:31:03:618 MDJ/(10410:10413): Terminada operacion
+[INFO] 11:31:03:618 MDJ/(10410:10413): Obtener datos...
+[INFO] 11:31:03:618 MDJ/(10410:10413): Datos a enviar: abrir /scripts/cpu_bound.escriptorio
+concentrar
+concentrar
+close /scripts/cpu_bound.escriptorio
+concentrar
+concentrar
+abrir /scripts/cpu_bound.escriptorio
+close /scripts/cpu_bound.escriptorio
+concentrar
+concentrar
+
+
+[INFO] 11:31:04:619 MDJ/(10410:10413): Terminada operacion
+[DEBUG] 11:32:01:612 MDJ/(10483:10485): Handshake de: DAM
+[DEBUG] 11:32:01:621 MDJ/(10483:10494): Escuchando nuevo cliente en 7
+[INFO] 11:32:22:487 MDJ/(10483:10486): Validar archivo...
+[INFO] 11:32:23:488 MDJ/(10483:10486): Terminada operacion
+[INFO] 11:32:23:488 MDJ/(10483:10486): Obtener datos...
+[INFO] 11:32:23:490 MDJ/(10483:10486): Datos a enviar: abrir /scripts/cpu_bound.escriptorio
+concentrar
+concentrar
+close /scripts/cpu_bound.escriptorio
+concentrar
+concentrar
+abrir /scripts/cpu_bound.escriptorio
+close /scripts/cpu_bound.escriptorio
+concentrar
+concentrar
+
+
+[INFO] 11:32:24:490 MDJ/(10483:10486): Terminada operacion
+[DEBUG] 11:33:17:60 MDJ/(10557:10559): Handshake de: DAM
+[DEBUG] 11:33:17:77 MDJ/(10557:10567): Escuchando nuevo cliente en 7
+[INFO] 11:33:26:908 MDJ/(10557:10560): Validar archivo...
+[INFO] 11:33:27:909 MDJ/(10557:10560): Terminada operacion
+[INFO] 11:33:27:909 MDJ/(10557:10560): Obtener datos...
+[INFO] 11:33:27:915 MDJ/(10557:10560): Datos a enviar: abrir /scripts/cpu_bound.escriptorio
+concentrar
+concentrar
+close /scripts/cpu_bound.escriptorio
+concentrar
+concentrar
+abrir /scripts/cpu_bound.escriptorio
+close /scripts/cpu_bound.escriptorio
+concentrar
+concentrar
+
+
+[INFO] 11:33:28:915 MDJ/(10557:10560): Terminada operacion

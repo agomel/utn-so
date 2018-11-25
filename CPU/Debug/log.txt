@@ -1,0 +1,74 @@
+[INFO] 11:24:33:4 CPU/(9278:9278): Iniciando retardo de 100........
+[INFO] 11:24:33:104 CPU/(9278:9278): Finalizando retardo
+[INFO] 11:24:33:105 CPU/(9278:9278): Recibiendo un dtb
+[INFO] 11:24:33:105 CPU/(9278:9278): Recibi DTB Dummy
+[DEBUG] 11:24:33:105 CPU/(9278:9278): Enviando dtb con id: 1
+[DEBUG] 11:24:33:105 CPU/(9278:9278): esperando que SAFA desbloquee para continuar
+[DEBUG] 11:24:33:305 CPU/(9278:9278): continuo ejecucion
+[INFO] 11:24:33:305 CPU/(9278:9278): Enviando a SAFA que desbloquee dummy
+[DEBUG] 11:24:33:305 CPU/(9278:9278): Enviando dtb con id: 1
+[INFO] 11:24:34:513 CPU/(9278:9278): Iniciando retardo de 100........
+[INFO] 11:24:34:614 CPU/(9278:9278): Finalizando retardo
+[INFO] 11:24:34:614 CPU/(9278:9278): Recibiendo un dtb
+[INFO] 11:24:34:614 CPU/(9278:9278): Recibi DTB NO Dummy
+[INFO] 11:24:34:614 CPU/(9278:9278): Ejecutando instruccion abrir
+[INFO] 11:24:34:614 CPU/(9278:9278): Bloquear DTB
+[DEBUG] 11:24:34:614 CPU/(9278:9278): Enviando dtb con id: 1
+[INFO] 11:24:34:815 CPU/(9278:9278): Terminada operacion
+[INFO] 11:24:36:521 CPU/(9278:9278): Iniciando retardo de 100........
+[INFO] 11:24:36:622 CPU/(9278:9278): Finalizando retardo
+[INFO] 11:24:36:622 CPU/(9278:9278): Recibiendo un dtb
+[INFO] 11:24:36:622 CPU/(9278:9278): Recibi DTB NO Dummy
+[INFO] 11:24:36:622 CPU/(9278:9278): Ejecutando instruccion concentrar
+[INFO] 11:24:36:623 CPU/(9278:9278): Ejecutando instruccion asignar
+[INFO] 11:24:36:624 CPU/(9278:9278): Ejecutando instruccion concentrar
+[INFO] 11:24:36:624 CPU/(9278:9278): Ejecutando instruccion close
+[INFO] 11:24:36:625 CPU/(9278:9278): Ejecutando instruccion concentrar
+[INFO] 11:24:36:626 CPU/(9278:9278): Pasar DTB a EXIT por fin de archivo
+[DEBUG] 11:24:36:626 CPU/(9278:9278): Enviando dtb con id: 1
+[INFO] 11:24:36:626 CPU/(9278:9278): Terminada operacion
+[INFO] 11:29:29:425 CPU/(9278:9278): chauuuuu :)
+[INFO] 11:29:58:947 CPU/(10325:10325): Iniciando retardo de 200........
+[INFO] 11:29:59:148 CPU/(10325:10325): Finalizando retardo
+[INFO] 11:29:59:148 CPU/(10325:10325): Recibi DTB Dummy
+[DEBUG] 11:29:59:148 CPU/(10325:10325): Enviando dtb con id: 1
+[INFO] 11:29:59:348 CPU/(10325:10325): Enviando a SAFA que desbloquee dummy
+[DEBUG] 11:29:59:349 CPU/(10325:10325): Enviando dtb con id: 1
+[INFO] 11:30:00:551 CPU/(10325:10325): Iniciando retardo de 200........
+[INFO] 11:30:00:752 CPU/(10325:10325): Finalizando retardo
+[INFO] 11:30:00:752 CPU/(10325:10325): Recibi DTB NO Dummy
+[INFO] 11:30:00:752 CPU/(10325:10325): Pasar DTB a EXIT (2)
+[DEBUG] 11:30:00:752 CPU/(10325:10325): Enviando dtb con id: 0
+[INFO] 11:30:00:753 CPU/(10325:10325): El continuar esta en 0
+[INFO] 11:30:00:753 CPU/(10325:10325): Terminada operacion
+[INFO] 11:30:01:432 CPU/(10325:10325): Iniciando retardo de 200........
+[INFO] 11:30:01:633 CPU/(10325:10325): Finalizando retardo
+[ERROR] 11:30:01:633 CPU/(10325:10325): Header desconocido ¿ del SAFA
+[INFO] 11:31:02:216 CPU/(10425:10425): Iniciando retardo de 200........
+[INFO] 11:31:02:417 CPU/(10425:10425): Finalizando retardo
+[INFO] 11:31:02:417 CPU/(10425:10425): Recibi DTB Dummy
+[DEBUG] 11:31:02:417 CPU/(10425:10425): Enviando dtb con id: 1
+[INFO] 11:31:02:617 CPU/(10425:10425): Enviando a SAFA que desbloquee dummy
+[DEBUG] 11:31:02:618 CPU/(10425:10425): Enviando dtb con id: 1
+[INFO] 11:31:03:820 CPU/(10425:10425): Iniciando retardo de 200........
+[INFO] 11:31:04:21 CPU/(10425:10425): Finalizando retardo
+[INFO] 11:31:04:21 CPU/(10425:10425): Recibi DTB NO Dummy
+[INFO] 11:31:04:21 CPU/(10425:10425): Pasar DTB a EXIT (2)
+[DEBUG] 11:31:04:21 CPU/(10425:10425): Enviando dtb con id: 0
+[INFO] 11:31:04:22 CPU/(10425:10425): El continuar esta en 0
+[INFO] 11:31:04:22 CPU/(10425:10425): Terminada operacion
+[INFO] 11:31:04:605 CPU/(10425:10425): Iniciando retardo de 200........
+[INFO] 11:31:04:807 CPU/(10425:10425): Finalizando retardo
+[ERROR] 11:31:04:807 CPU/(10425:10425): Header desconocido ¿ del SAFA
+[INFO] 11:32:22:235 CPU/(10498:10498): Iniciando retardo de 200........
+[INFO] 11:32:22:436 CPU/(10498:10498): Finalizando retardo
+[INFO] 11:32:22:436 CPU/(10498:10498): Recibi DTB Dummy
+[DEBUG] 11:32:22:436 CPU/(10498:10498): Enviando dtb con id: 1
+[INFO] 11:32:22:487 CPU/(10498:10498): Enviando a SAFA que desbloquee dummy
+[DEBUG] 11:32:22:487 CPU/(10498:10498): Enviando dtb con id: 1
+[INFO] 11:33:26:656 CPU/(10571:10571): Iniciando retardo de 200........
+[INFO] 11:33:26:857 CPU/(10571:10571): Finalizando retardo
+[INFO] 11:33:26:857 CPU/(10571:10571): Recibi DTB Dummy
+[DEBUG] 11:33:26:857 CPU/(10571:10571): Enviando dtb con id: 1
+[INFO] 11:33:26:908 CPU/(10571:10571): Enviando a SAFA que desbloquee dummy
+[DEBUG] 11:33:26:908 CPU/(10571:10571): Enviando dtb con id: 1
