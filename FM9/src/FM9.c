@@ -5,79 +5,79 @@
 #include "consola.h"
 
 respuestaDeObtencionDeMemoria* obtenerDatosDeMemoria(int idDTB, char* nombreArchivo){
-	if(strcmp(modo, "SEG_PURA") == 0)
+	if(strcmp(modo, "SEG") == 0)
 		return obtenerDatosSegPura(idDTB, nombreArchivo);
 
-	if(strcmp(modo, "SEG_PAG") == 0)
+	if(strcmp(modo, "SPA") == 0)
 		return obtenerDatosSegPag(idDTB, nombreArchivo);
 
-	if(strcmp(modo, "INV") == 0)
+	if(strcmp(modo, "TPI") == 0)
 		return obtenerDatosInvertida(idDTB, nombreArchivo);
 }
 
 RespuestaGuardado* cargarDatosEnMemoria(int idDTB, char* datos, char* nombreArchivo){
-	if(strcmp(modo, "SEG_PURA") == 0)
+	if(strcmp(modo, "SEG") == 0)
 		return guardarDatosSegPura(idDTB, datos, nombreArchivo);
 
-	if(strcmp(modo, "SEG_PAG") == 0)
+	if(strcmp(modo, "SPA") == 0)
 		return guardarDatosSegPag(idDTB, datos, nombreArchivo);
 
-	if(strcmp(modo, "INV") == 0)
+	if(strcmp(modo, "TPI") == 0)
 		return guardarDatosInvertida(idDTB, datos, nombreArchivo);
 }
 
 RespuestaGuardado* cargarNuevoDTB(int idDTB, char* datos, char* nombreArchivo){
-	if(strcmp(modo, "SEG_PURA") == 0)
+	if(strcmp(modo, "SEG") == 0)
 		return nuevoProcesoSegPura(idDTB, datos, nombreArchivo);
 
-	if(strcmp(modo, "SEG_PAG") == 0)
+	if(strcmp(modo, "SPA") == 0)
 		return nuevoProcesoSegPag(idDTB, datos, nombreArchivo);
 
-	if(strcmp(modo, "INV") == 0)
+	if(strcmp(modo, "TPI") == 0)
 		return guardarDatosInvertida(idDTB, datos, nombreArchivo);
 }
 
 respuestaDeObtencionDeMemoria* obtenerLinea(int idDTB, char* nombreArchivo, int numeroLinea){
-	if(strcmp(modo, "SEG_PURA") == 0)
+	if(strcmp(modo, "SEG") == 0)
 		return obtenerLineaSegPura(idDTB, nombreArchivo, numeroLinea);
 
-	if(strcmp(modo, "SEG_PAG") == 0)
+	if(strcmp(modo, "SPA") == 0)
 		return obtenerLineaSegPag(idDTB, nombreArchivo, numeroLinea);
 
-	if(strcmp(modo, "INV") == 0)
+	if(strcmp(modo, "TPI") == 0)
 		return obtenerLineaInvertida(idDTB, nombreArchivo, numeroLinea);
 }
 
 void liberarMemoria(int idDTB, char* nombreArchivo){
-	if(strcmp(modo, "SEG_PURA") == 0)
+	if(strcmp(modo, "SEG") == 0)
 		liberarMemoriaSegPura(idDTB, nombreArchivo);
 
-	if(strcmp(modo, "SEG_PAG") == 0)
+	if(strcmp(modo, "SPA") == 0)
 		liberarMemoriaSegPag(idDTB, nombreArchivo);
 
-	if(strcmp(modo, "INV") == 0)
+	if(strcmp(modo, "TPI") == 0)
 		liberarMemoriaInvertida(idDTB, nombreArchivo);
 }
 
 void liberarDTBDeMemoria(int idDTB){
-	if(strcmp(modo, "SEG_PURA") == 0)
+	if(strcmp(modo, "SEG") == 0)
 		liberarDTBDeMemoriaSegPura(idDTB);//PROBAR
 
-	if(strcmp(modo, "SEG_PAG") == 0)
+	if(strcmp(modo, "SPA") == 0)
 		liberarDTBDeMemoriaSegPag(idDTB);//PROBAR
 
-	if(strcmp(modo, "INV") == 0)
+	if(strcmp(modo, "TPI") == 0)
 		liberarDTBDeMemoriaInvertida(idDTB);
 }
 
 int asignarDatos(int idDTB, char* nombreArchivo, int numeroLinea, char* datos){
-	if(strcmp(modo, "SEG_PURA") == 0)
+	if(strcmp(modo, "SEG") == 0)
 		return asignarDatosSegPura(idDTB, nombreArchivo, numeroLinea, datos);
 
-	if(strcmp(modo, "SEG_PAG") == 0)
+	if(strcmp(modo, "SPA") == 0)
 		return asignarDatosSegPag(idDTB, nombreArchivo, numeroLinea, datos);
 
-	if(strcmp(modo, "INV") == 0)
+	if(strcmp(modo, "TPI") == 0)
 		return asignarDatosInvertida(idDTB, nombreArchivo, numeroLinea, datos);
 }
 
@@ -250,17 +250,17 @@ void crearSelect(int servidor){
 }
 
 void inicializar(char* modo, t_config* configuracion){
-	if(strcmp(modo, "SEG_PURA") == 0){
+	if(strcmp(modo, "SEG") == 0){
 		log_info(logger, "Utilizando segmentacion pura");
 		return inicializarSegPura();
 	}
 
-	if(strcmp(modo, "SEG_PAG") == 0){
+	if(strcmp(modo, "SPA") == 0){
 		log_info(logger, "Utilizando segmentacion paginada");
 		return inicializarSegPag(configuracion);
 	}
 
-	if(strcmp(modo, "INV") == 0){
+	if(strcmp(modo, "TPI") == 0){
 		log_info(logger, "Utilizando paginas invertidas");
 		return inicializarInvertida(configuracion);
 	}
