@@ -266,6 +266,10 @@ RespuestaGuardado* guardarDatosInvertida(int idDTB, char* datos, char* nombreArc
 		if(lineasEnLaUltimaPagina != 0)
 				cantidadPaginas++;
 	}
+
+	if(lineasEnLaUltimaPagina == 0)
+			lineasEnLaUltimaPagina = tamanioPagina - 1;
+
 	ElementoArchivos* elementoArchivo = crearElementoArchivos(idDTB, nombreArchivo, totalLineas);
 	list_add(tablaDeArchivos, elementoArchivo);
 
