@@ -4,6 +4,7 @@ void planificadorALargoPlazo() {
 	int a = 1;
 	while (a) {
 		waitSem(&semCantidadEnNew);
+		log_error(logger, "hay en new DTBs");
 
 		DTB* dtb = obtenerPrimerDTBEnNew();
 
@@ -47,6 +48,14 @@ void ponerEnReady(int idDTB) {
 		finalizarHistorialDeListaNew(idDTB);
 	}
 	cambiarEstado(idDTB, READY);
+	signalSem(&cantidadTotalREADY);
+}
+
+void ponerEnReadyDTB(DTB* dtb) {
+	if(dtb->estado == NEW){
+		finalizarHistorialDeListaNew(dtb->id);
+	}
+	cambiarEstadoGuardandoNuevoDTB(dtb, READY);
 	signalSem(&cantidadTotalREADY);
 }
 

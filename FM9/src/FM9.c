@@ -149,7 +149,7 @@ void entenderMensaje(int emisor, char header){
 				int numeroLinea = deserializarInt(emisor);
 				log_debug(logger, "Se pide linea %d para escriptorio %s", numeroLinea, nombreArchivo);
 				respuestaDeObtencionDeMemoria* respuesta = obtenerLinea(idDTB, nombreArchivo, numeroLinea);
-
+				log_error(logger, "mandando %d para linea %s", respuesta->pudoObtener, respuesta->datos);
 				if(respuesta->pudoObtener == 0){
 					enviarYSerializarStringSinHeader(emisor, respuesta->datos);
 					freeRespuestaObtencion(respuesta);

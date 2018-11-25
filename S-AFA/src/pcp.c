@@ -79,6 +79,16 @@ void desbloquearDTB(int idDTB){
 			}
 	}
 }
+void desbloquearDTBCambiandolo(DTB* dtb){
+	if(dtb->estado != EXIT){
+		if(!strcmp(algoritmo, "VRR") && dtb->quantum != 0){
+				cambiarEstadoGuardandoNuevoDTB(dtb, READY_PRIORIDAD);
+				signalSem(&cantidadTotalREADY);
+			}else{
+				ponerEnReadyDTB(dtb);
+			}
+	}
+}
 
 void desbloquearDummy(DTB* dummy){
 	cambiarEstadoDummy(BLOCKED);

@@ -89,12 +89,13 @@ void entenderMensaje(int emisor, char header){
 			}
 
 			if(!list_any_satisfy(dtb->listaDeArchivos, compararPath)){
+				log_error(logger, "agregado el archivo %s a la lista de %d", path, idDTB);
 				list_add(dtb->listaDeArchivos, path);
 				dtb->tamanioArchivosAbiertos += pesoArchivo;
 			}
 
 			operacionDelDiego(idDTB);
-			desbloquearDTB(idDTB);
+			desbloquearDTBCambiandolo(dtb);
 			break;
 
 		}
