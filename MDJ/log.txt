@@ -5,3 +5,156 @@
 [INFO] 12:37:13:548 MDJ/(7182:7196): Obtener datos...
 [INFO] 12:37:14:554 MDJ/(7182:7196): Terminada operacion
 [INFO] 12:37:14:962 MDJ/(7182:7196): Crear archivo...
+[INFO] 19:10:38:583 MDJ/(611:611): creado archivo de pruebas para BOAF con nombre PGB1.bin
+[INFO] 19:10:38:585 MDJ/(611:611): creado archivo de pruebas para BOAF con nombre PGB2.bin
+[INFO] 19:10:38:586 MDJ/(611:611): creado archivo de pruebas para BOAF con nombre hola
+[INFO] 19:10:38:588 MDJ/(611:611): creado archivo de pruebas para BOAF con nombre chau
+[INFO] 19:10:38:592 MDJ/(611:611): creado archivo de pruebas para BOAF con nombre pedidor
+[INFO] 19:10:38:594 MDJ/(611:611): creado archivo de pruebas para BOAF con nombre bloqueate
+[DEBUG] 19:12:30:77 MDJ/(611:633): Handshake de: DAM
+[DEBUG] 19:12:30:114 MDJ/(611:994): Escuchando nuevo cliente en 7
+[INFO] 19:12:42:764 MDJ/(611:634): Validar archivo...
+[INFO] 19:12:43:772 MDJ/(611:634): Terminada operacion
+[INFO] 19:12:43:772 MDJ/(611:634): Obtener datos...
+[INFO] 19:12:43:781 MDJ/(611:634): Datos a enviar: crear /equipos/equipo1.txt 5
+abrir /equipos/equipo1.txt
+asignar /equipos/equipo1.txt 1 Rasing
+asignar /equipos/equipo1.txt 1 Jugadores: Centurion
+flush /equipos/equipo1.txt
+close /equipos/equipo1.txt
+
+
+[INFO] 19:12:44:781 MDJ/(611:634): Terminada operacion
+[INFO] 19:12:47:185 MDJ/(611:634): Validar archivo...
+[INFO] 19:12:48:186 MDJ/(611:634): Terminada operacion
+[INFO] 19:13:40:11 MDJ/(611:634): Crear archivo...
+[INFO] 19:15:40:470 MDJ/(611:634): Terminada operacion
+[DEBUG] 19:17:14:748 MDJ/(1404:1417): Handshake de: DAM
+[DEBUG] 19:17:14:770 MDJ/(1404:1432): Escuchando nuevo cliente en 6
+[INFO] 19:17:29:925 MDJ/(1404:1418): Validar archivo...
+[INFO] 19:17:30:934 MDJ/(1404:1418): Terminada operacion
+[INFO] 19:17:30:934 MDJ/(1404:1418): Obtener datos...
+[INFO] 19:17:30:937 MDJ/(1404:1418): Datos a enviar: crear /equipos/equipo1.txt 5
+abrir /equipos/equipo1.txt
+asignar /equipos/equipo1.txt 1 Rasing
+asignar /equipos/equipo1.txt 1 Jugadores: Centurion
+flush /equipos/equipo1.txt
+close /equipos/equipo1.txt
+
+
+[INFO] 19:17:31:938 MDJ/(1404:1418): Terminada operacion
+[INFO] 19:17:34:343 MDJ/(1404:1418): Validar archivo...
+[INFO] 19:17:35:351 MDJ/(1404:1418): Terminada operacion
+[INFO] 19:17:49:589 MDJ/(1404:1418): Crear archivo...
+[INFO] 19:18:47:144 MDJ/(1404:1418): Terminada operacion
+[INFO] 19:18:49:567 MDJ/(1404:1418): Validar archivo...
+[INFO] 19:18:50:576 MDJ/(1404:1418): Terminada operacion
+[INFO] 19:18:50:577 MDJ/(1404:1418): Obtener datos...
+[INFO] 19:18:50:578 MDJ/(1404:1418): Datos a enviar: 
+
+
+
+
+
+[INFO] 19:18:51:578 MDJ/(1404:1418): Terminada operacion
+[INFO] 19:18:53:983 MDJ/(1404:1418): Validar archivo...
+[INFO] 19:18:54:984 MDJ/(1404:1418): Terminada operacion
+[INFO] 19:18:54:984 MDJ/(1404:1418): Guardar datos...
+[DEBUG] 19:43:12:702 MDJ/(2525:2538): Handshake de: DAM
+[DEBUG] 19:43:12:727 MDJ/(2525:2554): Escuchando nuevo cliente en 6
+[INFO] 19:43:24:709 MDJ/(2525:2539): Validar archivo...
+[INFO] 19:43:25:710 MDJ/(2525:2539): Terminada operacion
+[INFO] 19:43:25:710 MDJ/(2525:2539): Obtener datos...
+[INFO] 19:43:25:720 MDJ/(2525:2539): Datos a enviar: crear /equipos/equipo1.txt 5
+abrir /equipos/equipo1.txt
+asignar /equipos/equipo1.txt 1 Rasing
+asignar /equipos/equipo1.txt 1 Jugadores: Centurion
+flush /equipos/equipo1.txt
+close /equipos/equipo1.txt
+
+
+[INFO] 19:43:26:721 MDJ/(2525:2539): Terminada operacion
+[INFO] 19:43:29:125 MDJ/(2525:2539): Validar archivo...
+[INFO] 19:43:30:126 MDJ/(2525:2539): Terminada operacion
+[INFO] 19:43:30:126 MDJ/(2525:2539): Crear archivo...
+[INFO] 19:43:39:117 MDJ/(2525:2539): Terminada operacion
+[INFO] 19:43:41:521 MDJ/(2525:2539): Validar archivo...
+[INFO] 19:43:42:524 MDJ/(2525:2539): Terminada operacion
+[INFO] 19:43:42:524 MDJ/(2525:2539): Obtener datos...
+[INFO] 19:43:42:524 MDJ/(2525:2539): Datos a enviar: 
+
+
+
+
+
+[INFO] 19:43:43:524 MDJ/(2525:2539): Terminada operacion
+[INFO] 19:43:45:930 MDJ/(2525:2539): Validar archivo...
+[INFO] 19:43:46:931 MDJ/(2525:2539): Terminada operacion
+[INFO] 19:43:46:931 MDJ/(2525:2539): Guardar datos...
+[DEBUG] 19:49:48:729 MDJ/(2913:2922): Handshake de: DAM
+[DEBUG] 19:49:48:751 MDJ/(2913:2941): Escuchando nuevo cliente en 7
+[INFO] 19:50:02:563 MDJ/(2913:2923): Validar archivo...
+[INFO] 19:50:03:564 MDJ/(2913:2923): Terminada operacion
+[INFO] 19:50:03:564 MDJ/(2913:2923): Obtener datos...
+[INFO] 19:50:03:564 MDJ/(2913:2923): Datos a enviar: crear /equipos/equipo1.txt 5
+abrir /equipos/equipo1.txt
+asignar /equipos/equipo1.txt 1 Rasing
+asignar /equipos/equipo1.txt 1 Jugadores: Centurion
+flush /equipos/equipo1.txt
+close /equipos/equipo1.txt
+
+
+[INFO] 19:50:04:564 MDJ/(2913:2923): Terminada operacion
+[INFO] 19:50:06:975 MDJ/(2913:2923): Validar archivo...
+[INFO] 19:50:07:976 MDJ/(2913:2923): Terminada operacion
+[INFO] 19:50:07:976 MDJ/(2913:2923): Crear archivo...
+[INFO] 19:50:08:981 MDJ/(2913:2923): Terminada operacion
+[INFO] 19:50:11:379 MDJ/(2913:2923): Validar archivo...
+[INFO] 19:50:12:380 MDJ/(2913:2923): Terminada operacion
+[INFO] 19:50:12:382 MDJ/(2913:2923): Obtener datos...
+[INFO] 19:50:12:382 MDJ/(2913:2923): Datos a enviar: 
+
+
+
+
+
+[INFO] 19:50:13:383 MDJ/(2913:2923): Terminada operacion
+[INFO] 19:50:15:788 MDJ/(2913:2923): Validar archivo...
+[INFO] 19:50:16:789 MDJ/(2913:2923): Terminada operacion
+[INFO] 19:50:16:790 MDJ/(2913:2923): Guardar datos...
+[DEBUG] 20:44:29:82 MDJ/(5937:5981): Handshake de: DAM
+[DEBUG] 20:44:29:99 MDJ/(5937:5987): Escuchando nuevo cliente en 6
+[INFO] 20:44:42:202 MDJ/(5937:5982): Validar archivo...
+[DEBUG] 20:45:51:963 MDJ/(6066:6113): Handshake de: DAM
+[DEBUG] 20:45:51:986 MDJ/(6066:6118): Escuchando nuevo cliente en 6
+[INFO] 20:46:03:744 MDJ/(6066:6114): Validar archivo...
+[INFO] 20:46:25:417 MDJ/(6066:6114): Terminada operacion
+[INFO] 20:46:25:417 MDJ/(6066:6114): Obtener datos...
+[INFO] 20:46:35:84 MDJ/(6066:6114): Datos a enviar: crear /equipos/equipo1.txt 5
+abrir /equipos/equipo1.txt
+asignar /equipos/equipo1.txt 1 Rasing
+asignar /equipos/equipo1.txt 1 Jugadores: Centurion
+flush /equipos/equipo1.txt
+close /equipos/equipo1.txt
+
+
+[INFO] 20:46:36:84 MDJ/(6066:6114): Terminada operacion
+[INFO] 20:46:38:492 MDJ/(6066:6114): Validar archivo...
+[INFO] 20:46:39:499 MDJ/(6066:6114): Terminada operacion
+[INFO] 20:46:39:499 MDJ/(6066:6114): Crear archivo...
+[INFO] 20:46:40:500 MDJ/(6066:6114): Terminada operacion
+[INFO] 20:46:42:908 MDJ/(6066:6114): Validar archivo...
+[INFO] 20:46:43:909 MDJ/(6066:6114): Terminada operacion
+[INFO] 20:46:43:909 MDJ/(6066:6114): Obtener datos...
+[INFO] 20:46:43:909 MDJ/(6066:6114): Datos a enviar: 
+
+
+
+
+
+[INFO] 20:46:44:911 MDJ/(6066:6114): Terminada operacion
+[INFO] 20:46:47:317 MDJ/(6066:6114): Validar archivo...
+[INFO] 20:46:48:317 MDJ/(6066:6114): Terminada operacion
+[INFO] 20:46:48:318 MDJ/(6066:6114): Guardar datos...
+[DEBUG] 20:46:53:953 MDJ/(6066:6114): Enviando 0 al guardar datos
+[INFO] 20:46:54:954 MDJ/(6066:6114): Terminada operacion

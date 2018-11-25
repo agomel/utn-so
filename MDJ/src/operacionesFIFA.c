@@ -1,9 +1,22 @@
 #include "operacionesFIFA.h"
 
+void verificarDirectorio(char* path){
+	char** carpetas = string_split(path, "/");
+	int numeroCarpeta = 0;
+	char* montajeActual = asignarMemoria(strlen(PUNTO_MONTAJE_ARCHIVOS) + 1);
+	memcpy(montajeActual, PUNTO_MONTAJE_ARCHIVOS, strlen(PUNTO_MONTAJE_ARCHIVOS) + 1);
+	while(carpetas[numeroCarpeta +1] != NULL){
+		concatenarATexto(&montajeActual, carpetas[numeroCarpeta]);
+		crearCarpetaSiNoExiste(montajeActual);
+		numeroCarpeta++;
+	}
+}
+
 char* generarPathAbsoluto(char* path){
 	if(strlen(path) > 0 && path[0] == '/'){
 		memcpy(path, path + 1, strlen(path));
 	}
+	verificarDirectorio(path);
 	return concatenar(PUNTO_MONTAJE_ARCHIVOS, path);
 }
 

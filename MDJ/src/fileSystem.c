@@ -87,6 +87,15 @@ char* obtenerDatosFS(char* rutaArchivo, int offset, int size){
 
 int guardarDatosFS(char* rutaArchivo, int offset, int size, char* datos){
 	int error = 0;
+	error = borrarArchivoFS(rutaArchivo);
+	if(error == 0)
+	error = crearArchivoFS(rutaArchivo, datos);
+
+	return error;
+}
+
+int guardarDatosFSConOffset(char* rutaArchivo, int offset, int size, char* datos){
+	int error = 0;
 
 	char* datosAGuardar = asignarMemoria(size);
 	memcpy(datosAGuardar, datos, size);
