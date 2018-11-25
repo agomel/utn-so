@@ -164,3 +164,202 @@
 [INFO] 14:30:06:234 SAFA/(8295:8301): Recibi Desbloquear DTB
 [INFO] 14:30:06:283 SAFA/(8295:8301): Terminada operacion
 [INFO] 14:30:06:733 SAFA/(8295:8301): Recibi cargado con exito en memoria del DAM
+[INFO] 14:34:37:982 SAFA/(8615:8615): Algoritmo elegido VRR
+[DEBUG] 14:34:53:260 SAFA/(8615:8620): Se agrego a las conexiones DAM
+[DEBUG] 14:34:53:314 SAFA/(8615:8639): Escuchando nuevo cliente en 6
+[DEBUG] 14:35:05:824 SAFA/(8615:8620): Se agrego a las conexiones CPU
+[DEBUG] 14:35:05:866 SAFA/(8615:8647): Escuchando nuevo cliente en 7
+[INFO] 14:35:19:5 SAFA/(8615:8622): Comando ejecutar
+[DEBUG] 14:35:20:211 SAFA/(8615:8646): Enviando dtb con id: 1
+[INFO] 14:35:20:448 SAFA/(8615:8621): Desbloqueo el DUMMY
+[INFO] 14:35:20:518 SAFA/(8615:8621): Terminada operacion
+[INFO] 14:35:20:573 SAFA/(8615:8621): Recibi Desbloquear DTB
+[INFO] 14:35:20:623 SAFA/(8615:8621): Terminada operacion
+[INFO] 14:35:21:51 SAFA/(8615:8621): Recibi cargado con exito en memoria del DAM
+[INFO] 14:35:21:86 SAFA/(8615:8621): Pasado a READY dtb con id: 1, escriptorio: scripts/io_bound.escriptorio, quantum: 0
+[INFO] 14:35:21:96 SAFA/(8615:8646): Pasado a EXECUTE dtb con id: 1, escriptorio: scripts/io_bound.escriptorio, quantum: 2
+[INFO] 14:35:21:101 SAFA/(8615:8621): Terminada operacion
+[DEBUG] 14:35:21:106 SAFA/(8615:8646): Enviando dtb con id: 1
+[INFO] 14:35:21:268 SAFA/(8615:8621): Recibi bloquear DTB
+[INFO] 14:35:21:287 SAFA/(8615:8621): Pasado a BLOCKED dtb con id: 1, escriptorio: scripts/io_bound.escriptorio, quantum: 2
+[INFO] 14:35:21:304 SAFA/(8615:8621): Terminada operacion
+[INFO] 14:35:22:60 SAFA/(8615:8621): Recibi cargado con exito en memoria del DAM
+[INFO] 14:35:22:64 SAFA/(8615:8621): Pasado a READY_PRIORIDAD dtb con id: 1, escriptorio: scripts/io_bound.escriptorio, quantum: 2
+[INFO] 14:35:22:74 SAFA/(8615:8646): Pasado a EXECUTE dtb con id: 1, escriptorio: scripts/io_bound.escriptorio, quantum: 2
+[DEBUG] 14:35:22:75 SAFA/(8615:8646): Enviando dtb con id: 1
+[INFO] 14:35:22:77 SAFA/(8615:8621): Terminada operacion
+[INFO] 14:35:22:230 SAFA/(8615:8621): Recibi termino quantum
+[INFO] 14:35:22:238 SAFA/(8615:8621): Pasado a READY dtb con id: 1, escriptorio: scripts/io_bound.escriptorio, quantum: 0
+[INFO] 14:35:22:257 SAFA/(8615:8646): Pasado a EXECUTE dtb con id: 1, escriptorio: scripts/io_bound.escriptorio, quantum: 2
+[DEBUG] 14:35:22:258 SAFA/(8615:8646): Enviando dtb con id: 1
+[INFO] 14:35:22:259 SAFA/(8615:8621): Terminada operacion
+[INFO] 14:35:22:413 SAFA/(8615:8621): Recibi termino quantum
+[INFO] 14:35:22:415 SAFA/(8615:8621): Pasado a READY dtb con id: 1, escriptorio: scripts/io_bound.escriptorio, quantum: 0
+[INFO] 14:35:22:417 SAFA/(8615:8646): Pasado a EXECUTE dtb con id: 1, escriptorio: scripts/io_bound.escriptorio, quantum: 2
+[DEBUG] 14:35:22:418 SAFA/(8615:8646): Enviando dtb con id: 1
+[INFO] 14:35:22:419 SAFA/(8615:8621): Terminada operacion
+[INFO] 14:35:22:579 SAFA/(8615:8621): Recibi bloquear DTB
+[INFO] 14:35:22:581 SAFA/(8615:8621): Pasado a BLOCKED dtb con id: 1, escriptorio: scripts/io_bound.escriptorio, quantum: 1
+[INFO] 14:35:22:584 SAFA/(8615:8621): Terminada operacion
+[INFO] 14:35:22:636 SAFA/(8615:8621): Recibi termino quantum
+[INFO] 14:35:22:639 SAFA/(8615:8621): Pasado a READY dtb con id: 1, escriptorio: scripts/io_bound.escriptorio, quantum: 0
+[INFO] 14:35:22:644 SAFA/(8615:8646): Pasado a EXECUTE dtb con id: 1, escriptorio: scripts/io_bound.escriptorio, quantum: 2
+[DEBUG] 14:35:22:644 SAFA/(8615:8646): Enviando dtb con id: 1
+[INFO] 14:35:22:645 SAFA/(8615:8621): Terminada operacion
+[INFO] 14:35:22:799 SAFA/(8615:8621): Recibi pasar a EXIT por un error :(
+[INFO] 14:35:22:810 SAFA/(8615:8621): Pasado a EXIT dtb con id: 1, escriptorio: scripts/io_bound.escriptorio, quantum: 2
+[ERROR] 14:35:22:828 SAFA/(8615:8621): El archivo no se encuentra abierto scripts/io_bound.escriptorio
+[INFO] 14:35:22:851 SAFA/(8615:8621): Terminada operacion
+[INFO] 14:35:23:136 SAFA/(8615:8621): Recibi cargado con exito en memoria del DAM
+[INFO] 14:35:23:138 SAFA/(8615:8621): Terminada operacion
+[INFO] 14:35:25:778 SAFA/(8615:8622): Comando ejecutar
+[DEBUG] 14:35:25:781 SAFA/(8615:8646): Enviando dtb con id: 2
+[INFO] 14:35:25:933 SAFA/(8615:8621): Desbloqueo el DUMMY
+[INFO] 14:35:25:934 SAFA/(8615:8621): Terminada operacion
+[INFO] 14:35:25:986 SAFA/(8615:8621): Recibi Desbloquear DTB
+[INFO] 14:35:25:988 SAFA/(8615:8621): Terminada operacion
+[INFO] 14:44:21:142 SAFA/(8940:8940): Algoritmo elegido VRR
+[DEBUG] 14:44:38:440 SAFA/(8940:8952): Se agrego a las conexiones DAM
+[DEBUG] 14:44:38:466 SAFA/(8940:8968): Escuchando nuevo cliente en 5
+[DEBUG] 14:44:42:638 SAFA/(8940:8952): Se agrego a las conexiones CPU
+[DEBUG] 14:44:42:660 SAFA/(8940:8975): Escuchando nuevo cliente en 6
+[INFO] 14:44:55:820 SAFA/(8940:8954): Comando ejecutar
+[DEBUG] 14:45:13:850 SAFA/(8940:8979): Enviando dtb con id: 1
+[INFO] 14:45:14:10 SAFA/(8940:8953): Desbloqueo el DUMMY
+[INFO] 14:45:14:11 SAFA/(8940:8953): Terminada operacion
+[INFO] 14:45:14:62 SAFA/(8940:8953): Recibi Desbloquear DTB
+[INFO] 14:45:14:65 SAFA/(8940:8953): Terminada operacion
+[INFO] 14:45:14:579 SAFA/(8940:8953): Recibi cargado con exito en memoria del DAM
+[INFO] 14:45:43:919 SAFA/(8940:8954): Comando ejecutar
+[INFO] 14:45:43:919 SAFA/(8940:8954): Comando ejecutar
+[INFO] 14:45:43:920 SAFA/(8940:8953): Pasado a READY dtb con id: 1, escriptorio: scripts/io_bound.escriptorio, quantum: 0
+[INFO] 14:45:43:920 SAFA/(8940:8953): Terminada operacion
+[DEBUG] 14:45:53:890 SAFA/(8940:8979): Enviando dtb con id: 2
+[INFO] 14:45:54:42 SAFA/(8940:8953): Desbloqueo el DUMMY
+[INFO] 14:45:54:42 SAFA/(8940:8953): Terminada operacion
+[INFO] 14:45:54:95 SAFA/(8940:8953): Recibi Desbloquear DTB
+[INFO] 14:45:54:95 SAFA/(8940:8953): Terminada operacion
+[INFO] 14:45:54:95 SAFA/(8940:8979): Pasado a EXECUTE dtb con id: 1, escriptorio: scripts/io_bound.escriptorio, quantum: 2
+[DEBUG] 14:46:24:377 SAFA/(8940:8979): Enviando dtb con id: 1
+[INFO] 14:46:24:421 SAFA/(8940:8953): Recibi cargado con exito en memoria del DAM
+[INFO] 14:46:51:594 SAFA/(8940:8953): Pasado a READY dtb con id: 2, escriptorio: scripts/cpu_bound.escriptorio, quantum: 0
+[INFO] 14:46:51:594 SAFA/(8940:8953): Terminada operacion
+[INFO] 14:46:51:644 SAFA/(8940:8953): Recibi bloquear DTB
+[INFO] 14:46:51:645 SAFA/(8940:8953): Pasado a BLOCKED dtb con id: 1, escriptorio: scripts/io_bound.escriptorio, quantum: 2
+[INFO] 14:46:51:645 SAFA/(8940:8953): Terminada operacion
+[DEBUG] 14:46:58:584 SAFA/(8940:8979): Enviando dtb con id: 3
+[INFO] 14:46:58:633 SAFA/(8940:8953): Recibi cargado con exito en memoria del DAM
+[INFO] 14:47:15:20 SAFA/(8940:8953): Pasado a READY_PRIORIDAD dtb con id: 1, escriptorio: scripts/io_bound.escriptorio, quantum: 2
+[INFO] 14:47:15:20 SAFA/(8940:8953): Terminada operacion
+[INFO] 14:47:15:71 SAFA/(8940:8953): Desbloqueo el DUMMY
+[INFO] 14:47:15:71 SAFA/(8940:8953): Terminada operacion
+[INFO] 14:47:15:122 SAFA/(8940:8953): Recibi Desbloquear DTB
+[INFO] 14:47:15:123 SAFA/(8940:8953): Terminada operacion
+[INFO] 14:47:15:123 SAFA/(8940:8979): Pasado a EXECUTE dtb con id: 1, escriptorio: scripts/io_bound.escriptorio, quantum: 2
+[DEBUG] 14:47:36:110 SAFA/(8940:8979): Enviando dtb con id: 1
+[INFO] 14:47:36:160 SAFA/(8940:8953): Recibi cargado con exito en memoria del DAM
+[INFO] 14:47:48:312 SAFA/(8940:8953): Pasado a READY dtb con id: 3, escriptorio: scripts/cpu_bound.escriptorio, quantum: 0
+[INFO] 14:47:48:312 SAFA/(8940:8953): Terminada operacion
+[INFO] 14:47:48:362 SAFA/(8940:8953): Recibi termino quantum
+[INFO] 14:47:48:362 SAFA/(8940:8953): Pasado a READY dtb con id: 1, escriptorio: scripts/io_bound.escriptorio, quantum: 0
+[INFO] 14:47:48:363 SAFA/(8940:8953): Terminada operacion
+[INFO] 14:47:48:363 SAFA/(8940:8979): Pasado a EXECUTE dtb con id: 2, escriptorio: scripts/cpu_bound.escriptorio, quantum: 2
+[DEBUG] 14:47:55:644 SAFA/(8940:8979): Enviando dtb con id: 2
+[INFO] 14:47:55:797 SAFA/(8940:8953): Recibi termino quantum
+[INFO] 14:47:55:798 SAFA/(8940:8953): Pasado a READY dtb con id: 2, escriptorio: scripts/cpu_bound.escriptorio, quantum: 0
+[INFO] 14:47:55:798 SAFA/(8940:8953): Terminada operacion
+[INFO] 14:47:55:798 SAFA/(8940:8979): Pasado a EXECUTE dtb con id: 3, escriptorio: scripts/cpu_bound.escriptorio, quantum: 2
+[DEBUG] 14:48:02:151 SAFA/(8940:8979): Enviando dtb con id: 3
+[INFO] 14:48:02:305 SAFA/(8940:8953): Recibi termino quantum
+[INFO] 14:48:02:305 SAFA/(8940:8953): Pasado a READY dtb con id: 3, escriptorio: scripts/cpu_bound.escriptorio, quantum: 0
+[INFO] 14:48:02:306 SAFA/(8940:8953): Terminada operacion
+[INFO] 14:48:02:306 SAFA/(8940:8979): Pasado a EXECUTE dtb con id: 1, escriptorio: scripts/io_bound.escriptorio, quantum: 2
+[DEBUG] 14:48:13:987 SAFA/(8940:8979): Enviando dtb con id: 1
+[INFO] 14:48:14:140 SAFA/(8940:8953): Recibi termino quantum
+[INFO] 14:48:14:141 SAFA/(8940:8953): Pasado a READY dtb con id: 1, escriptorio: scripts/io_bound.escriptorio, quantum: 0
+[INFO] 14:48:14:141 SAFA/(8940:8953): Terminada operacion
+[INFO] 14:48:14:141 SAFA/(8940:8979): Pasado a EXECUTE dtb con id: 2, escriptorio: scripts/cpu_bound.escriptorio, quantum: 2
+[DEBUG] 14:48:29:936 SAFA/(8940:8979): Enviando dtb con id: 2
+[INFO] 14:48:30:90 SAFA/(8940:8953): Recibi termino quantum
+[INFO] 14:48:30:90 SAFA/(8940:8953): Pasado a READY dtb con id: 2, escriptorio: scripts/cpu_bound.escriptorio, quantum: 0
+[INFO] 14:48:30:90 SAFA/(8940:8953): Terminada operacion
+[INFO] 14:48:30:90 SAFA/(8940:8979): Pasado a EXECUTE dtb con id: 3, escriptorio: scripts/cpu_bound.escriptorio, quantum: 2
+[DEBUG] 14:48:35:378 SAFA/(8940:8979): Enviando dtb con id: 3
+[INFO] 14:48:35:532 SAFA/(8940:8953): Recibi termino quantum
+[INFO] 14:48:35:533 SAFA/(8940:8953): Pasado a READY dtb con id: 3, escriptorio: scripts/cpu_bound.escriptorio, quantum: 0
+[INFO] 14:48:35:533 SAFA/(8940:8953): Terminada operacion
+[INFO] 14:48:35:533 SAFA/(8940:8979): Pasado a EXECUTE dtb con id: 1, escriptorio: scripts/io_bound.escriptorio, quantum: 2
+[DEBUG] 14:48:51:531 SAFA/(8940:8979): Enviando dtb con id: 1
+[INFO] 14:48:51:686 SAFA/(8940:8953): Recibi bloquear DTB
+[INFO] 14:48:51:686 SAFA/(8940:8953): Pasado a BLOCKED dtb con id: 1, escriptorio: scripts/io_bound.escriptorio, quantum: 1
+[INFO] 14:48:51:686 SAFA/(8940:8953): Terminada operacion
+[INFO] 14:48:51:686 SAFA/(8940:8979): Pasado a EXECUTE dtb con id: 2, escriptorio: scripts/cpu_bound.escriptorio, quantum: 2
+[DEBUG] 14:48:57:620 SAFA/(8940:8979): Enviando dtb con id: 2
+[INFO] 14:48:57:667 SAFA/(8940:8953): Recibi termino quantum
+[INFO] 14:48:57:668 SAFA/(8940:8953): Pasado a READY dtb con id: 1, escriptorio: scripts/io_bound.escriptorio, quantum: 0
+[INFO] 14:48:57:668 SAFA/(8940:8953): Terminada operacion
+[INFO] 14:48:57:668 SAFA/(8940:8979): Pasado a EXECUTE dtb con id: 3, escriptorio: scripts/cpu_bound.escriptorio, quantum: 2
+[DEBUG] 14:49:02:996 SAFA/(8940:8979): Enviando dtb con id: 3
+[INFO] 14:49:02:997 SAFA/(8940:8953): Recibi cargado con exito en memoria del DAM
+[INFO] 14:49:50:550 SAFA/(9262:9262): Algoritmo elegido VRR
+[DEBUG] 14:50:03:522 SAFA/(9262:9269): Se agrego a las conexiones DAM
+[DEBUG] 14:50:03:576 SAFA/(9262:9291): Escuchando nuevo cliente en 6
+[DEBUG] 14:50:08:678 SAFA/(9262:9269): Se agrego a las conexiones CPU
+[DEBUG] 14:50:08:690 SAFA/(9262:9298): Escuchando nuevo cliente en 7
+[INFO] 14:50:22:133 SAFA/(9262:9271): Comando ejecutar
+[DEBUG] 14:50:22:349 SAFA/(9262:9297): Enviando dtb con id: 1
+[INFO] 14:50:22:558 SAFA/(9262:9270): Desbloqueo el DUMMY
+[INFO] 14:50:22:612 SAFA/(9262:9270): Terminada operacion
+[INFO] 14:50:22:677 SAFA/(9262:9270): Recibi Desbloquear DTB
+[INFO] 14:50:22:730 SAFA/(9262:9270): Terminada operacion
+[INFO] 14:50:23:181 SAFA/(9262:9270): Recibi cargado con exito en memoria del DAM
+[INFO] 14:50:23:208 SAFA/(9262:9270): Pasado a READY dtb con id: 1, escriptorio: scripts/io_bound.escriptorio, quantum: 0
+[INFO] 14:50:23:220 SAFA/(9262:9297): Pasado a EXECUTE dtb con id: 1, escriptorio: scripts/io_bound.escriptorio, quantum: 2
+[INFO] 14:50:23:229 SAFA/(9262:9270): Terminada operacion
+[DEBUG] 14:50:23:234 SAFA/(9262:9297): Enviando dtb con id: 1
+[INFO] 14:50:23:405 SAFA/(9262:9270): Recibi bloquear DTB
+[INFO] 14:50:23:409 SAFA/(9262:9270): Pasado a BLOCKED dtb con id: 1, escriptorio: scripts/io_bound.escriptorio, quantum: 2
+[INFO] 14:50:23:424 SAFA/(9262:9270): Terminada operacion
+[INFO] 14:50:24:189 SAFA/(9262:9270): Recibi cargado con exito en memoria del DAM
+[INFO] 14:50:24:192 SAFA/(9262:9270): Pasado a READY_PRIORIDAD dtb con id: 1, escriptorio: scripts/io_bound.escriptorio, quantum: 2
+[INFO] 14:50:24:195 SAFA/(9262:9297): Pasado a EXECUTE dtb con id: 1, escriptorio: scripts/io_bound.escriptorio, quantum: 2
+[DEBUG] 14:50:24:196 SAFA/(9262:9297): Enviando dtb con id: 1
+[INFO] 14:50:24:197 SAFA/(9262:9270): Terminada operacion
+[INFO] 14:50:24:349 SAFA/(9262:9270): Recibi termino quantum
+[INFO] 14:50:24:361 SAFA/(9262:9270): Pasado a READY dtb con id: 1, escriptorio: scripts/io_bound.escriptorio, quantum: 0
+[INFO] 14:50:24:366 SAFA/(9262:9297): Pasado a EXECUTE dtb con id: 1, escriptorio: scripts/io_bound.escriptorio, quantum: 2
+[DEBUG] 14:50:24:367 SAFA/(9262:9297): Enviando dtb con id: 1
+[INFO] 14:50:24:368 SAFA/(9262:9270): Terminada operacion
+[INFO] 14:50:24:522 SAFA/(9262:9270): Recibi termino quantum
+[INFO] 14:50:24:526 SAFA/(9262:9270): Pasado a READY dtb con id: 1, escriptorio: scripts/io_bound.escriptorio, quantum: 0
+[INFO] 14:50:24:530 SAFA/(9262:9297): Pasado a EXECUTE dtb con id: 1, escriptorio: scripts/io_bound.escriptorio, quantum: 2
+[DEBUG] 14:50:24:531 SAFA/(9262:9297): Enviando dtb con id: 1
+[INFO] 14:50:24:532 SAFA/(9262:9270): Terminada operacion
+[INFO] 14:50:24:685 SAFA/(9262:9270): Recibi bloquear DTB
+[INFO] 14:50:24:687 SAFA/(9262:9270): Pasado a BLOCKED dtb con id: 1, escriptorio: scripts/io_bound.escriptorio, quantum: 1
+[INFO] 14:50:24:688 SAFA/(9262:9270): Terminada operacion
+[INFO] 14:50:24:740 SAFA/(9262:9270): Recibi termino quantum
+[INFO] 14:50:24:741 SAFA/(9262:9270): Pasado a READY dtb con id: 1, escriptorio: scripts/io_bound.escriptorio, quantum: 0
+[INFO] 14:50:24:743 SAFA/(9262:9297): Pasado a EXECUTE dtb con id: 1, escriptorio: scripts/io_bound.escriptorio, quantum: 2
+[DEBUG] 14:50:24:744 SAFA/(9262:9297): Enviando dtb con id: 1
+[INFO] 14:50:24:745 SAFA/(9262:9270): Terminada operacion
+[INFO] 14:50:24:898 SAFA/(9262:9270): Recibi pasar a EXIT por un error :(
+[INFO] 14:50:24:902 SAFA/(9262:9270): Pasado a EXIT dtb con id: 1, escriptorio: scripts/io_bound.escriptorio, quantum: 2
+[ERROR] 14:50:24:927 SAFA/(9262:9270): El archivo no se encuentra abierto scripts/io_bound.escriptorio
+[INFO] 14:50:24:938 SAFA/(9262:9270): Terminada operacion
+[INFO] 14:50:25:241 SAFA/(9262:9270): Recibi cargado con exito en memoria del DAM
+[INFO] 14:50:25:243 SAFA/(9262:9270): Terminada operacion
+[INFO] 14:50:27:99 SAFA/(9262:9271): Comando ejecutar
+[DEBUG] 14:50:27:102 SAFA/(9262:9297): Enviando dtb con id: 2
+[INFO] 14:50:27:254 SAFA/(9262:9270): Desbloqueo el DUMMY
+[INFO] 14:50:27:256 SAFA/(9262:9270): Terminada operacion
+[INFO] 14:50:27:307 SAFA/(9262:9270): Recibi Desbloquear DTB
+[INFO] 14:50:27:309 SAFA/(9262:9270): Terminada operacion
+[INFO] 14:50:27:809 SAFA/(9262:9270): Recibi cargado con exito en memoria del DAM
+[INFO] 14:50:27:810 SAFA/(9262:9270): Pasado a READY dtb con id: 2, escriptorio: scripts/cpu_bound.escriptorio, quantum: 0
+[INFO] 14:50:27:812 SAFA/(9262:9297): Pasado a EXECUTE dtb con id: 2, escriptorio: scripts/cpu_bound.escriptorio, quantum: 2
+[DEBUG] 14:50:27:813 SAFA/(9262:9297): Enviando dtb con id: 2
+[INFO] 14:50:27:813 SAFA/(9262:9270): Terminada operacion
+[INFO] 14:50:27:967 SAFA/(9262:9270): Recibi termino quantum
+[INFO] 14:50:27:969 SAFA/(9262:9270): Pasado a READY dtb con id: 2, escriptorio: scripts/cpu_bound.escriptorio, quantum: 0
+[INFO] 14:50:27:970 SAFA/(9262:9297): Pasado a EXECUTE dtb con id: 2, escriptorio: scripts/cpu_bound.escriptorio, quantum: 2
