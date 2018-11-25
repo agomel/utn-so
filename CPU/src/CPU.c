@@ -17,7 +17,6 @@ void escuchar(int socketSAFA){
 		sentencias = 0;
 			switch(header){
 				case ENVIAR_DTB:{
-					log_info(logger, "Recibiendo un dtb");
 					dtbRecibido = deserializarDTB(socketSAFA);
 					if(dtbRecibido->flag == 0){
 						tratarDummy(dtbRecibido);

@@ -50,6 +50,14 @@ void ponerEnReady(int idDTB) {
 	signalSem(&cantidadTotalREADY);
 }
 
+void ponerEnReadyDTB(DTB* dtb) {
+	if(dtb->estado == NEW){
+		finalizarHistorialDeListaNew(dtb->id);
+	}
+	cambiarEstadoGuardandoNuevoDTB(dtb, READY);
+	signalSem(&cantidadTotalREADY);
+}
+
 void pasarDTBAExit(int idDTB){
 	DTB* dtb = obtenerDTBDeCola(idDTB);
 	if(!dtb){

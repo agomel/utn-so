@@ -18,9 +18,7 @@ void pedirCosasDelFM9(DTB* dtbRecibido){
 void tratarDummy(DTB* dtbRecibido){
 	log_info(logger, "Recibi DTB Dummy");
 	serializarYEnviarDTB(socketSAFA, *dtbRecibido, logger, DUMMY);
-	log_debug(logger, "esperando que SAFA desbloquee para continuar");
 	deserializarChar(socketSAFA);
-	log_debug(logger, "continuo ejecucion");
 
 	int tamanioPathEscriptorio = strlen(dtbRecibido->escriptorio) + 1;
 	int tamanioBuffer = sizeof(char) + tamanioPathEscriptorio + sizeof(int)*3;
