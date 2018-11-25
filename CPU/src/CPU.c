@@ -28,7 +28,7 @@ void escuchar(int socketSAFA){
 							while(dtbRecibido->quantum != 0 && continuar){
 								log_info(logger, "Tiene quantum el DTB");
 								continuar = entenderLinea(lineaAEjecutar, dtbRecibido, mensajeEntendido, 0);
-							}if(dtbRecibido->quantum == 0){
+							}if(dtbRecibido->quantum == 0 && continuar){
 								log_info(logger, "Termino quantum");
 								serializarYEnviarDTB(socketSAFA, *dtbRecibido, logger, TERMINO_QUANTUM);
 								enviarYSerializarIntSinHeader(socketSAFA, sentencias);
