@@ -16,3 +16,5 @@ cp -R configuraciones/ Debug/
 cd
 cd workspace/tp-2018-2c-5-fant-sticos/MDJ
 cp -R mnt/ Debug/
+cd
+cd workspace/tp-2018-2c-5-fant-sticos
