@@ -1,0 +1,1 @@
+[INFO] 02:24:02:701 FM9/(7983:7983): Utilizando segmentacion pura
