@@ -196,6 +196,5 @@ int main(void) {
 
 	crearSelect(servidorDAM);
 
-	while(1);
 	return 0;
 }

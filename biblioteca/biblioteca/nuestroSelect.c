@@ -50,8 +50,9 @@ void aceptarClientes(Select* select){
 }
 void realizarNuestroSelect(Select* select){
 	empezarAEscuchar(select->socket, INADDR_ANY);
-	crearHiloQueMuereSolo(&aceptarClientes, select);
+	pthread_t hilo = crearHilo(&aceptarClientes, select);
 	crearHiloQueMuereSolo(&consumirCola, select);
+	esperarHilo(hilo);
 }
 
 void freeSelect(Select* select){
