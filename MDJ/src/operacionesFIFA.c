@@ -14,7 +14,12 @@ void verificarDirectorio(char* path){
 
 char* generarPathAbsoluto(char* path){
 	if(strlen(path) > 0 && path[0] == '/'){
-		memcpy(path, path + 1, strlen(path));
+
+		char* pathModificado = string_substring_from(path, 1);
+		char* retornar = concatenar(PUNTO_MONTAJE_ARCHIVOS, pathModificado);
+		verificarDirectorio(pathModificado);
+		free(pathModificado);
+		return retornar;
 	}
 	verificarDirectorio(path);
 	return concatenar(PUNTO_MONTAJE_ARCHIVOS, path);
