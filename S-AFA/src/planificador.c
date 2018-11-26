@@ -47,6 +47,16 @@ void cambiarEstadoGuardandoNuevoDTB(DTB* nuevoDTB, char nuevoEstado){
 	signalMutex(&mutexListaDTBs);
 }
 
+void cambiarEstadoGuardandoNuevoDTBFreeando(DTB* nuevoDTB, char nuevoEstado){
+	removerDTBDeCola(nuevoDTB->id);
+	nuevoDTB->estado = nuevoEstado;
+
+	logguearCambioEstado(nuevoDTB, nuevoEstado);
+	waitMutex(&mutexListaDTBs);
+	list_add(listaDeTodosLosDTBs, nuevoDTB);
+	signalMutex(&mutexListaDTBs);
+}
+
 void logguearCambioEstado(DTB* dtb, char nuevoEstado){
 		log_info(logger,
 				"Pasado a %s dtb con id: %d, escriptorio: %s, quantum: %d",

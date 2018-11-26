@@ -45,6 +45,7 @@ DTB* obtenerDTBDeColaRemoviendolo(int idDTB){
 }
 
 
+
 static SocketCPU* obtenerSocketDeColaRemoviendolo(){
 	SocketCPU* socket;
 	int loEncontro = 0;

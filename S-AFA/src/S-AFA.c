@@ -144,7 +144,7 @@ void entenderMensaje(int emisor, char header){
 		case BLOQUEAR_DTB:
 			log_info(logger, "Recibi bloquear DTB");
 			dtb = deserializarDTB(emisor);
-			cambiarEstadoGuardandoNuevoDTB(dtb, BLOCKED);
+			cambiarEstadoGuardandoNuevoDTBFreeando(dtb, BLOCKED);
 
 			 historial = crearHistorial(dtb->id);
 			 agregarHistorialAListaTiempoRespuesta(historial);
@@ -174,7 +174,7 @@ void entenderMensaje(int emisor, char header){
 			dtb = deserializarDTB(emisor);
 			if(!estaEnExit(dtb->id)){
 				if(!strcmp(algoritmo, "VRR") && dtb->quantum != 0){
-					cambiarEstadoGuardandoNuevoDTB(dtb, READY_PRIORIDAD);
+					cambiarEstadoGuardandoNuevoDTBFreeando(dtb, READY_PRIORIDAD);
 					signalSem(&cantidadTotalREADY);
 				}else{
 					ponerEnReadyDTB(dtb);
