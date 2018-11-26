@@ -39,7 +39,7 @@ t_config* configuracion;
 void entenderMensaje(int emisor, char header);
 
 int identificarse(int emisor, char header);
-void crearSelect(int servidor);
+pthread_t crearSelect(int servidor);
 void levantarMetadata();
 int socketDAM;
 

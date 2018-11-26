@@ -146,7 +146,7 @@ int identificarse(int emisor, char header){
 	return 0;
 }
 
-void crearSelect(int servidor){
+pthread_t crearSelect(int servidor){
 	Select* select = asignarMemoria(sizeof(Select));
 	select->colaOperaciones = colaOperaciones;
 	select->funcionEntenderMensaje = &entenderMensaje;
@@ -156,7 +156,7 @@ void crearSelect(int servidor){
 	select->socket = servidor;
 	select->identificarse = &identificarse;
 	select->semProductores = &semProductores;
-	realizarNuestroSelect(select);
+	return realizarNuestroSelect(select);
 }
 void despedida(){
 
@@ -194,8 +194,8 @@ int main(void) {
 	handshake(socketMDJ, DAM);
 	handshake(socketFM9, DAM);
 
-	crearSelect(servidorDAM);
+	pthread_t hilo = crearSelect(servidorDAM);
+	esperarHilo(hilo);
 
-	while(1);
 	return 0;
 }

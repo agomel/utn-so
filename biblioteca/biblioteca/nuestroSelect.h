@@ -26,7 +26,7 @@ typedef struct{
 	int conectado;
 }SocketEnSelect;
 
-void realizarNuestroSelect(Select* select);
+pthread_t realizarNuestroSelect(Select* select);
 void aceptarClientes(Select* select);
 void consumirCola(Select* select);
 void escucharCliente(SocketEnSelect* socketEnSelect);

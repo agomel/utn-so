@@ -98,7 +98,7 @@ int identificarse(int emisor, char header){
 }
 
 
-void crearSelect(int servidor){
+pthread_t crearSelect(int servidor){
 	Select* select = asignarMemoria(sizeof(Select));
 	select->colaOperaciones = colaOperaciones;
 	select->funcionEntenderMensaje = &entenderMensaje;
@@ -108,7 +108,7 @@ void crearSelect(int servidor){
 	select->socket = servidor;
 	select->identificarse = &identificarse;
 	select->semProductores = &semProductores;
-	realizarNuestroSelect(select);
+	return realizarNuestroSelect(select);
 }
 void levantarMetadata(){
 	char* ubicacionMetadata = concatenar(PUNTO_MONTAJE_METADATA, "Metadata.bin");
@@ -183,10 +183,8 @@ int main(void) {
 	int servidor = crearServidor(direccionMDJ.puerto, INADDR_ANY);
 	//config_destroy(configuracion);
 
-	crearSelect(servidor);
-
-
-	while(1);
+	pthread_t hilo = crearSelect(servidor);
+	esperarHilo(hilo);
 
 	return 0;
 }

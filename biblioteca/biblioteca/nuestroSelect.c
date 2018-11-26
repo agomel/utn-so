@@ -48,10 +48,12 @@ void aceptarClientes(Select* select){
 		}
 	}
 }
-void realizarNuestroSelect(Select* select){
+pthread_t realizarNuestroSelect(Select* select){
+
 	empezarAEscuchar(select->socket, INADDR_ANY);
 	crearHiloQueMuereSolo(&aceptarClientes, select);
-	crearHiloQueMuereSolo(&consumirCola, select);
+	pthread_t hiloConsumirCola = crearHilo(&consumirCola, select);
+	return hiloConsumirCola;
 }
 
 void freeSelect(Select* select){
