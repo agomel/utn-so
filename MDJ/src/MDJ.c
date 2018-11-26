@@ -23,6 +23,7 @@ void entenderMensaje(int emisor, char header){
 				log_info(logger, "Crear archivo...");
 				path = deserializarString(emisor);
 				size = deserializarInt(emisor);
+				size++;
 
 				estadoDeOperacion = crearArchivoFIFA(path, size);
 

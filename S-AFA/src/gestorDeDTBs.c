@@ -268,7 +268,7 @@ void mostrarMetricas(){
 
 }
 
-int verificarSiExisteRecurso(char* recurso){
+void verificarSiExisteRecurso(char* recurso){
 	waitMutex(&mutexRecursos);
 	int tieneLaClave = dictionary_has_key(recursos, recurso);
 	signalMutex(&mutexRecursos);
@@ -279,15 +279,16 @@ int verificarSiExisteRecurso(char* recurso){
 		signalMutex(&mutexRecursos);
 		log_info(logger, "Creado el recurso %s, no existia", recurso);
 	}
-	return tieneLaClave;
 }
 char asignarRecurso(int idDTB, char* recurso){
 	verificarSiExisteRecurso(recurso);
 	waitMutex(&mutexRecursos);
 	int cant = dictionary_remove(recursos, recurso);
+	log_info(logger, "La cant de recursos que tengo es %d", cant);
 	signalMutex(&mutexRecursos);
 	char header;
 	if(cant > 0){
+		cant--;
 		header = CONTINUAR_CON_EJECUCION;
 	}else{
 		waitMutex(&mutexEsperandoRecursos);
@@ -297,25 +298,35 @@ char asignarRecurso(int idDTB, char* recurso){
 		list_add(esperandoRecursos, der);
 		signalMutex(&mutexEsperandoRecursos);
 		log_info(logger, "No esta el recurso disponible.. vas a pasar a bloqueado :( DTB: %d", idDTB);
-		header = LIBERAR_DTB_DE_EJECUCION;
+		header =  LIBERAR_DTB_DE_EJECUCION;
 	}
-	cant--;
+
 	waitMutex(&mutexRecursos);
 	dictionary_put(recursos, recurso, cant);
 	signalMutex(&mutexRecursos);
 	return header;
-
 }
 char liberarRecurso(char* recurso){
 
 	bool esQuienEspera(DTBEsperandoRecurso* esperando){
-		return esperando->recurso == recurso;
+		return !strcmp(esperando->recurso, recurso);
 	}
+
 	verificarSiExisteRecurso(recurso);
 
-	if(esperandoRecursos->elements_count > 0){
+
+	waitMutex(&mutexEsperandoRecursos);
+	t_list* hayEsperandoEsteRecurso = list_filter(esperandoRecursos, esQuienEspera);
+	signalMutex(&mutexEsperandoRecursos);
+
+
+	if(hayEsperandoEsteRecurso->elements_count > 0){
+		DTBEsperandoRecurso* waiteando = list_get(hayEsperandoEsteRecurso, 0);
+		bool esElQueEspera(DTBEsperandoRecurso* esperando){
+				return esperando->idDTB == waiteando->idDTB;
+		}
 		waitMutex(&mutexEsperandoRecursos);
-		DTBEsperandoRecurso* espera = list_remove_by_condition(esperandoRecursos, esQuienEspera);
+		DTBEsperandoRecurso* espera = list_remove_by_condition(esperandoRecursos, esElQueEspera);
 		signalMutex(&mutexEsperandoRecursos);
 
 		Historial* historial = crearHistorial(espera->idDTB);
