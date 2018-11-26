@@ -253,9 +253,10 @@ void liberarMemoriaSegPura(int idDTB, char* nombreArchivo){
 void liberarDTBDeMemoriaSegPura(int idDTB){
 	log_info(logger, "Liberando de la memoria el DTB");
 	ElementoTablaProcesos* proceso = obtenerProcesoPorIdDTB(idDTB);
-	for (int i = 0; i < proceso->tablaSegmentos->elements_count; ++i) {
+	int totalLista = proceso->tablaSegmentos->elements_count;
+	for (int i = 0; i < totalLista; ++i) {
 		waitMutex(&mutexListaSegmentos);
-		ElementoTablaSegPura* segmento = list_get(proceso->tablaSegmentos, i);
+		ElementoTablaSegPura* segmento = list_get(proceso->tablaSegmentos, 0);
 		signalMutex(&mutexListaSegmentos);
 		liberarMemoriaSegPura(idDTB, segmento->nombreArchivo);
 	}
