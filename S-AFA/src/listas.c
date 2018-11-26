@@ -162,6 +162,7 @@ int obtenerCPUDisponibleYOcupar(int id){
 	}
 	waitMutex(&mutexSocketsCPus);
 	SocketCPU* socketCPU = list_find(socketsCPUs, estaDisponible);
+	signalMutex(&mutexSocketsCPus);
 
 	if(socketCPU != NULL && socketCPU->ocupado == 0){
 		socketCPU->ocupado = 1;
@@ -172,9 +173,8 @@ int obtenerCPUDisponibleYOcupar(int id){
 	waitMutex(&mutexEjecutandoCPU);
 	dictionary_put(ejecutandoCPU, intToString(id), socketCPU->socket);
 	signalMutex(&mutexEjecutandoCPU);
-	int socket = socketCPU->socket;
-	signalMutex(&mutexSocketsCPus);
-	return socket;
+
+	return socketCPU->socket;
 }
 
 void liberarCPU(int idSocket, int idDTB){
@@ -183,13 +183,14 @@ void liberarCPU(int idSocket, int idDTB){
 	}
 	waitMutex(&mutexSocketsCPus);
 	SocketCPU* socketCPU = list_find(socketsCPUs, obtenerCPU);
+	signalMutex(&mutexSocketsCPus);
 
 	socketCPU->ocupado = 0;
 
 	waitMutex(&mutexEjecutandoCPU);
 	dictionary_remove(ejecutandoCPU, intToString(idDTB));
 	signalMutex(&mutexEjecutandoCPU);
-	signalMutex(&mutexSocketsCPus);
+
 	signalSem(&gradoMultiprocesamiento);
 }
 
