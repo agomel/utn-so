@@ -41,7 +41,6 @@ int recibirConexionesYMensajes(int servidor,void (*funcionEntenderMensaje)(int, 
 					if (cliente > numeroMaximoDeSockets) {    // actualizar el máximo
 						numeroMaximoDeSockets = cliente;
 					}
-					printf("Recibi una nueva conexion en %d\n", cliente);
 				}
 			} else {
 				// escuchar a cliente
