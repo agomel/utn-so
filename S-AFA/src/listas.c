@@ -1,5 +1,7 @@
 #include "listas.h"
 
+static SocketCPU* obtenerSocketDeColaRemoviendolo();
+
 DTB* obtenerDTBDeCola(int idDTB){
 	DTB* dtb;
 	int loEncontro = 0;
@@ -41,6 +43,31 @@ DTB* obtenerDTBDeColaRemoviendolo(int idDTB){
 
 	return dtb;
 }
+
+
+static SocketCPU* obtenerSocketDeColaRemoviendolo(){
+	SocketCPU* socket;
+	int loEncontro = 0;
+	int index = 0;
+	for(int index = 0; index < socketsCPUs->elements_count; index++){
+		waitMutex(&mutexSocketsCPus);
+		socket = list_get(socketsCPUs, index);
+		signalMutex(&mutexSocketsCPus);
+		if(socket->ocupado == 0){
+			waitMutex(&mutexSocketsCPus);
+			list_remove(socketsCPUs, index);
+			signalMutex(&mutexSocketsCPus);
+			loEncontro = 1;
+			break;
+		}
+	}
+
+	if(!loEncontro)
+		return NULL;
+
+	return socket;
+}
+
 
 void removerDTBDeCola(int idDTB){
 	DTB* dtb;
@@ -157,15 +184,13 @@ void cambiarEstadoDummyCargandolo(DTB* dummy){
 }
 
 int obtenerCPUDisponibleYOcupar(int id){
-	bool estaDisponible(SocketCPU* socket){
-		return (socket->ocupado == 0);
-	}
-	waitMutex(&mutexSocketsCPus);
-	SocketCPU* socketCPU = list_find(socketsCPUs, estaDisponible);
-	signalMutex(&mutexSocketsCPus);
+	SocketCPU* socketCPU = obtenerSocketDeColaRemoviendolo();
 
 	if(socketCPU != NULL && socketCPU->ocupado == 0){
 		socketCPU->ocupado = 1;
+		waitMutex(&mutexSocketsCPus);
+		list_add(socketsCPUs, socketCPU);
+		signalMutex(&mutexSocketsCPus);
 	}else{
 		log_error(logger, "No hay CPUs disponibles");
 	}
