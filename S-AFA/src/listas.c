@@ -4,15 +4,15 @@ DTB* obtenerDTBDeCola(int idDTB){
 	DTB* dtb;
 	int loEncontro = 0;
 	int index = 0;
-	waitMutex(&mutexListaDTBs);
 	for(int index = 0; index < listaDeTodosLosDTBs->elements_count; index++){
+		waitMutex(&mutexListaDTBs);
 		dtb = list_get(listaDeTodosLosDTBs, index);
+		signalMutex(&mutexListaDTBs);
 		if(dtb->id == idDTB && dtb->flag != 0){
 			loEncontro = 1;
 			break;
 		}
 	}
-	signalMutex(&mutexListaDTBs);
 	if(!loEncontro)
 		return NULL;
 
@@ -23,16 +23,19 @@ DTB* obtenerDTBDeColaRemoviendolo(int idDTB){
 	DTB* dtb;
 	int loEncontro = 0;
 	int index = 0;
-	waitMutex(&mutexListaDTBs);
 	for(int index = 0; index < listaDeTodosLosDTBs->elements_count; index++){
+		waitMutex(&mutexListaDTBs);
 		dtb = list_get(listaDeTodosLosDTBs, index);
+		signalMutex(&mutexListaDTBs);
 		if(dtb->id == idDTB && dtb->flag != 0){
+			waitMutex(&mutexListaDTBs);
 			list_remove(listaDeTodosLosDTBs, index);
+			signalMutex(&mutexListaDTBs);
 			loEncontro = 1;
 			break;
 		}
 	}
-	signalMutex(&mutexListaDTBs);
+
 	if(!loEncontro)
 		return NULL;
 
@@ -42,30 +45,33 @@ DTB* obtenerDTBDeColaRemoviendolo(int idDTB){
 void removerDTBDeCola(int idDTB){
 	DTB* dtb;
 	int index = 0;
-	waitMutex(&mutexListaDTBs);
 	for(int index = 0; index < listaDeTodosLosDTBs->elements_count; index++){
+		waitMutex(&mutexListaDTBs);
 		dtb = list_get(listaDeTodosLosDTBs, index);
+		signalMutex(&mutexListaDTBs);
 		if(dtb->id == idDTB && dtb->flag != 0){
+			waitMutex(&mutexListaDTBs);
 			list_remove(listaDeTodosLosDTBs, index);
+			signalMutex(&mutexListaDTBs);
 			freeDTBSAFA(dtb);
 			break;
 		}
 	}
-	signalMutex(&mutexListaDTBs);
 }
 DTB* obtenerDummyDeColaRemoviendolo(){
 	DTB* dtb;
 	int index = 0;
-
-	waitMutex(&mutexListaDTBs);
 	for(int index = 0; index < listaDeTodosLosDTBs->elements_count; index++){
+		waitMutex(&mutexListaDTBs);
 		dtb = list_get(listaDeTodosLosDTBs, index);
+		signalMutex(&mutexListaDTBs);
 		if(dtb->flag == 0){
+			waitMutex(&mutexListaDTBs);
 			list_remove(listaDeTodosLosDTBs, index);
+			signalMutex(&mutexListaDTBs);
 			break;
 		}
 	}
-	signalMutex(&mutexListaDTBs);
 	return dtb;
 }
 
@@ -156,7 +162,6 @@ int obtenerCPUDisponibleYOcupar(int id){
 	}
 	waitMutex(&mutexSocketsCPus);
 	SocketCPU* socketCPU = list_find(socketsCPUs, estaDisponible);
-	signalMutex(&mutexSocketsCPus);
 
 	if(socketCPU != NULL && socketCPU->ocupado == 0){
 		socketCPU->ocupado = 1;
@@ -167,7 +172,9 @@ int obtenerCPUDisponibleYOcupar(int id){
 	waitMutex(&mutexEjecutandoCPU);
 	dictionary_put(ejecutandoCPU, intToString(id), socketCPU->socket);
 	signalMutex(&mutexEjecutandoCPU);
-	return socketCPU->socket;
+	int socket = socketCPU->socket;
+	signalMutex(&mutexSocketsCPus);
+	return socket;
 }
 
 void liberarCPU(int idSocket, int idDTB){
@@ -176,14 +183,13 @@ void liberarCPU(int idSocket, int idDTB){
 	}
 	waitMutex(&mutexSocketsCPus);
 	SocketCPU* socketCPU = list_find(socketsCPUs, obtenerCPU);
-	signalMutex(&mutexSocketsCPus);
 
 	socketCPU->ocupado = 0;
 
 	waitMutex(&mutexEjecutandoCPU);
 	dictionary_remove(ejecutandoCPU, intToString(idDTB));
 	signalMutex(&mutexEjecutandoCPU);
-
+	signalMutex(&mutexSocketsCPus);
 	signalSem(&gradoMultiprocesamiento);
 }
 
@@ -191,4 +197,3 @@ int estaEnExit(int idDtb){
 	DTB* dtb = obtenerDTBDeCola(idDtb);
 	return dtb->estado == EXIT;
 }
-
