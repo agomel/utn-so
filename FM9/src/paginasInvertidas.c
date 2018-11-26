@@ -71,34 +71,19 @@ int asignarDatosInvertida(int idDTB, char* nombreArchivo, int numeroLinea, char*
 		ElementoTablaInvertida* elementoTabla = list_get(marcosParaEseArchivo, paginaDondeSeEncuentraLaLinea);
 		int desplazamientoMarco = elementoTabla->marco * tamanioPagina * tamanioLinea; //Porque el tamanioPagina esta en lineas
 		int desplazamientoLinea = lineaDentroDeLaPagina * tamanioLinea;
-		char* lineaConBasura = asignarMemoria(tamanioLinea);
-		memcpy(lineaConBasura, storage + desplazamientoMarco + desplazamientoLinea, tamanioLinea);
-		log_debug(logger, "En asignar: Linea: %s", lineaConBasura);
-		char** lineaSinBasura = string_split(lineaConBasura, "\n");
-		char* lineaPosta;
-		if(lineaSinBasura[0] == NULL)
-			lineaPosta = string_new();
-		else{
-			lineaPosta = malloc(strlen(lineaSinBasura[0]));
-			memcpy(lineaPosta, lineaSinBasura[0], strlen(lineaSinBasura[0]));
-		}
-		if((strlen(lineaPosta) + strlen(datos) + 2) < tamanioLinea){ //Lo que ya estaba, los datos nuevos, el /n y el espacio en el medio
+
+		if((strlen(datos) + 1) < tamanioLinea){ //Lo que ya estaba, los datos nuevos, el /n y el espacio en el medio
 			//Se puede escribir
-			string_append_with_format(&lineaPosta, " %s\n", datos);
-			log_debug("Linea resultante de la asignación: %s", lineaPosta);
+			log_debug("Linea que va a asignarse: %s", datos);
 			char* lineaAGuardar = malloc(tamanioLinea);
-			memcpy(lineaAGuardar, lineaPosta, strlen(lineaPosta) + 1);
+			memcpy(lineaAGuardar, datos, strlen(datos) + 1);
 			string_trim(&lineaAGuardar);
 			memcpy(storage + desplazamientoMarco + desplazamientoLinea, lineaAGuardar, tamanioLinea);
-			freeLineasBasura(lineaSinBasura, lineaConBasura);
-			free(lineaPosta);
 			free(lineaAGuardar);
 			log_debug(logger, "Asignados datos con exito");
 			return 0;
 
 		}else{
-			freeLineasBasura(lineaSinBasura, lineaConBasura);
-			free(lineaPosta);
 			log_error(logger, "No hay suficiente espacio en la linea %d del archivo %s", (numeroLinea+1), nombreArchivo);
 			return ESPACIO_INSUFICIENTE_EN_FM9; //ERROR
 		}
@@ -204,7 +189,6 @@ void liberarDTBDeMemoriaInvertida(int idDTB){
 respuestaDeObtencionDeMemoria* obtenerLineaInvertida(int idDTB, char* nombreArchivo, int numeroLinea){
 	respuestaDeObtencionDeMemoria* respuesta = malloc(sizeof(respuestaDeObtencionDeMemoria));
 	int cantLineas = cantidadDeLineasArchivo(idDTB, nombreArchivo);
-	log_info(logger, "CANTIDAD DE LINEAS DE %s ES: %d", nombreArchivo, cantLineas);
 	if(numeroLinea == (cantLineas - 1))
 		respuesta->pudoObtener = 3;
 

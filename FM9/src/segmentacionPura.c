@@ -285,37 +285,18 @@ int asignarDatosSegPura(int IdDTB, char* nombreArchivo, int numeroLinea, char* d
 
 	if(numeroLinea < cantidadLineasSegmento - 1){
 		int desplazamiento = segmento->base + numeroLinea * tamanioLinea;
-		char* lineaConBasura = malloc(tamanioLinea);
-		memcpy(lineaConBasura, storage + desplazamiento, tamanioLinea);
-		char** lineaSinBasura = string_split(lineaConBasura, "\n");
-		char* lineaPosta;
-		if(lineaSinBasura[0] == NULL)
-			lineaPosta = string_new();
-		else{
-			lineaPosta = malloc(strlen(lineaSinBasura[0]));
-			memcpy(lineaPosta, lineaSinBasura[0], strlen(lineaSinBasura[0]));
-		}
-		if((strlen(lineaPosta) + strlen(datos) + 2) < tamanioLinea){ //Lo que ya estaba, los datos nuevos, el /n y el espacio en el medio
+		if((strlen(datos) + 1) < tamanioLinea){ //Los datos + el \n
 			//Se puede escribir
-			string_append_with_format(&lineaPosta, " %s\n", datos);
-			log_debug("Linea resultante de la asignación: %s", lineaPosta);
+			log_debug("Linea que va a asignarse: %s", datos);
 			char* lineaAGuardar = malloc(tamanioLinea);
-			memcpy(lineaAGuardar, lineaPosta, strlen(lineaPosta) + 1);
+			memcpy(lineaAGuardar, datos, strlen(datos) + 1);
 			string_trim(&lineaAGuardar);
 			memcpy(storage + desplazamiento, lineaAGuardar, tamanioLinea);
-			if(lineaSinBasura[0] == NULL)
-				free(lineaConBasura);
-			else
-				freeLineasBasura(lineaSinBasura, lineaConBasura);
-
-			free(lineaPosta);
 			free(lineaAGuardar);
 			log_debug(logger, "Asignados datos con exito");
 			return 0;
 
 		}else{
-			freeLineasBasura(lineaSinBasura, lineaConBasura);
-			free(lineaPosta);
 			log_error(logger, "No hay suficiente espacio en la linea %d del archivo %s", (numeroLinea+1), nombreArchivo);
 			return ESPACIO_INSUFICIENTE_EN_FM9; //ERROR
 		}
