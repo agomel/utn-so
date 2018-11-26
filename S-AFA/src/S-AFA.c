@@ -39,6 +39,7 @@ int identificarse(int emisor, char header){
 }
 void terminarOperacionDeCPU(int emisor, DTB* dtb){
 	int sentenciasEjecutadas = deserializarInt(emisor);
+	log_debug(logger, "El DTB ejecuto %d sentencias", sentenciasEjecutadas);
 	agregarSentencias(sentenciasEjecutadas);
 	verificarSiPasarAExit(emisor, dtb);
 	liberarCPU(emisor, dtb->id);

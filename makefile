@@ -9,7 +9,7 @@ default:
 	cd MDJ/Debug; make
 
 clean:
-	sudo rm -rf ~/workspace/so-commons-library
+	sudo rm -rf ~/so-commons-library
 	cd biblioteca/Debug; make clean
 	cd S-AFA/Debug; make clean
 	cd CPU/Debug; make clean
