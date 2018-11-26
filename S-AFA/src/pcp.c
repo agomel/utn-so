@@ -54,6 +54,7 @@ void planificadorACortoPlazo(){
 	int a = 1;
 	while(a){
 		waitSem(&cantidadTotalREADY);
+		waitSem(&gradoMultiprocesamiento);
 		DTB* dtb = seleccionarDTB();
 		if(dtb->flag == 0){
 			cambiarEstadoDummy(EXECUTE);
@@ -61,7 +62,7 @@ void planificadorACortoPlazo(){
 			cambiarEstado(dtb->id, EXECUTE);
 		}
 		printf("enviando a ejecutar dtb con id %d y quantum %d\n", dtb->id, dtb->quantum);
-		waitSem(&gradoMultiprocesamiento);
+
 		int socketCPU = obtenerCPUDisponibleYOcupar(dtb->id);
 		serializarYEnviarDTB(socketCPU, *dtb, logger, ENVIAR_DTB);
 	}
