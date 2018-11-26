@@ -127,6 +127,7 @@ RespuestaGuardado* nuevoProcesoSegPag(int idDTB, char* datos, char* nombreArchiv
 		waitMutex(&mutexListaSegmentos);
 		list_add(tablaSegmentos, nuevoRegistro);
 		ElementoTablaDTBS* elementoTablaDTBS = crearElemTablaDTBS(idDTB, tablaSegmentos);
+		log_error(logger, "Guardando segmento 0 de archivo %s", nombreArchivo);
 		signalMutex(&mutexListaSegmentos);
 		waitMutex(&mutexListaProcesos);
 		list_add(tablaDeProcesos, elementoTablaDTBS);
@@ -150,6 +151,7 @@ RespuestaGuardado* guardarDatosSegPag(int idDTB, char* datos, char* nombreArchiv
 	if(cargaEnMemoria->resultado == 0){
 		ElementoTablaSegPag* nuevoRegistro = malloc(sizeof(ElementoTablaSegPag));
 		copiarElemSegPag(cargaEnMemoria->elementoTabla, nuevoRegistro);
+		log_error(logger, "Guardando segmento %d de archivo %s", proceso->segmentos->elements_count, nombreArchivo);
 		waitMutex(&mutexListaSegmentos);
 		list_add(proceso->segmentos, nuevoRegistro);
 		signalMutex(&mutexListaSegmentos);
@@ -188,6 +190,7 @@ static RespuestaCargaSegPag* guardarDatosInternaSegPag(char* datos, char* nombre
 		for(int i = 0; i < cantidadPaginas; i++){
 			char* textoAGuardar;
 			int posicionMarco = obtenerMarcoLibre();
+			log_error(logger, "Guardando datos de %s : pagina %d y marco %d", nombreArchivo, i, posicionMarco);
 			if(posicionMarco == -1)
 				respuesta->resultado = ESPACIO_INSUFICIENTE_EN_FM9; //ERROR NO HAY MARCOS LIBRES
 
