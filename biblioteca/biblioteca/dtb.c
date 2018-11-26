@@ -69,12 +69,3 @@ void freeDTB(DTB* dtb){
 	list_destroy_and_destroy_elements(dtb->listaDeArchivos, free);
 	free(dtb);
 }
-void freeDTBSAFA(DTB* dtb){
-	void destruirLista(t_list* lista){
-		if(lista->elements_count != 0)
-		list_destroy(lista);
-	}
-	list_destroy_and_destroy_elements(dtb->listaDeArchivos, free);
-	free(dtb);
-}
-

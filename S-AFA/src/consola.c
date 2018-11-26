@@ -72,7 +72,9 @@ void consola(){
 					break;
 				case EJECUTAR:
 					log_info(logger, "Comando ejecutar");
-					ponerProcesoEnNew(parametro);
+					char* script = asignarMemoria(strlen(parametro) + 1);
+					memcpy(script, parametro, strlen(parametro) + 1);
+					ponerProcesoEnNew(script);
 					break;
 				default:
 					log_error(logger, "Comando erroneo");
