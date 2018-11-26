@@ -2,8 +2,12 @@
 
 
 void loguearEstadoDTB(DTB* dtb){
-	log_info(logger, "id: %d, escriptiorio: %s, programCounter: %d, status: %s, quantum: %d, flag: %d",
-			dtb->id, dtb->escriptorio, dtb->programCounter, nombreEstado(dtb->estado), dtb->quantum, dtb->flag);
+	if(dtb->flag == 0){
+		log_info(logger, "DUMMY");
+	}else{
+		log_info(logger, "id: %d, escriptiorio: %s, programCounter: %d, status: %s, quantum: %d, flag: %d",
+					dtb->id, dtb->escriptorio, dtb->programCounter, nombreEstado(dtb->estado), dtb->quantum, dtb->flag);
+	}
 }
 
 void loguearEstadoDeLista(t_list* lista, char estado){
