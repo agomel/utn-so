@@ -127,9 +127,9 @@ DTB* obtenerDTBConArchivoMasGrande(){
 		return (dtb1->tamanioArchivosAbiertos > dtb2->tamanioArchivosAbiertos);
 	}
 	t_list* lista = filtrarListaPorEstado(READY);
-	list_sorted(lista, tieneArchivoMasGrande);
+	list_sort(lista, tieneArchivoMasGrande);
 	DTB* dtb = list_get(lista, 0);
-	log_error(logger, "cantidad de dtbs %d y elijo  %d", lista->elements_count, dtb->id);
+	log_error(logger, "cantidad de dtbs %d y elijo  %d con tamanio %d", lista->elements_count, dtb->id, dtb->tamanioArchivosAbiertos);
 	list_destroy(lista);
 	return dtb;
 }
