@@ -184,14 +184,14 @@ void entenderMensaje(int emisor, char header){
 			break;
 
 		case LIBERAR_RECURSO:
-			log_error(logger, "Recibi liberar recurso");
+			log_info(logger, "Recibi liberar recurso");
 			recurso = deserializarString(emisor);
 			asignado = liberarRecurso(recurso);
 			enviarYSerializarCharSinHeader(emisor, asignado);
 			break;
 
 		case RETENCION_DE_RECURSO:
-			log_error(logger, "Recibi retener recurso");
+			log_info(logger, "Recibi retener recurso");
 			recurso = deserializarString(emisor);
 			idDTB = deserializarInt(emisor);
 			asignado = asignarRecurso(idDTB, recurso);
