@@ -40,14 +40,12 @@ void operacionDelDiego(int idDTB){
 }
 
 void agregarSentencias(int sentenciasEjecutadas){
-	log_debug(logger, "Hay %d sentencias totales", sentenciasTotales);
 	waitMutex(&mutexSentenciasTotales);
 	sentenciasTotales += sentenciasEjecutadas;
 	signalMutex(&mutexSentenciasTotales);
 }
 
 void agregarHistorialAListaNew(Historial* historial){
-	log_debug(logger, "Agregando nuevo historial a new con llegada: %d y salida %d", historial->llegada, historial->salida);
 	waitMutex(&mutexHistorialNew);
 	list_add(listaHistorialNew, historial);
 	signalMutex(&mutexHistorialNew);
@@ -72,9 +70,6 @@ void finalizarHistorialDeListaNew(int idDTB){
 	waitMutex(&mutexSentenciasTotales);
 	historial->salida = sentenciasTotales;
 	signalMutex(&mutexSentenciasTotales);
-
-	log_debug(logger, "Finalizo historial new con llegada: %d y salida %d", historial->llegada, historial->salida);
-
 }
 
 void finalizarHistorialDeListaExit(int idDTB){
