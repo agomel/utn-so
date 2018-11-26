@@ -59,6 +59,14 @@ void ponerEnReadyDTB(DTB* dtb) {
 	signalSem(&cantidadTotalREADY);
 }
 
+void ponerEnReadyDTBFreeando(DTB* dtb) {
+	if(dtb->estado == MANDADO_A_DUMIZZAR){
+		finalizarHistorialDeListaNew(dtb->id);
+	}
+	cambiarEstadoGuardandoNuevoDTBFreeando(dtb, READY);
+	signalSem(&cantidadTotalREADY);
+}
+
 void pasarDTBAExit(int idDTB){
 	DTB* dtb = obtenerDTBDeCola(idDTB);
 	if(!dtb){

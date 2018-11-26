@@ -177,7 +177,7 @@ void entenderMensaje(int emisor, char header){
 					cambiarEstadoGuardandoNuevoDTBFreeando(dtb, READY_PRIORIDAD);
 					signalSem(&cantidadTotalREADY);
 				}else{
-					ponerEnReadyDTB(dtb);
+					ponerEnReadyDTBFreeando(dtb);
 				}
 			}
 
