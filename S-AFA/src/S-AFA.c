@@ -111,9 +111,10 @@ void entenderMensaje(int emisor, char header){
 		case DESBLOQUEAR_DTB:{
 			log_info(logger, "Recibi Desbloquear DTB");
 			DTB* dtb = deserializarDTB(emisor);
-			desbloquearDummy(dtb);
+			desbloquearDummy();
 
 			terminarOperacionDeCPU(emisor, dtb);
+			free(dtb);
 			break;
 		}
 
@@ -156,7 +157,7 @@ void entenderMensaje(int emisor, char header){
 		case PASAR_A_EXIT:
 			log_info(logger, "Recibi pasar a EXIT");
 			dtb = deserializarDTB(emisor);
-			pasarDTBAExitGuardandoNuevo(dtb);
+			pasarDTBAExitGuardandoNuevoFreeando(dtb);
 
 			terminarOperacionDeCPU(emisor, dtb);
 			break;
@@ -167,6 +168,7 @@ void entenderMensaje(int emisor, char header){
 			error = deserializarInt(emisor);
 			manejarErrores(dtb->id, dtb->escriptorio, error);
 			terminarOperacionDeCPU(emisor, dtb);
+			free(dtb);
 			break;
 
 		case TERMINO_QUANTUM:

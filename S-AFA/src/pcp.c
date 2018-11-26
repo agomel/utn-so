@@ -90,7 +90,7 @@ void desbloquearDTBCambiandolo(DTB* dtb){
 	}
 }
 
-void desbloquearDummy(DTB* dummy){
+void desbloquearDummy(){
 	cambiarEstadoDummy(BLOCKED);
 	signalSem(&semDummy);
 }

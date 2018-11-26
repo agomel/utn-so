@@ -85,6 +85,14 @@ void pasarDTBAExitGuardandoNuevo(DTB* dtb) {
 	}
 }
 
+void pasarDTBAExitGuardandoNuevoFreeando(DTB* dtb) {
+	if(dtb->estado != EXIT){
+		cambiarEstadoGuardandoNuevoDTBFreeando(dtb, EXIT);
+		finalizarHistorialDeListaExit(dtb->id);
+		signalSem(&gradoMultiprogramacion);
+	}
+}
+
 void manejarErrores(int idDTB, char* path, int error){
 	pasarDTBAExit(idDTB);
 	switch(error){
