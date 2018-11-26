@@ -286,12 +286,9 @@ char asignarRecurso(int idDTB, char* recurso){
 	waitMutex(&mutexRecursos);
 	int cant = dictionary_remove(recursos, recurso);
 	signalMutex(&mutexRecursos);
+	char header;
 	if(cant > 0){
-		cant--;
-		waitMutex(&mutexRecursos);
-		dictionary_put(recursos, recurso, cant);
-		signalMutex(&mutexRecursos);
-		return CONTINUAR_CON_EJECUCION;
+		header = CONTINUAR_CON_EJECUCION;
 	}else{
 		waitMutex(&mutexEsperandoRecursos);
 		DTBEsperandoRecurso* der = asignarMemoria(sizeof(DTBEsperandoRecurso));
@@ -300,8 +297,14 @@ char asignarRecurso(int idDTB, char* recurso){
 		list_add(esperandoRecursos, der);
 		signalMutex(&mutexEsperandoRecursos);
 		log_info(logger, "No esta el recurso disponible.. vas a pasar a bloqueado :( DTB: %d", idDTB);
-		return LIBERAR_DTB_DE_EJECUCION;
+		header = LIBERAR_DTB_DE_EJECUCION;
 	}
+	cant--;
+	waitMutex(&mutexRecursos);
+	dictionary_put(recursos, recurso, cant);
+	signalMutex(&mutexRecursos);
+	return header;
+
 }
 char liberarRecurso(char* recurso){
 
