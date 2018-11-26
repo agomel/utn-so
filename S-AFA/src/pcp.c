@@ -24,7 +24,7 @@ DTB* planificarPorVRR(){
 		list_destroy(listaVRR);
 		if(dtb->quantum == 0){
 			log_error(logger,"No deberia llegar aca");
-			cambiarEstado(dtb->id, READY);
+			ponerEnReadyDTB(dtb);
 			return planificarPorVRR();
 		}
 		return dtb;

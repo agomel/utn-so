@@ -44,7 +44,7 @@ void ponerProcesoEnNew(char* escriptorio) {
 
 void ponerEnReady(int idDTB) {
 	DTB* dtb = obtenerDTBDeCola(idDTB);
-	if(dtb->estado == NEW){
+	if(dtb->estado == MANDADO_A_DUMIZZAR){
 		finalizarHistorialDeListaNew(idDTB);
 	}
 	cambiarEstado(idDTB, READY);
@@ -52,7 +52,7 @@ void ponerEnReady(int idDTB) {
 }
 
 void ponerEnReadyDTB(DTB* dtb) {
-	if(dtb->estado == NEW){
+	if(dtb->estado == MANDADO_A_DUMIZZAR){
 		finalizarHistorialDeListaNew(dtb->id);
 	}
 	cambiarEstadoGuardandoNuevoDTB(dtb, READY);

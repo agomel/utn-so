@@ -155,7 +155,7 @@ void entenderMensaje(int emisor, char header){
 		case PASAR_A_EXIT:
 			log_info(logger, "Recibi pasar a EXIT");
 			dtb = deserializarDTB(emisor);
-			cambiarEstadoGuardandoNuevoDTB(dtb, EXIT);
+			pasarDTBAExitGuardandoNuevo(dtb);
 
 			terminarOperacionDeCPU(emisor, dtb);
 			break;
@@ -174,10 +174,10 @@ void entenderMensaje(int emisor, char header){
 			if(!estaEnExit(dtb->id)){
 				if(!strcmp(algoritmo, "VRR") && dtb->quantum != 0){
 					cambiarEstadoGuardandoNuevoDTB(dtb, READY_PRIORIDAD);
+					signalSem(&cantidadTotalREADY);
 				}else{
-					cambiarEstadoGuardandoNuevoDTB(dtb, READY);
+					ponerEnReadyDTB(dtb);
 				}
-				signalSem(&cantidadTotalREADY);
 			}
 
 			terminarOperacionDeCPU(emisor, dtb);
