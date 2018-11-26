@@ -186,5 +186,7 @@ int main(void) {
 	crearSelect(servidor);
 
 
+	while(1);
+
 	return 0;
 }
