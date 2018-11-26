@@ -23,6 +23,7 @@ void cargarDummy(DTB dtb) {
 	dtbDummy->programCounter = 0;
 	dtbDummy->listaDeArchivos = list_create();
 	dtbDummy->estado = READY;
+	dtbDummy->tamanioArchivosAbiertos = 9999;
 	cambiarEstadoDummyCargandolo(dtbDummy);
 	signalMutex(&mutexDummy);
 }

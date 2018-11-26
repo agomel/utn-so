@@ -35,7 +35,7 @@ DTB* planificarPorVRR(){
 
 DTB* planificarPorBOAF(){
 	DTB* dtb = obtenerDTBConArchivoMasGrande();
-	dtb->quantum = -1;
+	dtb->quantum = quantum;
 	return dtb;
 }
 
