@@ -98,7 +98,7 @@ RespuestaGuardado* guardarDatosSegPura(int idDTB, char* datos, char* nombreArchi
 
 static RespuestaCargaSegPura* guardarDatosInternaSegPura(char* datos, char* nombreArchivo){
 	log_debug(logger, "Guardando en segmentacion pura");
-	int rompio = FALLO_DE_SEGMENTO_MEMORIA;
+	int rompio = ESPACIO_INSUFICIENTE_EN_FM9;
 
 	RespuestaCargaSegPura* respuesta = malloc(sizeof(RespuestaCargaSegPura));
 	int totalLineas = cantidadDeLineas(datos);

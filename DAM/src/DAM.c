@@ -26,6 +26,10 @@ void entenderMensaje(int emisor, char header){
 			log_info(logger, "Ehhh, voy a buscar %s para %d", path, idDTB);
 			int validarArchivo = validarArchivoMDJ(path);
 			if(validarArchivo != 0){
+				if(header == GUARDAR_DATOS){
+					enviarYSerializarInt(socketFM9, idDTB, LIBERAR_DTB_MEMORIA);
+					char* libero = deserializarChar(socketFM9);
+				}
 				printf("Entro al error de validar archivo, valor: %d\n", validarArchivo);
 				enviarError(idDTB, path, validarArchivo);
 			}else{
@@ -34,6 +38,8 @@ void entenderMensaje(int emisor, char header){
 				int estadoDeCarga = enviarDatosAFM9(idDTB, path, datos, header);
 				free(datos);
 				if(estadoDeCarga != 0){
+					enviarYSerializarInt(socketFM9, idDTB, LIBERAR_DTB_MEMORIA);
+					char* libero = deserializarChar(socketFM9);
 					enviarError(idDTB, path, estadoDeCarga);
 				}else{
 					int pesoArchivo = deserializarInt(socketFM9);
@@ -51,10 +57,14 @@ void entenderMensaje(int emisor, char header){
 			int validarArchivo = validarArchivoMDJ(path);
 			if(validarArchivo != 0){
 				printf("Entro al error de validar archivo, valor: %d\n", validarArchivo);
+				enviarYSerializarInt(socketFM9, idDTB, LIBERAR_DTB_MEMORIA);
+				char* libero = deserializarChar(socketFM9);
 				enviarError(idDTB, path, validarArchivo);
 			}else{
 				int guardarDatos = guardarDatosEnMDJ(datos, path);
 				if(guardarDatos != 0){
+					enviarYSerializarInt(socketFM9, idDTB, LIBERAR_DTB_MEMORIA);
+					char* libero = deserializarChar(socketFM9);
 					enviarError(idDTB, path, guardarDatos);
 				}else{
 					notificarASafaExito(GUARDADO_CON_EXITO_EN_MDJ,idDTB, path);
@@ -69,11 +79,15 @@ void entenderMensaje(int emisor, char header){
 			cantidadDeLineas = deserializarInt(emisor);
 			int validarArchivo = validarArchivoMDJ(path);
 			if(validarArchivo == 0){
+				enviarYSerializarInt(socketFM9, idDTB, LIBERAR_DTB_MEMORIA);
+				char* libero = deserializarChar(socketFM9);
 				enviarError(idDTB, path, ARCHIVO_YA_EXISTENTE);
 				log_error(logger, "el archivo %s no se puede abrir porque ya existe", path);
 			}else{
 				int crearArchivo = crearArchivoEnMDJ(socketMDJ, path, cantidadDeLineas);
 				if(crearArchivo != 0){
+					enviarYSerializarInt(socketFM9, idDTB, LIBERAR_DTB_MEMORIA);
+					char* libero = deserializarChar(socketFM9);
 					enviarError(idDTB, path, crearArchivo);
 				}else{
 					notificarASafaExito(CREADO_CON_EXITO_EN_MDJ, idDTB, path);
@@ -87,10 +101,14 @@ void entenderMensaje(int emisor, char header){
 			int validarArchivo = validarArchivoMDJ(path);
 			if(validarArchivo != 0){
 				printf("Entro al error de validar archivo, valor: %d\n", validarArchivo);
+				enviarYSerializarInt(socketFM9, idDTB, LIBERAR_DTB_MEMORIA);
+				char* libero = deserializarChar(socketFM9);
 				enviarError(idDTB, path, validarArchivo);
 			}else{
 				int borrarArchivo = borrarArchivoEnMDJ(path);
 				if(borrarArchivo != 0){
+					enviarYSerializarInt(socketFM9, idDTB, LIBERAR_DTB_MEMORIA);
+					char* libero = deserializarChar(socketFM9);
 					enviarError(idDTB, path, borrarArchivo);
 				}else{
 					notificarASafaExito(BORRADO_CON_EXITO_EN_MDJ,idDTB, path);
