@@ -261,6 +261,7 @@ RespuestaGuardado* guardarDatosInvertida(int idDTB, char* datos, char* nombreArc
 	for(int i = 0; i < cantidadPaginas; i++){
 		char* textoAGuardar;
 		int marcoAUtilizar = obtenerMarcoLibreInvertida();
+		log_error(logger, "Se guarda la pagina %d de los datos del DTB %d en el marco %d", i, idDTB, marcoAUtilizar);
 		if(marcoAUtilizar == -1){
 			freeLineas(lineas);
 			respuesta->pudoGuardar = ESPACIO_INSUFICIENTE_EN_FM9; //ERROR NO HAY MARCOS LIBRES
