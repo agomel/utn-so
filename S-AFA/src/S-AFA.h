@@ -19,8 +19,6 @@
 int socketDAM;
 
 int socketDAM;
-int conectadoCPU;
-int conectadoDAM;
 t_list* socketsCPUs;
 pthread_mutex_t mutexSocketsCPus;
 pthread_mutex_t mutexEjecutandoCPU;
@@ -61,6 +59,7 @@ t_queue* colaOperaciones;
 pthread_mutex_t mutexOperaciones;
 sem_t semOperaciones;
 sem_t semProductores;
+sem_t semCorrupto;
 
 int retardo;
 void entenderMensaje(int emisor, char header);

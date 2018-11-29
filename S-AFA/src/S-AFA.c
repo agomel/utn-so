@@ -13,8 +13,7 @@ int identificarse(int emisor, char header){
 	if(header == IDENTIFICARSE){
 		char identificado = deserializarChar(emisor);
 		switch(identificado){
-			case CPU:
-				conectadoCPU = 1;
+			case CPU:{
 				SocketCPU* socketCPU = asignarMemoria(sizeof(SocketCPU));
 				socketCPU->socket = emisor;
 				socketCPU->ocupado = 0;
@@ -22,10 +21,12 @@ int identificarse(int emisor, char header){
 				list_add(socketsCPUs, socketCPU);
 				signalMutex(&mutexSocketsCPus);
 				signalSem(&gradoMultiprocesamiento);
+				signalSem(&semCorrupto);
 				break;
+			}
 			case DAM:
 				socketDAM = emisor;
-				conectadoDAM = 1;
+				signalSem(&semCorrupto);
 				break;
 			default:
 				log_error(logger, "Conexion rechazada");
@@ -218,8 +219,6 @@ void entenderMensaje(int emisor, char header){
 void inicializarSAFA(){
 	estado = CORRUPTO;
 	contadorIds = 1;
-	conectadoCPU = 0;
-	conectadoDAM = 0;
 	logger = crearLogger(ARCHIVO_LOG, "SAFA");
 	socketsCPUs = list_create();
 	inicializarMutex(&mutexSocketsCPus);
@@ -238,6 +237,7 @@ void inicializarSAFA(){
 	esperandoRecursos = list_create();
 	inicializarSem(&semDummy, 1);
 	inicializarMutex(&mutexDummy);
+	inicializarSem(&semCorrupto, 0);
 }
 void crearSelect(int servidor){
 	Select* select = asignarMemoria(sizeof(Select));
@@ -270,7 +270,8 @@ int main(void) {
 	crearSelect(servidor);
 	pthread_t hiloConsola = crearHilo(&consola, NULL);
 
-	while(!conectadoCPU || !conectadoDAM);
+	waitSem(&semCorrupto);
+	waitSem(&semCorrupto);
 	estado = OPERATIVO;
 
 	pthread_t hiloPlanificadorALargoPlazo = crearHilo(&planificadorALargoPlazo, NULL);
