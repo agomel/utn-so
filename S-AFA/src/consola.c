@@ -13,6 +13,7 @@ int obtenerComando(char* ingresado){
 void consola(){
 	while(1){
 
+		usleep(retardo*100);//milisegundos
 		char* mensaje = readline("");
 
 
