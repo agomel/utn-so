@@ -10,7 +10,7 @@ void inicializarSegPag(t_config* configuracion){
 	idPagina = 0;
 	tablaDeProcesos = list_create();
 	tamanioPagina = config_get_int_value(configuracion, "TAM_PAGINA");
-	cantidadMarcosTotales = tamanioMemoria / tamanioPagina;
+	cantidadMarcosTotales = tamanioMemoria / (tamanioPagina * tamanioLinea);
 	inicializarMutex(&mutexListaPaginas);
 	inicializarMutex(&mutexListaSegmentos);
 	inicializarMutex(&mutexListaProcesos);
@@ -234,6 +234,8 @@ static RespuestaCargaSegPag* guardarDatosInternaSegPag(char* datos, char* nombre
 		log_debug(logger, "Datos guardados");
 		respuesta->elementoTabla = elementoSegmento;
 		respuesta->pesoArchivo = cantidadPaginas * tamanioPagina;
+	}else{
+		respuesta->resultado = ESPACIO_INSUFICIENTE_EN_FM9;
 	}
 
 	freeLineas(lineas);
@@ -378,7 +380,8 @@ void liberarMemoriaSegPag(int idDTB, char* nombreArchivo){
 	waitMutex(&mutexListaPaginas);
 	for (int i = 0; i < segmento->paginas->elements_count; ++i) {
 		bool coincidePagina(ElementoTablaPag* elemeComparador){
-			return elemeComparador->idPag == list_get(segmento->paginas, i);
+			ElementoTablaPag* elem = list_get(segmento->paginas, i);
+			return elem->idPag == elemeComparador->idPag;
 		}
 		list_remove_and_destroy_by_condition(tablaDePaginas, coincidePagina, free);
 	}
@@ -426,16 +429,19 @@ void liberarDTBDeMemoriaSegPag(int idDTB){
 			list_destroy(elemento->segmentos);
 			free(elemento);
 		}
-		waitMutex(&mutexListaProcesos);
-	list_remove_and_destroy_by_condition(tablaDeProcesos, coincideIdDTB, destruirElemento);
+
+	waitMutex(&mutexListaProcesos);
+		list_remove_and_destroy_by_condition(tablaDeProcesos, coincideIdDTB, destruirElemento);
 	signalMutex(&mutexListaProcesos);
 }
 
 void dumpSegPag(int idDTB){
 	log_info(logger, "Dump de DTB: %d", idDTB);
 	ElementoTablaDTBS* proceso = obtenerProcesoPorIdDTB(idDTB);
+	int cantidadDeSegmentos = 0;
 	waitMutex(&mutexListaSegmentos);
-	int cantidadDeSegmentos = proceso->segmentos->elements_count;
+	if(proceso != NULL)
+		cantidadDeSegmentos = proceso->segmentos->elements_count;
 	signalMutex(&mutexListaSegmentos);
 	log_info(logger, "El DTB con id %d, tiene %d archivos abiertos en memoria", idDTB, cantidadDeSegmentos);
 	for (int i = 0; i < cantidadDeSegmentos; ++i) {
