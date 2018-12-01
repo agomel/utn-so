@@ -356,8 +356,10 @@ static int dondeEntro(int tamanioAGuardar){
 void dumpSegPura(int idDTB){
 	log_info(logger, "Dump de DTB: %d", idDTB);
 	ElementoTablaProcesos* proceso = obtenerProcesoPorIdDTB(idDTB);
+	int cantidadDeSegmentos = 0;
 	waitMutex(&mutexListaSegmentos);
-	int cantidadDeSegmentos = proceso->tablaSegmentos->elements_count;
+	if(proceso != NULL)
+		cantidadDeSegmentos = proceso->tablaSegmentos->elements_count;
 	signalMutex(&mutexListaSegmentos);
 	log_info(logger, "El DTB con id %d, tiene %d archivos abiertos en memoria", idDTB, cantidadDeSegmentos);
 	for (int i = 0; i < cantidadDeSegmentos; ++i) {

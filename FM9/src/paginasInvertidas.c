@@ -13,7 +13,7 @@ void inicializarInvertida(t_config* configuracion){
 	idPagina = 0;
 	idMarco = 0;
 	tamanioPagina = config_get_int_value(configuracion, "TAM_PAGINA");
-	cantidadMarcosTotales = tamanioMemoria / tamanioPagina;
+	cantidadMarcosTotales = tamanioMemoria / (tamanioPagina * tamanioLinea);
 	cargarTabla();
 	inicializarMutex(&mutexArchivos);
 	inicializarMutex(&mutexPaginasInvertidas);
@@ -175,9 +175,20 @@ void liberarDTBDeMemoriaInvertida(int idDTB){
 			free(elemento);
 		}
 
+		int cant = 0;
+		void sumar(ElementoArchivos* elemento){
+			if(elemento->idDTB == idDTB)
+				cant++;
+		}
 		waitMutex(&mutexArchivos);
-		list_remove_and_destroy_by_condition(tablaDeArchivos, coincideId, destruir);
+		list_iterate(tablaDeArchivos, sumar);
 		signalMutex(&mutexArchivos);
+
+		for(int i=0; i<cant; i++){
+			waitMutex(&mutexArchivos);
+			list_remove_and_destroy_by_condition(tablaDeArchivos, coincideId, destruir);
+			signalMutex(&mutexArchivos);
+		}
 
 	waitMutex(&mutexPaginasInvertidas);
 	list_iterate(tablaPaginasInvertidas, liberar);
