@@ -235,7 +235,7 @@ int identificarse(int emisor, char header){
 	}
 }
 
-void crearSelect(int servidor){
+pthread_t crearSelect(int servidor){
 	Select* select = asignarMemoria(sizeof(Select));
 	select->colaOperaciones = colaOperaciones;
 	select->funcionEntenderMensaje = &entenderMensaje;
@@ -245,7 +245,7 @@ void crearSelect(int servidor){
 	select->socket = servidor;
 	select->identificarse = &identificarse;
 	select->semProductores = &semProductores;
-	realizarNuestroSelect(select);
+	return realizarNuestroSelect(select);
 }
 
 void inicializar(char* modo, t_config* configuracion){
@@ -298,11 +298,12 @@ int main(void) {
 	init();
 	direccionServidor direccionFM9 = levantarDeConfiguracion(NULL, "PUERTO", configuracion);
 	int servidor = crearServidor(direccionFM9.puerto, INADDR_ANY);
-	crearSelect(servidor);
+	pthread_t hiloSelect = crearSelect(servidor);
 	config_destroy(configuracion);
 
 	pthread_t hiloConsola = crearHilo(&consola, NULL);
 	esperarHilo(hiloConsola);
+	esperarHilo(hiloSelect);
 
 
 	return 0;

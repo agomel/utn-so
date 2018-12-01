@@ -239,7 +239,7 @@ void inicializarSAFA(){
 	inicializarMutex(&mutexDummy);
 	inicializarSem(&semCorrupto, 0);
 }
-void crearSelect(int servidor){
+pthread_t crearSelect(int servidor){
 	Select* select = asignarMemoria(sizeof(Select));
 	select->colaOperaciones = colaOperaciones;
 	select->funcionEntenderMensaje = &entenderMensaje;
@@ -249,7 +249,7 @@ void crearSelect(int servidor){
 	select->socket = servidor;
 	select->identificarse = &identificarse;
 	select->semProductores = &semProductores;
-	realizarNuestroSelect(select);
+	return realizarNuestroSelect(select);
 }
 void despedida(){
 	log_info(logger, "chauuuuu :)");
@@ -267,7 +267,7 @@ int main(void) {
 	int servidor = crearServidor(direccionSAFA.puerto, INADDR_ANY);
 
 	inicializarPlanificadores();
-	crearSelect(servidor);
+	pthread_t hiloSelect = crearSelect(servidor);
 	pthread_t hiloConsola = crearHilo(&consola, NULL);
 
 	waitSem(&semCorrupto);
@@ -280,6 +280,7 @@ int main(void) {
 	esperarHilo(hiloConsola);
 	esperarHilo(hiloPlanificadorALargoPlazo);
 	esperarHilo(hiloPlanificadorACortoPlazo);
+	esperarHilo(hiloSelect);
 
 	config_destroy(configuracion);
 	return 0;
