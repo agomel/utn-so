@@ -49,12 +49,16 @@ static int obtenerMarcoLibre(){
 		if(tablaDePaginas->elements_count > 1){
 			waitMutex(&mutexListaPaginas);
 			list_sort(tablaDePaginas, compararPorMarco);
-			signalMutex(&mutexListaPaginas);}
+			signalMutex(&mutexListaPaginas);
+		}
+
 		waitMutex(&mutexListaPaginas);
 		ElementoTablaPag* primerElemento = list_get(tablaDePaginas, 0);
 		signalMutex(&mutexListaPaginas);
+
 		if(primerElemento->marco != 0)
 			return 0;
+
 		waitMutex(&mutexListaPaginas);
 		for(int i = 0; i < tablaDePaginas->elements_count - 1; i++){
 			ElementoTablaPag* elem1 = list_get(tablaDePaginas, i);
@@ -65,12 +69,15 @@ static int obtenerMarcoLibre(){
 
 			if(tamanioEntreAmbos != 0){
 				//Entra en ese lugar
+				signalMutex(&mutexListaPaginas);
 				return posicionInicial;
 			}
 		}
 
 		ElementoTablaPag* ultimoElemento = list_get(tablaDePaginas, tablaDePaginas->elements_count -1);
+
 		signalMutex(&mutexListaPaginas);
+
 		int ultimoMarco = ultimoElemento->marco;
 		if((ultimoMarco + 1) < cantidadMarcosTotales){
 			return ultimoMarco + 1;
@@ -191,45 +198,47 @@ static RespuestaCargaSegPag* guardarDatosInternaSegPag(char* datos, char* nombre
 			char* textoAGuardar;
 			int posicionMarco = obtenerMarcoLibre();
 			log_error(logger, "Guardando datos de %s : pagina %d y marco %d", nombreArchivo, i, posicionMarco);
-			if(posicionMarco == -1)
+			if(posicionMarco == -1){
 				respuesta->resultado = ESPACIO_INSUFICIENTE_EN_FM9; //ERROR NO HAY MARCOS LIBRES
-
-			ElementoTablaPag* elementoPagina = malloc(sizeof(ElementoTablaPag));
-			elementoPagina->idPag = idPagina;
-			idPagina++;
-			elementoPagina->marco = posicionMarco;
-			waitMutex(&mutexListaSegmentos);
-			list_add(elementoSegmento->paginas, elementoPagina);
-			signalMutex(&mutexListaSegmentos);
-			waitMutex(&mutexListaPaginas);
-			list_add(tablaDePaginas, elementoPagina);
-			signalMutex(&mutexListaPaginas);
-			int base = storage + posicionMarco * (tamanioPagina * tamanioLinea); //Porque el tamanioPagina esta en lineas
-			if(cantidadPaginas - 1 == i){ //Es la ultima pagina
-				for (int j = 0;  j < lineasEnLaUltimaPagina; j++) {
-					if(lineas[lineaACargar]==NULL)
-						lineas[lineaACargar] = string_new();
-
-					string_append(&lineas[lineaACargar], "\n");
-					char* textoAEscribir = malloc(tamanioLinea);
-					memcpy(textoAEscribir, lineas[lineaACargar], strlen(lineas[lineaACargar]) + 1);
-					memcpy(base + tamanioLinea * j, textoAEscribir, tamanioLinea); //Guardando de a una linea
-					free(textoAEscribir);
-					lineaACargar++;
-				}
 			}else{
-				for(int j = 0; j < (tamanioPagina); j++){
-					if(lineas[lineaACargar]==NULL)
-						lineas[lineaACargar] = string_new();
+				ElementoTablaPag* elementoPagina = malloc(sizeof(ElementoTablaPag));
+				elementoPagina->idPag = idPagina;
+				idPagina++;
+				elementoPagina->marco = posicionMarco;
+				waitMutex(&mutexListaSegmentos);
+				list_add(elementoSegmento->paginas, elementoPagina);
+				signalMutex(&mutexListaSegmentos);
+				waitMutex(&mutexListaPaginas);
+				list_add(tablaDePaginas, elementoPagina);
+				signalMutex(&mutexListaPaginas);
+				int base = storage + posicionMarco * (tamanioPagina * tamanioLinea); //Porque el tamanioPagina esta en lineas
+				if(cantidadPaginas - 1 == i){ //Es la ultima pagina
+					for (int j = 0;  j < lineasEnLaUltimaPagina; j++) {
+						if(lineas[lineaACargar]==NULL)
+							lineas[lineaACargar] = string_new();
 
-					string_append(&lineas[lineaACargar], "\n");
-					char* textoAEscribir = malloc(tamanioLinea);
-					memcpy(textoAEscribir, lineas[lineaACargar], strlen(lineas[lineaACargar]) + 1);
-					memcpy(base + tamanioLinea * j, textoAEscribir, tamanioLinea); //Guardando de a una linea
-					free(textoAEscribir);
-					lineaACargar++;
+						string_append(&lineas[lineaACargar], "\n");
+						char* textoAEscribir = malloc(tamanioLinea);
+						memcpy(textoAEscribir, lineas[lineaACargar], strlen(lineas[lineaACargar]) + 1);
+						memcpy(base + tamanioLinea * j, textoAEscribir, tamanioLinea); //Guardando de a una linea
+						free(textoAEscribir);
+						lineaACargar++;
+					}
+				}else{
+					for(int j = 0; j < (tamanioPagina); j++){
+						if(lineas[lineaACargar]==NULL)
+							lineas[lineaACargar] = string_new();
+
+						string_append(&lineas[lineaACargar], "\n");
+						char* textoAEscribir = malloc(tamanioLinea);
+						memcpy(textoAEscribir, lineas[lineaACargar], strlen(lineas[lineaACargar]) + 1);
+						memcpy(base + tamanioLinea * j, textoAEscribir, tamanioLinea); //Guardando de a una linea
+						free(textoAEscribir);
+						lineaACargar++;
+					}
 				}
 			}
+
 		}
 		log_debug(logger, "Datos guardados");
 		respuesta->elementoTabla = elementoSegmento;
@@ -240,19 +249,6 @@ static RespuestaCargaSegPag* guardarDatosInternaSegPag(char* datos, char* nombre
 
 	freeLineas(lineas);
 	return respuesta;
-}
-
-ElementoTablaPag* obtenerPaginasPorId(int pagina){
-	bool coincideLaPagina(int elemento){
-		if(elemento == pagina){
-			return true;
-		}
-		return false;
-	}
-	waitMutex(&mutexListaPaginas);
-	ElementoTablaPag* pag = list_find(tablaDePaginas, coincideLaPagina);
-	signalMutex(&mutexListaPaginas);
-	return pag;
 }
 
 respuestaDeObtencionDeMemoria* obtenerDatosSegPag(int idDTB, char* nombreArchivo){
@@ -285,7 +281,8 @@ respuestaDeObtencionDeMemoria* obtenerDatosSegPag(int idDTB, char* nombreArchivo
 					freeLineasBasura(lineaSinBasura, lineaConBasura);
 				}
 			}
-		}signalMutex(&mutexListaPaginas);
+		}
+		signalMutex(&mutexListaPaginas);
 		respuesta->datos = malloc(strlen(archivo) + 1);
 		memcpy(respuesta->datos, archivo, strlen(archivo) + 1);
 		free(archivo);
