@@ -22,12 +22,11 @@ void escuchar(int socketSAFA){
 						tratarDummy(dtbRecibido);
 					}else{
 						log_info(logger, "Recibi DTB NO Dummy");
-						char* lineaAEjecutar;
 						int continuar = 1;
 						if(dtbRecibido->quantum != -1 && continuar){
 							while(dtbRecibido->quantum != 0 && continuar){
 								log_info(logger, "Tiene quantum el DTB");
-								continuar = entenderLinea(lineaAEjecutar, dtbRecibido, mensajeEntendido, 0);
+								continuar = entenderLinea(dtbRecibido, mensajeEntendido, 0);
 							}if(dtbRecibido->quantum == 0 && continuar){
 								log_info(logger, "Termino quantum");
 								serializarYEnviarDTB(socketSAFA, *dtbRecibido, logger, TERMINO_QUANTUM);
@@ -36,7 +35,7 @@ void escuchar(int socketSAFA){
 						}else{
 							int continuar2 = 1;
 							while(continuar2){
-								continuar2 = entenderLinea(lineaAEjecutar, dtbRecibido, mensajeEntendido, 1);
+								continuar2 = entenderLinea(dtbRecibido, mensajeEntendido, 1);
 							}
 						}
 						log_info(logger, "Terminada operacion");

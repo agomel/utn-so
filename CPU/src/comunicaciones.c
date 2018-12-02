@@ -37,11 +37,13 @@ void tratarDummy(DTB* dtbRecibido){
 	enviarYSerializarIntSinHeader(socketSAFA, 1); //Ejecuta una sentencia
 }
 
-int entenderLinea(char* lineaAEjecutar, DTB* dtbRecibido, int mensajeEntendido, int fifo){
+int entenderLinea(DTB* dtbRecibido, int mensajeEntendido, int fifo){
 	int continuar = 0; //Cuando continuar es 1 continua, sino frena y no busca mas lineas.
 	pedirCosasDelFM9(dtbRecibido);
+	log_info(logger, "Pedidas cosas del FM9");
 	dtbRecibido->programCounter++;
-	lineaAEjecutar = deserializarString(socketFM9);
+	char* lineaAEjecutar = deserializarString(socketFM9);
+	log_info(logger, "Obtenida rta del FM9 linea %s", lineaAEjecutar);
 	if(lineaAEjecutar[0] == FIN_ARCHIVO){
 		//Fin de archivo
 		log_info(logger, "Pasar DTB a EXIT por fin de archivo");
@@ -81,6 +83,7 @@ int entenderLinea(char* lineaAEjecutar, DTB* dtbRecibido, int mensajeEntendido, 
 			continuar = 1;
 		}
 	}
+	free(lineaAEjecutar);
 	return continuar;
 }
 
