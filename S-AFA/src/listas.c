@@ -125,7 +125,7 @@ t_list* filtrarListaPorDTBsConArchivosAbiertos(){
 
 DTB* obtenerDTBConArchivoMasGrande(){
 	bool tieneArchivoMasGrande(DTB* dtb1, DTB* dtb2){
-		return (dtb1->tamanioArchivosAbiertos > dtb2->tamanioArchivosAbiertos);
+		return (dtb1->tamanioArchivosAbiertos >= dtb2->tamanioArchivosAbiertos);
 	}
 	t_list* lista = filtrarListaPorEstado(READY);
 	list_sort(lista, tieneArchivoMasGrande);
